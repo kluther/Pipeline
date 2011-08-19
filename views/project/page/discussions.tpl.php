@@ -1,0 +1,45 @@
+<?php
+
+$project = $SOUP->get('project');
+$events = $SOUP->get('events');
+$discussions = $SOUP->get('discussions');
+
+$fork = $SOUP->fork();
+
+$fork->set('project', $project);
+$fork->set('pageTitle', $project->getTitle());
+$fork->set('headingURL', Url::project($project->getID()));
+
+$fork->set('selected', "discussions");
+$fork->set('breadcrumbs', Breadcrumbs::discussions($project->getID()));
+$fork->startBlockSet('body');
+
+?>
+
+<div class="left">
+
+<?php
+	$SOUP->render('project/partial/discussions',array(
+		'discussions' => $discussions,
+		'size' => 'large'
+	));
+?>
+
+</div>
+
+<div class="right">
+
+<?php
+	$SOUP->render('site/partial/activity', array(
+		'title' => "Recent Activity",
+		'size' => 'small',
+		'olderURL' => Url::activityDiscussions($project->getID())
+		));
+?>
+
+</div>
+
+<?php
+
+$fork->endBlockSet();
+$fork->render('site/partial/page');

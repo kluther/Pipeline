@@ -1,0 +1,561 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/* end CSS reset */
+
+h1 {
+	display: block;
+	float: left;
+	padding-right: 1.5em;
+	}
+
+/* TASKS */
+
+ul.tasks p.title {
+	font-size: 120%;
+	margin: 0; padding: 0 0 0.1em 22px;
+	background: url(./../images/icons/clipboard.png) no-repeat 0 3px;
+	}
+	p.title.closed {
+		text-decoration: line-through;
+		}
+ul.tasks p.info {
+	font-size: 90%;
+	margin: 0; padding: 0 0 0 22px;
+	}
+ul.tasks p.relationship {
+	display: inline;
+	float: right;
+	text-align: right;
+	font-size: 80%;
+	margin: 0; padding: 0.5em 0.75em;
+	background: #1a1a1a;
+	-moz-border-radius: 0.5em;
+	-webkit-border-radius: 0.5em;
+	border-radius: 0.5em;		
+	}
+
+
+div.task-info {
+	margin-left: 170px;
+	}
+	div.task-info p {
+		font-size: 100%;
+		}	
+
+div#task h5, div#update h5 {
+	font-size: 150%;
+	color: #fff;
+	margin-top: 0.25em;
+	}
+		
+
+/* updates styles */
+div.panel.update div.view {
+	padding: 0.5em 0;
+	}
+div.panel.update div.edit {
+	text-align: right;
+	}
+	div.panel.update div.edit textarea {
+		width: 95%;
+		height: 150px;	
+		}
+/*
+ul.accepted p.needed {
+	font-size: 95%;
+	}
+ul.accepted p.username {
+	font-size: 120%;
+	margin: 0; padding: 0 0 0.1em 0;
+	}
+	
+ul.accepted p.role {
+	font-size: 90%;
+	margin: 0; padding: 0;
+	}
+	ul.accepted p.role a {
+		color: #a3a3a3;
+		}
+*/
+ul.accepted p.title, ul.updates p.title {
+	font-size: 120%;
+	margin: 0; padding: 0 0 0.1em 22px;
+	background: url(./../images/icons/pin.png) no-repeat 0 3px;
+	}
+	
+ul.accepted p.updates {
+	font-size: 90%;
+	margin: 0 0 0.5em 22px; padding: 0;
+	}
+	ul.accepted p.updates a {
+		color: #a3a3a3;
+		}
+
+ul.accepted p.status {
+	margin: 0 0 0.5em 22px; padding: 0;
+	}	
+	ul.accepted p.status span {
+		font-size: 80%;
+		margin: 0; padding: 0.5em 0.75em;
+		background: #1a1a1a;
+		-moz-border-radius: 0.5em;
+		-webkit-border-radius: 0.5em;
+		border-radius: 0.5em;
+		}
+	
+/* DISCUSSION LISTS */
+	
+ul.discussions li {
+	overflow: hidden;
+	width: 100%;
+	}
+ul.discussions p.title {
+	font-size: 120%;
+	margin: 0; padding: 0 0 0.1em 22px;
+	background: url(./../images/icons/balloon.png) no-repeat center left;
+}
+ul.discussions p.replies {
+	font-size: 90%;
+	margin: 0; padding: 0 0 0 22px;
+	}
+	ul.discussions p.replies a {
+		color: #a3a3a3;
+		}
+ul.discussions p.section {
+	display: inline;
+	float: right;
+	text-align: right;
+	font-size: 80%;
+	margin: 0; padding: 0.5em 0.75em;
+	background: #1a1a1a;
+	-moz-border-radius: 0.5em;
+	-webkit-border-radius: 0.5em;
+	border-radius: 0.5em;		
+	}
+	ul.discussions p.section a {
+		font-size: 100%;
+		}
+		
+/* DISCUSSION REPLIES / COMMENTS */
+ul.replies h5 {
+	color: #fff;
+	font-size: 150%;
+	margin-bottom: 0.5em;
+	
+	}
+ul.replies p.headline, ul.comments p.headline {
+	margin: 0; padding: 0.5em 0 0 0;
+	font-size: 100%;
+	margin-left: 55px;
+	}
+ul.replies p.message, ul.comments p.message {
+	font-size: 100%;
+	margin-left: 55px;
+	}
+ul.replies span.when, ul.comments span.when {
+	font-size: 90%;
+	color: #666;
+	}
+	ul.replies li.reply, ul.comments li.comment {
+		text-align: right;
+		}
+		ul.replies li.reply textarea, ul.comments li.comment textarea {
+			width: 95%;
+			height: 125px;
+			}
+		ul.replies li.reply input, ul.comments li.comment input {
+			margin-right: 0;
+			margin-left: 1em;
+			}
+
+/* comment replies styles */
+ul.comments input.replyButton {
+	float: right;
+	font-size: 80%;
+	margin: 0; 
+	/*margin: 1.25em 0 0 0;
+	padding: 0.25em 0.5em;*/
+	}			
+
+ul.comments li.comment-reply {
+	margin-left: 55px;
+	}
+ul.comments div.post-reply {
+	text-align: right;
+	margin-left: 55px;
+	}
+	ul.comments div.post-reply textarea {
+		width: 455px;
+		height: 100px;
+		}
+	ul.comments div.post-reply input {
+		margin-right: 0;
+		}
+		
+/* uploads */
+ul.replies div.upload-wrapper, ul.comments div.upload-wrapper {
+	margin-left: 55px;*/
+	}
+	
+div.upload {
+	margin: 1em 1em 1em 0;
+	float: left;
+	}
+	div.upload a.thumb, div.upload a.icon {
+		display: block;
+		height: 100px;
+		width: 125px;
+		border: 1px solid #262626;
+		-moz-border-radius: 0.5em;
+		-webkit-border-radius: 0.5em;
+		border-radius: 0.5em;
+		text-decoration: none;
+		background-color: #313131;
+		background-repeat: no-repeat;
+		}
+		div.upload a.thumb:hover, div.upload a.icon:hover {
+			border: 1px solid #f2cd58;
+			}
+	div.upload a.thumb {
+		background-position: 0 0;
+		}
+	div.upload a.icon {
+		background-position: 50% 50%;
+		background-image: url(./../images/icons/document.png);
+		}
+	div.upload a.name {
+		font-size: 85%;
+		display: block;
+		width: 125px;
+		padding: 0.2em 0;
+		overflow: hidden;
+		}
+	div.upload span.size {
+		font-size: 80%;
+		display: block;
+		}
+
+/* PANELS */
+			
+div.panel.small ul.discussions p.title {
+	font-size: 100%;
+	}
+div.panel.small ul.discussions p.replies {
+	font-size: 85%;
+	}	
+
+/* PRIMARY NAV */	
+	
+div.primary-nav {
+	padding: 1.3em 0;
+	}
+	
+div.primary-nav li {
+	display: block;
+	padding-top: 0.2em; /* valign with logo */
+	}
+	div.primary-nav li.left {
+		float: left;
+		}
+	div.primary-nav li.right {
+		float: right;
+		}
+	div.primary-nav li a {
+		display: block;
+		font-size: 87.5%;
+		padding-left: 1em;
+		padding-right: 1em;
+		}
+
+	
+div.left {
+	width: 620px;
+	float: left;
+	}
+
+div.right {
+	width: 300px;
+	float: right;
+	}
+
+div.funnel {
+	width: 920px;
+	margin: 0 auto;
+	}
+
+div.buttons {
+	overflow: hidden;
+	width: 100%;
+	}
+	div.buttons input.left {
+		float: left;
+		margin-left: 0;
+		margin-right: 1em;		
+		}
+	div.buttons input.right {
+		float: right;
+		margin-right: 0;
+		margin-left: 1em;
+		}
+	div.buttons p {
+		margin-top: 0.5em;
+		}
+
+/*
+br.clear {
+	clear: both;
+	margin: 0; padding: 0;
+	}
+*/
+
+ul.segmented-list {
+	}
+	ul.segmented-list li {
+		padding: .5em 0;
+		border-top: 1px solid #313131;
+		position: relative;
+		overflow: hidden; /*ie fix*/
+		}
+	ul.segmented-list li:first-child {
+		border-top: 0;
+		}
+	ul.segmented-list li.description {
+		padding-top: 0;
+		color: #666;
+		}
+
+		
+a.picture img{
+	float: left;
+	margin-right: 0.5em;
+	-moz-border-radius: 0.25em;
+	-webkit-border-radius: 0.25em;
+	border-radius: 0.25em;			
+	}
+	a.picture.small img {
+		width: 32px; height: 32px;
+		}
+	a.picture.large img {
+		width: 48px; height: 48px;
+		}
+
+span.slash {
+	color: #313131;
+	font-weight: bold;
+	}		
+		
+/* USER LISTS */
+		
+ul.user{
+
+	}
+	ul.user p.username {
+		font-size: 120%;
+		margin: 0; padding: 0 0 0.1em 0;
+		}
+	ul.user p.accomplishments {
+		font-size: 90%;
+		margin: 0; padding: 0;
+		}
+	ul.user div.buttons {
+		width: 200px;
+		float: right;
+		text-align: right;
+		}
+		ul.user div.buttons input {
+			margin: 0 0 0 1em;
+			}
+
+			
+/* ACTIVITY FEED */
+	
+ul.activity{
+	}
+	ul.activity p.event {
+		padding: 0; margin: 0 0 0 40px;
+		font-size: 95%;
+		}
+	ul.activity p.when {
+		padding: 0 0 0 22px; margin: 0.4em 0 0 40px;
+		font-size: 85%;
+		color: #666666;
+		}
+	ul.activity p.create {
+		background: url(./../images/icons/plus-circle.png) no-repeat center left;
+		}
+	ul.activity p.edit {
+		background: url(./../images/icons/pencil.png) no-repeat center left;
+		}		
+		
+div.clear {
+	clear: both;
+	margin-bottom: 1em;
+	}
+	div.clear > label {
+		float: left;
+		width: 150px;
+		text-align: right;
+		padding-top: 0.5em;
+		}
+	
+div.input {
+	margin-left: 170px;
+	}
+	div.input p {
+		font-size: 90%;
+		}
+	div.input input[type="text"],
+	div.input input[type="password"]{
+		font-size: 120%;
+		padding: 0.2em;
+		width: 210px;
+		}
+	div.input select {
+		font-size: 120%;
+		padding: 0.2em;
+		}
+
+
+span#username_check, span#pw_check {
+	/*display: block;
+	width: 120px;
+	text-align: left;
+	float: right;
+	margin: 0.5em 0 0 0;*/
+	font-weight: bold;
+	font-size: 90%;
+	}
+
+		
+textarea {
+	width: 300px;
+	height: 200px;
+	overflow: auto;
+	font-size: 120%;
+	padding: 0.2em;	
+	}
+		
+input.login {
+	display: block;
+	font-size: 120%;
+	margin: 0.5em 0 1em 0;
+	padding: 0.2em;
+	width: 210px;
+	}
+
+div.page-body {
+	padding: 1.5em 0;
+	}
+	
+p {
+	padding: 0.5em 0;
+	line-height: 1.2em;
+	}
+	
+input[type=button], input[type=submit] {
+	/*display: block;*/
+	padding:0.3em 0.8em;
+	margin: 0.5em 1em 1em 0;
+}
+
+div#feedback {
+	display: none;
+	}
+
+	
+img.sparkline {
+	margin: 0.5em auto;
+	}
+
+
+div.activity-filter select {
+	float: right;
+	font-size: 85%;
+	padding: 0.1em;		
+	margin-top: 0.6em;
+	}
+
+.hidden {
+	display: none;
+	}
+	
+div.person-box {
+	float: right;
+	width: auto;
+	margin-left: 0.5em;
+	}
+	div.text {
+		float: right;
+	}
+	div.person-box p.caption {
+		font-size: 100%;
+		margin: 0; padding: 0;
+	}
+	div.person-box p.username {
+		font-size: 120%;
+		margin: 0; padding: 0;
+	}
+	
+/* -------------- Details tab ----------- */
+
+#pitch div.edit, #specs div.edit, #rules div.edit {
+	text-align: right;
+	}
+#pitch textarea, #specs textarea, #rules textarea {
+	width: 95%;
+	}
+#pitch div.view {
+	padding: 0.5em 0;
+	}
+
+
+		
+		
