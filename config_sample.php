@@ -4,6 +4,8 @@
 	define('TEMPLATE_PATH', SYSTEM_PATH.'/views'); # where the views are - !NO CHANGE
 	define('CLASS_PATH', SYSTEM_PATH.'/model/classes'); # where the classes are - !NO CHANGE
 	define('UPLOAD_PATH', SYSTEM_PATH.'/upload'); # absolute path to where uploads are <- CHANGE THIS
+	define('THUMB_PATH', UPLOAD_PATH.'/thumb'); # absolute path to where thumbnails are <- CHANGE THIS
+	define('PREVIEW_PATH', UPLOAD_PATH.'/preview'); # absolute path to where previews are <- CHANGE THIS
 	
 	define('BASE_URI', 'http://pipeline.cc.gatech.edu'); # base URI for this Pipeline instance <- CHANGE THIS
 	define('PIPELINE_NAME', 'Pipeline Demo'); # name of this Pipeline instance <- CHANGE THIS
