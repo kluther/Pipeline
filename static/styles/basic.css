@@ -241,48 +241,51 @@ ul.comments div.post-reply {
 		}
 		
 /* uploads */
-ul.replies div.upload-wrapper, ul.comments div.upload-wrapper {
-	margin-left: 55px;*/
-	}
-	
-div.upload {
-	margin: 1em 1em 1em 0;
-	float: left;
-	}
-	div.upload a.thumb, div.upload a.icon {
-		display: block;
-		height: 100px;
-		width: 125px;
-		border: 1px solid #262626;
-		-moz-border-radius: 0.5em;
-		-webkit-border-radius: 0.5em;
-		border-radius: 0.5em;
-		text-decoration: none;
-		background-color: #313131;
-		background-repeat: no-repeat;
-		}
-		div.upload a.thumb:hover, div.upload a.icon:hover {
-			border: 1px solid #f2cd58;
-			}
-	div.upload a.thumb {
-		background-position: 0 0;
-		}
-	div.upload a.icon {
-		background-position: 50% 50%;
-		background-image: url(./../images/icons/document.png);
-		}
-	div.upload a.name {
-		font-size: 85%;
-		display: block;
-		width: 125px;
-		padding: 0.2em 0;
-		overflow: hidden;
-		}
-	div.upload span.size {
-		font-size: 80%;
-		display: block;
-		}
 
+div.upload {
+	clear: both;
+	background: url(./../images/icons/document.png) no-repeat 0 3px;
+	}
+	div.upload.audio {
+		background-image: url(./../images/icons/music.png);
+		}
+	div.upload.image {
+		background-image: url(./../images/icons/image-sunset.png);
+		}
+	div.upload.video {
+		background-image: url(./../images/icons/film.png);
+		}
+	div.upload p.filename {
+		font-size: 120%;
+		margin: 0 0 0.25em 22px; padding: 0;
+		}
+	div.upload p.links {
+		font-size: 90%;
+		margin: 0 0 0.25em 22px; padding: 0;
+		}
+	div.upload a.thumb {
+		width: 150px;
+		height: 40px;
+		display: block;
+		float: right;
+		margin: 0 0 0 0.5em; padding: 0;
+		background: #1a1a1a no-repeat center right;
+		/*border: #ccc;
+		-moz-border-radius: 0.25em;
+		-webkit-border-radius: 0.25em;
+		border-radius: 0.25em;*/
+		border: 1px solid #262626;
+		}
+		div.upload a.thumb:hover {
+			border: 1px solid #fff;
+			}
+		div.upload a.thumb img {
+			display: block;
+			height: 30px; width: 30px;
+			margin: 5px auto 0 auto; padding: 0;
+			}
+
+		
 /* PANELS */
 			
 div.panel.small ul.discussions p.title {

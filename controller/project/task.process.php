@@ -122,7 +122,7 @@ if($action == 'create') {
 		'user_1_id' => Session::getUserID(),
 		'item_1_id' => $task->getID()
 	));
-	//$logEvent->save();
+	$logEvent->save();
 	
 	// we're done here
 	Session::setMessage('You created a new task.');

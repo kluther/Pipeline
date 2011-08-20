@@ -4,7 +4,7 @@ include_once TEMPLATE_PATH.'/site/helper/format.php';
 $task = $SOUP->get('task');
 $project = $SOUP->get('project');
 $token = Upload::generateToken();
-$uploads = $SOUP->get('uploads');
+
 $numComments = $SOUP->get('numComments', 0);
 
 $fork = $SOUP->fork();
@@ -39,11 +39,7 @@ $fork->set('editLabel', 'Edit Task');
 
 <p><?= formatTaskDescription($task->getDescription()) ?></p>
 
-<?php
-	$SOUP->render('site/partial/newUploads', array(
-		'uploads' => $uploads
-	));
-?>
+
 <!--
 <script type="text/javascript">
 

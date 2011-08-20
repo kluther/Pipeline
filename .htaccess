@@ -6,9 +6,9 @@ ErrorDocument 404 /demo/controller/site/error_c.php
 
 ### STATIC ###
 
-RewriteRule ^styles/(.*)$ static/styles/$1 [L]
-RewriteRule ^scripts/(.*)$ static/scripts/$1 [L]
-RewriteRule ^images/(.*)$ static/images/$1 [L]
+RewriteRule ^styles/(.+)$ static/styles/$1 [L]
+RewriteRule ^scripts/(.+)$ static/scripts/$1 [L]
+RewriteRule ^images/(.+)$ static/images/$1 [L]
 
 ### UPLOAD AND DOWNLOAD ###
 
@@ -17,9 +17,9 @@ RewriteRule ^images/(.*)$ static/images/$1 [L]
 
 RewriteRule ^upload/process/?$ controller/site/upload.process.php [L]
 
-RewriteRule ^ul/th/(.+)$ upload/thumb/$1 [L]
-RewriteRule ^ul/pr/([0-9a-z]+)$ upload/preview/$1 [L]
-RewriteRule ^ul/([0-9a-z]+)$ upload/$1 [L]
+RewriteRule ^up/th/(.+)$ upload/thumb/$1 [L]
+RewriteRule ^up/pr/(.+)$ upload/preview/$1 [L]
+RewriteRule ^up/(.+)$ upload/$1 [L]
 
 ### HOME PAGE ###
 

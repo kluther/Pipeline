@@ -27,7 +27,7 @@ function initializeUploader() {
 		runtimes : 'flash,html5,gears,silverlight,browserplus',
 		browse_button : '<?= $browseButtonID ?>',
 		max_file_size : '100mb',
-		chunk_size : '1mb',
+		//chunk_size : '1mb',
 		url : '<?= Url::uploadProcess() ?>',
 		unique_names : true,
 		//resize : {width : 320, height : 240, quality : 90},

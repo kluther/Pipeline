@@ -22,12 +22,17 @@ class Url
 	}	
 	
 	public static function download($fileID=null) {
-		if($fileID == null) return null;
-		return (self::base().'/download/'.$fileID);
+		// if($fileID == null) return null;
+		// return (self::base().'/download/'.$fileID);
 	}
 	
-	public static function thumb() {
-		return (self::uploads().'/th');
+	public static function thumb($uploadID=null) {
+		if($uploadID == null) {
+			return (self::uploads().'/th');
+		} else {
+			$upload = Upload::load($uploadID);
+			
+		}
 	}
 	
 	public static function preview() {

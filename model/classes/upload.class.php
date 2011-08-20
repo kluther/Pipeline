@@ -440,6 +440,68 @@ class Upload extends DbObject
 		$this->token = $newToken;
 		$this->modified = true;
 	}
+	
+	public function getThumbURL() {
+		$thumbFileName = null;
+		switch($this->mime) {
+			// images
+			case 'image/png': 
+			case 'image/jpeg':
+			case 'image/pjpeg': 
+			case 'image/gif': 
+				$thumbFileName = $this->storedName;
+				break;
+			// flash or video
+			case 'application/x-shockwave-flash': 
+			case 'video/x-flv': 
+			case 'video/mpeg': 
+			case 'video/quicktime': 
+			case 'video/x-msvideo': 
+				$fileName = pathinfo($this->storedName, PATHINFO_FILENAME);
+				$thumbFileName = $fileName.".jpg";
+				break;
+		}
+		if($thumbFileName == null)
+			return null;
+		return (Url::thumb().'/'.$thumbFileName);
+	}
+	
+	public function getPreviewURL() {
+		$previewURL = null;
+		switch($this->mime) {
+			// images
+			case 'image/png': 
+			case 'image/jpeg':
+			case 'image/pjpeg': 
+			case 'image/gif': 
+			case 'audio/mpeg':
+				$previewURL = Url::uploads().'/'.$this->storedName;
+				break;
+			// audio exception
+			case 'application/octet-stream':
+				if($this->getExtension() == 'mp3')
+					$previewURL = Url::uploads().'/'.$this->storedName;
+				break;
+			case 'application/x-shockwave-flash': 
+			case 'video/x-flv': 
+				$previewURL = Url::uploads().'/'.$this->storedName;
+				break;
+			// reencoded video
+			case 'video/mpeg': 
+			case 'video/quicktime': 
+			case 'video/x-msvideo': 
+				$fileName = pathinfo($this->storedName, PATHINFO_FILENAME);
+				$previewFileName = $fileName.".flv";
+				$previewURL = Url::preview().'/'.$previewFileName;
+				break;
+		}
+		return ($previewURL);
+	}
+	
+	public function getExtension() {
+		$ext = pathinfo($this->storedName, PATHINFO_EXTENSION);
+		return ($ext);
+	}
 
 	// public function getFileExtension()
 	// {
