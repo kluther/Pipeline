@@ -441,6 +441,10 @@ class Upload extends DbObject
 		$this->modified = true;
 	}
 	
+	public function getDownloadURL() {
+		return (Url::download($this->id));
+	}
+	
 	public function getThumbURL() {
 		$thumbFileName = null;
 		switch($this->mime) {

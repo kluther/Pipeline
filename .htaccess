@@ -12,11 +12,8 @@ RewriteRule ^images/(.+)$ static/images/$1 [L]
 
 ### UPLOAD AND DOWNLOAD ###
 
-#RewriteRule ^upload/?$ upload/
-#RewriteRule ^download/(\d+)/?$ controller/site/download_c.php?f=$1 [QSA,L]
-
+RewriteRule ^download/(\d+)/(.+)?$ controller/site/download_c.php?fi=$1&fn=$2 [QSA,L]
 RewriteRule ^upload/process/?$ controller/site/upload.process.php [L]
-
 RewriteRule ^up/th/(.+)$ upload/thumb/$1 [L]
 RewriteRule ^up/pr/(.+)$ upload/preview/$1 [L]
 RewriteRule ^up/(.+)$ upload/$1 [L]

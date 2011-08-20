@@ -83,6 +83,8 @@ if($action == 'create') {
 	
 	// attach any uploads
 	foreach($_POST['file'] as $stored => $orig) {
+		$stored = Filter::text($stored);
+		$orig = Filter::text($orig);
 		// get extension
 		$ext = pathinfo($orig, PATHINFO_EXTENSION);
 		$stored .= '.'.$ext;
