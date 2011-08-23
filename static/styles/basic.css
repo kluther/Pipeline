@@ -61,7 +61,7 @@ h1 {
 
 ul.segmented-list p.primary {
 	font-size: 120%;
-	margin: 0; padding: 0 0 3px 22px;
+	margin: 0; padding: 0 0 0 22px;
 	background: no-repeat 0 3px;
 	}
 	ul.segmented-list p.primary span.status {

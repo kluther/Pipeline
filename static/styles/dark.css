@@ -209,11 +209,11 @@ span.required {
 	}
 	
 .good{
-	color: seagreen !important;
+	color: #2E8B57 !important;
 	}
 
 .bad {
-	color: red !important;
+	color: #B22222 !important;
 	}
 	
 div.line {
