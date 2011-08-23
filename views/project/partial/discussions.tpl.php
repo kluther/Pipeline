@@ -3,10 +3,12 @@ include_once TEMPLATE_PATH.'/site/helper/format.php';
 
 $project = $SOUP->get('project');
 $cat = $SOUP->get('cat');
+$title = $SOUP->get('title', 'Discussions');
 $discussions = $SOUP->get('discussions', array());
 $size = $SOUP->get('size');
 
 $fork = $SOUP->fork();
+$fork->set('title', $title);
 $fork->set('class', 'discussions');
 $fork->set('creatable', true);
 if($size == 'small') {
@@ -42,19 +44,29 @@ if($discussions != null) {
 		$replies = $discussion->getReplies("ASC"); // ascending sort so we get latest
 		
 		echo '<li>';
+
+		// title
+		echo '<p class="primary"><a href="'.$url.'">'.$title.'</a>';
+		
+		// status
 		if( ($discussion->getCategory() != null) && ($size != 'small')) // discussion category, if exists
-			echo '<p class="section">posted in<br />'.formatSectionLink($discussion->getCategory(),$discussion->getProjectID()).'</p>';
-		echo '<p class="title"><a href="'.$url.'">'.$title.'</a></p>'; // discussion title
+			echo ' <span class="status">'.formatSectionLink($discussion->getCategory(),$discussion->getProjectID()).'</span>';
+		
+		echo '</p>'; // .primary
+		
+		// reply info
+		echo '<p class="secondary">';
+		
 		if(count($replies) > 0) {
-			$latestReply = reset($replies);
-			echo '<p class="replies">';
 			if($size != 'small')
 				echo formatCount(count($replies),'reply','replies','no').' <span class="slash">/</span>'; // number of replies
+			$latestReply = reset($replies);				
 			echo ' last reply '.formatTimeTag($latestReply->getDateCreated()).' by '.formatUserLink($latestReply->getCreatorID()); // last reply
-			echo '</p>';
 		} else {
-			echo '<p class="replies">posted '.formatTimeTag($discussion->getDateCreated()).' by '.formatUserLink($discussion->getCreatorID()).'</p>';
+			echo 'posted '.formatTimeTag($discussion->getDateCreated()).' by '.formatUserLink($discussion->getCreatorID());
 		}
+		
+		echo '</p>'; // .secondary
 		echo '</li>';
 	}
 	echo '</ul>';

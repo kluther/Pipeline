@@ -22,26 +22,11 @@ $fork->startBlockSet('body');
 
 <?php if(Session::isLoggedIn()): ?>
 
-<script type="text/javascript">
-
-	$(document).ready(function() {
-		$('#yourTasks .createButton').click(function() {
-			window.location = '<?= Url::taskNew($project->getID()) ?>';
-		});
-		$('#moreTasks .createButton').click(function() {
-			window.location = '<?= Url::taskNew($project->getID()) ?>';
-		});		
-	});
-
-</script>
-
 <?php
 	$SOUP->render('project/partial/tasks', array(
 		'id' => 'yourTasks',
 		'tasks' => $yourTasks,
-		'title' => 'Your Tasks',
-		'creatable' => true,
-		'createLabel' => "New Task"
+		'title' => 'Your Tasks'
 	));
 ?>
 
@@ -49,9 +34,7 @@ $fork->startBlockSet('body');
 	$SOUP->render('project/partial/tasks', array(
 		'id' => 'moreTasks',
 		'tasks' => $moreTasks,
-		'title' => 'More Tasks',
-		'creatable' => true,
-		'createLabel' => "New Task"
+		'title' => 'More Tasks'
 	));
 ?>
 

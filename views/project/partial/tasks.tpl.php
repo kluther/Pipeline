@@ -2,65 +2,86 @@
 include_once TEMPLATE_PATH.'/site/helper/format.php';
 
 $tasks = $SOUP->get('tasks', array());
+$title = $SOUP->get('title', 'Tasks');
+$project = $SOUP->get('project');
+$id = $SOUP->get('id', 'tasks');
+$size = $SOUP->get('size', 'large');
 $showRelationship = $SOUP->get('showRelationship', true);
 
 $fork = $SOUP->fork();
+$fork->set('title', $title);
+$fork->set('creatable', true);
+
+if($size == 'small') {
+	$fork->set('createLabel', 'New');
+} else {
+	$fork->set('createLabel', 'New Task');
+}
 
 $fork->startBlockSet('body');
+?>
 
+
+<script type="text/javascript">
+
+	$(document).ready(function() {
+		$('#<?= $id ?> .createButton').click(function() {
+			window.location = '<?= Url::taskNew($project->getID()) ?>';
+		});
+	});
+
+</script>
+
+<?php
 if($tasks != null) {
 	echo '<ul class="segmented-list tasks">';
 	foreach($tasks as $task) {
 		echo '<li>';
 		
-		// relationship
-		if($showRelationship == true) {
-			if(Session::getUserID() == $task->getLeaderID())
-				echo '<p class="relationship">leader</p>';
-			else {
-				$accepted = Accepted::getByUserID(Session::getUserID(), $task->getID());
-				if($accepted != null)
-					echo '<p class="relationship">'.Accepted::getStatusName($accepted->getStatus()).'</p>';
-			}
-		}
+		// status
+		$statusName = Task::getStatusName($task->getStatus());
+		if($task->getStatus() == Task::STATUS_CLOSED)
+			$statusClass='bad';
+		else
+			$statusClass='good';	
 		
 		// title
 		$title = $task->getTitle();
 		$url = Url::task($task->getID());
 		$closed = ($task->getStatus() == Task::STATUS_CLOSED) ? ' closed' : ''; // CSS class for strikethrough
-		echo '<p class="title'.$closed.'"><a href="'.$url.'">'.$title.'</a></p>';
-		
-		echo '<p class="info">';
+		echo '<p class="primary'.$closed.'"><a href="'.$url.'">'.$title.'</a>';
 		
 		// status
 		$statusName = Task::getStatusName($task->getStatus());
 		if($task->getStatus() == Task::STATUS_CLOSED)
-			echo '<span class="bad">'.$statusName.'</span>';
+			echo '&nbsp;<span class="status bad">'.$statusName.'</span>';
 		else
-			echo '<span class="good">'.$statusName.'</span>';
-
+			echo '&nbsp;<span class="status good">'.$statusName.'</span>';
+		
+		echo '</p>'; // .primary
+		
+		echo '<p class="secondary">';
+		
 		// deadline
 		if($task->getDeadline() != '')
-			echo ' <span class="slash">/</span> due '.formatTimeTag($task->getDeadline());
+			echo 'due '.formatTimeTag($task->getDeadline());
+		else
+			echo 'no deadline';
+		echo ' <span class="slash">/</span> ';			
+		
+		// num needed
+		$numNeeded = $task->getNumNeeded();
+		if($numNeeded == 0)
+			echo '&#8734; needed';
+		else
+			echo $numNeeded.' needed';
+		echo ' <span class="slash">/</span> ';	
 		
 		// num accepted
-		echo ' <span class="slash">/</span> ';
 		$numAccepted = $task->getNumAccepted();
-		$numNeeded = $task->getNumNeeded();
-		//echo 'accepted by '.formatCount($numAccepted, 'person', 'people').' ';
-		if($numNeeded == 0)
-			echo '&#8734; people needed';
-		elseif($numNeeded > $numAccepted) {
-			$needed = $numNeeded - $numAccepted;
-			echo formatCount($needed, 'person', 'people').' needed';
-			} else {
-			echo formatCount($numAccepted, 'person', 'people').' joined';
-			//} elseif($numNeeded < $numAccepted) {
-			//$extra = $numAccepted - $numNeeded;
-			//echo '<span class="good">('.$extra.'&nbsp;extra)</span>';
-			}		
+		echo $numAccepted.' joined';
 			
-		echo '</p>';
+		echo '</p>'; // .secondary
 		echo '</li>';
 		}
 	echo '</ul>';

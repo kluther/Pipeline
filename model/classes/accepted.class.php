@@ -14,6 +14,7 @@ class Accepted extends DbObject
 	const STATUS_RELEASED = 0;
 	const STATUS_ACCEPTED = 2;
 	const STATUS_FEEDBACK = 3;
+	const STATUS_PROGRESS = 4;
 	const STATUS_COMPLETED = 1;
 	
 	public function __construct($args=array())
@@ -57,6 +58,19 @@ class Accepted extends DbObject
 		$db->store($this, __CLASS__, self::DB_TABLE, $db_properties);
 	}	
 
+	public function getUpdates() {
+		return (Update::getByAcceptedID($this->id));
+	}
+	
+	public function getLatestUpdate() {
+		$updates = $this->getUpdates();
+		if($updates != null) {
+			return (reset($updates));
+		} else {
+			return null;
+		}
+	}
+	
 	// used on Task page
 	public static function getAcceptedBy($taskID)
 	{
@@ -176,11 +190,13 @@ class Accepted extends DbObject
 	public static function getStatusName($status)
 	{
 		if($status == self::STATUS_ACCEPTED)
-			return "in progress";
+			return "started";
 		elseif($status == self::STATUS_FEEDBACK)
 			return "seeking feedback";
 		elseif($status == self::STATUS_COMPLETED)
 			return "completed";
+		elseif($status == self::STATUS_PROGRESS)
+			return "in progress";
 		else
 			return "canceled";		
 	}

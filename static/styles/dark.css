@@ -208,12 +208,12 @@ span.required {
 	color: red;
 	}
 	
-span.good{
-	color: seagreen;
+.good{
+	color: seagreen !important;
 	}
 
-span.bad {
-	color: red;
+.bad {
+	color: red !important;
 	}
 	
 div.line {
