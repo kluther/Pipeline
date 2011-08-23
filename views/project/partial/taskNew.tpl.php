@@ -16,25 +16,7 @@ $fork->startBlockSet('body');
 			changeYear: true,
 			dateFormat: 'yy-mm-dd' // MySQL datetime format
 		});
-		// $('#btnCreateTask').click(function(){
-			// buildPost({
-				// 'processPage':'<?= Url::taskNewProcess($project->getID()) ?>',
-				// 'info':{
-					// 'action': 'create',
-					// 'token':'<?= $token ?>',
-					// 'title': $('#txtTitle').val(),
-					// 'leaderID': $('#txtLeader').val(),
-					// 'description': $('#txtDescription').val(),
-					// 'status': $('#selStatus').val(),
-					// 'numNeeded': $('#txtNumNeeded').val(),
-					// 'deadline': $('#txtDeadline').val(),
-					// 'uploads': $('#submit-form').serialize()
-				// },
-				// 'buttonID':'#btnCreateTask'
-			// });
-		// });
 	});
-	
 	function uploadComplete() {
 		buildPost({
 			'processPage':'<?= Url::taskNewProcess($project->getID()) ?>',
@@ -108,19 +90,17 @@ $fork->startBlockSet('body');
 
 <div class="clear">
 	<div class="input">
-		<div class="buttons">
-		<input id="btnCreateTask" class="right" type="button" value="Create Task" />
-		</div>
+		<input id="btnCreateTask" type="button" value="Create Task" />
 	</div>
 </div>
 
 </form>
 
-	<?php
-		$SOUP->render('site/partial/newUpload', array(
-			'uploadButtonID' => 'btnCreateTask'
-		));
-	?>
+<?php
+	$SOUP->render('site/partial/newUpload', array(
+		'uploadButtonID' => 'btnCreateTask'
+	));
+?>
 
 <?php
 

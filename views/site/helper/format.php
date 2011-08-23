@@ -5,7 +5,8 @@ function formatFileSize($size) {
 	// some code from http://www.php.net/manual/en/function.filesize.php#100097
     $units = array(' B', ' KB', ' MB', ' GB', ' TB');
     for ($i = 0; $size >= 1024 && $i < 4; $i++) $size /= 1024;
-    return round($size, 0).$units[$i];
+	$decPlaces = ($i>=2) ? 1 : 0;
+    return round($size, $decPlaces).$units[$i];
 }
 
 function formatUpdate($update)

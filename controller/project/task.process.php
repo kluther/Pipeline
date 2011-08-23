@@ -81,41 +81,18 @@ if($action == 'create') {
 		$task->setNumNeeded($numNeeded);
 	$task->save();
 	
-	// attach any uploads
+	// save uploaded files to database
 	foreach($_POST['file'] as $stored => $orig) {
 		$stored = Filter::text($stored);
 		$orig = Filter::text($orig);
-		// get extension
-		$ext = pathinfo($orig, PATHINFO_EXTENSION);
-		$stored .= '.'.$ext;
-		// temp variable for absolute path
-		$absPath = UPLOAD_PATH.'/'.$stored;
-		// get file size
-		$size = filesize($absPath);
-		// get mime type
-		$finfo = finfo_open(FILEINFO_MIME_TYPE);
-		$mime = finfo_file($finfo, $absPath);
-		finfo_close($finfo);	
-		// store in db
-		$upload = new Upload(array(
-			'creator_id' => Session::getUserID(),
-			'original_name' => $orig,
-			'stored_name' => $stored,
-			'mime' => $mime,
-			'size' => $size,
-			'item_type' => Upload::TYPE_TASK,
-			'item_id' => $task->getID(),
-			'project_id' => $project->getID()
-		));
-		$upload->save();
+		Upload::saveToDatabase(
+			$orig,
+			$stored,
+			Upload::TYPE_TASK,
+			$task->getID(),
+			$project->getID()
+			);
 	}
-	
-	// Upload::attachToItem(
-		// $token,
-		// Upload::TYPE_TASK,
-		// $task->getID(),
-		// $project->getID()
-	// );
 	
 	// log it
 	$logEvent = new Event(array(
@@ -256,27 +233,28 @@ if($action == 'create') {
 		$modified = true;		
 	}
 	
-	// attach any uploads
-	$attached = Upload::attachToItem(
-		$token,
-		Upload::TYPE_TASK,
-		$task->getID(),
-		$project->getID()
-	);	
-	if($attached !== false) {
-		// log it
-		$firstUpload = reset($attached);
-		$logEvent = new Event(array(
-			'event_type_id' => 'edit_task_uploads',
-			'project_id' => $project->getID(),
-			'user_1_id' => Session::getUserID(),
-			'item_1_id' => $task->getID(),
-			'item_2_id' => $firstUpload->getID()
-		));
-		$logEvent->save();
-		// set flag
-		$modified = true;
-	}
+	// // attach any uploads
+	// $attached = Upload::attachToItem(
+		// $token,
+		// Upload::TYPE_TASK,
+		// $task->getID(),
+		// $project->getID()
+	// );	
+	
+	// if($attached !== false) {
+		// // log it
+		// $firstUpload = reset($attached);
+		// $logEvent = new Event(array(
+			// 'event_type_id' => 'edit_task_uploads',
+			// 'project_id' => $project->getID(),
+			// 'user_1_id' => Session::getUserID(),
+			// 'item_1_id' => $task->getID(),
+			// 'item_2_id' => $firstUpload->getID()
+		// ));
+		// $logEvent->save();
+		// // set flag
+		// $modified = true;
+	// }
 	
 	// check flag
 	if($modified) {
@@ -309,7 +287,7 @@ if($action == 'create') {
 	
 	// send us back
 	Session::setMessage('You accepted the task. Good luck!');
-	$json = array('success' => '1', 'successUrl' => Url::updates($accepted->getID()));
+	$json = array('success' => '1', 'successUrl' => Url::task($taskID));
 	echo json_encode($json);
 } elseif($action == 'comment') {
 	$message = Filter::formattedText($_POST['message']);

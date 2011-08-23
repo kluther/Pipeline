@@ -75,13 +75,13 @@ $(document).ready(function(){
 			'processPage':'<?= Url::taskProcess($task->getID()) ?>',
 			'info':{
 				'action': 'edit',
-				'token':'<?= $token ?>',
-				'title': $('#txtTitle').val(),
-				'leaderID': $('#txtLeader').val(),
-				'description': $('#txtDescription').val(),
-				'status': $('#selStatus').val(),
-				'numNeeded': $('#txtNumNeeded').val(),
-				'deadline': $('#txtDeadline').val()
+			//	'token':'<?= $token ?>',
+				'txtTitle': $('#txtTitle').val(),
+				'txtLeader': $('#txtLeader').val(),
+				'txtDescription': $('#txtDescription').val(),
+				'selStatus': $('#selStatus').val(),
+				'txtNumNeeded': $('#txtNumNeeded').val(),
+				'txtDeadline': $('#txtDeadline').val()
 			},
 			'buttonID':'#btnEditTask'
 		});
@@ -147,21 +147,6 @@ $(document).ready(function(){
 	<label for="txtDeadline">Deadline</label>
 	<div class="input">
 		<input id="txtDeadline" type="text" value="<?= ($task->getDeadline() != '') ? date("Y-m-d",strtotime($task->getDeadline())) : '' ?>" />
-	</div>
-</div>
-
-<div class="clear">
-	<label>Uploads</label>
-	<div class="input">
-		
-	<?php
-		$SOUP->render('site/partial/upload', array(
-			'token' => $token,
-			'item_type' => Upload::TYPE_TASK,
-			'item_id' => $task->getID()
-		));
-	?>
-		
 	</div>
 </div>
 

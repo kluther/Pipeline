@@ -1,5 +1,7 @@
 <?php
 
+$referer = $SOUP->get('referer');
+
 $fork = $SOUP->fork();
 
 $fork->set('pageTitle', "Log In");
@@ -28,7 +30,8 @@ function logIn(){
 		'processPage':'<?= Url::logInProcess() ?>',
 		'info':{
 			'username':$('#txtUsername').val(),
-			'password':$('#txtPassword').val()
+			'password':$('#txtPassword').val(),
+			'referer':$('#referer').val()
 			},
 		'buttonID':'#btnLogIn'
 		});
@@ -40,6 +43,7 @@ function logIn(){
 
 <label>Username or Email <input id="txtUsername" type="text" class="login" /></label>
 <label>Password <input id="txtPassword" type="password" class="login" /></label>
+<input type="hidden" id="referer" name="referer" value="<?= $referer ?>" />
 <input id="btnLogIn" type="button" value="Log In" />
 
 <p>Don't have an account yet? <a href="<?= Url::register() ?>">Register for free!</a></p>

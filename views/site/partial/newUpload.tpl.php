@@ -27,17 +27,14 @@ function initializeUploader() {
 		runtimes : 'flash,html5,gears,silverlight,browserplus',
 		browse_button : '<?= $browseButtonID ?>',
 		max_file_size : '100mb',
-		//chunk_size : '1mb',
+		chunk_size : '1mb',
 		url : '<?= Url::uploadProcess() ?>',
 		unique_names : true,
 		//resize : {width : 320, height : 240, quality : 90},
 		flash_swf_url : '<?= Url::base() ?>/lib/plupload/js/plupload.flash.swf',
 		silverlight_xap_url : '<?= Url::base() ?>/lib/plupload/js/plupload.silverlight.xap',
 		filters : [
-			{title : "Image files", extensions : "jpg,jpeg,gif,png"},
-			{title : "Video files", extensions : "mov,avi,mpg"},
-			{title : "Flash files", extensions : "swf,fla,flv"},
-			{title : "Audio files", extensions : "mp3"}
+			{title : "Allowed files", extensions : "jpg,jpeg,gif,png,mov,avi,mpg,swf,fla,flv,mp3"}
 		]
 	});
 
@@ -56,6 +53,8 @@ function initializeUploader() {
 		uploader.destroy();
 		displayNotification(error.message, "error");
 		initializeUploader();
+		$('#<?= $uploadButtonID ?>').removeAttr("disabled");
+		$('#<?= $uploadButtonID ?>').removeClass('disabledButton');
 	});
 
 	uploader.bind('UploadFile', function(up, file) {
@@ -80,8 +79,10 @@ function initializeUploader() {
 		}
 	});
 
-	$('#<?= $uploadButtonID ?>').click(function(){
+	$('#<?= $uploadButtonID ?>').mousedown(function(){
 		uploader.start();
+		$(this).attr('disabled', 'disabled');
+		$(this).addClass('disabledButton');
 		return false;
 	});
 

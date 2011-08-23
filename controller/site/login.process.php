@@ -7,6 +7,7 @@ if (!empty($_POST['username']) && !empty($_POST['password']))
 {
 	$username = Filter::text($_POST['username']);
 	$password = sha1(Filter::text($_POST['password']));
+	$referer = Filter::text($_POST['referer']);
 
 	// figure out if user provided username or email address
 	if(Filter::email($username))
@@ -19,7 +20,14 @@ if (!empty($_POST['username']) && !empty($_POST['password']))
 		if ($password == $user->getPassword())
 		{
 			Session::signIn($user->getID());
-			$json = array('success' => 1);
+			if($referer != null) {
+				$json = array(
+					'success' => '1',
+					'successUrl' => $referer
+				);
+			} else {
+				$json = array('success' => 1);
+			}
 			exit(json_encode($json));
 		}
 		else

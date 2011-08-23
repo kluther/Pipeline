@@ -14,18 +14,20 @@ $fork->startBlockSet('body');
 <script type="text/javascript">
 	$(document).ready(function(){
 		$('#txtTitle').focus();
-		$('#btnCreateUpdate').click(function(){
-			buildPost({
-				'processPage':'<?= Url::updateNewProcess($task->getID()) ?>',
-				'info':{
-					'action': 'create',
-					'message': $('#txtMessage').val(),
-				},
-				'buttonID':'#btnCreateUpdate'
-			});
-		});
 	});
+	
+	function uploadComplete() {
+		buildPost({
+			'processPage':'<?= Url::updateNewProcess($task->getID()) ?>',
+			'info': $('#frmNewItem').serialize(),
+			'buttonID':'#btnCreateUpdate'
+		});
+	}
 </script>
+
+<form id="frmNewItem">
+
+<input type="hidden" name="action" value="create" />
 
 <div class="clear">
 	<label for="txtTitle">Title<span class="required">*</span></label>
@@ -43,17 +45,12 @@ $fork->startBlockSet('body');
 	</div>
 </div>
 
-
 <div class="clear">
-	<label>Uploads</label>
+	<label>Attached Files</label>
 	<div class="input">
-		
-	<?php
-		$SOUP->render('site/partial/newUpload', array(
-		
-		));
-	?>
-		
+		<input type="button" id="btnSelectFiles" value="Select Files" />
+		<p>Max size 100 MB each</p>
+		<div id="filelist"></div>
 	</div>
 </div>
 
@@ -63,6 +60,13 @@ $fork->startBlockSet('body');
 	</div>
 </div>
 
+</form>
+
+<?php
+	$SOUP->render('site/partial/newUpload', array(
+		'uploadButtonID' => 'btnCreateUpdate'
+	));
+?>
 
 <?php
 

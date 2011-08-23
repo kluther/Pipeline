@@ -14,7 +14,7 @@ $fork->startBlockSet('body');
 if($updates != null) {
 	echo '<ul class="segmented-list accepted">';
 	foreach($updates as $u) {
-		if($updateID != $u->getID()) {
+
 			echo '<li>';
 			//echo '<p class="status">'.Accepted::getStatusName($accepted->getStatus()).'</p>';
 			echo '<p class="title"><a href="'.Url::update($u->getID()).'">'.$u->getTitle().'</a></p>';
@@ -22,7 +22,7 @@ if($updates != null) {
 			$comments = $u->getComments();
 			echo ' <span class="slash">/</span> '.formatCount(count($comments),'comment','comments','no').'</p>';
 			echo '</li>';
-		}
+
 	}
 	echo '</ul>';
 } else {

@@ -143,9 +143,8 @@ function formatEvent($event)
 				$task = Task::load($event->getItem2ID());
 				$taskTitle = $task->getTitle();
 				$taskUrl = Url::task($task->getID());
-				$formatted = sprintf("%s %s the task %s.",
+				$formatted = sprintf("%s accepted the task %s.",
 						formatUserLink($event->getUser1ID()),
-						'<a href="'.$acceptedUrl.'">accepted</a>',
 						'<a href="'.$taskUrl.'">'.$taskTitle.'</a>'
 					);			
 				break;

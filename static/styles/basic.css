@@ -247,13 +247,16 @@ div.upload {
 	background: url(./../images/icons/document.png) no-repeat 0 3px;
 	}
 	div.upload.audio {
-		background-image: url(./../images/icons/music.png);
+		background-image: url(./../images/icons/document-music.png);
 		}
 	div.upload.image {
-		background-image: url(./../images/icons/image-sunset.png);
+		background-image: url(./../images/icons/document-image.png);
 		}
 	div.upload.video {
-		background-image: url(./../images/icons/film.png);
+		background-image: url(./../images/icons/document-film.png);
+		}
+	div.upload.flash {
+		background-image: url(./../images/icons/document-flash-movie.png);
 		}
 	div.upload p.filename {
 		font-size: 120%;

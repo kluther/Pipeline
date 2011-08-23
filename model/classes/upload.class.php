@@ -12,6 +12,8 @@ class Upload extends DbObject
 	protected $storedName;
 	protected $mime;
 	protected $size;
+	protected $height;
+	protected $width;
 	protected $token;
 	protected $deleted;
 	protected $dateCreated;
@@ -39,6 +41,8 @@ class Upload extends DbObject
 			'stored_name' => '',
 			'mime' => '',
 			'size' => 0,
+			'height' => null,
+			'width' => null,
 			'token' => '',
 			'deleted' => 0,
 			'date_created' => null
@@ -56,6 +60,8 @@ class Upload extends DbObject
 		$this->storedName = $args['stored_name'];
 		$this->mime = $args['mime'];
 		$this->size = $args['size'];
+		$this->height = $args['height'];
+		$this->width = $args['width'];
 		$this->token = $args['token'];
 		$this->deleted = $args['deleted'];
 		$this->dateCreated = $args['date_created'];		
@@ -82,6 +88,8 @@ class Upload extends DbObject
 			'stored_name' => $this->storedName,
 			'mime' => $this->mime,
 			'size' => $this->size,
+			'height' => $this->height,
+			'width' => $this->width,
 			'token' => $this->token,
 			'deleted' => $this->deleted
 		);		
@@ -93,7 +101,6 @@ class Upload extends DbObject
 		$db = Db::instance();
 		$db->execute($query);
 	}
-
 	
 	// public function restore()
 	// {
@@ -176,6 +183,49 @@ class Upload extends DbObject
 		// }
 		// return ($hasThumb);
 	// }
+
+	public static function saveToDatabase($originalName=null, $storedName=null, $itemType=null, $itemID=null, $projectID=null){
+		// all but projectID required
+		if( ($originalName == null) ||
+			($storedName == null) ||
+			($itemType == null) ||
+			($itemID == null) )
+			return null;
+		// get extension
+		$ext = pathinfo($originalName, PATHINFO_EXTENSION);
+		$storedName .= '.'.$ext;
+		// temp variable for absolute path
+		$absPath = UPLOAD_PATH.'/'.$storedName;
+		// get file size
+		$size = filesize($absPath);
+		// get mime type
+		$finfo = finfo_open(FILEINFO_MIME_TYPE);
+		$mime = finfo_file($finfo, $absPath);
+		finfo_close($finfo);	
+		// get height and width (if image)
+		$imgSize = getimagesize($absPath);
+		if($imgSize) {
+			$height = $imgSize[1];
+			$width = $imgSize[0];
+		} else {
+			$height = null;
+			$width = null;
+		}
+		// store in db
+		$upload = new Upload(array(
+			'creator_id' => Session::getUserID(),
+			'original_name' => $originalName,
+			'stored_name' => $storedName,
+			'mime' => $mime,
+			'size' => $size,
+			'height' => $height,
+			'width' => $width,
+			'item_type' => $itemType,
+			'item_id' => $itemID,
+			'project_id' => $projectID
+		));
+		$upload->save();
+	}
 	
 	/* is this mime type allowed to be uploaded? */
 	public static function isAllowedMime($mime) {
@@ -314,6 +364,8 @@ class Upload extends DbObject
 		return $uploads;
 	}
 	
+	
+	
 	// --- only getters and setters below here --- //	
 	
 	public function getID()
@@ -432,6 +484,24 @@ class Upload extends DbObject
 		$this->modified = true;
 	}
 	
+	public function getHeight() {
+		return ($this->height);
+	}
+	
+	public function setHeight($newHeight) {
+		$this->height = $newHeight;
+		$this->modified = true;
+	}
+	
+	public function getWidth() {
+		return ($this->width);
+	}
+	
+	public function setWidth($newWidth) {
+		$this->width = $newWidth;
+		$this->modified = true;
+	}
+	
 	public function getToken() {
 		return ($this->token);
 	}
@@ -506,31 +576,6 @@ class Upload extends DbObject
 		$ext = pathinfo($this->storedName, PATHINFO_EXTENSION);
 		return ($ext);
 	}
-
-	// public function getFileExtension()
-	// {
-		// $dot = strrpos($this->origFileName, '.');
-		
-		// if(!$dot)
-			// return null; // filename has no dot; improperly formatted
-		// else
-		// {
-			// $extension = substr($this->origFileName, $dot+1);
-			// return (strtolower($extension));
-		// }
-	// }
-	
-	
-	/* Return file size in kilobytes, if known */
-	// public function getFileSize()
-	// {
-		// $absPath = UPLOAD_PATH.'/resource/'.$this->storedName;
-		// $fileSize = filesize($absPath);
-		// if($fileSize === false)
-			// return 'unknown';
-		// else
-			// return(ceil($fileSize/1024));
-	// }
 	
 	public function getDeleted()
 	{
