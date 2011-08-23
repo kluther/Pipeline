@@ -65,10 +65,11 @@ ul.segmented-list p.primary {
 	background: no-repeat 0 3px;
 	}
 	ul.segmented-list p.primary span.status {
+		float: right;
 		display: inline;
 		text-transform: uppercase;
 		font-size: 10px;
-		margin: 0; padding: 0.25em 0.5em;
+		margin: 0; padding: 0 0.5em;
 		background: #1a1a1a;
 		color: #ccc;
 		-moz-border-radius: 0.5em;
@@ -88,6 +89,7 @@ div.panel.small ul.segmented-list p.primary {
 	margin: 0; padding: 0 0 3px 22px;
 	}
 	div.panel.small ul.segmented-list p.primary span.status {
+		float: none;
 		}
 	div.panel.small ul.segmented-list p.secondary {
 		font-size: 75%;
