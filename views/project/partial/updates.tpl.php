@@ -40,13 +40,13 @@ if($updates != null) {
 	foreach($updates as $u) {
 
 			echo '<li>';
-			echo '<p class="primary"><a href="'.Url::update($u->getID()).'">'.$u->getTitle().'</a>';
+			echo '<h6 class="primary"><a href="'.Url::update($u->getID()).'">'.$u->getTitle().'</a>';
 			if($u->isLatestUpdate()) {
 				$accept = Accepted::load($u->getAcceptedID());
 				$statusName = Accepted::getStatusName($accept->getStatus());
 				echo '&nbsp;<span class="status">'.$statusName.'</span>';
 			}
-			echo '</p>'; // .primary
+			echo '</h6>'; // .primary
 			
 			echo '<p class="secondary">';
 			echo formatTimeTag($u->getDateCreated());

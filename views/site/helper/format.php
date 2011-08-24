@@ -31,6 +31,21 @@ function formatUserLink($userID=null)
 	return $formatted;
 }
 
+function formatProjectStatus($status=null) {
+	if($status == null) return null;
+	if($status == Project::STATUS_PRE_PRODUCTION) {
+		return "pre-production";
+	} elseif($status == Project::STATUS_IN_PRODUCTION) {
+		return "in production";
+	} elseif($status == Project::STATUS_POST_PRODUCTION) {
+		return "post-production";
+	} elseif($status == Project::STATUS_COMPLETED) {
+		return "finished";
+	} else {
+		return "canceled";		
+	}
+}
+
 function formatProjectLink($projectID=null)
 {
 	if($projectID == null) return null;

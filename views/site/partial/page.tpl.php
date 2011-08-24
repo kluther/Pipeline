@@ -1,10 +1,14 @@
 <?php
+require_once TEMPLATE_PATH.'/site/helper/format.php';
+
 $body = $SOUP->get('body');
 $pageTitle = $SOUP->get('pageTitle');
 $headingURL = $SOUP->get('headingURL', '#');
 $selected = $SOUP->get('selected', null);
 $breadcrumbs = $SOUP->get('breadcrumbs', null);
 $project = $SOUP->get('project', null);
+
+$status = formatProjectStatus($project->getStatus());
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -47,7 +51,7 @@ $project = $SOUP->get('project', null);
 	</div><!-- end .primary-nav -->
 	<div class="heading">
 		<div class="funnel">
-			<h2><a href="<?= $headingURL ?>"><?= $pageTitle ?></a></h2>
+			<h2><a href="<?= $headingURL ?>"><?= $pageTitle ?></a> <span class="status"><?= $status ?></span></h2>
 		</div><!-- end .funnel -->
 	</div><!-- end .heading -->
 <?php if($selected != null): ?>

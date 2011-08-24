@@ -46,13 +46,13 @@ if($discussions != null) {
 		echo '<li>';
 
 		// title
-		echo '<p class="primary"><a href="'.$url.'">'.$title.'</a>';
+		echo '<h6 class="primary"><a href="'.$url.'">'.$title.'</a>';
 		
 		// status
 		if( ($discussion->getCategory() != null) && ($size != 'small')) // discussion category, if exists
 			echo ' <span class="status">'.formatSectionLink($discussion->getCategory(),$discussion->getProjectID()).'</span>';
 		
-		echo '</p>'; // .primary
+		echo '</h6>'; // .primary
 		
 		// reply info
 		echo '<p class="secondary">';

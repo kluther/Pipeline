@@ -59,17 +59,17 @@ h1 {
 	
 /* generic */
 
-ul.segmented-list p.primary {
+ul.segmented-list h6.primary {
 	font-size: 120%;
-	margin: 0; padding: 0 0 0 22px;
+	margin: 0; padding: 0 0 3px 22px;
 	background: no-repeat 0 3px;
 	}
-	ul.segmented-list p.primary span.status {
+	ul.segmented-list h6.primary span.status {
 		float: right;
 		display: inline;
 		text-transform: uppercase;
 		font-size: 10px;
-		margin: 0; padding: 0 0.5em;
+		margin: 0; padding: 0.25em 0.5em;
 		background: #1a1a1a;
 		color: #ccc;
 		-moz-border-radius: 0.5em;
@@ -84,11 +84,12 @@ ul.segmented-list p.primary {
 			/*color: #a3a3a3;*/
 			}
 			
-div.panel.small ul.segmented-list p.primary {
+div.panel.small ul.segmented-list h6.primary {
 	font-size: 90%;	
-	margin: 0; padding: 0 0 3px 22px;
+	margin: 0; padding: 0 0 2px 22px;
+	background-position: 0 0;
 	}
-	div.panel.small ul.segmented-list p.primary span.status {
+	div.panel.small ul.segmented-list h6.primary span.status {
 		float: none;
 		}
 	div.panel.small ul.segmented-list p.secondary {
@@ -97,89 +98,67 @@ div.panel.small ul.segmented-list p.primary {
 		div.panel.small ul.segmented-list p.secondary a {
 			}
 			
-			
-			
-/* TASKS */
+/* TASK LIST */
 
-ul.tasks p.primary {
-	background-image: url(./../images/icons/clipboard.png);
+ul.tasks h6.primary {
+	background-image: url(./../images/icons/task.png);
 	}
-	ul.tasks p.primary.closed a {
+	ul.tasks h6.primary.closed a {
 		text-decoration: line-through;
 		}
-/*
-div.task-info {
-	margin-left: 170px;
+
+/* UPDATES LIST */
+	
+ul.updates h6.primary {
+	background-image: url(./../images/icons/pin.png);
 	}
-	div.task-info p {
-		font-size: 100%;
-		}	
-*/
+	
+/* TASK/UPDATE MAIN CONTENT */
 
 div#task h5, div#update h5 {
 	font-size: 150%;
 	color: #fff;
 	margin-top: 0.25em;
 	}
-
-
-/* updates styles */
-div.panel.update div.view {
-	padding: 0.5em 0;
-	}
-div.panel.update div.edit {
-	text-align: right;
-	}
-	div.panel.update div.edit textarea {
-		width: 95%;
-		height: 150px;	
-		}
-/*
-ul.accepted p.needed {
-	font-size: 95%;
-	}
-ul.accepted p.username {
-	font-size: 120%;
-	margin: 0; padding: 0 0 0.1em 0;
-	}
 	
-ul.accepted p.role {
-	font-size: 90%;
-	margin: 0; padding: 0;
+div#task span.status, div#update span.status {
+	display: inline;
+	text-transform: uppercase;
+	font-size: 75%;
+	margin: 0; padding: 0.25em 0.5em;
+	background: #1a1a1a;
+	color: #ccc;
+	-moz-border-radius: 0.5em;
+	-webkit-border-radius: 0.5em;
+	border-radius: 0.5em;	
 	}
-	ul.accepted p.role a {
-		color: #a3a3a3;
-		}
-*/
-ul.updates p.primary {
-	background-image: url(./../images/icons/pin.png);
+
+div.person-box {
+	float: right;
+	width: auto;
+	margin-left: 0.5em;
 	}
+	div.person-box div.text {
+		float: right;
+	}
+	div.person-box p.caption {
+		font-size: 100%;
+		margin: 0; padding: 0;
+	}
+	div.person-box p.username {
+		font-size: 120%;
+		margin: 0; padding: 0;
+	}
+		
 	
 /* DISCUSSION LISTS */
 	
-ul.discussions li {
-	overflow: hidden;
-	width: 100%;
-	}
-ul.discussions p.primary {
+ul.discussions h6.primary {
 	background-image: url(./../images/icons/balloon.png);
 	}
-ul.discussions p.section {
-	display: inline;
-	float: right;
-	text-align: right;
-	font-size: 80%;
-	margin: 0; padding: 0.5em 0.75em;
-	background: #1a1a1a;
-	-moz-border-radius: 0.5em;
-	-webkit-border-radius: 0.5em;
-	border-radius: 0.5em;		
-	}
-	ul.discussions p.section a {
-		font-size: 100%;
-		}
-		
+	
 /* DISCUSSION REPLIES / COMMENTS */
+
 ul.replies h5 {
 	color: #fff;
 	font-size: 150%;
@@ -212,6 +191,7 @@ ul.replies span.when, ul.comments span.when {
 			}
 
 /* comment replies styles */
+
 ul.comments input.replyButton {
 	float: right;
 	font-size: 80%;
@@ -253,14 +233,7 @@ div.upload {
 	div.upload.flash {
 		background-image: url(./../images/icons/document-flash-movie.png);
 		}
-	div.upload p.filename {
-		font-size: 120%;
-		margin: 0 0 0.25em 22px; padding: 0;
-		}
-	div.upload p.links {
-		font-size: 90%;
-		margin: 0 0 0.25em 22px; padding: 0;
-		}
+
 	div.upload a.thumb {
 		width: 150px;
 		height: 40px;
@@ -268,10 +241,6 @@ div.upload {
 		float: right;
 		margin: 0 0 0 0.5em; padding: 0;
 		background: #1a1a1a no-repeat center right;
-		/*border: #ccc;
-		-moz-border-radius: 0.25em;
-		-webkit-border-radius: 0.25em;
-		border-radius: 0.25em;*/
 		border: 1px solid #262626;
 		}
 		div.upload a.thumb:hover {
@@ -282,16 +251,6 @@ div.upload {
 			height: 30px; width: 30px;
 			margin: 5px auto 0 auto; padding: 0;
 			}
-
-		
-/* PANELS */
-			
-div.panel.small ul.discussions p.title {
-	font-size: 100%;
-	}
-div.panel.small ul.discussions p.replies {
-	font-size: 85%;
-	}	
 
 /* PRIMARY NAV */	
 	
@@ -316,6 +275,90 @@ div.primary-nav li {
 		padding-right: 1em;
 		}
 
+		
+/* USER LISTS */
+
+a.picture img{
+	float: left;
+	margin-right: 0.5em;
+	-moz-border-radius: 0.25em;
+	-webkit-border-radius: 0.25em;
+	border-radius: 0.25em;			
+	}
+	a.picture.small img {
+		width: 32px; height: 32px;
+		}
+	a.picture.large img {
+		width: 48px; height: 48px;
+		}
+		
+ul.user{}
+	ul.user p.username {
+		font-size: 100%;
+		margin: 0; padding: 0 0 0.1em 0;
+		}
+	ul.user p.accomplishments {
+		font-size: 85%;
+		margin: 0; padding: 0;
+		}
+	ul.user div.buttons {
+		width: 200px;
+		float: right;
+		text-align: right;
+		}
+		ul.user div.buttons input {
+			margin: 0 0 0 1em;
+			}
+
+			
+/* ACTIVITY FEED */
+
+ul.activity h6.create {
+	background-image: url(./../images/icons/plus-circle.png);
+	}
+ul.activity h6.edit {
+	background-image: url(./../images/icons/pencil.png);
+	}	
+ul.activity h6.edit-basics {
+	background-image: url(./../images/icons/clipboard--pencil.png);
+	}		
+ul.activity h6.create-task {
+	background-image: url(./../images/icons/task--plus.png);
+	}		
+ul.activity h6.edit-task, ul.activity h6.edit-leader {
+	background-image: url(./../images/icons/task--pencil.png);
+	}	
+ul.activity h6.accept-task {
+	background-image: url(./../images/icons/task--arrow.png);
+	}
+ul.activity h6.create-update {
+	background-image: url(./../images/icons/pin--plus.png);
+	}		
+ul.activity h6.edit-update {
+	background-image: url(./../images/icons/pin--pencil.png);
+	}
+ul.activity h6.create-comment, ul.activity h6.create-discussion {
+	background-image: url(./../images/icons/balloon--plus.png);
+	}
+ul.activity h6.edit-comment, ul.activity h6.edit-discussion {
+	background-image: url(./../images/icons/balloon--pencil.png);
+	}	
+			
+		
+/* generic */ 
+
+	
+h2 span.status {
+	display: inline;
+	text-transform: uppercase;
+	font-size: 50%;
+	margin: 0; padding: 0.25em 0.5em;
+	background: #1a1a1a;
+	color: #ccc;
+	-moz-border-radius: 0.5em;
+	-webkit-border-radius: 0.5em;
+	border-radius: 0.5em;	
+	}
 	
 div.left {
 	width: 620px;
@@ -350,20 +393,14 @@ div.buttons {
 		margin-top: 0.5em;
 		}
 
-/*
-br.clear {
-	clear: both;
-	margin: 0; padding: 0;
-	}
-*/
-
 ul.segmented-list {
 	}
 	ul.segmented-list li {
 		padding: .5em 0;
 		border-top: 1px solid #313131;
-		position: relative;
+		/*position: relative;*/
 		overflow: hidden; /*ie fix*/
+		width: auto;
 		}
 	ul.segmented-list li:first-child {
 		border-top: 0;
@@ -373,59 +410,10 @@ ul.segmented-list {
 		color: #666;
 		}
 
-		
-a.picture img{
-	float: left;
-	margin-right: 0.5em;
-	-moz-border-radius: 0.25em;
-	-webkit-border-radius: 0.25em;
-	border-radius: 0.25em;			
-	}
-	a.picture.small img {
-		width: 32px; height: 32px;
-		}
-	a.picture.large img {
-		width: 48px; height: 48px;
-		}
-
 span.slash {
 	color: #313131;
 	font-weight: bold;
 	}		
-		
-/* USER LISTS */
-		
-ul.user{
-
-	}
-	ul.user p.username {
-		font-size: 100%;
-		margin: 0; padding: 0 0 0.1em 0;
-		}
-	ul.user p.accomplishments {
-		font-size: 85%;
-		margin: 0; padding: 0;
-		}
-	ul.user div.buttons {
-		width: 200px;
-		float: right;
-		text-align: right;
-		}
-		ul.user div.buttons input {
-			margin: 0 0 0 1em;
-			}
-
-			
-/* ACTIVITY FEED */
-
-ul.activity p.create {
-	background-image: url(./../images/icons/plus-circle.png);
-	}
-ul.activity p.edit {
-	background-image: url(./../images/icons/pencil.png);
-	}		
-	
-/* misc */
 		
 div.clear {
 	clear: both;
@@ -457,11 +445,6 @@ div.input {
 
 
 span#username_check, span#pw_check {
-	/*display: block;
-	width: 120px;
-	text-align: left;
-	float: right;
-	margin: 0.5em 0 0 0;*/
 	font-weight: bold;
 	font-size: 90%;
 	}
@@ -518,25 +501,8 @@ div.activity-filter select {
 .hidden {
 	display: none;
 	}
-	
-div.person-box {
-	float: right;
-	width: auto;
-	margin-left: 0.5em;
-	}
-	div.text {
-		float: right;
-	}
-	div.person-box p.caption {
-		font-size: 100%;
-		margin: 0; padding: 0;
-	}
-	div.person-box p.username {
-		font-size: 120%;
-		margin: 0; padding: 0;
-	}
-	
-/* -------------- Details tab ----------- */
+
+/* -------------- Basics tab ----------- */
 
 #pitch div.edit, #specs div.edit, #rules div.edit {
 	text-align: right;

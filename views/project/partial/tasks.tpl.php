@@ -39,27 +39,19 @@ if($tasks != null) {
 	foreach($tasks as $task) {
 		echo '<li>';
 		
-		// status
-		$statusName = Task::getStatusName($task->getStatus());
-		if($task->getStatus() == Task::STATUS_CLOSED)
-			$statusClass='bad';
-		else
-			$statusClass='good';	
-		
 		// title
 		$title = $task->getTitle();
 		$url = Url::task($task->getID());
 		$closed = ($task->getStatus() == Task::STATUS_CLOSED) ? ' closed' : ''; // CSS class for strikethrough
-		echo '<p class="primary'.$closed.'"><a href="'.$url.'">'.$title.'</a>';
+		echo '<h6 class="primary'.$closed.'"><a href="'.$url.'">'.$title.'</a>';
 		
 		// status
-		$statusName = Task::getStatusName($task->getStatus());
 		if($task->getStatus() == Task::STATUS_CLOSED)
-			echo '&nbsp;<span class="status bad">'.$statusName.'</span>';
+			echo '&nbsp;<span class="status bad">closed</span>';
 		else
-			echo '&nbsp;<span class="status good">'.$statusName.'</span>';
+			echo '&nbsp;<span class="status good">open</span>';
 		
-		echo '</p>'; // .primary
+		echo '</h6>'; // .primary
 		
 		echo '<p class="secondary">';
 		

@@ -17,6 +17,12 @@ class Project extends DbObject
 
 	const DB_TABLE = 'project';
 	
+	const STATUS_PRE_PRODUCTION = 2;
+	const STATUS_IN_PRODUCTION = 3;
+	const STATUS_POST_PRODUCTION = 4;
+	const STATUS_COMPLETED = 1;
+	const STATUS_CANCELED = 0;
+	
 	public function __construct($args=array())
 	{
 		$defaultArgs = array(

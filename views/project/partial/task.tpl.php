@@ -26,16 +26,21 @@ $fork->set('editLabel', 'Edit Task');
 	</div>
 </div>
 
-<h5><?= $task->getTitle() ?></h5>
+<?php
 
-<?php $class = ($task->getStatus() == Task::STATUS_OPEN) ? 'good' : 'bad';	?>
-<p><span class="<?= $class ?>"><?= Task::getStatusName($task->getStatus()) ?></span> <span class="slash">/</span> <?= ($task->getDeadline() != '') ? 'due '.formatTimeTag($task->getDeadline()) : 'no deadline' ?><!-- <span class="slash">/</span> <?= ($task->getNumNeeded() != '') ? formatCount($task->getNumNeeded(),'person','people','no').' needed' : '(none)' ?> --></p>
+if($task->getStatus() == Task::STATUS_OPEN) {
+	$status = '<span class="status good">open</span>';
+} else {
+	$status = '<span class="status bad">closed</span>';
+}
 
+?>
 
+<h5><a href="<?= Url::task($task->getID()) ?>"><?= $task->getTitle() ?></a></h5>
+
+<p><?= $status ?> <span class="slash">/</span> <?= ($task->getDeadline() != '') ? 'due '.formatTimeTag($task->getDeadline()) : 'no deadline' ?></p>
 
 <div class="line"></div>
-
-
 
 <p><?= formatTaskDescription($task->getDescription()) ?></p>
 
