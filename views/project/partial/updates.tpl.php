@@ -49,7 +49,7 @@ if($updates != null) {
 			echo '</h6>'; // .primary
 			
 			echo '<p class="secondary">';
-			echo formatTimeTag($u->getDateCreated());
+			echo 'posted '.formatTimeTag($u->getDateCreated());
 			if($taskUpdates) {
 				echo ' by '.formatUserLink($u->getCreatorID());
 			} else {

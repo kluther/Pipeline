@@ -67,14 +67,18 @@ if($tasks != null) {
 		$numNeeded = $task->getNumNeeded();
 		
 		if($numNeeded == 0)
-			echo '&#8734; needed';
+			echo '&#8734; people needed';
 		else {
 			$numNeeded -= $numAccepted;
+			if($size != 'small')
+				$numNeeded = formatCount($numNeeded,'person','people');
 			echo $numNeeded.' needed';
 		}
 		echo ' <span class="slash">/</span> ';	
 		
 		// num accepted
+		if($size != 'small')
+			$numAccepted = formatCount($numAccepted,'person','people');
 		echo $numAccepted.' joined';
 			
 		echo '</p>'; // .secondary
