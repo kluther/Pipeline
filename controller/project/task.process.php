@@ -271,7 +271,7 @@ if($action == 'create') {
 		'creator_id' => Session::getUserID(),
 		'project_id' => $project->getID(),
 		'task_id' => $taskID,
-		'status' => Accepted::STATUS_ACCEPTED
+		'status' => Accepted::STATUS_PROGRESS
 	));
 	$accepted->save();
 	

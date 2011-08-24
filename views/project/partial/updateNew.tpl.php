@@ -46,6 +46,18 @@ $fork->startBlockSet('body');
 </div>
 
 <div class="clear">
+	<label for="selStatus">Status<span class="required">*</span></label>
+	<div class="input">
+		<select id="selStatus" name="selStatus">
+			<option value="<?= Accepted::STATUS_PROGRESS ?>"><?= Accepted::getStatusName(Accepted::STATUS_PROGRESS) ?></option>
+			<option value="<?= Accepted::STATUS_FEEDBACK ?>" selected="selected"><?= Accepted::getStatusName(Accepted::STATUS_FEEDBACK) ?></option>
+			<option value="<?= Accepted::STATUS_COMPLETED ?>"><?= Accepted::getStatusName(Accepted::STATUS_COMPLETED) ?></option>
+			<option value="<?= Accepted::STATUS_RELEASED ?>"><?= Accepted::getStatusName(Accepted::STATUS_RELEASED) ?></option>
+		</select>
+	</div>
+</div>
+
+<div class="clear">
 	<label>Attached Files</label>
 	<div class="input">
 		<input type="button" id="btnSelectFiles" value="Select Files" />

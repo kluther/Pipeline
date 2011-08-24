@@ -194,11 +194,11 @@ class Accepted extends DbObject
 		elseif($status == self::STATUS_FEEDBACK)
 			return "seeking feedback";
 		elseif($status == self::STATUS_COMPLETED)
-			return "completed";
+			return "finished";
 		elseif($status == self::STATUS_PROGRESS)
-			return "in progress";
+			return "working";
 		else
-			return "canceled";		
+			return "stopped";		
 	}
 	
 	public function setStatus($newStatus)

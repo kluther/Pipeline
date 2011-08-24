@@ -149,38 +149,45 @@ function formatEvent($event)
 					);			
 				break;
 			case 'edit_accepted_status':
-				$accepted = Accepted::load($event->getItem1ID());
-				//$acceptedUrl = Url::updates($accepted->getID());
-				$task = Task::load($event->getItem2ID());
+				$update = $event->getItem1ID();
+				$updateTitle = $update->getTitle();
+				$updateUrl = Url::update($update->getID());							
+				$accepted = Accepted::load($event->getItem2ID());
+				$task = Task::load($event->getItem3ID());
 				$taskTitle = $task->getTitle();
 				$taskUrl = Url::task($task->getID());
 				$status = $event->getData2();
 				if($status == Accepted::STATUS_RELEASED) {
-					$formatted = sprintf("%s is no longer %s on the task %s.",
+					$formatted = sprintf("%s has %s working on the task %s.",
 							formatUserLink($event->getUser1ID()),
-							'<a href="'.$acceptedUrl.'">working</a>',
+							'<a href="'.$updateUrl.'">stopped</a>',
 							'<a href="'.$taskUrl.'">'.$taskTitle.'</a>'
 						);	
 				} elseif($status == Accepted::STATUS_ACCEPTED) {
-					// is working on the task {t}
-					$formatted = sprintf("%s is %s on the task %s.",
+					$formatted = sprintf("%s has %s working on the task %s.",
 							formatUserLink($event->getUser1ID()),
-							'<a href="'.$acceptedUrl.'">working</a>',
+							'<a href="'.$updateUrl.'">started</a>',
 							'<a href="'.$taskUrl.'">'.$taskTitle.'</a>'
 						);				
 				} elseif($status == Accepted::STATUS_FEEDBACK) {
-					$formatted = sprintf("%s is seeking feedback on his/her %s on the task %s.",
+					$formatted = sprintf("%s is %s on his/her work on the task %s.",
 							formatUserLink($event->getUser1ID()),
-							'<a href="'.$acceptedUrl.'">updates</a>',
+							'<a href="'.$updateUrl.'">seeking feedback</a>',
 							'<a href="'.$taskUrl.'">'.$taskTitle.'</a>'
 						);					
 				} elseif($status == Accepted::STATUS_COMPLETED) {
-					$formatted = sprintf("%s completed his/her %s on the task %s.",
+					$formatted = sprintf("%s has %s working on the task %s.",
 							formatUserLink($event->getUser1ID()),
-							'<a href="'.$acceptedUrl.'">updates</a>',
+							'<a href="'.$updateUrl.'">finished</a>',
 							'<a href="'.$taskUrl.'">'.$taskTitle.'</a>'
 						);						
-				}	
+				} elseif($status == Accepted::STATUS_PROGRESS) {
+					$formatted = sprintf("%s is %s on the task %s.",
+							formatUserLink($event->getUser1ID()),
+							'<a href="'.$updateUrl.'">working</a>',
+							'<a href="'.$taskUrl.'">'.$taskTitle.'</a>'
+						);						
+				}				
 				break;
 			case 'create_task_comment':
 				$task = Task::load($event->getItem2ID());

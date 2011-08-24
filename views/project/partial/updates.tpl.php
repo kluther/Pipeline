@@ -4,6 +4,7 @@ include_once TEMPLATE_PATH.'/site/helper/format.php';
 $updates = $SOUP->get('updates', array());
 $update = $SOUP->get('update', null);
 $title = $SOUP->get('title', 'Updates');
+$creatable = $SOUP->get('creatable', true);
 //$accepted = $SOUP->get('accepted');
 $size = $SOUP->get('size', 'large');
 $task = $SOUP->get('task');
@@ -13,7 +14,7 @@ $updateID = ($update != null) ? $update->getID() : null;
 
 $fork = $SOUP->fork();
 $fork->set('title', $title);
-$fork->set('creatable', true);
+$fork->set('creatable', $creatable);
 if($size == 'small') {
 	$fork->set('createLabel', 'New');
 } else {

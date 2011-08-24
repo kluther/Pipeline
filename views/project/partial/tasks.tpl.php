@@ -4,13 +4,14 @@ include_once TEMPLATE_PATH.'/site/helper/format.php';
 $tasks = $SOUP->get('tasks', array());
 $title = $SOUP->get('title', 'Tasks');
 $project = $SOUP->get('project');
+$creatable = $SOUP->get('creatable', true);
 $id = $SOUP->get('id', 'tasks');
 $size = $SOUP->get('size', 'large');
 $showRelationship = $SOUP->get('showRelationship', true);
 
 $fork = $SOUP->fork();
 $fork->set('title', $title);
-$fork->set('creatable', true);
+$fork->set('creatable', $creatable);
 
 if($size == 'small') {
 	$fork->set('createLabel', 'New');
