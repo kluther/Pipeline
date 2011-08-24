@@ -5,6 +5,7 @@ $updates = $SOUP->get('updates', array());
 $update = $SOUP->get('update', null);
 $title = $SOUP->get('title', 'Updates');
 $creatable = $SOUP->get('creatable', true);
+$id = $SOUP->get('id', 'updates');
 //$accepted = $SOUP->get('accepted');
 $size = $SOUP->get('size', 'large');
 $task = $SOUP->get('task');
@@ -26,7 +27,7 @@ $fork->startBlockSet('body');
 <script type="text/javascript">
 
 $(document).ready(function(){
-	$('#progress input.createButton').mousedown(function(){
+	$('#updates input.createButton').mousedown(function(){
 		window.location = '<?= Url::updateNew($task->getID()) ?>';
 	});
 });
