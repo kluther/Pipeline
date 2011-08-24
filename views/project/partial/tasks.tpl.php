@@ -63,15 +63,18 @@ if($tasks != null) {
 		echo ' <span class="slash">/</span> ';			
 		
 		// num needed
+		$numAccepted = $task->getNumAccepted();
 		$numNeeded = $task->getNumNeeded();
+		
 		if($numNeeded == 0)
 			echo '&#8734; needed';
-		else
+		else {
+			$numNeeded -= $numAccepted;
 			echo $numNeeded.' needed';
+		}
 		echo ' <span class="slash">/</span> ';	
 		
 		// num accepted
-		$numAccepted = $task->getNumAccepted();
 		echo $numAccepted.' joined';
 			
 		echo '</p>'; // .secondary
