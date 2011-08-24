@@ -34,9 +34,10 @@ if($task->getStatus() == Task::STATUS_OPEN) {
 	$status = '<span class="status bad">closed</span>';
 }
 
+$closed = ($task->getStatus() == Task::STATUS_CLOSED) ? ' class="closed"' : ''; // CSS class for strikethrough
 ?>
 
-<h5><a href="<?= Url::task($task->getID()) ?>"><?= $task->getTitle() ?></a></h5>
+<h5<?= $closed ?>><a href="<?= Url::task($task->getID()) ?>"><?= $task->getTitle() ?></a></h5>
 
 <p><?= $status ?> <span class="slash">/</span> <?= ($task->getDeadline() != '') ? 'due '.formatTimeTag($task->getDeadline()) : 'no deadline' ?></p>
 

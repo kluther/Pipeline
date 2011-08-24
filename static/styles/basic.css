@@ -103,9 +103,6 @@ div.panel.small ul.segmented-list h6.primary {
 ul.tasks h6.primary {
 	background-image: url(./../images/icons/task.png);
 	}
-	ul.tasks h6.primary.closed a {
-		text-decoration: line-through;
-		}
 
 /* UPDATES LIST */
 	
@@ -347,6 +344,9 @@ ul.activity h6.edit-comment, ul.activity h6.edit-discussion {
 		
 /* generic */ 
 
+h5.closed a, h6.closed a {
+	text-decoration: line-through;
+	}
 	
 h2 span.status {
 	display: inline;
