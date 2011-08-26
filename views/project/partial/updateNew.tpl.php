@@ -2,8 +2,6 @@
 
 $project = $SOUP->get('project');
 $task = $SOUP->get('task');
-//$accepted = $SOUP->get('accepted');
-//$token = Upload::generateToken();
 
 $fork = $SOUP->fork();
 $fork->set('title', 'New Update');

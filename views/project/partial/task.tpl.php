@@ -3,20 +3,52 @@ include_once TEMPLATE_PATH.'/site/helper/format.php';
 
 $task = $SOUP->get('task');
 $project = $SOUP->get('project');
-$token = Upload::generateToken();
-
-$numComments = $SOUP->get('numComments', 0);
 
 $fork = $SOUP->fork();
-$fork->startBlockSet('body');
+
+$fork->set('id', 'task');
 $fork->set('editable', true);
 $fork->set('editLabel', 'Edit Task');
-//$fork->set('title', 'Task Info');
+$fork->set('title', 'Task Info');
+
+$fork->startBlockSet('body');
 
 ?>
 
-<div class="view">
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#txtDeadline").datepicker({
+		changeMonth: true,
+		changeYear: true,
+		dateFormat: 'yy-mm-dd' // MySQL datetime format
+	});
+	
+	$('#selStatus').val('<?= $task->getStatus() ?>');
+	
+	$('#btnEditTask').click(function(){
+		buildPost({
+			'processPage':'<?= Url::taskProcess($task->getID()) ?>',
+			'info': $('#frmEditItem').serialize(),
+			'buttonID':'#btnEditTask'
+		});
+	});
+	
+	$("#btnCancelTask").click(function(){
+		$("#task .edit").hide();
+		$("#task .view").fadeIn();
+	});
+	
+	$("#task .editButton").click(function(){
+		var edit = $("#task .edit");
+		var view = $("#task .view");
+		toggleEditView(edit, view);
+		if($(view).is(":hidden"))
+			$('#txtTitle').focus();
+	});		
+});
+</script>
 
+<div class="view">
 
 <div class="person-box">
 	<a class="picture large" href="<?= Url::user($task->getLeaderID()) ?>"><img src="<?= Url::userPictureLarge($task->getLeaderID()) ?>" /></a>
@@ -45,70 +77,16 @@ $closed = ($task->getStatus() == Task::STATUS_CLOSED) ? ' class="closed"' : ''; 
 
 <p><?= formatTaskDescription($task->getDescription()) ?></p>
 
-
-<!--
-<script type="text/javascript">
-
-$(document).ready(function(){
-	$('#btnShowComments').mousedown(function(){
-		$(this).parent().remove();
-		$('#comments').fadeIn();
-	});
-});
-
-</script>
-
-<div class="buttons">
-	<input class="right" type="button" id="btnShowComments" value="Comments (<?= $numComments ?>)" />
-</div>
--->
-
 </div><!-- end .view -->
-
 
 <div class="edit hidden">
 
-<script type="text/javascript">
-$(document).ready(function(){
-	$("#txtDeadline").datepicker({
-		changeMonth: true,
-		changeYear: true,
-		dateFormat: 'yy-mm-dd' // MySQL datetime format
-	});
-	$('#selStatus').val('<?= $task->getStatus() ?>');
-	$('#btnEditTask').click(function(){
-		buildPost({
-			'processPage':'<?= Url::taskProcess($task->getID()) ?>',
-			'info':{
-				'action': 'edit',
-			//	'token':'<?= $token ?>',
-				'txtTitle': $('#txtTitle').val(),
-				'txtLeader': $('#txtLeader').val(),
-				'txtDescription': $('#txtDescription').val(),
-				'selStatus': $('#selStatus').val(),
-				'txtNumNeeded': $('#txtNumNeeded').val(),
-				'txtDeadline': $('#txtDeadline').val()
-			},
-			'buttonID':'#btnEditTask'
-		});
-	});
-	
-	$("#btnCancelTask").mousedown(function(){
-		$("#task .edit").hide();
-		$("#task .view").fadeIn();
-	});
-	$("#task .editButton").click(function(){
-		var edit = $("#task .edit");
-		var view = $("#task .view");
-		toggleEditView(edit, view);
-		if($(view).is(":hidden"))
-			$('#txtTitle').focus();
-	});		
-});
-</script>
+<form id="frmEditItem">
+
+<input type="hidden" name="action" value="edit" />
 
 <div class="clear">
-	<label for="txtTitle">Task Name<span class="required">*</span></label>
+	<label for="txtTitle">Title<span class="required">*</span></label>
 	<div class="input">
 		<input id="txtTitle" type="text" maxlength="255" value="<?= $task->getTitle() ?>" />
 		<p>Short description of this task</p>
@@ -163,9 +141,9 @@ $(document).ready(function(){
 	</div>
 </div>
 
+</form>
+
 </div><!-- end .edit -->
-
-
 
 <?php
 

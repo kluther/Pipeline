@@ -1,22 +1,24 @@
 <?php
 
 $project = $SOUP->get('project');
-$token = Upload::generateToken();
 
 $fork = $SOUP->fork();
+$fork->set('title', "New Task");
 $fork->startBlockSet('body');
 
 ?>
 
 <script type="text/javascript">
 	$(document).ready(function(){
-		$('#txtTitle').focus();
 		$("#txtDeadline").datepicker({
 			changeMonth: true,
 			changeYear: true,
 			dateFormat: 'yy-mm-dd' // MySQL datetime format
 		});
+		
+		$('#txtTitle').focus();		
 	});
+	
 	function uploadComplete() {
 		buildPost({
 			'processPage':'<?= Url::taskNewProcess($project->getID()) ?>',
@@ -31,7 +33,7 @@ $fork->startBlockSet('body');
 <input type="hidden" name="action" value="create" />
 
 <div class="clear">
-	<label for="txtTitle">Task Name<span class="required">*</span></label>
+	<label for="txtTitle">Title<span class="required">*</span></label>
 	<div class="input">
 		<input id="txtTitle" name="txtTitle" type="text" maxlength="255" />
 		<p>Short description of this task</p>
