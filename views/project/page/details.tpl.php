@@ -18,8 +18,8 @@ $fork->startBlockSet('body');
 <div class="left">
 
 <?php
-	// $SOUP->render('project/partial/progress',array(
-	// ));
+	$SOUP->render('project/partial/progress',array(
+	));
 ?>
 
 <?php

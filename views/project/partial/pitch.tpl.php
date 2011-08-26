@@ -23,7 +23,6 @@ $(document).ready(function(){
 			'info':
 			{
 				'action':'pitch',
-				'projectID':'<?= $project->getID() ?>',
 				'pitch':$("#txtPitch").val()
 			},
 			'buttonID':'#btnSavePitch'

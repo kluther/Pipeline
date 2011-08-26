@@ -118,7 +118,7 @@ div#task h5, div#update h5 {
 	margin-top: 0.25em;
 	}
 	
-div#task span.status, div#update span.status {
+div#task span.status, div#update span.status, div#progress span.status {
 	display: inline;
 	text-transform: uppercase;
 	font-size: 75%;

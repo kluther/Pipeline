@@ -219,6 +219,18 @@ class Url
 		return (self::details($projectID).'#rules');
 	}	
 	
+	public static function status($projectID=null)
+	{
+		if($projectID == null) return null;
+		return (self::details($projectID).'#progress');
+	}	
+
+	public static function deadline($projectID=null)
+	{
+		if($projectID == null) return null;
+		return (self::details($projectID).'#progress');
+	}		
+	
 	public static function detailsProcess($projectID=null)
 	{
 		if($projectID == null) return null;

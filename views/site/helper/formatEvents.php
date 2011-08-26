@@ -29,6 +29,29 @@ function formatEvent($event)
 						'<a href="'.Url::rules($event->getProjectID()).'">rules</a>'
 					);					
 				break;	
+			case 'edit_project_status':
+				$status = $event->getData2();
+				$formatted = sprintf("%s changed the %s to &ldquo;%s.&rdquo;",
+						formatUserLink($event->getUser1ID()),
+						'<a href="'.Url::status($event->getProjectID()).'">project status</a>',
+						formatProjectStatus($status)
+					);					
+				break;
+			case 'edit_project_deadline':
+				$deadline = $event->getData2();
+				if($deadline != null) {
+					$formatted = sprintf("%s changed the %s to %s.",
+							formatUserLink($event->getUser1ID()),
+							'<a href="'.Url::deadline($event->getProjectID()).'">project deadline</a>',
+							strftime("%a, %b %d, %Y", strtotime($deadline))
+						);
+				} else {
+					$formatted = sprintf("%s removed the %s.",
+							formatUserLink($event->getUser1ID()),
+							'<a href="'.Url::deadline($event->getProjectID()).'">project deadline</a>'
+						);				
+				}
+				break;				
 			case 'create_discussion':
 				$discussion = Discussion::load($event->getItem1ID());
 				$title = $discussion->getTitle();
@@ -234,15 +257,24 @@ function formatEvent($event)
 						'<a href="'.$updateUrl.'">'.$updateTitle.'</a>'
 					);					
 				break;				
-			case 'edit_update':
+			case 'edit_update_title':
 				$update = Update::load($event->getItem1ID());
 				$updateTitle = $update->getTitle();
 				$updateUrl = Url::update($update->getID());
-				$formatted = sprintf("%s edited the update %s.",
+				$formatted = sprintf("%s edited the title of the update %s.",
 						formatUserLink($event->getUser1ID()),
 						'<a href="'.$updateUrl.'">'.$updateTitle.'</a>'
 					);					
 				break;
+			case 'edit_update_message':
+				$update = Update::load($event->getItem1ID());
+				$updateTitle = $update->getTitle();
+				$updateUrl = Url::update($update->getID());
+				$formatted = sprintf("%s edited the contents of the update %s.",
+						formatUserLink($event->getUser1ID()),
+						'<a href="'.$updateUrl.'">'.$updateTitle.'</a>'
+					);					
+				break;				
 			default:
 				$formatted = 'Event type "'.$event->getEventTypeID().'" not found.';
 		}

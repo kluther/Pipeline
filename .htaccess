@@ -40,9 +40,9 @@ RewriteRule ^consent/adult/?$ controller/site/consent_adult_c.php [L]
 RewriteRule ^consent/minor/?$ controller/site/consent_minor_c.php [L]
 RewriteRule ^consent/?$ controller/site/consent_c.php [L]
 
-### DETAILS ###
+### BASICS ###
 
-RewriteRule ^projects/([a-z0-9-]+)/basics/process/?$ controller/project/details.process.php [L]
+RewriteRule ^projects/([a-z0-9-]+)/basics/process/?$ controller/project/details.process.php?slug=$1 [QSA,L]
 RewriteRule ^projects/([a-z0-9-]+)/basics/?$ controller/project/details_c.php?slug=$1 [QSA,L]
 
 ### UPDATES ###

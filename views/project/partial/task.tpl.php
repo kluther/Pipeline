@@ -137,7 +137,7 @@ $closed = ($task->getStatus() == Task::STATUS_CLOSED) ? ' class="closed"' : ''; 
 <div class="clear">
 	<div class="input">
 		<input id="btnEditTask" type="button" value="Save" />
-		<input id="btnCancelTask" class="right" type="button" value="Cancel" />
+		<input id="btnCancelTask" type="button" value="Cancel" />
 	</div>
 </div>
 

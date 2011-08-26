@@ -32,7 +32,7 @@ function formatUserLink($userID=null)
 }
 
 function formatProjectStatus($status=null) {
-	if($status == null) return null;
+	if($status === null) return null;
 	if($status == Project::STATUS_PRE_PRODUCTION) {
 		return "pre-production";
 	} elseif($status == Project::STATUS_IN_PRODUCTION) {
