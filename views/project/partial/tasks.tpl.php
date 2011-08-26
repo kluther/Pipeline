@@ -11,6 +11,7 @@ $showRelationship = $SOUP->get('showRelationship', true);
 
 $fork = $SOUP->fork();
 $fork->set('title', $title);
+$fork->set('id', $id);
 $fork->set('creatable', $creatable);
 
 if($size == 'small') {
