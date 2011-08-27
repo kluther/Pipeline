@@ -98,6 +98,11 @@ div.panel.small ul.segmented-list h6.primary {
 		div.panel.small ul.segmented-list p.secondary a {
 			}
 			
+/* PROJECTS LIST */
+ul.projects h6.primary {
+	background-image: url(./../images/icons/clapperboard.png);
+	}
+			
 /* TASK LIST */
 
 ul.tasks h6.primary {

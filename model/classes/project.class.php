@@ -82,24 +82,6 @@ class Project extends DbObject
 		$db->store($this, __CLASS__, self::DB_TABLE, $db_properties);
 	}
 	
-	public static function getProjectFromSlug($slug=null)
-	{
-		if($slug == null) return null;
-		
-		$query  = "SELECT id FROM ".self::DB_TABLE;
-		$query .= sprintf(" WHERE slug = '%s'",
-				mysql_real_escape_string($slug)
-			);
-		
-		$db = Db::instance();
-		$result = $db->lookup($query);
-		if(!mysql_num_rows($result)) return null;
-		
-		$row = mysql_fetch_assoc($result);
-		$project = Project::load($row['id']);
-		return $project;
-	}
-	
 	public function getOrganizers()
 	{
 		return(ProjectUser::getOrganizers($this->id));
@@ -118,6 +100,50 @@ class Project extends DbObject
 	public function getBanned()
 	{
 		return(ProjectUser::getBanned($this->id));
+	}
+	
+	public function getTasks($status=null, $limit=null) {
+		return(Task::getByProjectID($this->id, $status, $limit));
+	}
+	
+	/* static methods */
+	
+	public static function getLookingForHelp() {
+		$query = "SELECT id FROM ".self::DB_TABLE;
+		$query .= " WHERE status > ".self::STATUS_COMPLETED;
+		$query .= " AND id IN (";
+			$query .= " SELECT DISTINCT project_id FROM ".Task::DB_TABLE;
+			$query .= " WHERE status = 1";
+		$query .= ") ";
+		$query .= " ORDER BY deadline DESC";
+		//echo $query;
+		
+		$db = Db::instance();
+		$result = $db->lookup($query);
+		if(!mysql_num_rows($result)) return null;
+		
+		$projects = array();
+		while($row = mysql_fetch_assoc($result))
+			$projects[$row['id']] = self::load($row['id']);
+		return $projects;
+	}
+	
+	public static function getProjectFromSlug($slug=null)
+	{
+		if($slug == null) return null;
+		
+		$query  = "SELECT id FROM ".self::DB_TABLE;
+		$query .= sprintf(" WHERE slug = '%s'",
+				mysql_real_escape_string($slug)
+			);
+		
+		$db = Db::instance();
+		$result = $db->lookup($query);
+		if(!mysql_num_rows($result)) return null;
+		
+		$row = mysql_fetch_assoc($result);
+		$project = Project::load($row['id']);
+		return $project;
 	}
 	
 	

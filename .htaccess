@@ -22,7 +22,11 @@ RewriteRule ^up/(.+)$ upload/$1 [L]
 
 RewriteRule ^$ controller/site/index_c.php [L]
 
-## LOGIN/LOGOUT ###
+### FIND PROJECTS ###
+
+RewriteRule ^projects/?$ controller/site/find_c.php [L]
+
+### LOGIN/LOGOUT ###
 
 RewriteRule ^logout/?$ controller/site/logout.process.php [L]
 RewriteRule ^login/process/?$ controller/site/login.process.php [L]

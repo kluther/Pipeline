@@ -69,8 +69,7 @@ class Task extends DbObject
 			'num_needed' => $this->numNeeded
 		);		
 		$db->store($this, __CLASS__, self::DB_TABLE, $db_properties);
-	}	
-	
+	}
 	
 	public static function getYourTasks($userID=null, $projectID=null, $limit=null)
 	{
@@ -128,12 +127,15 @@ class Task extends DbObject
 		return $tasks;			
 	}	
 	
-	public static function getByProjectID($projectID=null, $limit=null)
+	public static function getByProjectID($projectID=null, $status=null, $limit=null)
 	{
 		if($projectID == null) return null;
 		
 		$query = "SELECT id FROM ".self::DB_TABLE;
 		$query .= " WHERE project_id = ".$projectID;
+		if($status != null) {
+			$query .= " AND status = ".$status;
+		}
 		$query .= " ORDER BY status DESC, ISNULL(deadline) ASC, title ASC";
 		if($limit != null)
 			$query .= " LIMIT ".$limit;
