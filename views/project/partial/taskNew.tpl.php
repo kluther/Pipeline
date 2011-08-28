@@ -16,6 +16,11 @@ $fork->startBlockSet('body');
 			dateFormat: 'yy-mm-dd' // MySQL datetime format
 		});
 		
+		$('#txtLeader').autocomplete({
+			source: '<?= Url::people($project->getID()) ?>/search/organizers',
+			minLength: 2
+		});
+		
 		$('#txtTitle').focus();		
 	});
 	

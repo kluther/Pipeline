@@ -4,6 +4,8 @@ include_once TEMPLATE_PATH.'/site/helper/format.php';
 $task = $SOUP->get('task');
 $project = $SOUP->get('project');
 
+$leader = User::load($task->getLeaderID());
+
 $fork = $SOUP->fork();
 
 $fork->set('id', 'task');
@@ -21,6 +23,11 @@ $(document).ready(function(){
 		changeMonth: true,
 		changeYear: true,
 		dateFormat: 'yy-mm-dd' // MySQL datetime format
+	});
+	
+	$('#txtLeader').autocomplete({
+		source: '<?= Url::people($project->getID()) ?>/search/organizers',
+		minLength: 2
 	});
 	
 	$('#selStatus').val('<?= $task->getStatus() ?>');
@@ -88,7 +95,7 @@ $closed = ($task->getStatus() == Task::STATUS_CLOSED) ? ' class="closed"' : ''; 
 <div class="clear">
 	<label for="txtTitle">Title<span class="required">*</span></label>
 	<div class="input">
-		<input id="txtTitle" type="text" maxlength="255" value="<?= $task->getTitle() ?>" />
+		<input id="txtTitle" name="txtTitle" type="text" maxlength="255" value="<?= $task->getTitle() ?>" />
 		<p>Short description of this task</p>
 	</div>
 </div>
@@ -96,7 +103,7 @@ $closed = ($task->getStatus() == Task::STATUS_CLOSED) ? ' class="closed"' : ''; 
 <div class="clear">
 	<label for="txtLeader">Leader<span class="required">*</span></label>
 	<div class="input">
-		<input id="txtLeader" type="text" value="<?= $task->getLeaderID() ?>" />
+		<input id="txtLeader" name="txtLeader" type="text" value="<?= $leader->getUsername() ?>" />
 		<p>An organizer to lead this task</p>
 	</div>
 </div>
@@ -104,14 +111,14 @@ $closed = ($task->getStatus() == Task::STATUS_CLOSED) ? ' class="closed"' : ''; 
 <div class="clear">
 	<label for="txtDescription">Instructions<span class="required">*</span></label>
 	<div class="input">
-		<textarea id="txtDescription"><?= $task->getDescription() ?></textarea>
+		<textarea id="txtDescription" name="txtDescription"><?= $task->getDescription() ?></textarea>
 	</div>
 </div>
 
 <div class="clear">
 	<label for="selStatus">Status<span class="required">*</span></label>
 	<div class="input">
-		<select id="selStatus">
+		<select id="selStatus" name="selStatus">
 			<option value="<?= Task::STATUS_OPEN ?>"><?= Task::getStatusName(Task::STATUS_OPEN) ?></option>
 			<option value="<?= Task::STATUS_CLOSED ?>"><?= Task::getStatusName(Task::STATUS_CLOSED) ?></option>
 		</select>
@@ -121,7 +128,7 @@ $closed = ($task->getStatus() == Task::STATUS_CLOSED) ? ' class="closed"' : ''; 
 <div class="clear">
 	<label for="txtNumNeeded"># People Needed</label>
 	<div class="input">
-		<input id="txtNumNeeded" type="text" value="<?= $task->getNumNeeded() ?>" />
+		<input id="txtNumNeeded" name="txtNumNeeded" type="text" value="<?= $task->getNumNeeded() ?>" />
 		<p>Number of people needed for this task<br />
 		(Leave empty for unlimited)</p>
 	</div>
@@ -130,7 +137,7 @@ $closed = ($task->getStatus() == Task::STATUS_CLOSED) ? ' class="closed"' : ''; 
 <div class="clear">
 	<label for="txtDeadline">Deadline</label>
 	<div class="input">
-		<input id="txtDeadline" type="text" value="<?= ($task->getDeadline() != '') ? date("Y-m-d",strtotime($task->getDeadline())) : '' ?>" />
+		<input id="txtDeadline" name="txtDeadline" type="text" value="<?= ($task->getDeadline() != '') ? date("Y-m-d",strtotime($task->getDeadline())) : '' ?>" />
 	</div>
 </div>
 

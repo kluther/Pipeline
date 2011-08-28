@@ -11,7 +11,7 @@ if($project == null) {
 	exit();
 }
 
-$token = Filter::alphanum($_POST['token']);
+//$token = Filter::alphanum($_POST['token']);
 $action = Filter::text($_POST['action']);
 
 if($action == 'create') {
@@ -45,12 +45,12 @@ if($action == 'create') {
 	$discussion->save();
 	
 	// attach any uploads
-	Upload::attachToItem(
-		$token,
-		Upload::TYPE_DISCUSSION,
-		$discussion->getID(),
-		$project->getID()
-	);
+	// Upload::attachToItem(
+		// $token,
+		// Upload::TYPE_DISCUSSION,
+		// $discussion->getID(),
+		// $project->getID()
+	// );
 	
 	// log it
 	$logEvent = new Event(array(
@@ -105,12 +105,12 @@ if($action == 'create') {
 	$reply->save();
 	
 	// attach any uploads
-	Upload::attachToItem(
-		$token,
-		Upload::TYPE_DISCUSSION,
-		$reply->getID(),
-		$project->getID()
-	);	
+	// Upload::attachToItem(
+		// $token,
+		// Upload::TYPE_DISCUSSION,
+		// $reply->getID(),
+		// $project->getID()
+	// );	
 	
 	// log it
 	$logEvent = new Event(array(

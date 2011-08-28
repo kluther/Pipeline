@@ -115,7 +115,7 @@ class Project extends DbObject
 			$query .= " SELECT DISTINCT project_id FROM ".Task::DB_TABLE;
 			$query .= " WHERE status = 1";
 		$query .= ") ";
-		$query .= " ORDER BY deadline DESC";
+		$query .= " ORDER BY ISNULL(deadline) ASC, title ASC";
 		//echo $query;
 		
 		$db = Db::instance();

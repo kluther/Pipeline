@@ -16,7 +16,7 @@ $action = Filter::text($_POST['action']);
 if ( ($action == 'create') || ($action == 'edit') ) {
 	//$token = Filter::alphanum($_POST['token']);
 	$title = Filter::text($_POST['txtTitle']);
-	$leaderID = Filter::numeric($_POST['txtLeader']);
+	$leaderName = Filter::alphanum($_POST['txtLeader']);
 	$description = Filter::text($_POST['txtDescription']);
 	$status = Filter::numeric($_POST['selStatus']);
 	$numNeeded = Filter::numeric($_POST['txtNumNeeded']);
@@ -28,11 +28,22 @@ if ( ($action == 'create') || ($action == 'edit') ) {
 	if($title == '') {
 		$json = array('error' => 'You must provide a name for this task.');
 		exit(json_encode($json));
-	} elseif($leaderID == '') {
+	} elseif($leaderName == '') {
 		$json = array('error' => 'This task must have a leader.');
 		exit(json_encode($json));		
 	} elseif($description == '') {
 		$json = array('error' => 'You must provide some instructions for this task.');
+		exit(json_encode($json));
+	}
+	
+	// leader must be real, and a creator or organizer
+	$leader = User::loadByUsername($leaderName);
+	if($leader === null){
+		$json = array('error' => 'The user you specified to lead this task does not exist.');
+		exit(json_encode($json));
+	} elseif( !ProjectUser::isCreator($leader->getID(), $project->getID()) &&
+		!ProjectUser::isOrganizer($leader->getID(), $project->getID()) ) {
+		$json = array('error' => 'The user you specified cannot lead this task. Only the creator or an organizer may lead tasks.');
 		exit(json_encode($json));
 	}
 	
@@ -66,7 +77,7 @@ if($action == 'create') {
 	// first the required stuff
 	$task = new Task(array(
 		'creator_id' => Session::getUserID(),		
-		'leader_id' => $leaderID,
+		'leader_id' => $leader->getID(),
 		'project_id' => $project->getID(),
 		'title' => $title,
 		'description' => $description,
@@ -132,20 +143,20 @@ if($action == 'create') {
 	}
 	
 	// is leader modified?
-	if($leaderID != $task->getLeaderID()) {
+	if($leader->getID() != $task->getLeaderID()) {
 		// save changes
 		$oldLeaderID = $task->getLeaderID();
-		$task->setLeaderID($leaderID);
+		$task->setLeaderID($leader->getID());
 		$task->save();
 		// log it
 		$logEvent = new Event(array(
 			'event_type_id' => 'edit_task_leader',
 			'project_id' => $project->getID(),
 			'user_1_id' => Session::getUserID(),
-			'user_2_id' => $leaderID,
+			'user_2_id' => $leader->getID(),
 			'item_1_id' => $task->getID(),
 			'data_1' => $oldLeaderID,
-			'data_2' => $leaderID
+			'data_2' => $leader->getID()
 		));
 		$logEvent->save();
 		// set flag
