@@ -127,6 +127,26 @@ class Task extends DbObject
 		return $tasks;			
 	}	
 	
+	public static function getByLeaderID($projectID=null, $leaderID=null, $limit=null)
+	{
+		if( ($projectID == null) || ($leaderID == null) ) return null;
+		
+		$query = "SELECT id FROM ".self::DB_TABLE;
+		$query .= " WHERE project_id = ".$projectID;
+		$query .= " AND leader_id = ".$leaderID;
+		if($limit != null)
+			$query .= " LIMIT ".$limit;
+			
+		$db = Db::instance();
+		$result = $db->lookup($query);
+		if(!mysql_num_rows($result)) return array();
+
+		$tasks = array();
+		while($row = mysql_fetch_assoc($result))
+			$tasks[$row['id']] = self::load($row['id']);
+		return $tasks;			
+	}
+	
 	public static function getByProjectID($projectID=null, $status=null, $limit=null)
 	{
 		if($projectID == null) return null;

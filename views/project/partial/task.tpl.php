@@ -26,7 +26,7 @@ $(document).ready(function(){
 	});
 	
 	$('#txtLeader').autocomplete({
-		source: '<?= Url::people($project->getID()) ?>/search/organizers',
+		source: '<?= Url::peopleSearch($project->getID()) ?>/organizers',
 		minLength: 2
 	});
 	

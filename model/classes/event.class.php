@@ -167,6 +167,26 @@ class Event extends DbObject
 	
 	//----------------------------------------------------------------------------//
 	
+	public static function getUserEvents($userID=null, $limit=null) {
+		if($userID == null) return null;
+		
+		$query = "SELECT id FROM ".self::DB_TABLE;
+		$query .= " WHERE user_1_id = ".$userID;
+		$query .= " ORDER BY date_created DESC";
+		if($limit != null)
+			$query .= " LIMIT ".$limit;
+		//echo $query;
+			
+		$db = Db::instance();
+		$result = $db->lookup($query);
+		if(!mysql_num_rows($result)) return array();
+
+		$events = array();
+		while($row = mysql_fetch_assoc($result))
+			$events[$row['id']] = self::load($row['id']);
+		return $events;	
+	}
+	
 	public static function getDiscussionEvents($discussionID=null, $limit=null)
 	{
 		if($discussionID == null) return null;

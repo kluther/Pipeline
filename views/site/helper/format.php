@@ -23,6 +23,18 @@ function formatTaskDescription($description)
 	return $formattedDescription;
 }
 
+function formatUserPicture($userID=null, $size='large') {
+	if($userID == null) return null;
+	$user = User::load($userID);
+	if($size == 'large') {
+		return ('<a class="picture" href="'.Url::user($user->getID()).'" title="'.$user->getUsername().'"><img src="'.Url::userPictureLarge($user->getID()).'" /></a>');
+	} elseif($size == 'small') {
+		return ('<a class="picture small" href="'.Url::user($user->getID()).'" title="'.$user->getUsername().'"><img src="'.Url::userPictureSmall($user->getID()).'" /></a>');
+	} else {
+		return '';
+	}
+}
+
 function formatUserLink($userID=null)
 {
 	if($userID == null) return null;
@@ -53,25 +65,6 @@ function formatProjectLink($projectID=null)
 	$formatted = '<a href="'.Url::project($projectID).'">'.$project->getTitle().'</a>';
 	return $formatted;
 }
-
-function showUser($user=null, $creator=false, $organizer=false, $contributor=false) {
-	echo '<li>';
-	echo '<a class="picture small" href="'.Url::user($user->getID()).'"><img src="'.Url::userPictureSmall($user->getID()).'" /></a>';
-	echo '<p class="username">'.formatUserLink($user->getID()).'</p>';		
-	echo '<p class="accomplishments">';
-	if($creator && $organizer && $contributor)
-		echo 'creator <span class="slash">/</span> organizer <span class="slash">/</span> contributor';
-	elseif($creator && $organizer)
-		echo 'creator <span class="slash">/</span> organizer';
-	elseif($organizer && $contributor)
-		echo 'organizer <span class="slash">/</span> contributor';
-	elseif($organizer)
-		echo 'organizer';
-	elseif($contributor)
-		echo 'contributor';
-	echo '</p>';
-	echo '</li>';
-	}
 
 function formatSectionLink($sectionID=null, $projectID=null)
 {

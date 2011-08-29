@@ -45,8 +45,41 @@ class ProjectUser extends DbObject
 		);		
 		$db->store($this, __CLASS__, self::DB_TABLE, $db_properties);
 	}
+
 	
 // ---------------------------------------------------------------------------- //	
+	
+	
+	public static function changeRelationship($projectID=null, $userID=null, $relationship=null) {
+		if( ($projectID === null) ||
+			($userID === null) ||
+			($relationship === null) ) {
+			return null;
+		}
+		
+		$query = "UPDATE ".self::DB_TABLE;
+		$query .= " SET relationship = ".$relationship;
+		$query .= " WHERE user_id = ".$userID;
+		$query .= " AND project_id = ".$projectID;
+		
+		$db = Db::instance();
+		$db->execute($query);
+	}
+	
+	public static function delete($projectID=null, $userID=null) {
+		if( ($projectID === null) ||
+			($userID === null) ) {
+			return null;
+		}
+		
+		$query = "DELETE from ".self::DB_TABLE;
+		$query .= " WHERE user_id = ".$userID;
+		$query .= " AND project_id = ".$projectID;
+		
+		$db = Db::instance();
+		$db->execute($query);
+		//ObjectCache::remove('User',$this->userID;
+	}
 	
 	// doesn't really belong here but what the hey
 	public static function isCreator($userID=null, $projectID=null)

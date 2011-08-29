@@ -1,10 +1,10 @@
 <?php
 
 $project = $SOUP->get('project');
-$creator = $SOUP->get('creator');
-$organizers = $SOUP->get('organizers');
-$contributors = $SOUP->get('contributors');
-$followers = $SOUP->get('followers');
+//$creator = $SOUP->get('creator');
+//$organizers = $SOUP->get('organizers');
+//$contributors = $SOUP->get('contributors');
+// $followers = $SOUP->get('followers');
 
 $fork = $SOUP->fork();
 
@@ -20,27 +20,20 @@ $fork->startBlockSet('body');
 
 <div class="left">
 
-
 <?php
-	$SOUP->render('project/partial/users', array(
-		'creator' => $creator,
-		'organizers' => $organizers,
-		'contributors' => $contributors,
-		'title' => 'Crew'
-		));
+	$SOUP->render('project/partial/creator', array(
+	));
 ?>
 
 <?php
-	$SOUP->render('project/partial/users', array(
-		'title' => "Followers",
-		'users' => $followers,
-		'style' => 'list',
-		'description' => "Interested in the project but haven't contributed yet."
-		));
+	$SOUP->render('project/partial/organizers', array(
+	));
 ?>
 
-<p><a href="<?= Url::banned($project->getID()) ?>">View Banned</a></p>
-
+<?php
+	$SOUP->render('project/partial/contributors', array(
+	));
+?>
 
 </div>
 
@@ -56,7 +49,7 @@ $fork->startBlockSet('body');
 
 <?php
 	$SOUP->render('site/partial/activity', array(
-		'title' => "Recent Activity",
+	//	'title' => "Recent Activity",
 		'size' => 'small',
 		'olderURL' => Url::activityPeople($project->getID())
 		));

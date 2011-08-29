@@ -135,6 +135,11 @@ class Url
 		return $url;
 	}
 	
+	public static function userProcess($userID=null) {
+		if($userID == null) return null;
+		return (self::user($userID).'/process');
+	}
+	
 	public static function userPictureSmall($userID=null)
 	{
 		if($userID == null) return null;
@@ -333,10 +338,20 @@ class Url
 		return (self::project($projectID).'/people');
 	}
 	
-	public static function banned($projectID=null)
-	{
+	public static function peopleProcess($projectID=null) {
 		if($projectID == null) return null;
-		return (self::people($projectID).'/banned');
+		return (self::people($projectID).'/process');
 	}
+	
+	public static function peopleSearch($projectID=null) {
+		if($projectID == null) return null;
+		return (self::people($projectID).'/search');
+	}
+	
+	// public static function banned($projectID=null)
+	// {
+		// if($projectID == null) return null;
+		// return (self::people($projectID).'/banned');
+	// }
 	
 }

@@ -111,6 +111,7 @@ class Project extends DbObject
 	public static function getLookingForHelp() {
 		$query = "SELECT id FROM ".self::DB_TABLE;
 		$query .= " WHERE status > ".self::STATUS_COMPLETED;
+		$query .= " AND private = 0";
 		$query .= " AND id IN (";
 			$query .= " SELECT DISTINCT project_id FROM ".Task::DB_TABLE;
 			$query .= " WHERE status = 1";

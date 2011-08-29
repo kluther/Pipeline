@@ -83,7 +83,8 @@ RewriteRule ^projects/([a-z0-9-]+)/discussions/?$ controller/project/discussions
 ### PEOPLE ###
 
 RewriteRule ^projects/([a-z0-9-]+)/people/search/([a-z]+)/?$ controller/project/peopleSearch.process.php?slug=$1&relationship=$2 [QSA,L]
-RewriteRule ^projects/([a-z0-9-]+)/people/banned/?$ controller/project/banned_c.php?slug=$1 [QSA,L]
+#RewriteRule ^projects/([a-z0-9-]+)/people/banned/?$ controller/project/banned_c.php?slug=$1 [QSA,L]
+RewriteRule ^projects/([a-z0-9-]+)/people/process/?$ controller/project/credits.process.php?slug=$1 [QSA,L]
 RewriteRule ^projects/([a-z0-9-]+)/people/?$ controller/project/credits_c.php?slug=$1 [QSA,L]
 
 ### ACTIVITY ###
@@ -95,3 +96,6 @@ RewriteRule ^projects/([a-z0-9-]+)/activity/people/?$ controller/project/activit
 RewriteRule ^projects/([a-z0-9-]+)/activity/?$ controller/project/activity_c.php?slug=$1&filter=all [QSA,L]
 RewriteRule ^projects/([a-z0-9-]+)/?$ controller/project/activity_c.php?slug=$1&filter=all [QSA,L]
 
+### USERS ###
+
+RewriteRule ^users/([a-zA-Z0-9-]{6,20})/?$ controller/site/user_c.php?un=$1 [QSA,L]

@@ -18,6 +18,7 @@ class ObjectCache
 	
 	public static function remove($dataType, $key)
 	{
+		$key = $dataType . "\n" . serialize($key);
 		unset(self::$_cache[$key]);
 	}
 }

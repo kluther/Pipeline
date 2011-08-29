@@ -116,7 +116,7 @@ function registerUser()
 	</div>
 </div>			
 <div class="clear">
-	<label for="">Email Address<span class="required">*</span></label>
+	<label for="txtEmail">Email Address<span class="required">*</span></label>
 	<div class="input">
 		<input id="txtEmail" type="text" maxlength="255" />
 		<p>Must be valid to receive email notifications</p>

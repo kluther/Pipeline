@@ -277,6 +277,20 @@ div.primary-nav li {
 		padding-right: 1em;
 		}
 
+
+/* PROFILE */
+div#profile div.view h5 {
+	font-size: 150%;
+	color: #fff;
+	margin-top: 0.25em;
+}
+
+div#profile div.view p {
+	padding: 0; margin: 0.5em 0 0 55px;
+	}
+	div#profile div.view p.biography {
+		margin: 1em 0 1em 55px;
+	}
 		
 /* USER LISTS */
 
@@ -294,23 +308,18 @@ a.picture img{
 		width: 48px; height: 48px;
 		}
 		
-ul.user{}
-	ul.user p.username {
-		font-size: 100%;
-		margin: 0; padding: 0 0 0.1em 0;
-		}
-	ul.user p.accomplishments {
-		font-size: 85%;
-		margin: 0; padding: 0;
-		}
-	ul.user div.buttons {
-		width: 200px;
-		float: right;
-		text-align: right;
-		}
-		ul.user div.buttons input {
-			margin: 0 0 0 1em;
-			}
+
+ul.users h6.primary {
+	padding-left: 0px;
+	}
+ul.users p.secondary {
+	padding-left: 0px;
+	}
+ul.users input[type=button] {
+	float: right;
+	margin: 0 0 0 1em;
+	font-size: 90%;
+	}
 
 			
 /* ACTIVITY FEED */
