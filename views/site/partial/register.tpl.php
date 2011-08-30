@@ -1,5 +1,7 @@
 <?php
 
+$invite = $SOUP->get('invite', null);
+
 $fork = $SOUP->fork();
 $fork->startBlockSet('body');
 
@@ -73,6 +75,7 @@ function registerUser()
 		'processPage':'<?= Url::registerProcess() ?>',
 		'info':{
 			action: "register",
+			code: $("#hdnInvitationCode").val(),
 			uname: $("#txtUsername").val(),
 			pw: $("#txtPassword").val(),
 			pw2: $("#txtConfirmPassword").val(),
@@ -92,6 +95,8 @@ function registerUser()
 <p>Have an account already? <a href="<?= Url::logIn() ?>">Log in here.</a> If not, create one below for free.</p>
 
 <div class="line"></div>
+
+<input type="hidden" id="hdnInvitationCode" value="<?= ($invite != null) ? $invite->getInvitationCode() : '' ?>" />
 
 <div class="clear">
 	<label for="txtUsername">Username<span class="required">*</span></label>
@@ -118,7 +123,7 @@ function registerUser()
 <div class="clear">
 	<label for="txtEmail">Email Address<span class="required">*</span></label>
 	<div class="input">
-		<input id="txtEmail" type="text" maxlength="255" />
+		<input id="txtEmail" type="text" maxlength="255" value="<?= ($invite != null) ? $invite->getInviteeEmail() : '' ?>" />
 		<p>Must be valid to receive email notifications</p>
 	</div>
 </div>

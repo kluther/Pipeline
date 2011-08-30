@@ -2,6 +2,7 @@
 
 class ProjectUser extends DbObject
 {
+	protected $id;
 	protected $userID;
 	protected $projectID;
 	protected $relationship;
@@ -15,6 +16,7 @@ class ProjectUser extends DbObject
 	public function __construct($args=array())
 	{
 		$defaultArgs = array(
+			'id' => null,
 			'user_id' => 0,
 			'project_id' => 0,
 			'relationship' => null
@@ -22,6 +24,7 @@ class ProjectUser extends DbObject
 		
 		$args += $defaultArgs;
 		
+		$this->id = $args['id'];
 		$this->userID = $args['user_id'];
 		$this->projectID = $args['project_id'];
 		$this->relationship = $args['relationship'];
@@ -45,10 +48,38 @@ class ProjectUser extends DbObject
 		);		
 		$db->store($this, __CLASS__, self::DB_TABLE, $db_properties);
 	}
+	
+	public function delete() {
+		$query = "DELETE from ".self::DB_TABLE;
+		$query .= " WHERE user_id = ".$this->userID;
+		$query .= " AND project_id = ".$this->projectID;
+		
+		$db = Db::instance();
+		$db->execute($query);
+		ObjectCache::remove(get_class($this),$this->id);
+	}
 
 	
 // ---------------------------------------------------------------------------- //	
 	
+	
+	public static function find($userID=null, $projectID=null) {
+		if( ($userID === null) ||
+			($projectID === null) ) {
+			return null;
+		}
+		
+		$query = "SELECT id FROM ".self::DB_TABLE;
+		$query .= " WHERE user_id = ".$userID;
+		$query .= " AND project_id = ".$projectID;
+		
+		$db = Db::instance();
+		$result = $db->lookup($query);
+		if(!mysql_num_rows($result))
+			return null;
+		elseif($row = mysql_fetch_assoc($result))
+			return (self::load($row['id']));
+	}
 	
 	public static function changeRelationship($projectID=null, $userID=null, $relationship=null) {
 		if( ($projectID === null) ||
@@ -64,21 +95,6 @@ class ProjectUser extends DbObject
 		
 		$db = Db::instance();
 		$db->execute($query);
-	}
-	
-	public static function delete($projectID=null, $userID=null) {
-		if( ($projectID === null) ||
-			($userID === null) ) {
-			return null;
-		}
-		
-		$query = "DELETE from ".self::DB_TABLE;
-		$query .= " WHERE user_id = ".$userID;
-		$query .= " AND project_id = ".$projectID;
-		
-		$db = Db::instance();
-		$db->execute($query);
-		//ObjectCache::remove('User',$this->userID;
 	}
 	
 	// doesn't really belong here but what the hey
@@ -138,31 +154,30 @@ class ProjectUser extends DbObject
 	
 	public static function getBanned($projectID=null)
 	{
-		return (self::getProjectUsersByRelationship($projectID,self::BANNED));
+		return (self::getUsersByRelationship($projectID,self::BANNED));
 	}
 	
 	public static function getFollowers($projectID=null)
 	{
-		return (self::getProjectUsersByRelationship($projectID,self::FOLLOWER));
+		return (self::getUsersByRelationship($projectID,self::FOLLOWER));
 	}	
 	
 	public static function getOrganizers($projectID=null)
 	{
-		return (self::getProjectUsersByRelationship($projectID,self::ORGANIZER));
+		return (self::getUsersByRelationship($projectID,self::ORGANIZER));
 	}	
 	
 	// avoid calling this... use one of the aliased functions above instead
-	public static function getProjectUsersByRelationship($projectID=null, $relationship=null)
+	public static function getUsersByRelationship($projectID=null, $relationship=null)
 	{
-		if( ($projectID == null) || ($relationship === null) ) return null;
+		if($projectID == null) return null;
 		
-		$query = "SELECT pu.user_id FROM ".self::DB_TABLE." pu";
+		$query = "SELECT pu.user_id AS user_id FROM ".self::DB_TABLE." pu";
 		$query .= " INNER JOIN ".User::DB_TABLE." u ON ";
 		$query .= " pu.user_id = u.id";
-		$query .= sprintf(" WHERE pu.project_id = '%s' AND pu.relationship = '%s'",
-				mysql_real_escape_string($projectID),
-				mysql_real_escape_string($relationship)
-			);
+		$query .= " WHERE pu.project_id = ".$projectID;
+		if($relationship !== null)
+			$query .= " AND pu.relationship = ".$relationship;
 		$query .= " ORDER BY u.username ASC"; // alphabetical
 		//echo $query;
 		
@@ -177,6 +192,17 @@ class ProjectUser extends DbObject
 	}
 	
 	// --- only getters and setters below here --- //	
+	
+	public function getID()
+	{
+		return ($this->id);
+	}
+
+	public function setID($newID)
+	{
+		$this->id = $newID;
+		$this->modified = true;
+	}	
 	
 	public function getUserID()
 	{

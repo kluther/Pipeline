@@ -1,6 +1,6 @@
 <?php
-
 require_once("../../global.php");
+require_once TEMPLATE_PATH.'/site/helper/format.php'; // for formatCount
 
 $action = Filter::text($_POST['action']);
 
@@ -18,6 +18,7 @@ switch($action)
 	case "register":
 
 		// assign POST data to variables
+		$code = 	 Filter::alphanum($_POST['code']);
 		$uname = 	 Filter::text($_POST['uname']);
 		$pw = 		 Filter::text($_POST['pw']);
 		$pw2 = 		 Filter::text($_POST['pw2']);
@@ -47,7 +48,17 @@ switch($action)
 		$blacklist = array(
 			"process",
 			"------",
-			"administrator"
+			"administrator",
+			"create",
+			"new",
+			"admin",
+			"edit",
+			"delete",
+			"invite",
+			"tasks",
+			"people",
+			"basics",
+			"activity"
 		);
 		foreach($blacklist as $b)
 		{
@@ -86,7 +97,7 @@ switch($action)
 			exit(json_encode($json));
 		}
 		
-		if(!Filter::email($email))
+		if(!filter_var($email, FILTER_VALIDATE_EMAIL))
 		{
 			$json = array( 'error' => 'You must provide a valid email address to register.' );
 			exit(json_encode($json));
@@ -124,28 +135,53 @@ switch($action)
 		$user->save(); // save last login as date created
 		
 		// log the event
-		// $logEvent = new Action(
-			// array(
-				// 'action_type_id' => ActionType::CREATE_PROFILE,
-				// 'user_1_id' => $user->getId()
-			// )
-		// );
-		// $logEvent->save();
+		$logEvent = new Event(
+			array(
+				'event_type_id' => 'create_user',
+				'user_1_id' => $user->getId()
+			)
+		);
+		$logEvent->save();
 		
 		// email confirmation
-		// $subject = "Welcome to Pipeline!";
-		// $message = "You have successfully registered for Pipeline.\n\nYour username: " . $uname;
-		// $headers = "From: Pipeline Team <pipeline.gt@gmail.com>" . "\r\n" . "Reply-To: Pipeline Team <pipeline.gt@gmail.com>";
-		// mail($email, $subject, $message, $headers);
+		$msg = '<p>You have successfully registered for <a href="'.Url::base().'">'.PIPELINE_NAME.'</a>.</p>';
+		$msg .= '<p>Your username is '.formatUserLink($user->getID()).'. Have fun!</p>';
+		$email = array(
+			'to' => $email,
+			'subject' => 'Welcome to '.PIPELINE_NAME.'!',
+			'message' => $msg
+		);
+		Email::send($email);
 		
 		// log us into the new account
 		Session::signIn($user->getId());
+		
+		// see if we were invited to do anything special
+		if($code != null) {
+			// get the invitation
+			$invite = Invitation::findByCode($code);
+			// add the user to the project
+			$pu = new ProjectUser(array(
+				'project_id' => $invite->getProjectID(),
+				'user_id' => $user->getID(),
+				'relationship' => $invite->getRelationship()
+			));
+			$pu->save();
+			// update the invite
+			$invite->setResponse(Invitation::ACCEPTED);
+			$invite->setDateResponded(date("Y-m-d H:i:s"));
+			$invite->save();
+			// send us to the project we just joined
+			$successUrl = Url::project($invite->getProjectID());
+		} else {
+			$successUrl = Url::base();
+		}
 
-		// set confirm message and send us to the dashboard
+		// set confirm message and send us away
 		Session::setMessage("Registration successful! Welcome aboard.");
 		$json = array( 'success' => '1',
-			   'successUrl' => Url::base());
-		exit(json_encode($json));
+			   'successUrl' => $successUrl);
+		echo json_encode($json);
 		break;
 		
 	default:

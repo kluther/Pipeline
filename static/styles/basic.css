@@ -354,6 +354,9 @@ ul.activity h6.create-comment, ul.activity h6.create-discussion {
 ul.activity h6.edit-comment, ul.activity h6.edit-discussion {
 	background-image: url(./../images/icons/balloon--pencil.png);
 	}	
+ul.activity h6.people {
+	background-image: url(./../images/icons/users.png);
+	}		
 			
 		
 /* generic */ 

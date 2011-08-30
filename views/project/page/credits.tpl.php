@@ -35,6 +35,16 @@ $fork->startBlockSet('body');
 	));
 ?>
 
+<?php
+	$SOUP->render('project/partial/followers', array(
+	));
+?>
+
+<?php
+	$SOUP->render('project/partial/banned', array(
+	));
+?>
+
 </div>
 
 <div class="right">

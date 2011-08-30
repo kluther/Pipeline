@@ -21,6 +21,8 @@ $banned = $project->getBanned();
 
 $discussions = Discussion::getPeopleDiscussionsByProjectID($project->getID(), 3);
 
+$events = Event::getPeopleEventsByProjectID($project->getID(), 10);
+
 $soup = new Soup();
 $soup->set('project', $project);
 $soup->set('creator', $creator);
@@ -28,6 +30,7 @@ $soup->set('organizers', $organizers);
 $soup->set('contributors', $contributors);
 $soup->set('banned', $banned);
 $soup->set('followers', $followers);
+$soup->set('events', $events);
 
 $soup->set('discussions', $discussions);
 

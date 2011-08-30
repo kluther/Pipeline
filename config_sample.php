@@ -19,4 +19,5 @@
 	define('SMTP_PORT', '465'); # SMTP server port - !NO CHANGE
 	define('SMTP_USER', 'username'); # SMTP server user <- CHANGE THIS
 	define('SMTP_PASSWORD', 'qwerty'); # SMTP server user <- CHANGE THIS
+	define('SMTP_FROM_EMAIL', "email@address.com"); # email address that system emails are sent from <- CHANGE THIS
 	define('IS_TLS', false); # SMTP TLS <- CHANGE THIS TO true IF NOT USING GMAIL

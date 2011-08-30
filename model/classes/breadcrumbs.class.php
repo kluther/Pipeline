@@ -109,12 +109,12 @@ class Breadcrumbs
 		return (self::oneCrumb("People", Url::people($projectID)));
 	}
 	
-	public static function banned($projectID=null)
-	{
-		if($projectID == null) return null;
-		return array_merge(
-			self::oneCrumb("Banned", Url::banned($projectID)),
-			self::people($projectID)
-		);
-	}
+	// public static function banned($projectID=null)
+	// {
+		// if($projectID == null) return null;
+		// return array_merge(
+			// self::oneCrumb("Banned", Url::banned($projectID)),
+			// self::people($projectID)
+		// );
+	// }
 }

@@ -75,6 +75,11 @@ class Url
 		return (self::base().'/register');
 	}
 	
+	public static function registerWithCode($code=null) {
+		if($code === null) return null;
+		return (self::register().'/'.$code);
+	}	
+	
 	public static function registerProcess()
 	{
 		return (self::register().'/process');

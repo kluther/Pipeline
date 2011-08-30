@@ -5,6 +5,30 @@ function formatEvent($event)
 {
 		switch($event->getEventTypeID())
 		{
+			case 'make_organizer':
+				$formatted = sprintf("%s made %s an organizer.",
+						formatUserLink($event->getUser1ID()),
+						formatUserLink($event->getUser2ID())
+					);
+				break;	
+			case 'revoke_organizer':
+				$formatted = sprintf("%s revoked %s's organizer status.",
+						formatUserLink($event->getUser1ID()),
+						formatUserLink($event->getUser2ID())
+					);
+				break;				
+			case 'ban_user':
+				$formatted = sprintf("%s banned %s.",
+						formatUserLink($event->getUser1ID()),
+						formatUserLink($event->getUser2ID())
+					);
+				break;
+			case 'unban_user':
+				$formatted = sprintf("%s unbanned %s.",
+						formatUserLink($event->getUser1ID()),
+						formatUserLink($event->getUser2ID())
+					);
+				break;
 			case 'create_project':
 				$formatted = sprintf("%s created the project %s.",
 						formatUserLink($event->getUser1ID()),

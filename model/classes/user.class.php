@@ -107,6 +107,43 @@ class User extends DbObject
 		}		
 	}	
 	
+	public static function getUnaffiliatedUsernames($projectID=null) {
+		if($projectID === null) return null;
+		$project = Project::load($projectID);
+		$creatorID = $project->getCreatorID();
+		
+		$query = "SELECT username FROM ".User::DB_TABLE;
+		// contributors
+		$query .= " WHERE id NOT IN (";
+			$query .= " SELECT DISTINCT user_1_id FROM ".Event::DB_TABLE;
+			$query .= " WHERE project_id = ".$projectID;
+		$query .= ")";
+		$query .= " AND id NOT IN (";
+			$query .= " SELECT DISTINCT user_2_id FROM ".Event::DB_TABLE;
+			$query .= " WHERE project_id = ".$projectID;
+			$query .= " AND user_2_id IS NOT NULL";
+		$query .= ")";		
+		// organizers, followers, banned
+		$query .= " AND id NOT IN (";
+			$query .= " SELECT user_id FROM ".ProjectUser::DB_TABLE;
+			$query .= " WHERE project_id = ".$projectID;
+		$query .= ")";
+		// project creator
+		$query .= " AND id != ".$creatorID;
+		$query .= " ORDER BY username ASC";
+		
+		$db = Db::instance();
+		$result = $db->lookup($query);
+		
+		if(!mysql_num_rows($result))
+			return array();
+		
+		$usernames = array();
+		while($row = mysql_fetch_assoc($result))
+			$usernames[] = $row['username'];
+		return $usernames;			
+	}	
+	
 	// public static function findUsers($username = null, $limit = null)
 	// {
 		// if ($username == null) return null;
