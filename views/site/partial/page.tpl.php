@@ -28,6 +28,14 @@ if($project != null)
 	</script>
 	<script type="text/javascript" src="<?= Url::scripts() ?>/common.js"></script>
 	<script type="text/javascript" src="<?= Url::scripts() ?>/feedback.js"></script>
+	<?php if(Session::getMessage() != null): ?>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			displayNotification("<?= Session::getMessage() ?>");
+		});
+	</script>		
+	<?php Session::clearMessage(); ?>
+	<?php endif; ?>
 </head>
 <body>
 

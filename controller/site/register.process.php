@@ -172,7 +172,7 @@ switch($action)
 			$invite->setDateResponded(date("Y-m-d H:i:s"));
 			$invite->save();
 			// send us to the project we just joined
-			$successUrl = Url::project($invite->getProjectID());
+			$successUrl = Url::details($invite->getProjectID());
 		} else {
 			$successUrl = Url::base();
 		}
