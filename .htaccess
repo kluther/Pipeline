@@ -26,6 +26,10 @@ RewriteRule ^$ controller/site/index_c.php [L]
 
 RewriteRule ^projects/?$ controller/site/find_c.php [L]
 
+### SETTINGS ###
+
+RewriteRule ^settings/?$ controller/site/settings_c.php [L]
+
 ### LOGIN/LOGOUT ###
 
 RewriteRule ^logout/?$ controller/site/logout.process.php [L]

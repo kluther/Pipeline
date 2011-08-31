@@ -46,8 +46,9 @@ if($project != null)
 			<ul>
 			<?php if(Session::isLoggedIn()): ?>
 				<li class="right"><a href="<?= Url::logOut() ?>">Log Out</a></li>
-				<li class="right"><a href="<?= Url::profile() ?>">Profile</a></li>
-				<li class="right"><a href="<?= Url::inbox() ?>">Inbox</a></li>				
+				<li class="right"><a href="<?= Url::settings() ?>">Settings</a></li>
+				<li class="right"><a href="<?= Url::profile() ?>"><?= Session::getUsername() ?></a></li>	
+				<!--li class="right"><a href="<?= Url::inbox() ?>">Inbox</a></li-->				
 			<?php else: ?>
 				<li class="right"><a href="<?= Url::register() ?>">Register</a></li>
 				<li class="right"><a href="<?= Url::logIn() ?>">Log In</a></li>

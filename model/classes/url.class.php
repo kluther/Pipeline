@@ -125,6 +125,10 @@ class Url
 		return (self::base().'/inbox');
 	}
 	
+	public static function settings() {
+		return (self::base().'/settings');
+	}
+	
 	public static function profile()
 	{
 		$userID = Session::getUserID();

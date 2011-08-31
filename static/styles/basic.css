@@ -358,7 +358,25 @@ ul.activity h6.people {
 	background-image: url(./../images/icons/users.png);
 	}		
 			
-		
+/* NOTIFICATIONS */
+
+ul.notifications span.category {
+	float: right;
+	display: inline;
+	text-transform: uppercase;
+	font-size: 10px;
+	margin: 0; padding: 0.25em 0.5em;
+	background: #1a1a1a;
+	color: #ccc;
+	-moz-border-radius: 0.5em;
+	-webkit-border-radius: 0.5em;
+	border-radius: 0.5em;
+	}
+	
+ul.notifications label {
+	color: #a3a3a3;
+	}
+			
 /* generic */ 
 
 h5.closed a, h6.closed a {
