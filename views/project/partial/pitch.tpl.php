@@ -7,7 +7,7 @@ $fork = $SOUP->fork();
 $fork->set('title', "Pitch");
 $fork->set('id', "pitch");
 $fork->set('editable', true);
-$fork->set('editLabel', 'Edit Pitch');
+//$fork->set('editLabel', 'Edit Pitch');
 $fork->startBlockSet('body');
 
 $formattedPitch = formatPitch($project->getPitch());

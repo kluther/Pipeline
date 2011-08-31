@@ -74,7 +74,7 @@ $(document).ready(function(){
 
 <div class="view">
 
-<a class="picture large" href="<?= Url::user($user->getID()) ?>"><img src="<?= Url::userPictureLarge($user->getID()) ?>" /></a>
+<?= formatUserPicture($user->getID()) ?>
 <h5 class="username"><?= formatUserLink($user->getID()) ?></h5>
 <p class="contact"><?= ($user->getName() != null) ? $user->getName().$slash : '' ?> <a href="mailto:<?= $user->getEmail() ?>">send email</a></p>
 <?php
@@ -114,9 +114,10 @@ if($bio != null) {
 <input type="hidden" name="action" value="edit" />
 
 <!--div class="clear">
-	<label for="">Picture</label>
+	<label>Picture</label>
 	<div class="input">
-
+		<img src="<?= Url::userPictureLarge($user->getID()) ?>" />
+		<input id="btnRemovePicture" type="button" value="Remove" />
 	</div>
 </div-->
 <div class="clear">

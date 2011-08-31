@@ -14,6 +14,14 @@ class User extends DbObject
 	protected $picture;
 	protected $pictureSmall;
 	protected $pictureLarge;
+	protected $notifyCommentTaskLeading;
+	protected $notifyEditTaskAccepted;
+	protected $notifyCommentTaskAccepted;
+	protected $notifyCommentTaskUpdate;
+	protected $notifyFollowProject;
+	protected $notifyOrganizeProject;
+	protected $notifyBannedProject;
+	protected $notifyDiscussionReply;
 	protected $dateCreated;
 	protected $lastLogin;
 	
@@ -34,6 +42,14 @@ class User extends DbObject
 			'picture' => '',
 			'picture_small' => '',
 			'picture_large' => '',
+			'notify_comment_task_leading' => 1,
+			'notify_edit_task_accepted' => 1,
+			'notify_comment_task_accepted' => 1,
+			'notify_comment_task_update' => 1,
+			'notify_follow_project' => 1,
+			'notify_organize_project' => 1,
+			'notify_banned_project' => 1,
+			'notify_discussion_reply' => 1,
 			'date_created' => null,
 			'last_login' => null
 		);
@@ -52,6 +68,14 @@ class User extends DbObject
 		$this->picture = $args['picture'];
 		$this->pictureSmall = $args['picture_small'];
 		$this->pictureLarge = $args['picture_large'];
+		$this->notifyCommentTaskLeading = $args['notify_comment_task_leading'];
+		$this->notifyEditTaskAccepted = $args['notify_edit_task_accepted'];
+		$this->notifyCommentTaskAccepted = $args['notify_comment_task_accepted'];
+		$this->notifyCommentTaskUpdate = $args['notify_comment_task_update'];
+		$this->notifyFollowProject = $args['notify_follow_project'];
+		$this->notifyOrganizeProject = $args['notify_organize_project'];
+		$this->notifyBannedProject = $args['notify_banned_project'];
+		$this->notifyDiscussionReply = $args['notify_discussion_reply'];
 		$this->dateCreated = $args['date_created'];
 		$this->lastLogin = $args['last_login'];
 	}
@@ -183,11 +207,19 @@ class User extends DbObject
 			'picture' => $this->picture,
 			'picture_small' => $this->pictureSmall,
 			'picture_large' => $this->pictureLarge,
+			'notify_comment_task_leading' => $this->notifyCommentTaskLeading,
+			'notify_edit_task_accepted' => $this->notifyEditTaskAccepted,
+			'notify_comment_task_accepted' => $this->notifyCommentTaskAccepted,
+			'notify_comment_task_update' => $this->notifyCommentTaskUpdate,
+			'notify_follow_project' => $this->notifyFollowProject,
+			'notify_organize_project' => $this->notifyOrganizeProject,
+			'notify_banned_project' => $this->notifyBannedProject,
+			'notify_discussion_reply' => $this->notifyDiscussionReply,
 			'last_login' => $this->lastLogin
 		);		
 		$db->store($this, __CLASS__, self::DB_TABLE, $db_properties);
 	}
-	
+
 	/* instance methods */
 
 	// public function getSubmissions($projectID=null, $limit=null, $deleted=false)
@@ -244,25 +276,25 @@ class User extends DbObject
 	// --- only getters and setters below here --- //
 	
 	/* Epic getter -- convert the object data to an array */
-	public function getArgsArray()
-	{
-		$args = array
-		(
-			'id' => $this->id,
-			'username' => $this->username,
-			'password' => $this->password,
-			'email' => $this->email,
-			'name' => $this->firstName,
-			'dob' => $this->dob,			
-			'sex' => $this->sex,
-			'location' => $this->location,
-			'biography' => $this->biography,
-			'date_created' => $this->dateCreated,
-			'last_login' => $this->lastLogin
-		);
+	// public function getArgsArray()
+	// {
+		// $args = array
+		// (
+			// 'id' => $this->id,
+			// 'username' => $this->username,
+			// 'password' => $this->password,
+			// 'email' => $this->email,
+			// 'name' => $this->firstName,
+			// 'dob' => $this->dob,			
+			// 'sex' => $this->sex,
+			// 'location' => $this->location,
+			// 'biography' => $this->biography,
+			// 'date_created' => $this->dateCreated,
+			// 'last_login' => $this->lastLogin
+		// );
 		
-		return $args;
-	}
+		// return $args;
+	// }
 	public function getID()
 	{
 		return ($this->id);
@@ -393,7 +425,79 @@ class User extends DbObject
 	public function getPicture()
 	{
 		return ($this->picture);
-	}		
+	}
+	
+	public function getNotifyCommentTaskLeading() {
+		return ($this->notifyCommentTaskLeading);
+	}
+	
+	public function setNotifyCommentTaskLeading($newNotifyCommentTaskLeading) {
+		$this->notifyCommentTaskLeading = $newNotifyCommentTaskLeading;
+		$this->modified = true;
+	}
+	
+	public function getNotifyEditTaskAccepted() {
+		return ($this->notifyEditTaskAccepted);
+	}
+	
+	public function setNotifyEditTaskAccepted($newNotifyEditTaskAccepted) {
+		$this->notifyEditTaskAccepted = $newNotifyEditTaskAccepted;
+		$this->modified = true;
+	}
+
+	public function getNotifyCommentTaskAccepted() {
+		return ($this->notifyCommentTaskAccepted);
+	}
+	
+	public function setNotifyCommentTaskAccepted($newNotifyCommentTaskAccepted) {
+		$this->notifyCommentTaskAccepted = $newNotifyCommentTaskAccepted;
+		$this->modified = true;
+	}
+
+	public function getNotifyCommentTaskUpdate() {
+		return ($this->notifyCommentTaskUpdate);
+	}
+	
+	public function setNotifyCommentTaskUpdate($newNotifyCommentTaskUpdate) {
+		$this->notifyCommentTaskUpdate = $newNotifyCommentTaskUpdate;
+		$this->modified = true;
+	}
+
+	public function getNotifyFollowProject() {
+		return ($this->notifyFollowProject);
+	}
+	
+	public function setNotifyFollowProject($newNotifyFollowProject) {
+		$this->notifyFollowProject = $newNotifyFollowProject;
+		$this->modified = true;
+	}
+
+	public function getNotifyOrganizeProject() {
+		return ($this->notifyOrganizeProject);
+	}
+	
+	public function setNotifyOrganizeProject($newNotifyOrganizeProject) {
+		$this->notifyOrganizeProject = $newNotifyOrganizeProject;
+		$this->modified = true;
+	}
+
+	public function getNotifyBannedProject() {
+		return ($this->notifyBannedProject);
+	}
+	
+	public function setNotifyBannedProject($newNotifyBannedProject) {
+		$this->notifyBannedProject = $newNotifyBannedProject;
+		$this->modified = true;
+	}
+
+	public function getNotifyDiscussionReply() {
+		return ($this->notifyDiscussionReply);
+	}
+	
+	public function setNotifyDiscussionReply($newNotifyDiscussionReply) {
+		$this->notifyDiscussionReply = $newNotifyDiscussionReply;
+		$this->modified = true;
+	}	
 	
 	public function getDateCreated()
 	{

@@ -12,10 +12,10 @@ $fork->set('title', $title);
 $fork->set('class', 'discussions');
 $fork->set('creatable', true);
 if($size == 'small') {
-	$fork->set('createLabel', 'New');
+//	$fork->set('createLabel', 'New');
 	$newURL = Url::discussionNew($project->getID()).'/'.$cat;
 } else {
-	$fork->set('createLabel', 'New Discussion');
+//	$fork->set('createLabel', 'New Discussion');
 	$newURL = Url::discussionNew($project->getID());
 }
 

@@ -129,6 +129,10 @@ class Url
 		return (self::base().'/settings');
 	}
 	
+	public static function settingsProcess() {
+		return (self::settings().'/process');
+	}	
+	
 	public static function profile()
 	{
 		$userID = Session::getUserID();
@@ -156,7 +160,7 @@ class Url
 		if($user->getPictureSmall() != '')
 			$url = self::uploadsDir().'/thumb/'.$user->getPictureSmall();
 		else
-			$url = self::images().'/user_48x48.jpg';
+			$url = self::images().'/user32x32.jpg';
 		return $url;
 	}
 	
@@ -167,7 +171,7 @@ class Url
 		if($user->getPictureLarge() != '')
 			$url = self::uploadsDir().'/thumb/'.$user->getPictureLarge();
 		else
-			$url = self::images().'/user_48x48.jpg';
+			$url = self::images().'/user48x48.jpg';
 		return $url;
 	}	
 	

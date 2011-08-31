@@ -5,6 +5,12 @@ function formatEvent($event)
 {
 		switch($event->getEventTypeID())
 		{
+			case 'create_user':
+				$formatted = sprintf("%s joined %s.",
+						formatUserLink($event->getUser1ID()),
+						'<a href="'.Url::base().'">'.PIPELINE_NAME.'</a>'
+					);
+					break;
 			case 'make_organizer':
 				$formatted = sprintf("%s made %s an organizer.",
 						formatUserLink($event->getUser1ID()),

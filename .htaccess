@@ -28,6 +28,7 @@ RewriteRule ^projects/?$ controller/site/find_c.php [L]
 
 ### SETTINGS ###
 
+RewriteRule ^settings/process/?$ controller/site/settings.process.php [L]
 RewriteRule ^settings/?$ controller/site/settings_c.php [L]
 
 ### LOGIN/LOGOUT ###

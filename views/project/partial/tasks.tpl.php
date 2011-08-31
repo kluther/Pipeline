@@ -14,11 +14,11 @@ $fork->set('title', $title);
 $fork->set('id', $id);
 $fork->set('creatable', $creatable);
 
-if($size == 'small') {
-	$fork->set('createLabel', 'New');
-} else {
-	$fork->set('createLabel', 'New Task');
-}
+// if($size == 'small') {
+	// $fork->set('createLabel', 'New');
+// } else {
+	// $fork->set('createLabel', 'New Task');
+// }
 
 $fork->startBlockSet('body');
 ?>

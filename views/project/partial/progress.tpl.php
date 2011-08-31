@@ -13,7 +13,7 @@ $fork = $SOUP->fork();
 $fork->set('id', 'progress');
 $fork->set('title', "Progress");
 $fork->set('editable', true);
-$fork->set('editLabel', "Edit Progress");
+//$fork->set('editLabel', "Edit Progress");
 $fork->startBlockSet('body');
 ?>
 

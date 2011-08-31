@@ -10,7 +10,7 @@ $fork = $SOUP->fork();
 
 $fork->set('id', 'task');
 $fork->set('editable', true);
-$fork->set('editLabel', 'Edit Task');
+//$fork->set('editLabel', 'Edit Task');
 $fork->set('title', 'Task Info');
 
 $fork->startBlockSet('body');
