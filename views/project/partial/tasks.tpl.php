@@ -7,7 +7,7 @@ $project = $SOUP->get('project');
 $creatable = $SOUP->get('creatable', true);
 $id = $SOUP->get('id', 'tasks');
 $size = $SOUP->get('size', 'large');
-$showRelationship = $SOUP->get('showRelationship', true);
+//$showRelationship = $SOUP->get('showRelationship', true);
 
 $fork = $SOUP->fork();
 $fork->set('title', $title);

@@ -73,17 +73,17 @@ class Task extends DbObject
 	
 	public static function getYourTasks($userID=null, $projectID=null, $limit=null)
 	{
-		if( ($userID == null) || ($projectID == null) ) return null;
+		if($userID == null) return null;
 		
 		$query = "SELECT id FROM ".self::DB_TABLE;
-		$query .= " WHERE (project_id = ".$projectID;
-		$query .= " AND leader_id = ".$userID.")";
+		$query .= " WHERE (leader_id = ".$userID.")";
 		$query .= " OR (id IN ";
 			$query .= " (SELECT task_id FROM ".Accepted::DB_TABLE;
-			$query .= " WHERE project_id = ".$projectID;
-			$query .= " AND creator_id = ".$userID;
+			$query .= " WHERE creator_id = ".$userID;
 			$query .= " AND status != ".Accepted::STATUS_RELEASED.")";
 		$query .= ")";
+		if($projectID != null)
+			$query .= " AND project_id = ".$projectID;
 		$query .= " ORDER BY status DESC, ISNULL(deadline) ASC, title ASC";
 		if($limit != null)
 			$query .= " LIMIT ".$limit;

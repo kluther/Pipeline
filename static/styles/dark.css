@@ -6,7 +6,13 @@ div#task h5, div#update h5, div#profile div.view h5 {
 	color: #fff;
 	}		
 
-div#task span.status, div#update span.status, div#progress span.status, ul.segmented-list h6.primary span.status, h2 span.status {
+div#task span.status,
+div#update span.status,
+div#progress span.status,
+ul.segmented-list h6.primary span.status,
+ul.segmented-list p.secondary span.status,
+h2 span.status,
+ul.notifications span.category {
 	background-color: #1a1a1a;
 	color: #ccc;
 	}	
@@ -50,11 +56,6 @@ div.secondary-nav {
 			border-color: #6C6C6C;
 			color: #fff;
 			}		
-	
-ul.notifications span.category {
-	background-color: #1a1a1a;
-	color: #ccc;
-	}
 	
 ul.notifications label {
 	color: #a3a3a3;

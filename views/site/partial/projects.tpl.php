@@ -16,20 +16,22 @@ if($projects != null) {
 	<li>
 		<?php
 		
-		$status = '';
+		$relationship = '';
 		if(ProjectUser::isCreator($user->getID(), $p->getID())) {
-			$status = 'creator';
+			$relationship = 'creator';
 		} elseif(ProjectUser::isOrganizer($user->getID(), $p->getID())) {
-			$status = 'organizer';
+			$relationship = 'organizer';
 		} elseif(ProjectUser::isContributor($user->getID(), $p->getID())) {
-			$status = 'contributor';
+			$relationship = 'contributor';
 		} elseif(ProjectUser::isFollower($user->getID(), $p->getID())) {
-			$status = 'follower';
+			$relationship = 'follower';
 		}
 		
+		$deadline = ($p->getDeadline() != '') ? 'due '.formatTimeTag($p->getDeadline()) : 'no deadline';
+		
 		?>
-		<h6 class="primary"><a href="<?= Url::project($p->getID()) ?>"><?= $p->getTitle() ?></a>&nbsp;<span class="status"><?= formatProjectStatus($p->getStatus()) ?></span></h6>
-		<p class="secondary"><?= $status ?></p>
+		<h6 class="primary"><a href="<?= Url::project($p->getID()) ?>"><?= $p->getTitle() ?></a>&nbsp;<span class="status"><?= $relationship ?></span></h6>
+		<p class="secondary"><span class="status"><?= formatProjectStatus($p->getStatus()) ?></span> <span class="slash">/</span> <?= $deadline ?></p>
 	</li>
 <?php endforeach; ?>
 </ul>

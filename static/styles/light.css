@@ -10,6 +10,7 @@ div#task span.status,
 div#update span.status,
 div#progress span.status,
 ul.segmented-list h6.primary span.status,
+ul.segmented-list p.secondary span.status,
 h2 span.status,
 ul.notifications span.category {
 	background-color: #eeeeee;

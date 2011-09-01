@@ -10,10 +10,21 @@ $fork->startBlockSet('body');
 <div class="left">
 
 <?php
-	$SOUP->render('/site/partial/projects', array(
+	$SOUP->render('site/partial/projects', array(
 		'title' => 'Your Projects'
 	));
+?>
 
+<?php
+	$SOUP->render('site/partial/tasks', array(
+		'title' => 'Your Tasks'
+	));
+?>
+
+
+<?php
+	$SOUP->render('site/partial/invitations', array(
+	));
 ?>
 
 </div>
