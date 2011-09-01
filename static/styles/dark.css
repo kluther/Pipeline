@@ -126,16 +126,11 @@ div.heading a {
 	color: #fff;
 	}	
 	
-	div.breadcrumbs h3 {
-		color: #fff;
-		}
+div.breadcrumbs h3 {
+	color: #fff;
+	}
 		
-input[type=button][disabled="disabled"], input[type=submit][disabled="disabled"], .disabledButton{
-	border-color: #313131;
-	background-color: #444444;
-	color:#888888;
-	}		
-	
+
 input[type=text], input[type=password],
 input.textbox, textarea, select {
 	background-color: #1a1a1a;
@@ -144,14 +139,28 @@ input.textbox, textarea, select {
 }	
 
 input[type=text]:hover, input[type=password]:hover,
-input.textbox:hover, textarea:hover, select:hover,
+input[type=file]:hover textarea:hover, select:hover,
 input[type=text]:focus, input[type=password]:focus,
-input[type=file]:focus, input.textbox:focus, textarea:focus, select:focus {
+input[type=file]:focus, textarea:focus, select:focus {
 	border-color: #F2CD58;
 }
-
+	
 input[type=button], input[type=submit] {
-	color:#fff;
-	border-color: #133749;
-}
+	background-color: #666;
+	color: #eeeeee;
+	}
+	input[type=button]:hover, input[type=submit]:hover {
+		background-color: slategray;
+		color: #fff;
+	}
+input.create[type=button] {
+	}
+	input.create[type=button]:hover {
+		}		
+		
+input[type=button][disabled="disabled"], input[type=submit][disabled="disabled"], .disabledButton{
+	background-color: #dddddd;
+	color: #999;
+	}		
+
 	
