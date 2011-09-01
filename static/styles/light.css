@@ -29,7 +29,9 @@ div.upload a.thumb {
 		}	
 		
 div.primary-nav {			
-	background: rgba(255,255,255,.50);
+	/*background: rgba(255,255,255,.50);*/
+	background: #fff url(./../images/header_bg_light.png) repeat-x center left;	
+	background: #eeeeee;
 	}
 	div.primary-nav a {
 		color: #000;
@@ -46,14 +48,17 @@ div.secondary-nav {
 		}	
 		div.secondary-nav a.selected {
 			background-color: #eeeeee;
-			border-color: #fff;
+			border-color: #dddddd;
 			color: #000;
 			}
 		div.secondary-nav a:hover {
-			background-color: #fff;
-			border-color: #fff;
+			background-color: #eeeeee;
+			border-color: #dddddd;
 			color: #000;
-			}		
+			}
+			div.secondary-nav a.selected:hover {
+				/*background-color: #fff;*/
+				}
 
 ul.notifications label {
 	color: #333;
@@ -117,7 +122,8 @@ div.panel-footer {
 	}	
 
 div.page-header {
-	background: #fff url(./../images/header_bg_light.png) repeat-x center left;
+	/*background: #fff url(./../images/header_bg_light.png) repeat-x center left;*/
+	background: #fff;
 	}	
 	
 div.heading a {

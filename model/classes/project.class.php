@@ -108,8 +108,8 @@ class Project extends DbObject
 	
 	/* static methods */
 	
-	public static function getLookingForHelp() {
-		$query = "SELECT id FROM ".self::DB_TABLE;
+	public static function getLookingForHelp($limit=null) {
+		$query = "SELECT DISTINCT id FROM ".self::DB_TABLE;
 		$query .= " WHERE status > ".self::STATUS_COMPLETED;
 		$query .= " AND private = 0";
 		$query .= " AND id IN (";
@@ -117,8 +117,48 @@ class Project extends DbObject
 			$query .= " WHERE status = 1";
 		$query .= ") ";
 		$query .= " ORDER BY ISNULL(deadline) ASC, title ASC";
+		if($limit != null)
+			$query .= " LIMIT ".$limit;
 		//echo $query;
 		
+		$db = Db::instance();
+		$result = $db->lookup($query);
+		if(!mysql_num_rows($result)) return null;
+		
+		$projects = array();
+		while($row = mysql_fetch_assoc($result))
+			$projects[$row['id']] = self::load($row['id']);
+		return $projects;
+	}
+	
+	public static function getByUserID($userID=null, $limit=null) {
+		if($userID === null) return null;
+		
+		$query = "SELECT DISTINCT id FROM ".self::DB_TABLE;
+		// creator
+		$query .= " WHERE (creator_id = ".$userID;
+		// follower, organizer
+		$query .= " OR id IN (";
+			$query .= " SELECT DISTINCT project_id FROM ".ProjectUser::DB_TABLE;
+			$query .= " WHERE user_id = ".$userID;
+			$query .= " AND relationship != ".ProjectUser::BANNED;
+		$query .= " )";
+		// contributor
+		$query .= " OR id IN (";
+			$query .= " SELECT DISTINCT project_id FROM ".Event::DB_TABLE;
+			$query .= " WHERE user_1_id = ".$userID;
+			$query .= " OR user_2_id = ".$userID;
+		$query .= "))";
+		// not banned
+		$query .= " AND id NOT IN (";
+			$query .= " SELECT DISTINCT project_id FROM ".ProjectUser::DB_TABLE;
+			$query .= " WHERE user_id = ".$userID;
+			$query .= " AND relationship = ".ProjectUser::BANNED;
+		$query .= " )";
+		$query .= " ORDER BY ISNULL(deadline) ASC, title ASC";
+		if($limit != null)
+			$query .= " LIMIT ".$limit;
+			
 		$db = Db::instance();
 		$result = $db->lookup($query);
 		if(!mysql_num_rows($result)) return null;

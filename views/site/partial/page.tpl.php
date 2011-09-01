@@ -16,14 +16,14 @@ if($project != null)
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 	<title><?= PIPELINE_NAME ?> - <?= $pageTitle ?></title>
-	<link rel="icon" type="image/png" href="<?= Url::images() ?>/favicon.png" />
+	<link rel="icon" type="image/png" href="<?= Url::images() ?>/icons/clapperboard.png" />
 	<link rel="stylesheet" type="text/css" href="<?= Url::styles() ?>/basic.css" />
 	<link rel="stylesheet" type="text/css" href="<?= Url::styles() ?>/light.css" />
-	<link rel="stylesheet" type="text/css" href="<?= Url::styles() ?>/jquery-ui.css" />
+	<link rel="stylesheet" type="text/css" href="<?= Url::styles() ?>/jquery-ui-1.8.16.custom.css" />
 	<script type="text/javascript" src="http://www.google.com/jsapi"></script>
 	<script type="text/javascript"> 
 		google.load("jquery", "1");
-		google.load("jqueryui", "1.8.5");
+		google.load("jqueryui", "1.8.16");
 		google.setOnLoadCallback(function(){});
 	</script>
 	<script type="text/javascript" src="<?= Url::scripts() ?>/common.js"></script>

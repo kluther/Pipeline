@@ -9,11 +9,22 @@ $fork->startBlockSet('body');
 
 <div class="left">
 
-<h1>Dashboard</h1>
+<?php
+	$SOUP->render('/site/partial/projects', array(
+		'title' => 'Your Projects'
+	));
+
+?>
 
 </div>
 
 <div class="right">
+
+<?php
+	$SOUP->render('site/partial/activity', array(
+		'size' => 'small'
+	));
+?>
 
 </div>
 

@@ -256,14 +256,14 @@ div.upload {
 /* PRIMARY NAV */	
 	
 div.primary-nav {
-	padding: 1.3em 0;
+	padding: 1em 0;
 	overflow: hidden;
-	width: auto;		
+	width: auto;
 	}
 	
 div.primary-nav li {
 	display: block;
-	padding-top: 0.2em; /* valign with logo */
+	margin: 0; padding-top: 0.3em; /* valign with logo */
 	}
 	div.primary-nav li.left {
 		float: left;
@@ -274,11 +274,8 @@ div.primary-nav li {
 	div.primary-nav li a {
 		display: block;
 		font-size: 87.5%;
-		padding-left: 1em;
-		padding-right: 1em;
+		padding: 0 1em;
 		}
-	
-
 
 /* SECONDARY NAV */
 
@@ -462,7 +459,7 @@ h1 {
 	padding-right: 1.5em;
 	}
 	h1 a {
-		font-size: 110%;
+		font-size: 120%;
 		}
 		
 h2 {
