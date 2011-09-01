@@ -38,13 +38,10 @@ div.primary-nav {
 		color: #000;
 		}
 			
-div.secondary-nav {
-	/*border-bottom: 2px solid #999;*/
-	/*color: #a8a8a8;*/
-	}			
+div.secondary-nav {}			
 	div.secondary-nav a {
 		background-color: #dddddd;	
-		border-color: #ccc;
+		border-color: #fff;
 		color: #666;
 		}	
 		div.secondary-nav a.selected {
@@ -53,8 +50,8 @@ div.secondary-nav {
 			color: #000;
 			}
 		div.secondary-nav a:hover {
-			background-color: #eeeeee;
-			border-color: #dddddd;
+		/*	background-color: #eeeeee; */
+			border-color: #ccc;
 			color: #000;
 			}
 			div.secondary-nav a.selected:hover {

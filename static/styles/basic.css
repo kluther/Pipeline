@@ -259,7 +259,7 @@ div.upload {
 /* PRIMARY NAV */	
 	
 div.primary-nav {
-	padding: 1em 0;
+	padding: 1em 0 1.2em 0;
 	overflow: hidden;
 	width: auto;
 	}
@@ -298,7 +298,7 @@ div.primary-nav li {
 		margin-right: .5em;
 		padding: .5em 1em;
 		border: 2px solid;
-		border-bottom: 0;
+	/*	border-bottom: 0;*/
 		-moz-border-radius-topleft: .5em;
 		-moz-border-radius-topright: .5em;
 		-webkit-border-top-left-radius: .5em;
