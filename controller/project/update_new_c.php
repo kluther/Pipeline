@@ -34,6 +34,10 @@ if($task == null) {
 
 // get existing updates
 $accepted = Accepted::getByUserID(Session::getUserID(), $taskID);
+if($accepted == null) {
+	header('Location: '.Url::error());
+	exit();
+}
 $updates = Update::getByAcceptedID($accepted->getID());
 
 $soup = new Soup();

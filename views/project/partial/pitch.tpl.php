@@ -53,12 +53,19 @@ $(document).ready(function(){
 
 <div class="edit hidden">
 
-<textarea id="txtPitch"><?= html_entity_decode($project->getPitch()) ?></textarea>
+<div class="clear">
+	<label for="txtPitch">Pitch<span class="required">*</span></label>
+	<div class="input">
+		<textarea id="txtPitch"><?= html_entity_decode($project->getPitch()) ?></textarea>
+		<p>Allowed tags: &lt;a&gt; &lt;strong&gt; &lt;b&gt; &lt;em&gt; &lt;i&gt;</p>
+	</div>
+</div>
 
-<div class="buttons">
-	<input id="btnSavePitch" class="right" type="button" value="Save" />
-	<input id="btnCancelPitch" class="right" type="button" value="Cancel" />
-	<p class="right">Allowed tags: &lt;a&gt; &lt;strong&gt; &lt;b&gt; &lt;em&gt; &lt;i&gt;</p>
+<div class="clear">
+	<div class="input">
+		<input id="btnSavePitch" type="button" value="Save" />
+		<input id="btnCancelPitch" type="button" value="Cancel" />
+	</div>
 </div>
 
 </div>

@@ -1,5 +1,6 @@
 <?php
 require_once('./../../global.php');
+require_once TEMPLATE_PATH.'/site/helper/format.php'; 
 
 $slug = Filter::text($_GET['slug']);
 	
@@ -269,6 +270,24 @@ if($action == 'create') {
 	
 	// check flag
 	if($modified) {
+		// notify task crew, if desired
+		$crew = Accepted::getByTaskID($task->getID());
+		if($crew != null) {
+			foreach($crew as $c) {
+				$user = User::load($c->getCreatorID());
+				if($user->getNotifyEditTaskAccepted()) {
+					// compose email
+					$msg = "<p>".formatUserLink(Session::getUserID()).' edited the task <a href="'.Url::task($taskID).'">'.$task->getTitle().'</a> in the project '.formatProjectLink($project->getID()).' on '.PIPELINE_NAME.'.</p>';
+					$email = array(
+						'to' => $user->getEmail(),
+						'subject' => 'New edits to a task you joined in '.$project->getTitle(),
+						'message' => $msg
+					);
+					// send email
+					Email::send($email);				
+				}
+			}
+		}
 		Session::setMessage('You edited this task.');
 		$json = array('success' => '1', 'successUrl' => Url::task($task->getID()));
 		echo json_encode($json);		
@@ -329,6 +348,43 @@ if($action == 'create') {
 		));
 		$logEvent->save();
 		
+		// send email notifications, if applicable
+		
+		// to task leader
+		$leader = User::load($task->getLeaderID());
+		if($leader->getNotifyCommentTaskLeading()) {
+			// compose email
+			$msg = "<p>".formatUserLink(Session::getUserID()).' commented on the task <a href="'.Url::task($taskID).'">'.$task->getTitle().'</a> in the project '.formatProjectLink($project->getID()).' on '.PIPELINE_NAME.'. The comment was:</p>';
+			$msg .= "<blockquote>".html_entity_decode($message)."</blockquote>";
+			$email = array(
+				'to' => $leader->getEmail(),
+				'subject' => 'New comment on a task you are leading in '.$project->getTitle(),
+				'message' => $msg
+			);
+			// send email
+			Email::send($email);	
+		}		
+		
+		// to task crew
+		$crew = Accepted::getByTaskID($taskID);
+		if($crew != null) {
+			foreach($crew as $c) {
+				$user = User::load($c->getCreatorID());
+				if($user->getNotifyCommentTaskAccepted()) {
+					// compose email
+					$msg = "<p>".formatUserLink(Session::getUserID()).' commented on the task <a href="'.Url::task($taskID).'">'.$task->getTitle().'</a> in the project '.formatProjectLink($project->getID()).' on '.PIPELINE_NAME.'. The comment was:</p>';
+					$msg .= "<blockquote>".html_entity_decode($message)."</blockquote>";
+					$email = array(
+						'to' => $user->getEmail(),
+						'subject' => 'New comment on a task you joined in '.$project->getTitle(),
+						'message' => $msg
+					);
+					// send email
+					Email::send($email);				
+				}
+			}
+		}		
+		
 		// send us back
 		Session::setMessage('You commented on this task.');
 		$json = array('success' => '1');
@@ -349,7 +405,7 @@ if($action == 'create') {
 			'parent_id' => $commentID,
 			'message' => $message
 		));
-		$reply->save();
+		$reply->save();	
 		
 		// log it
 		$logEvent = new Event(array(
@@ -362,6 +418,43 @@ if($action == 'create') {
 			'data_1' => $message
 		));
 		$logEvent->save();
+		
+		// send email notifications, if applicable
+		
+		// to task leader
+		$leader = User::load($task->getLeaderID());
+		if($leader->getNotifyCommentTaskLeading()) {
+			// compose email
+			$msg = "<p>".formatUserLink(Session::getUserID()).' replied to a comment on the task <a href="'.Url::task($taskID).'">'.$task->getTitle().'</a> in the project '.formatProjectLink($project->getID()).' on '.PIPELINE_NAME.'. The reply was:</p>';
+			$msg .= "<blockquote>".html_entity_decode($message)."</blockquote>";
+			$email = array(
+				'to' => $leader->getEmail(),
+				'subject' => 'New comment reply on a task you are leading in '.$project->getTitle(),
+				'message' => $msg
+			);
+			// send email
+			Email::send($email);	
+		}		
+		
+		// to task crew
+		$crew = Accepted::getByTaskID($taskID);
+		if($crew != null) {
+			foreach($crew as $c) {
+				$user = User::load($c->getCreatorID());
+				if($user->getNotifyCommentTaskAccepted()) {
+					// compose email
+					$msg = "<p>".formatUserLink(Session::getUserID()).' replied to a comment on the task <a href="'.Url::task($taskID).'">'.$task->getTitle().'</a> in the project '.formatProjectLink($project->getID()).' on '.PIPELINE_NAME.'. The reply was:</p>';
+					$msg .= "<blockquote>".html_entity_decode($message)."</blockquote>";
+					$email = array(
+						'to' => $leader->getEmail(),
+						'subject' => 'New comment reply on a task you joined in '.$project->getTitle(),
+						'message' => $msg
+					);
+					// send email
+					Email::send($email);				
+				}
+			}
+		}			
 		
 		// send us back
 		Session::setMessage('You replied to a comment on this task.');

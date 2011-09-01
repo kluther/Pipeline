@@ -81,7 +81,7 @@ if($comments != null) {
 	<li class="comment">
 		<textarea id="txtComment"></textarea>
 		<div class="buttons">
-			<input type="button" class="right" id="btnComment" value="Post Comment" />		
+			<input type="button" class="right" id="btnComment" value="Comment" />		
 			<p class="right">Allowed tags: &lt;a&gt; &lt;strong&gt; &lt;b&gt; &lt;em&gt; &lt;i&gt;</p>
 		</div>
 	</li>

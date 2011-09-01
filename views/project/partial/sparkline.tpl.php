@@ -6,7 +6,8 @@ $data = $SOUP->get('data', array());
 $project = $SOUP->get('project');
 $filter = $SOUP->get('filter');
 
-//print_r($data);
+$lineColor = '666666';
+$bgColor = 'ffffff';
 
 $height=50;
 $width=570;
@@ -43,6 +44,6 @@ $(document).ready(function(){
 		</div>
 	</div>
 	<div class="panel-body">
-		<img class="sparkline" src="http://chart.apis.google.com/chart?cht=lc&chs=<?= $width ?>x<?= $height ?>&chd=<?= simpleEncode($data,max($data)) ?>&chco=ffffff&chls=1,1,0&chxt=r,x,y&chxs=0,ffffff,11,0,_|1,ffffff,1,0,_|2,ffffff,1,0,_&chxl=0:||1:||2:||&chf=bg,s,262626" /></li>
+		<img class="sparkline" src="http://chart.apis.google.com/chart?cht=lc&chs=<?= $width ?>x<?= $height ?>&chd=<?= simpleEncode($data,max($data)) ?>&chco=<?= $lineColor ?>&chls=1,1,0&chxt=r,x,y&chxs=0,<?= $lineColor ?>,11,0,_|1,<?= $lineColor ?>,1,0,_|2,<?= $lineColor ?>,1,0,_&chxl=0:||1:||2:||&chf=bg,s,<?= $bgColor ?>" /></li>
 	</div>
 </div>

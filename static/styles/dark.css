@@ -1,209 +1,78 @@
-html {
-	font-family: Verdana, sans-serif;
-	font-size: 14px;
-	color: #a3a3a3;
-	background: #1a1a1a;
+ul.segmented-list li {
+	border-top-color: #313131;
 	}
-
-
-a {
-	/*color: #f2cd58;*/
+		
+div#task h5, div#update h5, div#profile div.view h5 {
 	color: #fff;
-	text-decoration: none;
-	}
+	}		
 
-h1 a {
+div#task span.status, div#update span.status, div#progress span.status, ul.segmented-list h6.primary span.status, h2 span.status {
+	background-color: #1a1a1a;
+	color: #ccc;
+	}	
+	
+ul.replies h5 {
 	color: #fff;
-	font-size: 110%;
 	}
 	
-a:hover {
-	text-decoration: underline;
+ul.replies span.when, ul.comments span.when {
+	color: #666;
+	}	
+	
+div.upload a.thumb {
+	background-color: #1a1a1a;
+	border-color: #262626;
 	}
-
-div.primary-nav {
+	div.upload a.thumb:hover {
+		border-color: #fff;
+		}	
+			
+div.primary-nav {			
 	background: rgba(0,0,0,.25);
-	overflow: hidden;
-	width: auto;	
-	}
+	}	
 	
-div.page-header {
-	background: #313131 url(./../images/header_bg.png) repeat-x center left;
-	}
-
-
 div.secondary-nav {
 	border-bottom: 2px solid #6C6C6C;
 	color: #a8a8a8;
-	}
-	div.secondary-nav div.funnel {
-		padding-top: .75em;
-		padding-bottom: .5em;
-		overflow: hidden;
-		}
-	div.secondary-nav li {
-		display: inline;
-		}
-		div.secondary-nav li.break {
-			margin-right: 1em;
-			}
+	}			
 	div.secondary-nav a {
-		margin-right: .5em;
-		padding: .5em 1em;
-		border: 2px solid #3C3C3C;
-		border-bottom: 0;
-		background: #1A1A1A;
+		border-color: #3C3C3C;
+		background-color: #1A1A1A;
 		color: inherit;
-		-moz-border-radius-topleft: .5em;
-		-moz-border-radius-topright: .5em;
-		-webkit-border-top-left-radius: .5em;
-		-webkit-border-top-right-radius: .5em;
-		border-top-left-radius: .5em;
-		border-top-right-radius: .5em;
-		}
+		}	
 		div.secondary-nav a.selected {
-			text-decoration: none;
-			background: #494949;
+			background-color: #494949;
 			border-color: #494949;
 			color: #fff;
 			}
 		div.secondary-nav a:hover {
-			text-decoration: none;
-			background: #6C6C6C;
+			background-color: #6C6C6C;
 			border-color: #6C6C6C;
 			color: #fff;
-			}
+			}		
+	
+ul.notifications span.category {
+	background-color: #1a1a1a;
+	color: #ccc;
+	}
+	
+ul.notifications label {
+	color: #a3a3a3;
+	}
+	
+html {
+	color: #a3a3a3;
+	background-color: #1a1a1a;
+	}	
 
-
+a, h1 a {
+	color: #fff;
+	}	
 		
 h2 {
-	font-size: 180%;
 	color: #fff;
-	padding: 1em 0;
-	}
-
-div.heading a {
-	color: #fff;
-	}
-	
-	
-div.breadcrumbs {
-	/*display: none;*/
-	margin-bottom: 1em;
-	}
-	div.breadcrumbs h3 {
-		font-size: 120%;
-		color: #fff;
-		display: inline;
-		}
-	
-label {
-	color: #fff;
-	}
-
-
-	
-input[type=button][disabled="disabled"], input[type=submit][disabled="disabled"], .disabledButton{
-	border:1px solid #313131;
-	background: #444444 url("./../images/loader.gif") no-repeat 3% 50%;
-	color:#888888;
-	}
-	
-input[type=text], input[type=password],
-input.textbox, textarea, select {
-	background: #000;
-	color: #fff;
-	border: 1px solid #666;
-	font-family: Verdana, sans-serif;
-}
-
-input[type=text]:hover, input[type=password]:hover,
-input.textbox:hover, textarea:hover, select:hover,
-input[type=text]:focus, input[type=password]:focus,
-input[type=file]:focus, input.textbox:focus, textarea:focus, select:focus {
-	border: 1px solid #F2CD58;
-}
-
-input[type=button], input[type=submit] {
-
-	font-family:Verdana, sans-serif;
-	font-size: 110%;
-	font-weight:bold;
-	color:#fff;
-	background:url("./../images/button.png") repeat-x center left;
-	border:1px solid #133749;
-	-moz-border-radius: .5em;
-	-webkit-border-radius: .5em;
-	border-radius: .5em;
-}
-
-input[type=submit]:hover, input[type=button]:hover{
-	background-image:url("./../images/button_hover.png");
-}
-
-
-div.panel {
-	background: #262626;
-	margin-bottom: 1em;
-	-moz-border-radius: .5em;
-	-webkit-border-radius: .5em;
-	border-radius: .5em;	
-	}
-	div.panel.small {
-		width: 300px;
-		}
-	div.panel.large {
-		width: 600px;
-		}
-	div.panel.indent {
-		width: 550px;
-		margin-left: 50px;
-		}
-	div.panel.double-indent {
-		width: 500px;
-		margin-left: 100px;
-		}
-	
-div.panel-header {
-	background: #313131;
-	padding: 0 1em;
-	border-top: 2px solid #6c6c6c;
-	overflow: hidden;
-	width: auto;
-	}
-	div.panel-header h4 {
-		color: #ccc;
-		font-size: 90%;
-		text-transform: uppercase;
-		display: block;
-		float: left;
-		padding: 1em 0;
-		}
-	div.panel-header input.editButton, div.panel-header input.createButton {
-		display: block;
-		float: right;
-		font-size: 85%;
-		margin: 6px 0 6px 0.75em; padding: 4px 6px;
-		/*font-weight: normal;*/
-		-moz-border-radius: 0.5em;
-		-webkit-border-radius: 0.5em;
-		border-radius: 0.5em;		
-		}
-
-div.panel-body {
-	clear: both;
-	padding: .5em 1em;
-	color: #a8a8a8;
-
-	}
-	
-div.panel-footer {
-	padding: .5em 1em;
-	border-top: 1px solid #313131;
-	font-size: 90%;
-	text-align: right;
-	}
-	
+	}			
+				
 span.required {
 	color: red;
 	}
@@ -214,22 +83,75 @@ span.required {
 
 .bad {
 	color: #B22222 !important;
+	}	
+	
+label {
+	color: #fff;
 	}
 	
 div.line {
-	border-top: 1px solid #313131;
-	margin: 0.5em 0;
-	clear: both;
-	}
+	border-top-color: #313131;
+	}	
 	
-strong, b {
-	font-weight: bold;
-	}
+span.slash {
+	color: #313131;
+	}	
+	
+div.panel {
+	background-color: #262626;	
+	}	
+	
+div.panel-header {
+	background-color: #313131;
+	border-top-color: #6c6c6c;
+	}	
+	div.panel-header h4 {
+		color: #ccc;
+		}	
+		
+div.panel-body {
+	color: #a8a8a8;
+	}		
+	
+div.panel-footer {
+	border-top-color: #313131;
+	}	
 
-em, i {
-	font-style: italic;
-	}
+div.page-header {
+	background: url(./../images/header_bg.png) repeat-x center left;
+	background-color: #313131;
+	}	
+	
+div.heading a {
+	color: #fff;
+	}	
+	
+	div.breadcrumbs h3 {
+		color: #fff;
+		}
+		
+input[type=button][disabled="disabled"], input[type=submit][disabled="disabled"], .disabledButton{
+	border-color: #313131;
+	background-color: #444444;
+	color:#888888;
+	}		
+	
+input[type=text], input[type=password],
+input.textbox, textarea, select {
+	background-color: #1a1a1a;
+	color: #fff;
+	border-color: #666;
+}	
 
-span.datetime {
-	font-style: italic;
-	}
+input[type=text]:hover, input[type=password]:hover,
+input.textbox:hover, textarea:hover, select:hover,
+input[type=text]:focus, input[type=password]:focus,
+input[type=file]:focus, input.textbox:focus, textarea:focus, select:focus {
+	border-color: #F2CD58;
+}
+
+input[type=button], input[type=submit] {
+	color:#fff;
+	border-color: #133749;
+}
+	

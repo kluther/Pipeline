@@ -17,7 +17,7 @@ $(document).ready(function(){
 		logIn();
 		});
 	// the below function allows user to press "Enter" to log in
-	$('input').keypress(function(e){
+	$('input.login').keypress(function(e){
 		if(e.which == 13){
 			$('#btnLogIn').mousedown();
 			return false;
