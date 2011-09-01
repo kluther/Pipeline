@@ -32,12 +32,17 @@ $loc = $user->getLocation();
 // bio
 $bio = $user->getBiography();
 
+// must be current user to edit
+$hasPermission = ($user->getID() == Session::getUserID());
+
 $fork = $SOUP->fork();
 $fork->set('id', 'profile');
 $fork->set('title', "Profile");
-$fork->set('editable', true);
+$fork->set('editable', $hasPermission);
 $fork->startBlockSet('body');
 ?>
+
+<?php if($hasPermission): ?>
 
 <script type="text/javascript">
 $(document).ready(function(){
@@ -71,41 +76,6 @@ $(document).ready(function(){
 	});	
 });
 </script>
-
-<div class="view">
-
-<?= formatUserPicture($user->getID()) ?>
-<h5 class="username"><?= formatUserLink($user->getID()) ?></h5>
-<p class="contact"><?= ($user->getName() != null) ? $user->getName().$slash : '' ?> <a href="mailto:<?= $user->getEmail() ?>">send email</a></p>
-<?php
-if( ($age != null) &&
-	($sex != null) &&
-	($loc != null) ) {
-	echo '<p class="asl">'.$age.' years old'.$slash.$sex.$slash.'from '.$loc.'</p>';
-} elseif( ($age != null) &&
-	($sex != null) ) {
-	echo '<p class="asl">'.$age.' years old'.$slash.$sex.'</p>';
-} elseif( ($age != null) &&
-	($loc != null) ) {
-	echo '<p class="asl">'.$age.' years old'.$slash.'from '.$loc.'</p>';
-} elseif( ($sex != null) &&
-	($loc != null) ) {
-	echo '<p class="asl">'.$sex.$slash.'from '.$loc.'</p>';	
-} elseif($age != null) {
-	echo '<p class="asl">'.$age.' years old</p>';
-} elseif($sex != null) {
-	echo '<p class="asl">'.$sex.'</p>';
-} elseif($loc != null) {
-	echo '<p class="asl">from '.$loc.'</p>';
-}
-
-if($bio != null) {
-	echo '<div class="line" style="margin: 1em 0 0 55px;"></div>';
-	echo '<p class="biography">'.html_entity_decode($bio).'</p>';
-}
-?>
-<div class="clear"></div>
-</div><!-- .view -->
 
 <div class="edit hidden">
 
@@ -186,6 +156,45 @@ if($bio != null) {
 </form>
 
 </div><!-- .edit -->
+
+<?php endif; ?>
+
+<div class="view">
+
+<?= formatUserPicture($user->getID()) ?>
+<h5 class="username"><?= formatUserLink($user->getID()) ?></h5>
+<p class="contact"><?= ($user->getName() != null) ? $user->getName().$slash : '' ?> <a href="mailto:<?= $user->getEmail() ?>">send email</a></p>
+<?php
+if( ($age != null) &&
+	($sex != null) &&
+	($loc != null) ) {
+	echo '<p class="asl">'.$age.' years old'.$slash.$sex.$slash.'from '.$loc.'</p>';
+} elseif( ($age != null) &&
+	($sex != null) ) {
+	echo '<p class="asl">'.$age.' years old'.$slash.$sex.'</p>';
+} elseif( ($age != null) &&
+	($loc != null) ) {
+	echo '<p class="asl">'.$age.' years old'.$slash.'from '.$loc.'</p>';
+} elseif( ($sex != null) &&
+	($loc != null) ) {
+	echo '<p class="asl">'.$sex.$slash.'from '.$loc.'</p>';	
+} elseif($age != null) {
+	echo '<p class="asl">'.$age.' years old</p>';
+} elseif($sex != null) {
+	echo '<p class="asl">'.$sex.'</p>';
+} elseif($loc != null) {
+	echo '<p class="asl">from '.$loc.'</p>';
+}
+
+if($bio != null) {
+	echo '<div class="line" style="margin: 1em 0 0 55px;"></div>';
+	echo '<p class="biography">'.html_entity_decode($bio).'</p>';
+}
+?>
+<div class="clear"></div>
+</div><!-- .view -->
+
+
 
 <?php
 

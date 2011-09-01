@@ -3,19 +3,24 @@ include_once TEMPLATE_PATH.'/site/helper/format.php';
 
 $task = $SOUP->get('task');
 $project = $SOUP->get('project');
-
 $leader = User::load($task->getLeaderID());
+
+// only organizers or creator may edit
+$hasPermission = ( ProjectUser::isOrganizer(Session::getUserID(), $project->getID()) ||
+					ProjectUser::isCreator(Session::getUserID(), $project->getID()) );
 
 $fork = $SOUP->fork();
 
 $fork->set('id', 'task');
-$fork->set('editable', true);
+$fork->set('editable', $hasPermission);
 //$fork->set('editLabel', 'Edit Task');
 $fork->set('title', 'Task Info');
 
 $fork->startBlockSet('body');
 
 ?>
+
+<?php if($hasPermission): ?>
 
 <script type="text/javascript">
 $(document).ready(function(){
@@ -55,36 +60,6 @@ $(document).ready(function(){
 });
 </script>
 
-<div class="view">
-
-<div class="person-box">
-	<a class="picture large" href="<?= Url::user($task->getLeaderID()) ?>"><img src="<?= Url::userPictureLarge($task->getLeaderID()) ?>" /></a>
-	<div class="text">
-		<p class="caption">task leader</p>
-		<p class="username"><?= formatUserLink($task->getLeaderID()) ?></p>
-	</div>
-</div>
-
-<?php
-
-if($task->getStatus() == Task::STATUS_OPEN) {
-	$status = '<span class="status good">open</span>';
-} else {
-	$status = '<span class="status bad">closed</span>';
-}
-
-$closed = ($task->getStatus() == Task::STATUS_CLOSED) ? ' class="closed"' : ''; // CSS class for strikethrough
-?>
-
-<h5<?= $closed ?>><a href="<?= Url::task($task->getID()) ?>"><?= $task->getTitle() ?></a></h5>
-
-<p><?= $status ?> <span class="slash">/</span> <?= ($task->getDeadline() != '') ? 'due '.formatTimeTag($task->getDeadline()) : 'no deadline' ?></p>
-
-<div class="line"></div>
-
-<p><?= formatTaskDescription($task->getDescription()) ?></p>
-
-</div><!-- end .view -->
 
 <div class="edit hidden">
 
@@ -151,6 +126,40 @@ $closed = ($task->getStatus() == Task::STATUS_CLOSED) ? ' class="closed"' : ''; 
 </form>
 
 </div><!-- end .edit -->
+
+<?php endif; ?>
+
+<div class="view">
+
+<div class="person-box">
+	<a class="picture large" href="<?= Url::user($task->getLeaderID()) ?>"><img src="<?= Url::userPictureLarge($task->getLeaderID()) ?>" /></a>
+	<div class="text">
+		<p class="caption">task leader</p>
+		<p class="username"><?= formatUserLink($task->getLeaderID()) ?></p>
+	</div>
+</div>
+
+<?php
+
+if($task->getStatus() == Task::STATUS_OPEN) {
+	$status = '<span class="status good">open</span>';
+} else {
+	$status = '<span class="status bad">closed</span>';
+}
+
+$closed = ($task->getStatus() == Task::STATUS_CLOSED) ? ' class="closed"' : ''; // CSS class for strikethrough
+?>
+
+<h5<?= $closed ?>><a href="<?= Url::task($task->getID()) ?>"><?= $task->getTitle() ?></a></h5>
+
+<p><?= $status ?> <span class="slash">/</span> <?= ($task->getDeadline() != '') ? 'due '.formatTimeTag($task->getDeadline()) : 'no deadline' ?></p>
+
+<div class="line"></div>
+
+<p><?= formatTaskDescription($task->getDescription()) ?></p>
+
+</div><!-- end .view -->
+
 
 <?php
 

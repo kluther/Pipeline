@@ -7,10 +7,13 @@ $title = $SOUP->get('title', 'Discussions');
 $discussions = $SOUP->get('discussions', array());
 $size = $SOUP->get('size');
 
+// any logged-in user may create
+$hasPermission = Session::isLoggedIn();
+
 $fork = $SOUP->fork();
 $fork->set('title', $title);
 $fork->set('class', 'discussions');
-$fork->set('creatable', true);
+$fork->set('creatable', $hasPermission);
 if($size == 'small') {
 //	$fork->set('createLabel', 'New');
 	$newURL = Url::discussionNew($project->getID()).'/'.$cat;
@@ -21,6 +24,8 @@ if($size == 'small') {
 
 ?>
 
+<?php if($hasPermission): ?>
+
 <script type="text/javascript">
 
 $(document).ready(function(){
@@ -30,6 +35,8 @@ $(document).ready(function(){
 });
 
 </script>
+
+<?php endif; ?>
 
 <?
 

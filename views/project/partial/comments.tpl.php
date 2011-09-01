@@ -5,15 +5,20 @@ $comments = $SOUP->get('comments',array());
 $processURL = $SOUP->get('processURL');
 $parentID = $SOUP->get('parentID');
 
+// any logged-in user may comment
+$hasPermission = Session::isLoggedIn();
+
 $fork = $SOUP->fork();
 $fork->set('title', 'Comments');
 $fork->startBlockSet('body');
 ?>
 
+<?php if($hasPermission): ?>
+
 <script type="text/javascript">
 	$(document).ready(function(){
 		//$('#txtComment').focus();
-		$('#btnComment').mousedown(function(){
+		$('#btnComment').click(function(){
 			buildPost({
 				'processPage':'<?= $processURL ?>',
 				'info':{
@@ -50,13 +55,16 @@ $fork->startBlockSet('body');
 	});
 </script>
 
+<?php endif; ?>
+
 <ul class="segmented-list comments">
 <?php
 if($comments != null) {
 	foreach($comments as $comment) {
 		echo '<li id="comment-'.$comment->getID().'">';
 		echo '<a class="picture large" href="'.Url::user($comment->getCreatorID()).'"><img src="'.Url::userPictureLarge($comment->getCreatorID()).'" /></a>';
-		echo '<input class="replyButton" type="button" value="Reply" />';
+		if($hasPermission)
+			echo '<input class="replyButton" type="button" value="Reply" />';
 		echo '<p class="headline">'.formatUserLink($comment->getCreatorID()).' <span class="slash">/</span> <span class="when">'.formatTimeTag($comment->getDateCreated()).'</span></p>';					
 		echo '<p class="message">'.html_entity_decode($comment->getMessage()).'</p>';			
 		//echo '<p class="when">'.formatTimeTag($comment->getDateCreated()).'</p>';
@@ -78,13 +86,18 @@ if($comments != null) {
 	echo '<li>(none)</li>';
 }
 ?>
+
+<?php if($hasPermission): ?>
+
 	<li class="comment">
 		<textarea id="txtComment"></textarea>
 		<div class="buttons">
-			<input type="button" class="right" id="btnComment" value="Comment" />		
+			<input type="button" class="right" id="btnComment" value="Post Comment" />		
 			<p class="right">Allowed tags: &lt;a&gt; &lt;strong&gt; &lt;b&gt; &lt;em&gt; &lt;i&gt;</p>
 		</div>
 	</li>
+	
+<?php endif; ?>
 </ul>
 <?php
 

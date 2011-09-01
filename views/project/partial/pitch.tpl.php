@@ -3,16 +3,22 @@ include_once TEMPLATE_PATH.'/site/helper/format.php';
 
 $project = $SOUP->get('project');
 
+// only organizers or creator may edit
+$hasPermission = ( ProjectUser::isOrganizer(Session::getUserID(), $project->getID()) ||
+					ProjectUser::isCreator(Session::getUserID(), $project->getID()) );
+
+$formattedPitch = formatPitch($project->getPitch());					
+					
 $fork = $SOUP->fork();
 $fork->set('title', "Pitch");
 $fork->set('id', "pitch");
-$fork->set('editable', true);
+$fork->set('editable', $hasPermission);
 //$fork->set('editLabel', 'Edit Pitch');
 $fork->startBlockSet('body');
 
-$formattedPitch = formatPitch($project->getPitch());
-
 ?>
+
+<?php if($hasPermission): ?>
 
 <script type="text/javascript">
 
@@ -41,15 +47,7 @@ $(document).ready(function(){
 	});
 });
 
-
-
 </script>
-
-<div class="view">
-
-<?= $formattedPitch ?>
-
-</div>
 
 <div class="edit hidden">
 
@@ -67,6 +65,14 @@ $(document).ready(function(){
 		<input id="btnCancelPitch" type="button" value="Cancel" />
 	</div>
 </div>
+
+</div><!-- .edit -->
+
+<?php endif; ?>
+
+<div class="view">
+
+<?= $formattedPitch ?>
 
 </div>
 

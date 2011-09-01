@@ -1,6 +1,12 @@
 <?php
 require_once("../../global.php");
 
+// must be logged in to post discussion
+if(!Session::isLoggedIn()) {
+	header('Location: '.Url::error());
+	exit();
+}
+
 $slug = Filter::text($_GET['slug']);
 $project = Project::getProjectFromSlug($slug);
 

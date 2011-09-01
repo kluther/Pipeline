@@ -4,15 +4,23 @@ include_once TEMPLATE_PATH.'/site/helper/format.php';
 $tasks = $SOUP->get('tasks', array());
 $title = $SOUP->get('title', 'Tasks');
 $project = $SOUP->get('project');
-$creatable = $SOUP->get('creatable', true);
+//$creatable = $SOUP->get('creatable', true);
 $id = $SOUP->get('id', 'tasks');
 $size = $SOUP->get('size', 'large');
 //$showRelationship = $SOUP->get('showRelationship', true);
+$hasPermission = $SOUP->get('hasPermission', null);
+
+// allow values to be passed in
+if($hasPermission === null) {
+	// only organizers or creator may create tasks
+	$hasPermission = ( ProjectUser::isOrganizer(Session::getUserID(), $project->getID()) ||
+						ProjectUser::isCreator(Session::getUserID(), $project->getID()) );
+}
 
 $fork = $SOUP->fork();
 $fork->set('title', $title);
 $fork->set('id', $id);
-$fork->set('creatable', $creatable);
+$fork->set('creatable', $hasPermission);
 
 // if($size == 'small') {
 	// $fork->set('createLabel', 'New');
@@ -23,6 +31,7 @@ $fork->set('creatable', $creatable);
 $fork->startBlockSet('body');
 ?>
 
+<?php if($hasPermission): ?>
 
 <script type="text/javascript">
 
@@ -33,6 +42,8 @@ $fork->startBlockSet('body');
 	});
 
 </script>
+
+<?php endif; ?>
 
 <?php
 if($tasks != null) {

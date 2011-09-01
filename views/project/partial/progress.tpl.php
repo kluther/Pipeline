@@ -9,13 +9,19 @@ $deadline = ($deadline != null) ? '<strong>due</strong> '.formatTimeTag($deadlin
 $venue = $project->getVenue();
 $venue = ($venue != null) ? $venue : '(none)';
 
+// only organizers or creator may edit
+$hasPermission = ( ProjectUser::isOrganizer(Session::getUserID(), $project->getID()) ||
+					ProjectUser::isCreator(Session::getUserID(), $project->getID()) );
+
 $fork = $SOUP->fork();
 $fork->set('id', 'progress');
 $fork->set('title', "Progress");
-$fork->set('editable', true);
+$fork->set('editable', $hasPermission);
 //$fork->set('editLabel', "Edit Progress");
 $fork->startBlockSet('body');
 ?>
+
+<?php if($hasPermission): ?>
 
 <script type="text/javascript">
 $(document).ready(function(){
@@ -54,12 +60,6 @@ $(document).ready(function(){
 });
 </script>
 
-<div class="view">
-
-<p><strong>started</strong> <?= formatTimeTag($project->getDateCreated()) ?> <span class="slash">/</span> <strong>status</strong>: <span class="status"><?= formatProjectStatus($project->getStatus()) ?></span>  <span class="slash">/</span> <?= $deadline ?></p>
-
-</div><!-- .view -->
-
 <div class="edit hidden">
 
 <div class="clear">
@@ -90,6 +90,14 @@ $(document).ready(function(){
 </div>
 
 </div><!-- .edit -->
+
+<?php endif; ?>
+
+<div class="view">
+
+<p><strong>started</strong> <?= formatTimeTag($project->getDateCreated()) ?> <span class="slash">/</span> <strong>status</strong>: <span class="status"><?= formatProjectStatus($project->getStatus()) ?></span>  <span class="slash">/</span> <?= $deadline ?></p>
+
+</div><!-- .view -->
 
 <?php
 
