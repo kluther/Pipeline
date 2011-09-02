@@ -54,7 +54,7 @@ foreach($replies as $reply) {
 	echo '<li>';
 	echo '<a class="picture large" href="'.Url::user($reply->getCreatorID()).'"><img src="'.Url::userPictureLarge($reply->getCreatorID()).'" /></a>';
 	echo '<p class="headline">'.formatUserLink($reply->getCreatorID()).' <span class="slash">/</span> <span class="when">'.formatTimeTag($reply->getDateCreated()).'</span></p>';
-	echo '<p class="message">'.formattedDiscussionReply($reply->getMessage()).'</p>';
+	echo '<p class="message">'.formatDiscussionReply($reply->getMessage()).'</p>';
 	echo '</li>';
 }
 ?>
