@@ -170,31 +170,34 @@ class Event extends DbObject
 	public static function getDashboardEvents($userID=null, $limit=null) {
 		if($userID === null) return null;
 		
-		$query = "SELECT DISTINCT id FROM ".self::DB_TABLE;
-		$query .= " WHERE (project_id IN (";
+		$query = "SELECT DISTINCT e.id AS id FROM ".self::DB_TABLE." e";
+		$query .= " INNER JOIN ".EventType::DB_TABLE." et ON ";
+		$query .= " e.event_type_id = et.id";
+		$query .= " WHERE (e.project_id IN (";
 		// follower or organizer
 			$query .= " SELECT DISTINCT project_id FROM ".ProjectUser::DB_TABLE;
 			$query .= " WHERE user_id = ".$userID;
 			$query .= " AND relationship != ".ProjectUser::BANNED;
 		$query .= " )";
 		// creator
-		$query .= " OR project_id IN (";
+		$query .= " OR e.project_id IN (";
 			$query .= " SELECT DISTINCT id FROM ".Project::DB_TABLE;
 			$query .= " WHERE creator_id = ".$userID;
 		$query .= " )";
 		// contributor
-		$query .= " OR project_id IN (";
+		$query .= " OR e.project_id IN (";
 			$query .= " SELECT DISTINCT project_id FROM ".self::DB_TABLE;
 			$query .= " WHERE user_1_id = ".$userID;
 			$query .= " OR user_2_id = ".$userID;
 		$query .= " ))";
 		// not banned
-		$query .= " AND project_id NOT IN (";
+		$query .= " AND e.project_id NOT IN (";
 			$query .= " SELECT DISTINCT project_id FROM ".ProjectUser::DB_TABLE;
 			$query .= " WHERE user_id = ".$userID;
 			$query .= " AND relationship = ".ProjectUser::BANNED;
 		$query .= " )";
-		$query .= " ORDER BY date_created DESC";
+		$query .= " AND et.hidden = 0";
+		$query .= " ORDER BY e.date_created DESC";
 		if($limit != null)
 			$query .= " LIMIT ".$limit;
 		//echo $query;
@@ -207,52 +210,6 @@ class Event extends DbObject
 		while($row = mysql_fetch_assoc($result))
 			$events[$row['id']] = self::load($row['id']);
 		return $events;	
-	}
-	
-	public static function getUserEvents($userID=null, $limit=null) {
-		if($userID == null) return null;
-		
-		$query = "SELECT id FROM ".self::DB_TABLE;
-		$query .= " WHERE user_1_id = ".$userID;
-		$query .= " ORDER BY date_created DESC";
-		if($limit != null)
-			$query .= " LIMIT ".$limit;
-		//echo $query;
-			
-		$db = Db::instance();
-		$result = $db->lookup($query);
-		if(!mysql_num_rows($result)) return array();
-
-		$events = array();
-		while($row = mysql_fetch_assoc($result))
-			$events[$row['id']] = self::load($row['id']);
-		return $events;	
-	}
-	
-	public static function getDiscussionEvents($discussionID=null, $limit=null)
-	{
-		if($discussionID == null) return null;
-		
-		$discussion = Discussion::load($discussionID);
-		$projectID = $discussion->getProjectID();
-		
-		$query = "SELECT id FROM ".self::DB_TABLE;
-		$query .= " WHERE project_id = ".$projectID;
-		$query .= " AND ( item_1_id = ".$discussionID." AND event_type_id = 'create_discussion' )";
-		$query .= " OR ( item_2_id = ".$discussionID." AND event_type_id = 'create_discussion_reply' )";		
-		$query .= " ORDER BY date_created DESC";
-		if($limit != null)
-			$query .= " LIMIT ".$limit;
-		//echo $query;
-			
-		$db = Db::instance();
-		$result = $db->lookup($query);
-		if(!mysql_num_rows($result)) return array();
-
-		$events = array();
-		while($row = mysql_fetch_assoc($result))
-			$events[$row['id']] = self::load($row['id']);
-		return $events;			
 	}
 	
 	public static function getBasicsEventsByProjectID($projectID=null, $limit=null)
@@ -270,29 +227,34 @@ class Event extends DbObject
 		
 		$task = Task::load($taskID);
 		
-		$query = "SELECT id FROM ".self::DB_TABLE;
-		$query .= " WHERE (item_1_id = ".$taskID;
-		$query .= " AND event_type_id IN (";
+		$query = "SELECT e.id AS id FROM ".self::DB_TABLE." e";
+		$query .= " INNER JOIN ".EventType::DB_TABLE." et ON ";
+		$query .= " e.event_type_id = et.id";		
+		$query .= " WHERE (e.item_1_id = ".$taskID;
+		$query .= " AND e.event_type_id IN (";
 			$query .= " SELECT id FROM ".EventType::DB_TABLE;
 			$query .= " WHERE `group` = ".TASKS_ID;
 		$query .= " ))";
-		$query .= " OR (item_2_id = ".$taskID;
-		$query .= " AND event_type_id = 'create_task_comment')";
-		$query .= " OR (item_2_id = ".$taskID;
-		$query .= " AND event_type_id = 'create_update_comment')";
-		$query .= " OR (item_2_id = ".$taskID;
-		$query .= " AND event_type_id = 'accept_task')";			
-		$query .= " OR (item_2_id = ".$taskID;
-		$query .= " AND event_type_id = 'edit_accepted_status')";	
-		$query .= " OR (item_3_id = ".$taskID;
-		$query .= " AND event_type_id = 'create_task_comment_reply')";
-		$query .= " OR (item_3_id = ".$taskID;
-		$query .= " AND event_type_id = 'create_update_comment_reply')";
-		$query .= " OR (item_3_id = ".$taskID;
-		$query .= " AND event_type_id = 'edit_update')";
-		$query .= " OR (item_3_id = ".$taskID;
-		$query .= " AND event_type_id = 'create_update')";		
-		$query .= " ORDER BY date_created DESC";
+		$query .= " OR (e.item_2_id = ".$taskID;
+		$query .= " AND e.event_type_id = 'create_task_comment')";
+		$query .= " OR (e.item_2_id = ".$taskID;
+		$query .= " AND e.event_type_id = 'create_update_comment')";
+		$query .= " OR (e.item_2_id = ".$taskID;
+		$query .= " AND e.event_type_id = 'accept_task')";			
+		$query .= " OR (e.item_2_id = ".$taskID;
+		$query .= " AND e.event_type_id = 'edit_accepted_status')";	
+		$query .= " OR (e.item_3_id = ".$taskID;
+		$query .= " AND e.event_type_id = 'create_task_comment_reply')";
+		$query .= " OR (e.item_3_id = ".$taskID;
+		$query .= " AND e.event_type_id = 'create_update_comment_reply')";
+		$query .= " OR (e.item_3_id = ".$taskID;
+		$query .= " AND e.event_type_id = 'edit_update_title')";
+		$query .= " OR (e.item_3_id = ".$taskID;
+		$query .= " AND e.event_type_id = 'edit_update_message')";		
+		$query .= " OR (e.item_3_id = ".$taskID;
+		$query .= " AND e.event_type_id = 'create_update')";
+		$query .= " AND et.hidden = 0";		
+		$query .= " ORDER BY e.date_created DESC";
 		if($limit != null)
 			$query .= " LIMIT ".$limit;	
 			
@@ -311,15 +273,20 @@ class Event extends DbObject
 		
 		$update = Update::load($updateID);
 		
-		$query = "SELECT id FROM ".self::DB_TABLE;
-		$query .= " WHERE (item_1_id = ".$updateID;
-		$query .= " AND event_type_id = 'create_update')";
-		$query .= " OR (item_1_id = ".$updateID;
-		$query .= " AND event_type_id = 'edit_update')";
-		$query .= " OR (item_2_id = ".$updateID;
-		$query .= " AND event_type_id = 'create_update_comment')";
-		$query .= " OR (item_3_id = ".$updateID;
-		$query .= " AND event_type_id = 'create_update_comment_reply')";
+		$query = "SELECT e.id AS id FROM ".self::DB_TABLE." e";
+		$query .= " INNER JOIN ".EventType::DB_TABLE." et ON ";
+		$query .= " e.event_type_id = et.id";			
+		$query .= " WHERE (e.item_1_id = ".$updateID;
+		$query .= " AND e.event_type_id = 'create_update')";
+		$query .= " OR (e.item_1_id = ".$updateID;
+		$query .= " AND e.event_type_id = 'edit_update_title')";
+		$query .= " OR (e.item_1_id = ".$updateID;
+		$query .= " AND e.event_type_id = 'edit_update_message')";		
+		$query .= " OR (e.item_2_id = ".$updateID;
+		$query .= " AND e.event_type_id = 'create_update_comment')";
+		$query .= " OR (e.item_3_id = ".$updateID;
+		$query .= " AND e.event_type_id = 'create_update_comment_reply')";
+		$query .= " AND et.hidden = 0";
 		$query .= " ORDER BY date_created DESC";
 		if($limit != null)
 			$query .= " LIMIT ".$limit;	
@@ -333,64 +300,81 @@ class Event extends DbObject
 			$events[$row['id']] = self::load($row['id']);
 		return $events;		
 	}
-	
-	// public static function getUpdatesEvents($acceptedID=null, $limit=null) {
-		// if($acceptedID == null) return null;
-		
-		// $accepted = Accepted::load($acceptedID);
-		// $taskID = $accepted->getTaskID();
-		
-		// $query = "SELECT id FROM ".self::DB_TABLE;
-		// $query .= " WHERE (item_1_id = ".$acceptedID;
-		// $query .= " AND event_type_id = 'accept_task')";
-		// $query .= " OR (item_2_id = ".$taskID;
-		// $query .= " AND event_type_id = 'edit_accepted_status')";
-		// $query .= " OR (item_2_id = ".$acceptedID;
-		// $query .= " AND event_type_id = 'edit_update')";
-		// $query .= " OR (item_2_id = ".$acceptedID;
-		// $query .= " AND event_type_id = 'create_update')";			
-		// $query .= " ORDER BY date_created DESC";
-		// if($limit != null)
-			// $query .= " LIMIT ".$limit;	
-			
-		// $db = Db::instance();
-		// $result = $db->lookup($query);
-		// if(!mysql_num_rows($result)) return array();
-
-		// $events = array();
-		// while($row = mysql_fetch_assoc($result))
-			// $events[$row['id']] = self::load($row['id']);
-		// return $events;	
-	// }
 
 	public static function getDiscussionsEventsByProjectID($projectID=null, $limit=null)
 	{
 		return (self::getByProjectID($projectID, DISCUSSIONS_ID, $limit));
 	}
+	
+	public static function getDiscussionEvents($discussionID=null, $limit=null)
+	{
+		if($discussionID == null) return null;
+		
+		$discussion = Discussion::load($discussionID);
+		$projectID = $discussion->getProjectID();
+		
+		$query = "SELECT e.id AS id FROM ".self::DB_TABLE." e";
+		$query .= " INNER JOIN ".EventType::DB_TABLE." et ON ";
+		$query .= " e.event_type_id = et.id";			
+		$query .= " WHERE e.project_id = ".$projectID;
+		$query .= " AND ( e.item_1_id = ".$discussionID." AND e.event_type_id = 'create_discussion' )";
+		$query .= " OR ( e.item_2_id = ".$discussionID." AND e.event_type_id = 'create_discussion_reply' )";	
+		$query .= " AND et.hidden = 0";		
+		$query .= " ORDER BY e.date_created DESC";
+		if($limit != null)
+			$query .= " LIMIT ".$limit;
+		//echo $query;
+			
+		$db = Db::instance();
+		$result = $db->lookup($query);
+		if(!mysql_num_rows($result)) return array();
+
+		$events = array();
+		while($row = mysql_fetch_assoc($result))
+			$events[$row['id']] = self::load($row['id']);
+		return $events;			
+	}	
 
 	public static function getPeopleEventsByProjectID($projectID=null, $limit=null)
 	{
 		return (self::getByProjectID($projectID, PEOPLE_ID, $limit));
 	}	
+	
+	public static function getUserEvents($userID=null, $limit=null) {
+		if($userID == null) return null;
+		
+		$query = "SELECT e.id AS id FROM ".self::DB_TABLE." e";
+		$query .= " INNER JOIN ".EventType::DB_TABLE." et ON ";
+		$query .= " e.event_type_id = et.id";		
+		$query .= " WHERE e.user_1_id = ".$userID;
+		$query .= " AND et.hidden = 0";
+		$query .= " ORDER BY e.date_created DESC";
+		if($limit != null)
+			$query .= " LIMIT ".$limit;
+		//echo $query;
+			
+		$db = Db::instance();
+		$result = $db->lookup($query);
+		if(!mysql_num_rows($result)) return array();
 
+		$events = array();
+		while($row = mysql_fetch_assoc($result))
+			$events[$row['id']] = self::load($row['id']);
+		return $events;	
+	}	
+	
 	public static function getByProjectID($projectID=null, $eventTypeGroup=null, $limit=null)
 	{
 		if($projectID == null) return null;
 		
-		$query = "SELECT e.id FROM ".self::DB_TABLE." e";
+		$query = "SELECT e.id AS id FROM ".self::DB_TABLE." e";
+		$query .= " INNER JOIN ".EventType::DB_TABLE." et ON";
+		$query .= " e.event_type_id = et.id";
+		$query .= " WHERE e.project_id = ".$projectID;
 		if($eventTypeGroup != null)
-		{
-			$query .= " INNER JOIN ".EventType::DB_TABLE." et ON";
-			$query .= " e.event_type_id = et.id";
-		}
-		$query .= sprintf(" WHERE e.project_id = '%s'",
-					$projectID
-				);
-		if($eventTypeGroup != null)
-		{
-			$query .= " AND et.group = '".$eventTypeGroup."'";
-		}
-		$query .= " ORDER BY date_created DESC";		
+			$query .= " AND et.group = ".$eventTypeGroup;
+		$query .= " AND et.hidden = 0";
+		$query .= " ORDER BY e.date_created DESC";
 		if($limit != null)
 			$query .= " LIMIT ".$limit;
 		//echo $query;

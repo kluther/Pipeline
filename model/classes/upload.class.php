@@ -3,7 +3,6 @@
 class Upload extends DbObject
 {
 	protected $id;
-	protected $kalturaID;
 	protected $creatorID;	
 	protected $projectID;
 	protected $itemType;
@@ -14,7 +13,6 @@ class Upload extends DbObject
 	protected $size;
 	protected $height;
 	protected $width;
-	protected $token;
 	protected $deleted;
 	protected $dateCreated;
 
@@ -22,7 +20,6 @@ class Upload extends DbObject
 	
 	const TYPE_TASK = 'task';
 	const TYPE_UPDATE = 'update';
-	const TYPE_DISCUSSION = 'discussion';
 	
 	const THUMB_MAX_WIDTH = 150;
 	const THUMB_MAX_HEIGHT = 150;
@@ -32,7 +29,6 @@ class Upload extends DbObject
 		$defaultArgs = array
 		(
 			'id' => null,
-			'kaltura_id' => '',
 			'creator_id' => 0,
 			'project_id' => null,
 			'item_type' => null,
@@ -43,7 +39,6 @@ class Upload extends DbObject
 			'size' => 0,
 			'height' => null,
 			'width' => null,
-			'token' => '',
 			'deleted' => 0,
 			'date_created' => null
 		);
@@ -51,7 +46,6 @@ class Upload extends DbObject
 		$args += $defaultArgs;
 		
 		$this->id = $args['id'];
-		$this->kalturaID = $args['kaltura_id'];
 		$this->creatorID = $args['creator_id'];		
 		$this->projectID = $args['project_id'];
 		$this->itemType = $args['item_type'];
@@ -62,7 +56,6 @@ class Upload extends DbObject
 		$this->size = $args['size'];
 		$this->height = $args['height'];
 		$this->width = $args['width'];
-		$this->token = $args['token'];
 		$this->deleted = $args['deleted'];
 		$this->dateCreated = $args['date_created'];		
 	}
@@ -79,7 +72,6 @@ class Upload extends DbObject
 		$db = Db::instance();
 		// map database fields to class properties; omit id and dateTimeCreated
 		$db_properties = array(
-			'kaltura_id' => $this->kalturaID,
 			'creator_id' => $this->creatorID,		
 			'project_id' => $this->projectID,
 			'item_type' => $this->itemType,
@@ -90,7 +82,6 @@ class Upload extends DbObject
 			'size' => $this->size,
 			'height' => $this->height,
 			'width' => $this->width,
-			'token' => $this->token,
 			'deleted' => $this->deleted
 		);		
 		$db->store($this, __CLASS__, self::DB_TABLE, $db_properties);
@@ -310,59 +301,59 @@ class Upload extends DbObject
 		return $uploads;			
 	}	
 	
-	public static function getByToken($token=null) {
-		if($token == null) return null;
+	// public static function getByToken($token=null) {
+		// if($token == null) return null;
 		
-		$query = "SELECT id FROM ".self::DB_TABLE;
-		$query .= " WHERE token = '".$token."'";
-		$query .= " ORDER BY date_created DESC";
+		// $query = "SELECT id FROM ".self::DB_TABLE;
+		// $query .= " WHERE token = '".$token."'";
+		// $query .= " ORDER BY date_created DESC";
 		
-		$db = Db::instance();
-		$result = $db->lookup($query);
-		if(!mysql_num_rows($result)) return array();
+		// $db = Db::instance();
+		// $result = $db->lookup($query);
+		// if(!mysql_num_rows($result)) return array();
 
-		$uploads = array();
-		while($row = mysql_fetch_assoc($result))
-			$uploads[$row['id']] = self::load($row['id']);
-		return $uploads;		
-	}
+		// $uploads = array();
+		// while($row = mysql_fetch_assoc($result))
+			// $uploads[$row['id']] = self::load($row['id']);
+		// return $uploads;		
+	// }
 	
-	public static function generateToken() {
-		return (sha1(microtime(true).mt_rand(10000,90000)));
-	}
+	// public static function generateToken() {
+		// return (sha1(microtime(true).mt_rand(10000,90000)));
+	// }
 	
-	/* attach uploads to an item based on matched token */
-	/* returns null if missing arguments */
-	/* returns false if no matches */
-	/* otherwise, returns array of matched uploads */
-	public static function attachToItem($token=null, $itemType=null, $itemID=null, $projectID=null) {
-		if( ($token == null) || ($itemType == null) || ($itemID == null) ) {
-			return null;
-		}
+	// /* attach uploads to an item based on matched token */
+	// /* returns null if missing arguments */
+	// /* returns false if no matches */
+	// /* otherwise, returns array of matched uploads */
+	// public static function attachToItem($token=null, $itemType=null, $itemID=null, $projectID=null) {
+		// if( ($token == null) || ($itemType == null) || ($itemID == null) ) {
+			// return null;
+		// }
 		
-		// get unattached uploads with this token
-		$query = "SELECT id FROM ".self::DB_TABLE;
-		$query .= " WHERE token='".$token."'";
-		$query .= " AND item_type IS NULL";
+		// // get unattached uploads with this token
+		// $query = "SELECT id FROM ".self::DB_TABLE;
+		// $query .= " WHERE token='".$token."'";
+		// $query .= " AND item_type IS NULL";
 
-		$db = Db::instance();
-		$result = $db->lookup($query);
-		if(!mysql_num_rows($result))
-			return false;
+		// $db = Db::instance();
+		// $result = $db->lookup($query);
+		// if(!mysql_num_rows($result))
+			// return false;
 
-		$uploads = array();
-		while($row = mysql_fetch_assoc($result)) {
-			$upload = self::load($row['id']);
-			// associate item data with this upload
-			$upload->setItemType($itemType);
-			$upload->setItemID($itemID);
-			if($projectID != null)
-				$upload->setProjectID($projectID);
-			$upload->save();
-			$uploads[$row['id']] = $upload;
-		}
-		return $uploads;
-	}
+		// $uploads = array();
+		// while($row = mysql_fetch_assoc($result)) {
+			// $upload = self::load($row['id']);
+			// // associate item data with this upload
+			// $upload->setItemType($itemType);
+			// $upload->setItemID($itemID);
+			// if($projectID != null)
+				// $upload->setProjectID($projectID);
+			// $upload->save();
+			// $uploads[$row['id']] = $upload;
+		// }
+		// return $uploads;
+	// }
 	
 	
 	
@@ -376,15 +367,6 @@ class Upload extends DbObject
 	public function setID($newID)
 	{
 		$this->id = $newID;
-		$this->modified = true;
-	}
-	
-	public function getKalturaID() {
-		return ($this->kalturaID);
-	}
-	
-	public function setKalturaID($newKalturaID) {
-		$this->kalturaID = $newKalturaID;
 		$this->modified = true;
 	}
 	
@@ -499,15 +481,6 @@ class Upload extends DbObject
 	
 	public function setWidth($newWidth) {
 		$this->width = $newWidth;
-		$this->modified = true;
-	}
-	
-	public function getToken() {
-		return ($this->token);
-	}
-	
-	public function setToken($newToken) {
-		$this->token = $newToken;
 		$this->modified = true;
 	}
 	

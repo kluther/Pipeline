@@ -171,6 +171,16 @@ switch($action)
 			$invite->setResponse(Invitation::ACCEPTED);
 			$invite->setDateResponded(date("Y-m-d H:i:s"));
 			$invite->save();
+			// log the event
+			$eventTypeID = ($invite->getRelationship() == ProjectUser::ORGANIZER) ? 'accept_organizer_invitation' : 'accept_follower_invitation';
+			$logEvent = new Event(array(
+				'event_type_id' => $eventTypeID,
+				'user_1_id' => $user->getID(),
+				'user_2_id' => $invite->getInviterID(),
+				'project_id' => $invite->getProjectID(),
+				'item_1_id' => $invite->getID(),
+			));
+			$logEvent->save();
 			// send us to the project we just joined
 			$successUrl = Url::details($invite->getProjectID());
 		} else {
