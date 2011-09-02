@@ -192,7 +192,7 @@ class Url
 	public static function activityDetails($projectID=null)
 	{
 		if($projectID == null) return null;
-		return (self::activity($projectID).'/details');
+		return (self::activity($projectID).'/basics');
 	}		
 	
 	public static function activityTasks($projectID=null)
