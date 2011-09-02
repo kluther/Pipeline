@@ -16,11 +16,18 @@ function formatUpdate($update)
 	return $formattedUpdate;
 }
 
-function formatTaskDescription($description)
+function formatComment($comment)
 {
-	$formattedDescription = html_entity_decode($description);
-	$formattedDescription = str_replace("\n","<br />",$formattedDescription);
-	return $formattedDescription;
+	$formattedComment = html_entity_decode($comment);
+	$formattedComment = str_replace("\n","<br />",$formattedComment);
+	return $formattedComment;
+}
+
+function formatDiscussionReply($reply)
+{
+	$formattedReply = html_entity_decode($reply);
+	$formattedReply = str_replace("\n","<br />",$formattedReply);
+	return $formattedReply;
 }
 
 function formatUserPicture($userID=null, $size='large') {

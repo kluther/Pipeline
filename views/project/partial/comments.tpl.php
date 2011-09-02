@@ -76,7 +76,7 @@ if($comments != null) {
 				echo '<li class="comment-reply">';
 				echo '<a class="picture large" href="'.Url::user($reply->getCreatorID()).'"><img src="'.Url::userPictureLarge($reply->getCreatorID()).'" /></a>';		
 				echo '<p class="headline">'.formatUserLink($reply->getCreatorID()).' <span class="slash">/</span> <span class="when">'.formatTimeTag($reply->getDateCreated()).'</span></p>';					
-				echo '<p class="message">'.html_entity_decode($reply->getMessage()).'</p>';			
+				echo '<p class="message">'.formattedComment($reply->getMessage()).'</p>';			
 				//echo '<p class="when">'.formatTimeTag($reply->getDateCreated()).'</p>';				
 				echo '</li>';
 			}
