@@ -133,14 +133,12 @@ class ProjectUser extends DbObject
 	// avoid calling this... use one of the aliased functions above instead
 	public static function hasRelationship($userID=null, $projectID=null, $relationship=null)
 	{
-		if( ($userID == null) || ($projectID == null) || ($relationship == null) ) return null;
+		if( ($userID === null) || ($projectID === null) || ($relationship === null) ) return null;
 		
 		$query = "SELECT * FROM ".self::DB_TABLE;
-		$query .= sprintf(" WHERE user_id = '%s' AND project_id = '%s' AND relationship = '%s'",
-				mysql_real_escape_string($userID),
-				mysql_real_escape_string($projectID),
-				mysql_real_escape_string($relationship)
-			);
+		$query .= " WHERE user_id = ".$userID;
+		$query .= " AND project_id = ".$projectID;
+		$query .= " AND relationship = ".$relationship;
 		
 		$db = Db::instance();
 		$result = $db->lookup($query);

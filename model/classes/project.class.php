@@ -174,9 +174,7 @@ class Project extends DbObject
 		if($slug == null) return null;
 		
 		$query  = "SELECT id FROM ".self::DB_TABLE;
-		$query .= sprintf(" WHERE slug = '%s'",
-				mysql_real_escape_string($slug)
-			);
+		$query .= " WHERE slug = '".$slug."'";
 		
 		$db = Db::instance();
 		$result = $db->lookup($query);
