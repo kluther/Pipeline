@@ -28,6 +28,7 @@ define('TASKS_ID',3);
 define('DISCUSSIONS_ID',4);
 define('PEOPLE_ID',5);
 
+date_default_timezone_set('America/New_York');
 set_include_path(dirname(__FILE__));
 require_once("config.php");
 require_once("lib/Soup/Soup.php");
