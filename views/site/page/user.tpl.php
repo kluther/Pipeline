@@ -21,7 +21,8 @@ $fork->startBlockSet('body');
 
 <?php
 	$SOUP->render('site/partial/activity', array(
-		'size' => 'small'
+		'size' => 'small',
+		'showProject' => true
 	));
 ?>
 
