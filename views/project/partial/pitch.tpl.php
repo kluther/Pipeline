@@ -7,7 +7,7 @@ $project = $SOUP->get('project');
 $hasPermission = ( ProjectUser::isOrganizer(Session::getUserID(), $project->getID()) ||
 					ProjectUser::isCreator(Session::getUserID(), $project->getID()) );
 
-$formattedPitch = formatPitch($project->getPitch());					
+$formattedPitch = ($project->getPitch() != '') ? formatPitch($project->getPitch()) : '(none)';					
 					
 $fork = $SOUP->fork();
 $fork->set('title', "Pitch");

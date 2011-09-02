@@ -140,10 +140,11 @@ function formatPitch($pitch)
 	return $formattedPitch;
 }
 
-function formatSpecs($specs)
-{
+function formatSpecs($specs) {
+	if(empty($specs)) return null;
 	$specs = html_entity_decode($specs);
 	$lines = explode("\n",$specs); // line feeds
+
 	$formattedSpecs = array();
 	for($i=0; $i<count($lines); $i++)
 	{
@@ -153,18 +154,20 @@ function formatSpecs($specs)
 			$key = "<strong>".$spec[0]."</strong>: ";
 			$value = $spec[1];
 			$formattedSpecs[$i] = $key.$value;
+		} else {
+			$formattedSpecs[$i] = $lines[$i];
 		}
 	}
 	return $formattedSpecs;
 }
 
-function formatRules($rules)
-{
+function formatRules($rules) {
+	if(empty($rules)) return null;
 	$rules = html_entity_decode($rules);
 	$lines = explode("\n",$rules); // line feeds
+
 	$formattedRules = array();
-	for($i=0; $i<count($lines); $i++)
-	{
+	for($i=0; $i<count($lines); $i++) {
 		if(substr($lines[$i],0,1) == '+')
 			$formattedRules[$i] = '<span class="good">'.$lines[$i].'</span>';
 		elseif(substr($lines[$i],0,1) == '-')
