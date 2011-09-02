@@ -30,6 +30,13 @@ function formatDiscussionReply($reply)
 	return $formattedReply;
 }
 
+function formatTaskDescription($description)
+{
+	$formattedDescription = html_entity_decode($description);
+	$formattedDescription = str_replace("\n","<br />",$formattedDescription);
+	return $formattedDescription;
+}
+
 function formatUserPicture($userID=null, $size='large') {
 	if($userID == null) return null;
 	$user = User::load($userID);
