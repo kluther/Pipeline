@@ -132,7 +132,7 @@ function formatEvent($event, $showProject=false)
 				break;				
 			case 'create_discussion_reply':
 				$predicate = ($showProject) ? ' in the project '.formatProjectLink($event->getProjectID()) : '';
-				$discussion = Discussion::load($event->getItem1ID());
+				$discussion = Discussion::load($event->getItem2ID());
 				$title = $discussion->getTitle();
 				$url = Url::discussion($discussion->getID());
 				$formatted = sprintf("%s replied to the discussion %s%s.",
