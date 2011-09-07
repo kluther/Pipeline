@@ -16,8 +16,10 @@ $fork->startBlockSet('body');
 ?>
 
 <?php
-	$SOUP->render('site/partial/tasks', array(
-		'title' => 'Your Tasks'
+	$SOUP->render('site/partial/userTasks', array(
+		'title' => 'Your Tasks',
+		'user' => User::load(Session::getUserID()),
+		'hasPermission' => false
 	));
 ?>
 

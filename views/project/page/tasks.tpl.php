@@ -23,10 +23,11 @@ $fork->startBlockSet('body');
 <?php if(Session::isLoggedIn()): ?>
 
 <?php
-	$SOUP->render('project/partial/tasks', array(
+	$SOUP->render('site/partial/userTasks', array(
 		'id' => 'yourTasks',
 		'tasks' => $yourTasks,
-		'title' => 'Your Tasks'
+		'title' => 'Your Tasks',
+		'user' => User::load(Session::getUserID())
 	));
 ?>
 

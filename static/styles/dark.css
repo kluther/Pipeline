@@ -13,7 +13,7 @@ ul.segmented-list h6.primary span.status,
 ul.segmented-list p.secondary span.status,
 h2 span.status,
 ul.notifications span.category {
-	background-color: #1a1a1a;
+	background-color: #111111;
 	color: #ccc;
 	}	
 	
@@ -34,26 +34,27 @@ div.upload a.thumb {
 		}	
 			
 div.primary-nav {			
-	background: rgba(0,0,0,.25);
+	background: #000;
 	}	
+	div.primary-nav a {
+		color: #fff;
+		}	
 	
 div.secondary-nav {
-	border-bottom: 2px solid #6C6C6C;
-	color: #a8a8a8;
+
 	}			
 	div.secondary-nav a {
-		border-color: #3C3C3C;
-		background-color: #1A1A1A;
-		color: inherit;
+		border-color: #222222;
+		background-color: #333333;
+		color: #999;
 		}	
 		div.secondary-nav a.selected {
-			background-color: #494949;
-			border-color: #494949;
+			background-color: #000;
+			border-color: #333333;
 			color: #fff;
 			}
 		div.secondary-nav a:hover {
-			background-color: #6C6C6C;
-			border-color: #6C6C6C;
+			border-color: #666;
 			color: #fff;
 			}		
 	
@@ -62,12 +63,12 @@ ul.notifications label {
 	}
 	
 html {
-	color: #a3a3a3;
-	background-color: #1a1a1a;
+	color: #eeeeee;
+	background-color: #000;
 	}	
 
 a, h1 a {
-	color: #fff;
+	color: LightBlue;
 	}	
 		
 h2 {
@@ -99,15 +100,15 @@ span.slash {
 	}	
 	
 div.panel {
-	background-color: #262626;	
+	background-color: #222222;	
 	}	
 	
 div.panel-header {
-	background-color: #313131;
-	border-top-color: #6c6c6c;
+	background-color: #333333;
+	border-top-color: #444444;
 	}	
 	div.panel-header h4 {
-		color: #ccc;
+		color: #aaaaaa;
 		}	
 		
 div.panel-body {
@@ -119,8 +120,8 @@ div.panel-footer {
 	}	
 
 div.page-header {
-	background: url(./../images/header_bg.png) repeat-x center left;
-	background-color: #313131;
+	/*background: url(./../images/header_bg.png) repeat-x center left;*/
+	background-color: #222222;
 	}	
 	
 div.heading a {
@@ -130,7 +131,13 @@ div.heading a {
 div.breadcrumbs h3 {
 	color: #fff;
 	}
-		
+	
+div.your-role {
+	background-color: #333;
+	}
+	div.your-role p {
+		color: #fff;
+		}
 
 input[type=text], input[type=password],
 input.textbox, textarea, select {
@@ -148,7 +155,7 @@ input[type=file]:focus, textarea:focus, select:focus {
 	
 input[type=button], input[type=submit] {
 	background-color: #666;
-	color: #eeeeee;
+	color: #dddddd;
 	}
 	input[type=button]:hover, input[type=submit]:hover {
 		background-color: slategray;

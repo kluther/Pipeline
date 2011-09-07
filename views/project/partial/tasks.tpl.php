@@ -1,13 +1,16 @@
 <?php
 include_once TEMPLATE_PATH.'/site/helper/format.php';
 
+// supported:
+// - other tasks within project NO USER, YES PROJECT
+// - list of open tasks in 'find projects' NO USER, NO PROJECT
+// - single task next to update - NO USER, YES PROJECT
+
 $tasks = $SOUP->get('tasks', array());
 $title = $SOUP->get('title', 'Tasks');
-$project = $SOUP->get('project');
-//$creatable = $SOUP->get('creatable', true);
+$project = $SOUP->get('project', null);
 $id = $SOUP->get('id', 'tasks');
 $size = $SOUP->get('size', 'large');
-//$showRelationship = $SOUP->get('showRelationship', true);
 $hasPermission = $SOUP->get('hasPermission', null);
 
 // allow values to be passed in
@@ -21,12 +24,6 @@ $fork = $SOUP->fork();
 $fork->set('title', $title);
 $fork->set('id', $id);
 $fork->set('creatable', $hasPermission);
-
-// if($size == 'small') {
-	// $fork->set('createLabel', 'New');
-// } else {
-	// $fork->set('createLabel', 'New Task');
-// }
 
 $fork->startBlockSet('body');
 ?>

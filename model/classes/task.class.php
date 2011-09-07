@@ -71,7 +71,11 @@ class Task extends DbObject
 		$db->store($this, __CLASS__, self::DB_TABLE, $db_properties);
 	}
 	
-	public static function getYourTasks($userID=null, $projectID=null, $limit=null)
+	public static function getYourTasks($userID=null, $projectID=null, $limit=null) {
+		return (self::getByUserID($userID, $projectID, $limit));
+	}
+	
+	public static function getByUserID($userID=null, $projectID=null, $limit=null)
 	{
 		if($userID == null) return null;
 		

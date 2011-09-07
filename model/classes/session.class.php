@@ -20,7 +20,8 @@ class Session
 			$user = User::loadByUserName($userInfo);
 		
 		$_SESSION['user_id'] = $user->getId();
-		$_SESSION['username'] = $user->getUserName();			
+		$_SESSION['username'] = $user->getUserName();	
+		$_SESSION['admin'] = $user->getAdmin();
 	}
 	
 	public static function signOut()
@@ -78,5 +79,12 @@ class Session
 			return $_SESSION['username'];
 		else
 			return null;
-	}	
+	}
+	
+	public static function isAdmin() {
+		if(isset($_SESSION['admin']))
+			return $_SESSION['admin'];
+		else
+			return null;
+	}
 }

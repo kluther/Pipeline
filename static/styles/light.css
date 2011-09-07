@@ -31,7 +31,7 @@ div.upload a.thumb {
 		
 div.primary-nav {			
 	/*background: rgba(255,255,255,.50);*/
-	background: #fff url(./../images/header_bg_light.png) repeat-x center left;	
+	/*background: #fff url(./../images/header_bg_light.png) repeat-x center left;	*/
 	background: #eeeeee;
 	}
 	div.primary-nav a {
@@ -131,7 +131,11 @@ div.heading a {
 div.breadcrumbs h3 {
 	color: #666;
 	}
-		
+	
+div.your-role {
+	background-color: beige;
+	}
+
 input[type=button], input[type=submit] {
 	background-color: slategray;
 	color: #eeeeee;

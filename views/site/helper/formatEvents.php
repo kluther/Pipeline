@@ -42,6 +42,20 @@ function formatEvent($event, $showProject=false)
 						formatUserLink($event->getUser2ID()),
 						$predicate
 					);					
+				break;		
+			case 'resign_organizer':
+				$predicate = ($showProject) ? ' of the project '.formatProjectLink($event->getProjectID()) : '';
+				$formatted = sprintf("%s resigned as an organizer%s.",
+						formatUserLink($event->getUser1ID()),
+						$predicate
+					);					
+				break;	
+			case 'follow_project':
+				$predicate = ($showProject) ? 'the project '.formatProjectLink($event->getProjectID()) : 'this project';
+				$formatted = sprintf("%s is following %s.",
+						formatUserLink($event->getUser1ID()),
+						$predicate
+					);					
 				break;				
 			case 'ban_user':
 				$predicate = ($showProject) ? ' from the project '.formatProjectLink($event->getProjectID()) : '';

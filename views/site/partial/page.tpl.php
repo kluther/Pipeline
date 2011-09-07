@@ -61,6 +61,11 @@ if($project != null)
 	</div><!-- end .primary-nav -->
 	<div class="heading">
 		<div class="funnel">
+			<?php 
+				if($project != null) {
+					$SOUP->render('project/partial/yourRole', array());
+				}
+			?>
 			<h2>
 				<a href="<?= $headingURL ?>"><?= $pageTitle ?></a>
 				<?php if($project != null): ?><span class="status"><?= $status ?></span><?php endif; ?>
@@ -68,8 +73,8 @@ if($project != null)
 		</div><!-- end .funnel -->
 	</div><!-- end .heading -->
 <?php if($selected != null): ?>
-	<div class="secondary-nav">
-		<div class="funnel">
+	<div class="funnel">
+		<div class="secondary-nav">
 			<ul>
 			<?php if($project != null): ?>
 				<li><a <?= ($selected == "details")?'class="selected"':'' ?> href="<?= Url::details($project->getID()) ?>">Basics</a></li>
@@ -79,8 +84,8 @@ if($project != null)
 				<li><a <?= ($selected == "activity")?'class="selected"':'' ?> href="<?= Url::activity($project->getID()) ?>">Activity</a></li>
 			<?php endif; ?>
 			</ul>
-		</div><!-- end .funnel -->
-	</div><!-- end .secondary-nav -->
+		</div><!-- end .secondary-nav -->
+	</div><!-- end .funnel -->
 <?php endif; ?>
 </div><!-- end .page-header -->
 <div class="page-body">

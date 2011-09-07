@@ -1,5 +1,6 @@
 <?php
 $user = $SOUP->get('user');
+$tasks = $SOUP->get('tasks');
 
 $fork = $SOUP->fork();
 
@@ -12,6 +13,14 @@ $fork->startBlockSet('body');
 
 <?php
 	$SOUP->render('site/partial/profile', array(
+	));
+?>
+
+<?php
+	$SOUP->render('site/partial/userTasks', array(
+		'user' => $user,
+		'tasks' => $tasks,
+		'hasPermission' => false
 	));
 ?>
 

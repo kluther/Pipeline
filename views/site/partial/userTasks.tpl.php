@@ -1,17 +1,48 @@
 <?php
 include_once TEMPLATE_PATH.'/site/helper/format.php';
 
-$user = $SOUP->get('user', null);
-$tasks = $SOUP->get('tasks', array());
-$title = $SOUP->get('title', 'Tasks');
+// supported
+// - user's dashboard tasks YES USER, NO PROJECT
+// - user's own tasks within a project YES USER, YES PROJECT
+// - user's tasks on their profile YES USER, NO PROJECT
+
+$project = $SOUP->get('project', null);
+$user = $SOUP->get('user'); // can't be null
+$tasks = $SOUP->get('tasks');
 $id = $SOUP->get('id', 'tasks');
 $size = $SOUP->get('size', 'large');
+$title = $SOUP->get('title', 'Tasks');
+$hasPermission = $SOUP->get('hasPermission', null);
+
+// allow values to be passed in
+if($hasPermission === null) {
+	// only organizers or creator may create tasks
+	$hasPermission = ( ProjectUser::isOrganizer(Session::getUserID(), $project->getID()) ||
+						ProjectUser::isCreator(Session::getUserID(), $project->getID()) );
+}
 
 $fork = $SOUP->fork();
 $fork->set('title', $title);
 $fork->set('id', $id);
-
+$fork->set('creatable', $hasPermission);
 $fork->startBlockSet('body');
+?>
+
+<?php if($hasPermission): ?>
+
+<script type="text/javascript">
+
+	$(document).ready(function() {
+		$('#<?= $id ?> .createButton').click(function() {
+			window.location = '<?= Url::taskNew($project->getID()) ?>';
+		});
+	});
+
+</script>
+
+<?php endif; ?>
+
+<?php
 
 if($tasks != null) {
 	echo '<ul class="segmented-list tasks">';
@@ -41,8 +72,10 @@ if($tasks != null) {
 		echo '<p class="secondary">';
 		
 		// project
-		echo 'in '.formatProjectLink($task->getProjectID());
-		echo ' <span class="slash">/</span> ';	
+		if($project === null) {
+			echo 'in '.formatProjectLink($task->getProjectID());
+			echo ' <span class="slash">/</span> ';	
+		}
 		
 		// status
 		if($task->getStatus() == Task::STATUS_CLOSED)

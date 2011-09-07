@@ -160,6 +160,23 @@ if($action == 'create') {
 			'data_2' => $leader->getID()
 		));
 		$logEvent->save();
+		
+		// if changing the leader to someone besides you
+		if($leader->getID() != Session::getUserID()) {
+			// notify new leader, if applicable
+			if($leader->getNotifyMakeTaskLeader()) {
+				// compose email
+				$msg = "<p>".formatUserLink(Session::getUserID()).' made you the leader of the task <a href="'.Url::task($taskID).'">'.$task->getTitle().'</a> in the project '.formatProjectLink($project->getID()).' on '.PIPELINE_NAME.'.</p>';
+				$email = array(
+					'to' => $leader->getEmail(),
+					'subject' => 'You are now leading a task in '.$project->getTitle(),
+					'message' => $msg
+				);
+				// send email
+				Email::send($email);				
+			}		
+		}
+		
 		// set flag
 		$modified = true;		
 	}

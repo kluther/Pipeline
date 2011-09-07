@@ -283,7 +283,7 @@ div.primary-nav li {
 /* SECONDARY NAV */
 
 
-	div.secondary-nav div.funnel {
+	div.secondary-nav {
 		padding-top: .75em;
 		padding-bottom: .5em;
 		overflow: hidden;
@@ -611,6 +611,22 @@ div.breadcrumbs {
 		display: inline;
 		}	
 
+div.your-role {
+	float: right;
+	width: 300px;
+	margin: 1em 0 0 0; padding: 0;
+	-moz-border-radius: .5em;
+	-webkit-border-radius: .5em;
+	border-radius: .5em;	
+	text-align: right;
+	}
+	div.your-role p {
+		padding: 1em;
+		text-align: left;
+		}
+	div.your-role input {
+		margin: 0 1em 1em 1em;
+		}
 
 /* INPUT/FORMS */
 		

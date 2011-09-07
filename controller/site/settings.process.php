@@ -36,6 +36,9 @@ if($action == 'notification') {
 		case 'chkDiscussionReply':
 			$user->setNotifyDiscussionReply($value);
 			break;
+		case 'chkMakeTaskLeader':
+			$user->setNotifyMakeTaskLeader($value);
+			break;
 		default:
 			$json = array( 'error' => 'Invalid notification type.' );
 			exit(json_encode($json));

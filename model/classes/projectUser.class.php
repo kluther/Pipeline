@@ -11,6 +11,7 @@ class ProjectUser extends DbObject
 	
 	const BANNED = 0;
 	const FOLLOWER = 1;
+	const CONTRIBUTOR = 5;
 	const ORGANIZER = 10;
 	
 	public function __construct($args=array())
@@ -112,7 +113,7 @@ class ProjectUser extends DbObject
 	// doesn't really belong here but what the hey
 	public static function isContributor($userID=null, $projectID=null)
 	{
-		return (Event::isContributor($userID, $projectID));
+		return (self::hasRelationship($userID,$projectID,self::CONTRIBUTOR));
 	}
 	
 	public static function isOrganizer($userID=null, $projectID=null)
@@ -130,15 +131,22 @@ class ProjectUser extends DbObject
 		return (self::hasRelationship($userID,$projectID,self::BANNED));
 	}
 	
+	public static function isAffiliated($userID=null, $projectID=null) {
+		if (self::hasRelationship($userID,$projectID) || self::isCreator($userID, $projectID))
+			return true;
+		else return false;
+	}
+	
 	// avoid calling this... use one of the aliased functions above instead
 	public static function hasRelationship($userID=null, $projectID=null, $relationship=null)
 	{
-		if( ($userID === null) || ($projectID === null) || ($relationship === null) ) return null;
+		if( ($userID === null) || ($projectID === null) ) return null;
 		
 		$query = "SELECT * FROM ".self::DB_TABLE;
 		$query .= " WHERE user_id = ".$userID;
 		$query .= " AND project_id = ".$projectID;
-		$query .= " AND relationship = ".$relationship;
+		if($relationship != null)
+			$query .= " AND relationship = ".$relationship;
 		
 		$db = Db::instance();
 		$result = $db->lookup($query);
@@ -157,32 +165,38 @@ class ProjectUser extends DbObject
 	
 	public static function getFollowers($projectID=null)
 	{
-		if($projectID == null) return null;
+		// if($projectID == null) return null;
 		
-		$query = "SELECT pu.user_id AS user_id FROM ".self::DB_TABLE." pu";
-		$query .= " INNER JOIN ".User::DB_TABLE." u ON ";
-		$query .= " pu.user_id = u.id";
-		$query .= " WHERE pu.project_id = ".$projectID;
-		$query .= " AND pu.user_id NOT IN (";
-			$query .= " SELECT DISTINCT user_1_id FROM ".Event::DB_TABLE;
-			$query .= " WHERE project_id = ".$projectID;
-		$query .= " )";
-		$query .= " AND pu.user_id NOT IN (";
-			$query .= " SELECT DISTINCT user_2_id FROM ".Event::DB_TABLE;
-			$query .= " WHERE project_id = ".$projectID;
-		$query .= " )";
-		$query .= " AND pu.relationship = ".self::FOLLOWER;
-		$query .= " ORDER BY u.username ASC"; // alphabetical
-		//echo $query;
+		// $query = "SELECT pu.user_id AS user_id FROM ".self::DB_TABLE." pu";
+		// $query .= " INNER JOIN ".User::DB_TABLE." u ON ";
+		// $query .= " pu.user_id = u.id";
+		// $query .= " WHERE pu.project_id = ".$projectID;
+		// $query .= " AND pu.user_id NOT IN (";
+			// $query .= " SELECT DISTINCT user_1_id FROM ".Event::DB_TABLE;
+			// $query .= " WHERE project_id = ".$projectID;
+		// $query .= " )";
+		// $query .= " AND pu.user_id NOT IN (";
+			// $query .= " SELECT DISTINCT user_2_id FROM ".Event::DB_TABLE;
+			// $query .= " WHERE project_id = ".$projectID;
+		// $query .= " )";
+		// $query .= " AND pu.relationship = ".self::FOLLOWER;
+		// $query .= " ORDER BY u.username ASC"; // alphabetical
+		// //echo $query;
 		
-		$db = Db::instance();
-		$result = $db->lookup($query);
-		if(!mysql_num_rows($result)) return array();
+		// $db = Db::instance();
+		// $result = $db->lookup($query);
+		// if(!mysql_num_rows($result)) return array();
 
-		$users = array();
-		while($row = mysql_fetch_assoc($result))
-			$users[$row['user_id']] = User::load($row['user_id']);		
-		return $users;
+		// $users = array();
+		// while($row = mysql_fetch_assoc($result))
+			// $users[$row['user_id']] = User::load($row['user_id']);		
+		// return $users;
+		
+		return (self::getUsersByRelationship($projectID,self::FOLLOWER));
+	}	
+	
+	public static function getContributors($projectID=null) {
+		return (self::getUsersByRelationship($projectID,self::CONTRIBUTOR));
 	}	
 	
 	public static function getOrganizers($projectID=null)

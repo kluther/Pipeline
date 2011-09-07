@@ -8,6 +8,7 @@ class EventType
 	protected $cssClass;
 	protected $diffable;
 	protected $hidden;
+	protected $contribution;
 
 	const DB_TABLE = "event_type";
 	
@@ -19,7 +20,8 @@ class EventType
 			'group' => 0,
 			'css_class' => '',
 			'diffable' => 0,
-			'hidden' => 0
+			'hidden' => 0,
+			'contribution' => 0
 		);	
 		
 		$args += $defaultArgs;
@@ -30,6 +32,7 @@ class EventType
 		$this->cssClass = $args['css_class'];
 		$this->diffable = $args['diffable'];
 		$this->hidden = $args['hidden'];
+		$this->contribution = $args['contribution'];
 	}
 
 	public static function load($id)
@@ -48,7 +51,8 @@ class EventType
 			'group' => $this->group,
 			'css_class' => $this->cssClass,
 			'diffable' => $this->diffable,
-			'hidden' => $this->hidden
+			'hidden' => $this->hidden,
+			'contribution' => $this->contribution
 		);		
 		$db->store($this, __CLASS__, self::DB_TABLE, $db_properties);
 	}	
@@ -100,7 +104,6 @@ class EventType
 		$this->modified = true;
 	}
 	
-	
 	public function getDiffable()
 	{
 		return ($this->diffable);
@@ -120,6 +123,15 @@ class EventType
 	public function setHidden($newHidden)
 	{
 		$this->hidden = $newHidden;
+		$this->modified = true;
+	}
+	
+	public function getContribution() {
+		return ($this->contribution);
+	}
+	
+	public function setContribution($newContribution) {
+		$this->contribution = $newContribution;
 		$this->modified = true;
 	}
 	

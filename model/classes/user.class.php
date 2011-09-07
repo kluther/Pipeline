@@ -22,6 +22,8 @@ class User extends DbObject
 	protected $notifyOrganizeProject;
 	protected $notifyBannedProject;
 	protected $notifyDiscussionReply;
+	protected $notifyMakeTaskLeader;
+	protected $admin;
 	protected $dateCreated;
 	protected $lastLogin;
 	
@@ -50,6 +52,8 @@ class User extends DbObject
 			'notify_organize_project' => 1,
 			'notify_banned_project' => 1,
 			'notify_discussion_reply' => 1,
+			'notify_make_task_leader' => 1,
+			'admin' => 0,
 			'date_created' => null,
 			'last_login' => null
 		);
@@ -76,6 +80,8 @@ class User extends DbObject
 		$this->notifyOrganizeProject = $args['notify_organize_project'];
 		$this->notifyBannedProject = $args['notify_banned_project'];
 		$this->notifyDiscussionReply = $args['notify_discussion_reply'];
+		$this->notifyMakeTaskLeader = $args['notify_make_task_leader'];
+		$this->admin = $args['admin'];
 		$this->dateCreated = $args['date_created'];
 		$this->lastLogin = $args['last_login'];
 	}
@@ -136,19 +142,9 @@ class User extends DbObject
 		$project = Project::load($projectID);
 		$creatorID = $project->getCreatorID();
 		
-		$query = "SELECT username FROM ".User::DB_TABLE;
-		// contributors
+		$query = "SELECT username FROM ".User::DB_TABLE;	
+		// project users
 		$query .= " WHERE id NOT IN (";
-			$query .= " SELECT DISTINCT user_1_id FROM ".Event::DB_TABLE;
-			$query .= " WHERE project_id = ".$projectID;
-		$query .= ")";
-		$query .= " AND id NOT IN (";
-			$query .= " SELECT DISTINCT user_2_id FROM ".Event::DB_TABLE;
-			$query .= " WHERE project_id = ".$projectID;
-			$query .= " AND user_2_id IS NOT NULL";
-		$query .= ")";		
-		// organizers, followers, banned
-		$query .= " AND id NOT IN (";
 			$query .= " SELECT user_id FROM ".ProjectUser::DB_TABLE;
 			$query .= " WHERE project_id = ".$projectID;
 		$query .= ")";
@@ -215,6 +211,8 @@ class User extends DbObject
 			'notify_organize_project' => $this->notifyOrganizeProject,
 			'notify_banned_project' => $this->notifyBannedProject,
 			'notify_discussion_reply' => $this->notifyDiscussionReply,
+			'notify_make_task_leader' => $this->notifyMakeTaskLeader,
+			'admin' => $this->admin,
 			'last_login' => $this->lastLogin
 		);		
 		$db->store($this, __CLASS__, self::DB_TABLE, $db_properties);
@@ -498,6 +496,24 @@ class User extends DbObject
 		$this->notifyDiscussionReply = $newNotifyDiscussionReply;
 		$this->modified = true;
 	}	
+	
+	public function getNotifyMakeTaskLeader() {
+		return ($this->notifyMakeTaskLeader);
+	}
+	
+	public function setNotifyMakeTaskLeader($newNotifyMakeTaskLeader) {
+		$this->notifyMakeTaskLeader = $newNotifyMakeTaskLeader;
+		$this->modified = true;
+	}
+	
+	public function getAdmin() {
+		return ($this->admin);
+	}
+	
+	public function setAdmin($newAdmin) {
+		$this->admin = $newAdmin;
+		$this->modified = true;
+	}
 	
 	public function getDateCreated()
 	{

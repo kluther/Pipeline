@@ -89,7 +89,7 @@ class Project extends DbObject
 	
 	public function getContributors()
 	{
-		return (Event::getContributorsByProjectID($this->id));
+		return (ProjectUser::getContributors($this->id));
 	}
 	
 	public function getFollowers()
