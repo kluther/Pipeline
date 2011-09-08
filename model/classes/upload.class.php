@@ -244,7 +244,7 @@ class Upload extends DbObject
 	
 	public static function isAllowedExtension($ext) {
 		$isAllowed = false;
-		switch($ext) {
+		switch(strtolower($ext)) {
 			// images
 			case 'jpg':
 			case 'jpeg':
@@ -547,7 +547,7 @@ class Upload extends DbObject
 	
 	public function getExtension() {
 		$ext = pathinfo($this->storedName, PATHINFO_EXTENSION);
-		return ($ext);
+		return (strtolower($ext));
 	}
 	
 	public function getDeleted()
