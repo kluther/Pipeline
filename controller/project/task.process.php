@@ -392,7 +392,7 @@ if($action == 'create') {
 					$msg = "<p>".formatUserLink(Session::getUserID()).' commented on the task <a href="'.Url::task($taskID).'">'.$task->getTitle().'</a> in the project '.formatProjectLink($project->getID()).' on '.PIPELINE_NAME.'. The comment was:</p>';
 					$msg .= "<blockquote>".html_entity_decode($message)."</blockquote>";
 					$email = array(
-						'to' => $c->getEmail(),
+						'to' => $user->getEmail(),
 						'subject' => 'New comment on a task you joined in '.$project->getTitle(),
 						'message' => $msg
 					);
@@ -463,7 +463,7 @@ if($action == 'create') {
 					$msg = "<p>".formatUserLink(Session::getUserID()).' replied to a comment on the task <a href="'.Url::task($taskID).'">'.$task->getTitle().'</a> in the project '.formatProjectLink($project->getID()).' on '.PIPELINE_NAME.'. The reply was:</p>';
 					$msg .= "<blockquote>".html_entity_decode($message)."</blockquote>";
 					$email = array(
-						'to' => $c->getEmail(),
+						'to' => $user->getEmail(),
 						'subject' => 'New comment reply on a task you joined in '.$project->getTitle(),
 						'message' => $msg
 					);
