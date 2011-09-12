@@ -66,7 +66,7 @@ if($comments != null) {
 		if($hasPermission)
 			echo '<input class="replyButton" type="button" value="Reply" />';
 		echo '<p class="headline">'.formatUserLink($comment->getCreatorID()).' <span class="slash">/</span> <span class="when">'.formatTimeTag($comment->getDateCreated()).'</span></p>';					
-		echo '<p class="message">'.html_entity_decode($comment->getMessage()).'</p>';			
+		echo '<p class="message">'.formatComment($comment->getMessage()).'</p>';			
 		//echo '<p class="when">'.formatTimeTag($comment->getDateCreated()).'</p>';
 		echo '</li>';
 		
