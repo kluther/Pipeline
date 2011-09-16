@@ -18,13 +18,20 @@ $fork = $SOUP->fork();
 $fork->set('title', $title);
 $fork->set('class', 'discussions');
 $fork->set('creatable', $hasPermission);
-if($size == 'small') {
-//	$fork->set('createLabel', 'New');
-	$newURL = Url::discussionNew($project->getID()).'/'.$cat;
-} else {
-//	$fork->set('createLabel', 'New Discussion');
+
+// generate URL for new discussion, if has permission
+if($hasPermission) {
 	$newURL = Url::discussionNew($project->getID());
+	$newURL .= ($cat != null) ? '/'.$cat : '';
 }
+
+// if($size == 'small') {
+// //	$fork->set('createLabel', 'New');
+	// $newURL = Url::discussionNew($project->getID()).'/'.$cat;
+// } else {
+// //	$fork->set('createLabel', 'New Discussion');
+	// $newURL = Url::discussionNew($project->getID());
+// }
 $fork->set('createLabel', 'New Discussion');
 
 ?>

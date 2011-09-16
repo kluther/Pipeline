@@ -21,6 +21,13 @@ $fork->startBlockSet('body');
 <td class="extra">
 
 <?php
+	$SOUP->render('site/partial/projects', array(
+		'hasPermission' => false,
+		'size' => 'small'
+	));
+?>
+
+<?php
 	$SOUP->render('site/partial/userTasks', array(
 		'user' => $user,
 		'tasks' => $tasks,

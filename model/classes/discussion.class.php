@@ -224,7 +224,7 @@ class Discussion extends DbObject
 		$query .= " WHERE creator_id=".$userID;
 		if($projectID != null)
 			$query .= " AND project_id=".$projectID;
-//		$query .= " AND parent_id IS NOT NULL";
+		$query .= " AND parent_id = id";
 		if($deleted===true)
 			$query .= " AND deleted=1";
 		elseif($deleted===false)
@@ -255,7 +255,7 @@ class Discussion extends DbObject
 			$query .= " AND project_id = ".$projectID;
 		$query .= " )";
 		$query .= " AND project_id=".$projectID;
-//		$query .= " AND parent_id IS NOT NULL";
+		$query .= " AND parent_id = id";
 		if($deleted===true)
 			$query .= " AND deleted=1";
 		elseif($deleted===false)

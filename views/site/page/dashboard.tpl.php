@@ -9,6 +9,7 @@ $fork->startBlockSet('body');
 
 <td class="left">
 
+
 <?php
 	$SOUP->render('site/partial/projects', array(
 		'title' => 'Your Projects'
@@ -23,6 +24,24 @@ $fork->startBlockSet('body');
 	));
 ?>
 
+<?php
+	// $SOUP->render('project/partial/userUpdates', array(
+		// 'title' => 'Your Contributions',
+		// 'hasPermission' => false
+	// ));
+?>
+
+<?php
+	// $SOUP->render('project/partial/discussions', array(
+		// 'title' => 'Your Discussions',
+		// 'hasPermission' => false
+	// ));
+?>
+
+</td>
+
+<td class="extra">
+
 
 <?php
 	$SOUP->render('site/partial/invitations', array(
@@ -35,14 +54,14 @@ $fork->startBlockSet('body');
 
 <?php
 	$SOUP->render('site/partial/activity', array(
-		'size' => 'small',
-		'showProject' => true
+		'showProject' => true,
+		'title' => 'Recent Activity in Your Projects',
+		'size' => 'small'
 	));
 ?>
 
-</td>
 
-<td class="extra"> </td>
+</td>
 
 <?php
 
