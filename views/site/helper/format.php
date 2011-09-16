@@ -9,32 +9,31 @@ function formatFileSize($size) {
     return round($size, $decPlaces).$units[$i];
 }
 
-function formatUpdate($update)
-{
-	$formattedUpdate = html_entity_decode($update);
-	$formattedUpdate = str_replace("\n","<br />",$formattedUpdate);
-	return $formattedUpdate;
+function formatUpdate($update) {
+	return (formatParagraphs($update));
 }
 
-function formatComment($comment)
-{
-	$formattedComment = html_entity_decode($comment);
-	$formattedComment = str_replace("\n","<br />",$formattedComment);
-	return $formattedComment;
+function formatComment($comment) {
+	return (formatParagraphs($comment));
 }
 
-function formatDiscussionReply($reply)
-{
-	$formattedReply = html_entity_decode($reply);
-	$formattedReply = str_replace("\n","<br />",$formattedReply);
-	return $formattedReply;
+function formatDiscussionReply($reply) {
+	return (formatParagraphs($reply));
 }
 
-function formatTaskDescription($description)
-{
-	$formattedDescription = html_entity_decode($description);
-	$formattedDescription = str_replace("\n","<br />",$formattedDescription);
-	return $formattedDescription;
+function formatTaskDescription($description) {
+	return (formatParagraphs($description));
+}
+
+function formatPitch($pitch) {
+	return (formatParagraphs($pitch));
+}
+
+/* generic function for formatting paragraphs of HTML text */
+function formatParagraphs($paragraphs) {
+	$formatted = html_entity_decode($paragraphs);
+	$formatted = str_replace("\n","<br />",$formatted);
+	return $formatted;
 }
 
 function formatUserPicture($userID=null, $size='large') {
@@ -76,7 +75,7 @@ function formatProjectLink($projectID=null)
 {
 	if($projectID == null) return null;
 	$project = Project::load($projectID);
-	$formatted = '<a href="'.Url::project($projectID).'">'.$project->getTitle().'</a>';
+	$formatted = '<a href="'.Url::project($projectID).'">'.html_entity_decode($project->getTitle()).'</a>';
 	return $formatted;
 }
 
@@ -131,13 +130,6 @@ function formatTimeTag($t, $tagName = 'span')
 	$text = formatTimeDiff($t);
 	
 	return "<{$tagName} class=\"datetime\" title=\"{$title}\">{$text}</{$tagName}>";
-}
-
-function formatPitch($pitch)
-{
-	$formattedPitch = html_entity_decode($pitch);
-	$formattedPitch = str_replace("\n","<br />",$formattedPitch);
-	return $formattedPitch;
 }
 
 function formatSpecs($specs) {

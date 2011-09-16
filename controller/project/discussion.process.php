@@ -1,5 +1,6 @@
 <?php
 require_once('./../../global.php');
+require_once TEMPLATE_PATH.'/site/helper/format.php'; 
 
 $slug = Filter::text($_GET['slug']);
 	
@@ -130,11 +131,11 @@ if($action == 'create') {
 	if($creator->getID() != Session::getUserID()) { // don't email yourself
 		if($creator->getNotifyDiscussionStarted()) {
 			// compose email
-			$msg = "<p>".formatUserLink(Session::getUserID()).' replied to your discussion <a href="'.Url::discussion($discussionID).'">'.$discussion->getTitle().'</a> in the project '.formatProjectLink($project->getID()).' on '.PIPELINE_NAME.'. The reply was:</p>';
-			$msg .= "<blockquote>".html_entity_decode($message)."</blockquote>";
+			$msg = "<p>".formatUserLink(Session::getUserID()).' replied to your discussion <a href="'.Url::discussion($discussionID).'">'.html_entity_decode($discussion->getTitle()).'</a> in the project '.formatProjectLink($project->getID()).' on '.PIPELINE_NAME.'. The reply was:</p>';
+			$msg .= "<blockquote>".formatDiscussionReply($message)."</blockquote>";
 			$email = array(
 				'to' => $creator->getEmail(),
-				'subject' => 'New reply to your discussion in '.$project->getTitle(),
+				'subject' => 'New reply to your discussion in '.html_entity_decode($project->getTitle()),
 				'message' => $msg
 			);
 			// send email
@@ -148,11 +149,11 @@ if($action == 'create') {
 		if($r->getID() != Session::getUserID()) { // don't email yourself
 			if($r->getNotifyDiscussionReply()) {
 				// compose email
-				$msg = "<p>".formatUserLink(Session::getUserID()).' replied to the discussion <a href="'.Url::discussion($discussionID).'">'.$discussion->getTitle().'</a> in the project '.formatProjectLink($project->getID()).' on '.PIPELINE_NAME.'. The reply was:</p>';
-				$msg .= "<blockquote>".html_entity_decode($message)."</blockquote>";
+				$msg = "<p>".formatUserLink(Session::getUserID()).' replied to the discussion <a href="'.Url::discussion($discussionID).'">'.html_entity_decode($discussion->getTitle()).'</a> in the project '.formatProjectLink($project->getID()).' on '.PIPELINE_NAME.'. The reply was:</p>';
+				$msg .= "<blockquote>".formatDiscussionReply($message)."</blockquote>";
 				$email = array(
 					'to' => $r->getEmail(),
-					'subject' => 'New reply to a discussion in '.$project->getTitle(),
+					'subject' => 'New reply to a discussion in '.html_entity_decode($project->getTitle()),
 					'message' => $msg
 				);
 				// send email
