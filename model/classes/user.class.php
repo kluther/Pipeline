@@ -21,6 +21,7 @@ class User extends DbObject
 	protected $notifyFollowProject;
 	protected $notifyOrganizeProject;
 	protected $notifyBannedProject;
+	protected $notifyDiscussionStarted;
 	protected $notifyDiscussionReply;
 	protected $notifyMakeTaskLeader;
 	protected $admin;
@@ -51,6 +52,7 @@ class User extends DbObject
 			'notify_follow_project' => 1,
 			'notify_organize_project' => 1,
 			'notify_banned_project' => 1,
+			'notify_discussion_started' => 1,
 			'notify_discussion_reply' => 1,
 			'notify_make_task_leader' => 1,
 			'admin' => 0,
@@ -79,6 +81,7 @@ class User extends DbObject
 		$this->notifyFollowProject = $args['notify_follow_project'];
 		$this->notifyOrganizeProject = $args['notify_organize_project'];
 		$this->notifyBannedProject = $args['notify_banned_project'];
+		$this->notifyDiscussionStarted = $args['notify_discussion_started'];
 		$this->notifyDiscussionReply = $args['notify_discussion_reply'];
 		$this->notifyMakeTaskLeader = $args['notify_make_task_leader'];
 		$this->admin = $args['admin'];
@@ -210,6 +213,7 @@ class User extends DbObject
 			'notify_follow_project' => $this->notifyFollowProject,
 			'notify_organize_project' => $this->notifyOrganizeProject,
 			'notify_banned_project' => $this->notifyBannedProject,
+			'notify_discussion_started' => $this->notifyDiscussionStarted,
 			'notify_discussion_reply' => $this->notifyDiscussionReply,
 			'notify_make_task_leader' => $this->notifyMakeTaskLeader,
 			'admin' => $this->admin,
@@ -487,6 +491,15 @@ class User extends DbObject
 		$this->notifyBannedProject = $newNotifyBannedProject;
 		$this->modified = true;
 	}
+	
+	public function getNotifyDiscussionStarted() {
+		return ($this->notifyDiscussionStarted);
+	}
+	
+	public function setNotifyDiscussionStarted($newNotifyDiscussionStarted) {
+		$this->notifyDiscussionStarted = $newNotifyDiscussionStarted;
+		$this->modified = true;
+	}		
 
 	public function getNotifyDiscussionReply() {
 		return ($this->notifyDiscussionReply);

@@ -123,6 +123,44 @@ if($action == 'create') {
 	));
 	$logEvent->save();
 	
+	// send email notification, if desired
+	
+	// discussion creator
+	$creator = User::load($discussion->getCreatorID());
+	if($creator->getID() != Session::getUserID()) { // don't email yourself
+		if($creator->getNotifyDiscussionStarted()) {
+			// compose email
+			$msg = "<p>".formatUserLink(Session::getUserID()).' replied to your discussion <a href="'.Url::discussion($discussionID).'">'.$discussion->getTitle().'</a> in the project '.formatProjectLink($project->getID()).' on '.PIPELINE_NAME.'. The reply was:</p>';
+			$msg .= "<blockquote>".html_entity_decode($message)."</blockquote>";
+			$email = array(
+				'to' => $creator->getEmail(),
+				'subject' => 'New reply to your discussion in '.$project->getTitle(),
+				'message' => $msg
+			);
+			// send email
+			Email::send($email);	
+		}		
+	}		
+	
+	// others who replied to discussion
+	$repliers = $discussion->getDistinctRepliers();
+	foreach($repliers as $r) {
+		if($r->getID() != Session::getUserID()) { // don't email yourself
+			if($r->getNotifyDiscussionReply()) {
+				// compose email
+				$msg = "<p>".formatUserLink(Session::getUserID()).' replied to the discussion <a href="'.Url::discussion($discussionID).'">'.$discussion->getTitle().'</a> in the project '.formatProjectLink($project->getID()).' on '.PIPELINE_NAME.'. The reply was:</p>';
+				$msg .= "<blockquote>".html_entity_decode($message)."</blockquote>";
+				$email = array(
+					'to' => $r->getEmail(),
+					'subject' => 'New reply to a discussion in '.$project->getTitle(),
+					'message' => $msg
+				);
+				// send email
+				Email::send($email);			
+			}
+		}
+	}
+	
 	$json = array( 'success' => '1' );
 	Session::setMessage("You replied to the discussion.");
 	echo json_encode($json);

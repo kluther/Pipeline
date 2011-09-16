@@ -329,6 +329,28 @@ class Discussion extends DbObject
 		return $replies;
 	}
 	
+	// for email notifications
+	public function getDistinctRepliers($deleted=false) {
+		$query = "SELECT DISTINCT creator_id AS id FROM ".self::DB_TABLE;
+		$query .= " WHERE parent_id=".$this->getID();
+		$query .= " AND id != parent_id"; // ignore parent discussion
+		if($deleted===true)
+			$query .= " AND deleted=1";
+		elseif($deleted===false)
+			$query .= " AND deleted=0";
+		$query .= " ORDER BY date_created DESC";
+		//echo $query;
+		
+		$db = Db::instance();
+		$result = $db->lookup($query);
+		if (!mysql_num_rows($result)) {return null;}
+		
+		$repliers = array();
+		while ($row = mysql_fetch_assoc($result))
+			$repliers[$row['id']] = User::load($row['id']);
+		return $repliers;	
+	}
+	
 	// public static function getDiscussionChildren($discussionID=null, $deleted=false)
 	// {
 		// return self::getChildren($discussionID, null, $deleted);

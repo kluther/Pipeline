@@ -33,6 +33,9 @@ if($action == 'notification') {
 		case 'chkBannedProject':
 			$user->setNotifyBannedProject($value);
 			break;
+		case 'chkDiscussionStarted':
+			$user->setNotifyDiscussionStarted($value);
+			break;			
 		case 'chkDiscussionReply':
 			$user->setNotifyDiscussionReply($value);
 			break;
