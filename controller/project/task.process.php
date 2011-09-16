@@ -335,7 +335,7 @@ if($action == 'create') {
 	$logEvent->save();
 	
 	// send us back
-	Session::setMessage('You accepted the task. Good luck!');
+	Session::setMessage('You joined the task. Good luck!');
 	$json = array('success' => '1', 'successUrl' => Url::task($taskID));
 	echo json_encode($json);
 } elseif($action == 'comment') {

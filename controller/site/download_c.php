@@ -21,4 +21,5 @@ header("Content-Description: File Transfer");
 header('Content-Type: '.$upload->getMime().'"');
 header('Content-Disposition: attachment; filename="'.$upload->getOriginalName().'"');
 header("Content-Transfer-Encoding: binary");
+header('Content-Length: '.$upload->getSize());
 readfile($fileURL);

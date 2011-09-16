@@ -19,9 +19,9 @@ class Session
 		else
 			$user = User::loadByUserName($userInfo);
 		
-		$_SESSION['user_id'] = $user->getId();
-		$_SESSION['username'] = $user->getUserName();	
-		$_SESSION['admin'] = $user->getAdmin();
+		$_SESSION[BASE_URI]['user_id'] = $user->getId();
+		$_SESSION[BASE_URI]['username'] = $user->getUserName();	
+		$_SESSION[BASE_URI]['admin'] = $user->getAdmin();
 	}
 	
 	public static function signOut()
@@ -33,22 +33,22 @@ class Session
 	
 	public static function getMessage()
 	{
-		if(isset($_SESSION['message']))
-			return $_SESSION['message'];
+		if(isset($_SESSION[BASE_URI]['message']))
+			return $_SESSION[BASE_URI]['message'];
 		else
 			return null;			
 	}
 	
 	public static function setMessage($message)
 	{
-		$_SESSION['message'] = $message;
+		$_SESSION[BASE_URI]['message'] = $message;
 	}
 
 	public static function clearMessage()
 	{	
 		@session_start();
-		$_SESSION['message'] = null;
-		unset($_SESSION['message']);		
+		$_SESSION[BASE_URI]['message'] = null;
+		unset($_SESSION[BASE_URI]['message']);		
 	}
 
 	// public static function getProjectID()
@@ -61,8 +61,8 @@ class Session
 
 	public static function getUserID()
 	{
-		if(isset($_SESSION['user_id']))
-			return $_SESSION['user_id'];
+		if(isset($_SESSION[BASE_URI]['user_id']))
+			return $_SESSION[BASE_URI]['user_id'];
 		else
 			return null;
 	}
@@ -75,15 +75,15 @@ class Session
 	
 	public static function getUserName()
 	{
-		if(isset($_SESSION['username']))
-			return $_SESSION['username'];
+		if(isset($_SESSION[BASE_URI]['username']))
+			return $_SESSION[BASE_URI]['username'];
 		else
 			return null;
 	}
 	
 	public static function isAdmin() {
-		if(isset($_SESSION['admin']))
-			return $_SESSION['admin'];
+		if(isset($_SESSION[BASE_URI]['admin']))
+			return $_SESSION[BASE_URI]['admin'];
 		else
 			return null;
 	}
