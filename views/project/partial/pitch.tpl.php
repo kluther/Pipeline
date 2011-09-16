@@ -4,7 +4,8 @@ include_once TEMPLATE_PATH.'/site/helper/format.php';
 $project = $SOUP->get('project');
 
 // only organizers or creator may edit
-$hasPermission = ( ProjectUser::isOrganizer(Session::getUserID(), $project->getID()) ||
+$hasPermission = ( Session::isAdmin() ||
+					ProjectUser::isOrganizer(Session::getUserID(), $project->getID()) ||
 					ProjectUser::isCreator(Session::getUserID(), $project->getID()) );
 
 $formattedPitch = ($project->getPitch() != '') ? formatPitch($project->getPitch()) : '(none)';					

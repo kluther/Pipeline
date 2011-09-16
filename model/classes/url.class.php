@@ -120,6 +120,10 @@ class Url
 		return (self::base().'/logout');
 	}
 	
+	public static function help() {
+		return (self::base().'/help');
+	}
+	
 	public static function inbox()
 	{
 		return (self::base().'/inbox');

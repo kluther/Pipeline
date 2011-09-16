@@ -101,7 +101,11 @@ span.slash {
 	
 div.panel {
 	background-color: #fff;	
-	}	
+	}
+	
+td.right div.panel {
+	background-color: #eeeeee;
+	}
 	
 div.panel-header {
 	background-color: #dddddd;
@@ -113,7 +117,7 @@ div.panel-header {
 		
 div.panel-body {
 	/*color: #eeeeee;*/
-	}		
+	}
 	
 div.panel-footer {
 	border-top-color: #dddddd;
@@ -133,7 +137,8 @@ div.breadcrumbs h3 {
 	}
 	
 div.your-role {
-	background-color: beige;
+	background-color: #dddddd;
+	border-color: #ccc;
 	}
 
 input[type=button], input[type=submit] {

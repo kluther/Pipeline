@@ -18,7 +18,7 @@ $fork->startBlockSet('body');
 
 ?>
 
-<div class="left">
+<td class="left">
 
 <?php if(Session::isLoggedIn()): ?>
 
@@ -50,10 +50,13 @@ $fork->startBlockSet('body');
 
 <?php endif; ?>
 
+</td>
 
-</div>
+<td class="right">
 
-<div class="right">
+<?php
+	$SOUP->render('project/partial/yourRole', array());
+?>
 
 <?php
 	$SOUP->render('project/partial/discussions',array(
@@ -72,7 +75,9 @@ $fork->startBlockSet('body');
 		));
 ?>
 
-</div>
+</td>
+
+<td class="extra"> </td>
 
 <?php
 

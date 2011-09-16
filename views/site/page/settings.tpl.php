@@ -7,18 +7,20 @@ $fork->startBlockSet('body');
 
 ?>
 
-<div class="left">
+<td class="left">
 
 <?php
 	$SOUP->render('site/partial/notifications', array(
 	));
 ?>
 
-</div>
+</td>
 
-<div class="right">
+<td class="right">
 
-</div>
+</td>
+
+<td class="extra"> </td>
 
 <?php
 

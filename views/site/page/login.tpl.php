@@ -39,7 +39,7 @@ function logIn(){
 
 </script>
 
-<div class="left">
+<td class="left">
 
 <label>Username or Email <input id="txtUsername" type="text" class="login" /></label>
 <label>Password <input id="txtPassword" type="password" class="login" /></label>
@@ -48,11 +48,11 @@ function logIn(){
 
 <p>Don't have an account yet? <a href="<?= Url::register() ?>">Register for free!</a></p>
 
-</div>
+</td>
 
-<div class="right">
+<td class="extra"> </td>
 
-</div>
+<td class="right"> </td>
 
 <?php
 

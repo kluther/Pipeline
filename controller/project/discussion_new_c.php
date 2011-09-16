@@ -37,7 +37,11 @@ switch($c) {
 		$cat = null;
 }
 
+// get your discussions
+$yourDiscussions = Discussion::getByUserID(Session::getUserID(), $project->getID());
+
 $soup = new Soup();
 $soup->set('project', $project);
 $soup->set('cat', $cat);
+$soup->set('yourDiscussions', $yourDiscussions);
 $soup->render('project/page/discussionNew');

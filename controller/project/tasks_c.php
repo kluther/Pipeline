@@ -11,7 +11,7 @@ if($project == null)
 	exit();
 }
 
-$events = Event::getTasksEventsByProjectID($project->getID(), 10);
+$events = Event::getTasksEventsByProjectID($project->getID(), 5);
 $discussions = Discussion::getTasksDiscussionsByProjectID($project->getID(), 5);
 
 $soup = new Soup();
@@ -24,9 +24,9 @@ if(Session::isLoggedIn()) {
 	$soup->set('yourTasks', $yourTasks);	
 	$moreTasks = Task::getMoreTasks(Session::getUserID(), $project->getID());
 	$soup->set('moreTasks', $moreTasks);
-	} else {
+} else {
 	$tasks = Task::getByProjectID($project->getID());
 	$soup->set('tasks', $tasks);
-	}
+}
 
 $soup->render('project/page/tasks');

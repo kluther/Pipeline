@@ -4,11 +4,15 @@ include_once TEMPLATE_PATH.'/site/helper/format.php';
 $project = $SOUP->get('project');
 $cat = $SOUP->get('cat');
 $title = $SOUP->get('title', 'Discussions');
+$hasPermission = $SOUP->get('hasPermission', null);
 $discussions = $SOUP->get('discussions', array());
 $size = $SOUP->get('size');
 
-// any logged-in user may create
-$hasPermission = Session::isLoggedIn();
+// allow values to be passed in
+if($hasPermission === null) {
+	// any logged-in user may create
+	$hasPermission = Session::isLoggedIn();
+}
 
 $fork = $SOUP->fork();
 $fork->set('title', $title);
@@ -21,6 +25,7 @@ if($size == 'small') {
 //	$fork->set('createLabel', 'New Discussion');
 	$newURL = Url::discussionNew($project->getID());
 }
+$fork->set('createLabel', 'New Discussion');
 
 ?>
 

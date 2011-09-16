@@ -87,9 +87,9 @@ class Project extends DbObject
 		return(ProjectUser::getOrganizers($this->id));
 	}
 	
-	public function getContributors()
+	public function getOnlyContributors()
 	{
-		return (ProjectUser::getContributors($this->id));
+		return (ProjectUser::getOnlyContributors($this->id));
 	}
 	
 	public function getFollowers()

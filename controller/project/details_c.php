@@ -11,7 +11,7 @@ if($project == null)
 	exit();
 }
 
-$events = Event::getBasicsEventsByProjectID($project->getID(), 10);
+$events = Event::getBasicsEventsByProjectID($project->getID(), 5);
 $discussions = Discussion::getBasicsDiscussionsByProjectID($project->getID(), 5);
 
 $soup = new Soup();

@@ -75,29 +75,29 @@ class Event extends DbObject
 		);		
 		$db->store($this, __CLASS__, self::DB_TABLE, $db_properties);
 		
-		// was this a contribution?
-		$et = EventType::load($this->eventTypeID);
-		if($et->getContribution() == true) {
-			// only project-related events can be contributions
-			if($this->projectID != null) {
-				$pu = ProjectUser::find($this->user1ID, $this->projectID);
-				if($pu != null) {
-					if($pu->getRelationship() == ProjectUser::FOLLOWER) {
-						// only followers can be upgraded to contributors
-						$pu->setRelationship(ProjectUser::CONTRIBUTOR);
-						$pu->save();
-					}
-				} else {
-					// no pre-existing relationship to project, so create new ProjectUser
-					$pu = new ProjectUser(array(
-						'user_id' => $this->user1ID,
-						'project_id' => $this->projectID,
-						'relationship' => ProjectUser::CONTRIBUTOR
-					));
-					$pu->save();
-				}
-			}
-		}
+		// // was this a contribution?
+		// $et = EventType::load($this->eventTypeID);
+		// if($et->getContribution() == true) {
+			// // only project-related events can be contributions
+			// if($this->projectID != null) {
+				// $pu = ProjectUser::find($this->user1ID, $this->projectID);
+				// if($pu != null) {
+					// if($pu->getRelationship() == ProjectUser::FOLLOWER) {
+						// // only followers can be upgraded to contributors
+						// $pu->setRelationship(ProjectUser::CONTRIBUTOR);
+						// $pu->save();
+					// }
+				// } else {
+					// // no pre-existing relationship to project, so create new ProjectUser
+					// $pu = new ProjectUser(array(
+						// 'user_id' => $this->user1ID,
+						// 'project_id' => $this->projectID,
+						// 'relationship' => ProjectUser::CONTRIBUTOR
+					// ));
+					// $pu->save();
+				// }
+			// }
+		// }
 	}
 	
 	/* ------------------------------------------------------------------*/

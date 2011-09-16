@@ -18,6 +18,7 @@ $fork = $SOUP->fork();
 $fork->set('id', 'discussion');
 $fork->set('title', 'Discussion');
 $fork->set('creatable', $hasPermission);
+$fork->set('createLabel', 'New Discussion');
 $fork->startBlockSet('body');
 ?>
 

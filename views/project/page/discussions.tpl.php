@@ -2,6 +2,8 @@
 
 $project = $SOUP->get('project');
 $events = $SOUP->get('events');
+$yourDiscussions = $SOUP->get('yourDiscussions');
+$moreDiscussions = $SOUP->get('moreDiscussions');
 $discussions = $SOUP->get('discussions');
 
 $fork = $SOUP->fork();
@@ -16,18 +18,45 @@ $fork->startBlockSet('body');
 
 ?>
 
-<div class="left">
+<td class="left">
+
+<?php if(Session::isLoggedIn()): ?>
+
+<?php
+	$SOUP->render('project/partial/discussions',array(
+		'discussions' => $yourDiscussions,
+		'size' => 'large',
+		'title' => 'Your Discussions'
+	));
+?>
+
+<?php
+	$SOUP->render('project/partial/discussions',array(
+		'discussions' => $moreDiscussions,
+		'size' => 'large',
+		'title' => 'More Discussions'
+	));
+?>
+
+<?php else: ?>
 
 <?php
 	$SOUP->render('project/partial/discussions',array(
 		'discussions' => $discussions,
-		'size' => 'large'
+		'size' => 'large',
+		'title' => 'Discussions'
 	));
 ?>
 
-</div>
+<?php endif; ?>
 
-<div class="right">
+</td>
+
+<td class="right">
+
+<?php
+	$SOUP->render('project/partial/yourRole', array());
+?>
 
 <?php
 	$SOUP->render('site/partial/activity', array(
@@ -37,7 +66,9 @@ $fork->startBlockSet('body');
 		));
 ?>
 
-</div>
+</td>
+
+<td class="extra"> </td>
 
 <?php
 

@@ -5,15 +5,18 @@ $task = $SOUP->get('task');
 $project = $SOUP->get('project');
 $leader = User::load($task->getLeaderID());
 
-// only organizers or creator may edit
-$hasPermission = ( ProjectUser::isOrganizer(Session::getUserID(), $project->getID()) ||
+// only organizers or creator may create or edit
+$hasPermission = ( Session::isAdmin() ||
+					ProjectUser::isOrganizer(Session::getUserID(), $project->getID()) ||
 					ProjectUser::isCreator(Session::getUserID(), $project->getID()) );
 
 $fork = $SOUP->fork();
 
 $fork->set('id', 'task');
 $fork->set('editable', $hasPermission);
-//$fork->set('editLabel', 'Edit Task');
+$fork->set('editLabel', 'Edit Task');
+$fork->set('creatable', $hasPermission);
+$fork->set('createLabel', 'New Task');
 $fork->set('title', 'Task Info');
 
 $fork->startBlockSet('body');
@@ -24,6 +27,11 @@ $fork->startBlockSet('body');
 
 <script type="text/javascript">
 $(document).ready(function(){
+
+	$('#task .createButton').click(function() {
+		window.location = '<?= Url::taskNew($project->getID()) ?>';
+	});
+		
 	$("#txtDeadline").datepicker({
 		changeMonth: true,
 		changeYear: true,

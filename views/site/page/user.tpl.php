@@ -9,24 +9,29 @@ $fork->startBlockSet('body');
 
 ?>
 
-<div class="left">
+<td class="left">
 
 <?php
 	$SOUP->render('site/partial/profile', array(
 	));
 ?>
 
+</td>
+
+<td class="extra">
+
 <?php
 	$SOUP->render('site/partial/userTasks', array(
 		'user' => $user,
 		'tasks' => $tasks,
-		'hasPermission' => false
+		'hasPermission' => false,
+		'size' => 'small'
 	));
 ?>
 
-</div>
+</td>
 
-<div class="right">
+<td class="right">
 
 <?php
 	$SOUP->render('site/partial/activity', array(
@@ -35,7 +40,9 @@ $fork->startBlockSet('body');
 	));
 ?>
 
-</div>
+</td>
+
+
 
 <?php
 

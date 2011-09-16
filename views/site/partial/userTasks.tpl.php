@@ -17,7 +17,8 @@ $hasPermission = $SOUP->get('hasPermission', null);
 // allow values to be passed in
 if($hasPermission === null) {
 	// only organizers or creator may create tasks
-	$hasPermission = ( ProjectUser::isOrganizer(Session::getUserID(), $project->getID()) ||
+	$hasPermission = ( Session::isAdmin() ||
+						ProjectUser::isOrganizer(Session::getUserID(), $project->getID()) ||
 						ProjectUser::isCreator(Session::getUserID(), $project->getID()) );
 }
 
@@ -25,6 +26,7 @@ $fork = $SOUP->fork();
 $fork->set('title', $title);
 $fork->set('id', $id);
 $fork->set('creatable', $hasPermission);
+$fork->set('createLabel', 'New Task');
 $fork->startBlockSet('body');
 ?>
 

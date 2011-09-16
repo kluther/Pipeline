@@ -7,18 +7,18 @@ $fork->startBlockSet('body');
 
 ?>
 
-<div class="left">
+<td class="left">
 
 <?php
 	$SOUP->render('site/partial/lookingForHelp', array(
 	));
 ?>
 
-</div>
+</td>
 
-<div class="right">
+<td class="right"> </td>
 
-</div>
+<td class="extra"> </td>
 
 <?php
 

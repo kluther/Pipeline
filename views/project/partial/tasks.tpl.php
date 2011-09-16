@@ -24,7 +24,7 @@ $fork = $SOUP->fork();
 $fork->set('title', $title);
 $fork->set('id', $id);
 $fork->set('creatable', $hasPermission);
-
+$fork->set('createLabel', 'New Task');
 $fork->startBlockSet('body');
 ?>
 
@@ -75,9 +75,9 @@ if($tasks != null) {
 		$numAccepted = $task->getNumAccepted();
 		$numNeeded = $task->getNumNeeded();
 		
-		if($numNeeded == 0)
-			echo '&#8734; people needed';
-		else {
+		if($numNeeded == 0) {
+			echo ($size != 'small') ? '&#8734; people needed' : '&#8734; needed';
+		} else {
 			$numNeeded -= $numAccepted;
 			if($size != 'small')
 				$numNeeded = formatCount($numNeeded,'person','people');

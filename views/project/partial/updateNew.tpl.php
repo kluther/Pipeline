@@ -4,7 +4,7 @@ $project = $SOUP->get('project');
 $task = $SOUP->get('task');
 
 $fork = $SOUP->fork();
-$fork->set('title', 'New Update');
+$fork->set('title', 'New Contribution');
 $fork->startBlockSet('body');
 
 ?>
@@ -31,7 +31,7 @@ $fork->startBlockSet('body');
 	<label for="txtTitle">Title<span class="required">*</span></label>
 	<div class="input">
 		<input type="text" id="txtTitle" name="txtTitle" maxlength="255" />
-		<p>Short title for the update</p>
+		<p>Short title for the contribution</p>
 	</div>
 </div>
 
@@ -39,7 +39,7 @@ $fork->startBlockSet('body');
 	<label for="txtMessage">Message<span class="required">*</span></label>
 	<div class="input">
 		<textarea id="txtMessage" name="txtMessage"></textarea>
-		<p>Write your update here</p>
+		<p>Write your contribution here</p>
 	</div>
 </div>
 
@@ -66,7 +66,7 @@ $fork->startBlockSet('body');
 
 <div class="clear">
 	<div class="input">
-		<input id="btnCreateUpdate" type="button" value="Create Update" />
+		<input id="btnCreateUpdate" type="button" value="Create Contribution" />
 	</div>
 </div>
 

@@ -132,8 +132,9 @@ div.breadcrumbs h3 {
 	color: #fff;
 	}
 	
-div.your-role {
+div.your-role div {
 	background-color: #333;
+	border-color: #666;
 	}
 	div.your-role p {
 		color: #fff;

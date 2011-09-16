@@ -71,8 +71,8 @@ class Accepted extends DbObject
 		}
 	}
 	
-	// used on Task page
-	public static function getAcceptedBy($taskID)
+	// get all accepts for this taskID ... used on Task page
+	public static function getAcceptedBy($taskID=null)
 	{
 		if($taskID == null) return null;
 		
@@ -90,12 +90,47 @@ class Accepted extends DbObject
 		return $accepted;		
 	}
 	
+	
+	// has user accepted any task in this project?
+	public static function hasAccepted($userID=null, $projectID=null) {
+		if( ($userID == null) || ($projectID == null) ) return null;
+		
+		$query = "SELECT id FROM ".self::DB_TABLE;
+		$query .= " WHERE creator_id = ".$userID;
+		$query .= " AND project_id = ".$projectID;
+		$query .= " AND status != ".self::STATUS_RELEASED;
+
+		$db = Db::instance();
+		$result = $db->lookup($query);
+		if(!mysql_num_rows($result)) return null;
+
+		$accepted = null;
+		if($row = mysql_fetch_assoc($result))
+			$accepted = self::load($row['id']);
+			
+		if($accepted != null)
+			return true;
+		else
+			return false;
+	}
+	
+	// has user accepted THIS task?
+	public static function hasAcceptedTask($userID=null, $taskID=null) {
+		if( ($userID == null) || ($taskID == null) ) return null;
+		$accepted = self::getByUserID($userID, $taskID);
+		if($accepted != null)
+			return true;
+		else
+			return false;
+	}
+	
 	public static function getByUserID($userID=null, $taskID=null)
 	{
 		if($userID == null) return null;
 		
 		$query = "SELECT id FROM ".self::DB_TABLE;
 		$query .= " WHERE creator_id = ".$userID;
+		$query .= " AND status != ".self::STATUS_RELEASED;
 		if($taskID != null)
 			$query .= " AND task_id = ".$taskID;
 			
@@ -116,7 +151,7 @@ class Accepted extends DbObject
 		$query = "SELECT id FROM ".self::DB_TABLE;
 		$query .= " WHERE task_id = ".$taskID;
 		$query .= " AND status != ".self::STATUS_RELEASED;
-		$query .= " ORDER BY date_created DESC";
+		$query .= " ORDER BY status DESC, date_created DESC";
 		if($limit != null)
 			$query .= " LIMIT ".$limit;
 			

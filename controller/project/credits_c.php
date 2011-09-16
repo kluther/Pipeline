@@ -15,13 +15,13 @@ $creatorID = $project->getCreatorID();
 $creator = User::load($creatorID);
 
 $organizers = $project->getOrganizers();
-$contributors = $project->getContributors();
+$contributors = $project->getOnlyContributors();
 $followers = $project->getFollowers();
 $banned = $project->getBanned();
 
 $discussions = Discussion::getPeopleDiscussionsByProjectID($project->getID(), 3);
 
-$events = Event::getPeopleEventsByProjectID($project->getID(), 10);
+$events = Event::getPeopleEventsByProjectID($project->getID(), 5);
 
 $soup = new Soup();
 $soup->set('project', $project);

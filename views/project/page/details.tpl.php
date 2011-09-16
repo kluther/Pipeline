@@ -15,16 +15,20 @@ $fork->startBlockSet('body');
 
 ?>
 
-<div class="left">
-
-<?php
-	$SOUP->render('project/partial/progress',array(
-	));
-?>
+<td class="left">
 
 <?php
 	$SOUP->render('project/partial/pitch',array(
 
+	));
+?>
+
+</td>
+
+<td class="extra">
+
+<?php
+	$SOUP->render('project/partial/progress',array(
 	));
 ?>
 
@@ -38,9 +42,13 @@ $fork->startBlockSet('body');
 	));
 ?>
 
-</div>
+</td>
 
-<div class="right">
+<td class="right">
+
+<?php
+	$SOUP->render('project/partial/yourRole', array());
+?>
 
 <?php
 	$SOUP->render('project/partial/discussions',array(
@@ -59,7 +67,7 @@ $fork->startBlockSet('body');
 		));
 ?>
 
-</div>
+</td>
 
 <?php
 

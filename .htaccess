@@ -22,6 +22,10 @@ RewriteRule ^up/(.+)$ upload/$1 [L]
 
 RewriteRule ^$ controller/site/index_c.php [L]
 
+### HELP ###
+
+RewriteRule ^help/?$ controller/site/help_c.php [L]
+
 ### FIND PROJECTS ###
 
 RewriteRule ^projects/?$ controller/site/find_c.php [L]

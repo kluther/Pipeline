@@ -70,7 +70,7 @@ class Breadcrumbs
 	
 	public static function updateNew($taskID=null) {
 		if($taskID == null) return null;
-		$title = 'New Update';
+		$title = 'New Contribution';
 		return array_merge(
 			self::oneCrumb($title, Url::updateNew($taskID)),
 			self::task($taskID)

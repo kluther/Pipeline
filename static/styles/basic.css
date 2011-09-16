@@ -68,7 +68,7 @@ ul.segmented-list {
 
 ul.segmented-list h6.primary {
 	font-size: 120%;
-	margin: 0; padding: 0 0 3px 22px;
+	margin: 0; padding: 0 0 0 22px;
 	background: no-repeat 0 3px;
 	}
 	ul.segmented-list h6.primary span.status, ul.segmented-list p.secondary span.status {
@@ -80,10 +80,11 @@ ul.segmented-list h6.primary {
 		-moz-border-radius: 0.5em;
 		-webkit-border-radius: 0.5em;
 		border-radius: 0.5em;
+		white-space: nowrap;
 		}
 ul.segmented-list p.secondary {
 	font-size: 90%;
-	margin: 0; padding: 0 0 0 22px;
+	margin: 0; padding: 3px 0 0 22px;
 	}
 	ul.segmented-list p.secondary span.status {
 		float: none;
@@ -94,7 +95,7 @@ ul.segmented-list p.secondary {
 			
 div.panel.small ul.segmented-list h6.primary {
 	font-size: 90%;	
-	margin: 0; padding: 0 0 3px 22px;
+	margin: 0; padding: 0 0 2px 22px;
 	background-position: 0 0;
 	}
 	div.panel.small ul.segmented-list h6.primary span.status {
@@ -121,6 +122,12 @@ ul.tasks h6.primary {
 	
 ul.updates h6.primary {
 	background-image: url(./../images/icons/pin.png);
+	}
+	
+div.panel.small ul.segmented-list h6.primary.contribution {
+	background-image: url(./../images/icons/pin.png);
+	clear: both;
+	margin: 5px 0 0 18px;
 	}
 	
 /* TASK/UPDATE MAIN CONTENT */
@@ -529,15 +536,19 @@ div.clear {
 
 div.panel {
 	margin-bottom: 1em;
-	-moz-border-radius: .5em;
-	-webkit-border-radius: .5em;
-	border-radius: .5em;	
+	-moz-border-bottom-left-radius: .5em;
+	-webkit-border-bottom-left-radius: .5em;
+	border-bottom-left-radius: .5em;	
+	-moz-border-bottom-right-radius: .5em;
+	-webkit-border-bottom-right-radius: .5em;
+	border-bottom-right-radius: .5em;	
 	}
+	/*
 	div.panel.small {
-		width: 300px;
+		width: 100%;
 		}
 	div.panel.large {
-		width: 600px;
+		width: 100%;
 		}
 	div.panel.indent {
 		width: 550px;
@@ -547,6 +558,7 @@ div.panel {
 		width: 500px;
 		margin-left: 100px;
 		}
+	*/
 	
 div.panel-header {
 	padding: 0 1em;
@@ -587,18 +599,43 @@ div.page-body {
 	padding: 1.5em 0;
 	}	
 	
+table {
+	width: 100%;
+	}
+	table td {
+		vertical-align: top;
+		}
+td.left {
+	width: auto;
+	}
+	
+td.right {
+	width: 25%;
+	padding-left: 1.5em;
+	}
+	
+td.extra {
+	width: 30%;
+	padding-left: 1.5em;
+	}
+/*
 div.left {
-	width: 620px;
+	width: auto;
 	float: left;
 	}
 
-div.right {
-	width: 300px;
+div.extra {
 	float: right;
+	width: 300px;
 	}
-
+	
+div.right {
+	float: right;
+	width: 300px;
+	}
+*/
 div.funnel {
-	width: 920px;
+	width: 90%;
 	margin: 0 auto;
 	}
 	
@@ -612,21 +649,46 @@ div.breadcrumbs {
 		}	
 
 div.your-role {
-	float: right;
-	width: 300px;
-	margin: 1em 0 0 0; padding: 0;
-	-moz-border-radius: .5em;
-	-webkit-border-radius: .5em;
-	border-radius: .5em;	
-	text-align: right;
+/*	float: right;
+	width: 25%;
+	margin-top: 1em;*/
+	margin-bottom: 2em;
 	}
-	div.your-role p {
-		padding: 1em;
-		text-align: left;
+	div.your-role  {
+		padding: 0.5em 1em;
+		border: 2px solid;
+		-moz-border-radius: .5em;
+		-webkit-border-radius: .5em;
+		border-radius: .5em;
 		}
+	div.your-role p {}
 	div.your-role input {
-		margin: 0 1em 1em 1em;
+		margin: 0.5em 0;
 		}
+		
+/* HELP */
+
+div.help h3 {
+	font-weight: normal;
+	font-size: 150%;
+	margin: 1em 0 0.5em 0;
+	}
+	
+div.help p {
+	font-size: 100%;
+	}
+	
+div.help ul {
+	list-style: disc;
+	margin: 1em 0 0 2em;
+	}
+	div.help ul li {
+		margin-bottom: 1em;
+		}
+
+div.help em {
+	font-weight: bold;
+	}
 
 /* INPUT/FORMS */
 		

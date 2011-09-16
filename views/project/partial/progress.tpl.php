@@ -4,13 +4,14 @@ include_once TEMPLATE_PATH.'/site/helper/format.php';
 $project = $SOUP->get('project');
 
 $deadline = $project->getDeadline();
-$deadline = ($deadline != null) ? '<strong>due</strong> '.formatTimeTag($deadline) : '<strong>no deadline</strong>';
+$deadline = ($deadline != null) ? formatTimeTag($deadline) : '(none)';
 
 $venue = $project->getVenue();
 $venue = ($venue != null) ? $venue : '(none)';
 
 // only organizers or creator may edit
-$hasPermission = ( ProjectUser::isOrganizer(Session::getUserID(), $project->getID()) ||
+$hasPermission = ( Session::isAdmin() ||
+					ProjectUser::isOrganizer(Session::getUserID(), $project->getID()) ||
 					ProjectUser::isCreator(Session::getUserID(), $project->getID()) );
 
 $fork = $SOUP->fork();
@@ -95,7 +96,11 @@ $(document).ready(function(){
 
 <div class="view">
 
-<p><strong>started</strong> <?= formatTimeTag($project->getDateCreated()) ?> <span class="slash">/</span> <strong>status</strong>: <span class="status"><?= formatProjectStatus($project->getStatus()) ?></span>  <span class="slash">/</span> <?= $deadline ?></p>
+<ul class="segmented-list">
+	<li><strong>Status</strong>: <span class="status"><?= formatProjectStatus($project->getStatus()) ?></span></li>
+	<li><strong>Deadline</strong>: <?= $deadline ?></li>
+	<li><strong>Started</strong>: <?= formatTimeTag($project->getDateCreated()) ?></li>
+</ul>
 
 </div><!-- .view -->
 

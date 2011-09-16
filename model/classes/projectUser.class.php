@@ -11,7 +11,7 @@ class ProjectUser extends DbObject
 	
 	const BANNED = 0;
 	const FOLLOWER = 1;
-	const CONTRIBUTOR = 5;
+//	const CONTRIBUTOR = 5;
 	const ORGANIZER = 10;
 	
 	public function __construct($args=array())
@@ -111,9 +111,8 @@ class ProjectUser extends DbObject
 	}
 	
 	// doesn't really belong here but what the hey
-	public static function isContributor($userID=null, $projectID=null)
-	{
-		return (self::hasRelationship($userID,$projectID,self::CONTRIBUTOR));
+	public static function isContributor($userID=null, $projectID=null) {
+		return (Accepted::hasAccepted($userID, $projectID));
 	}
 	
 	public static function isOrganizer($userID=null, $projectID=null)
@@ -132,7 +131,9 @@ class ProjectUser extends DbObject
 	}
 	
 	public static function isAffiliated($userID=null, $projectID=null) {
-		if (self::hasRelationship($userID,$projectID) || self::isCreator($userID, $projectID))
+		if (self::hasRelationship($userID, $projectID) ||
+			self::isCreator($userID, $projectID) ||
+			self::isContributor($userID, $projectID) )
 			return true;
 		else return false;
 	}
@@ -145,8 +146,9 @@ class ProjectUser extends DbObject
 		$query = "SELECT * FROM ".self::DB_TABLE;
 		$query .= " WHERE user_id = ".$userID;
 		$query .= " AND project_id = ".$projectID;
-		if($relationship != null)
+		if($relationship !== null)
 			$query .= " AND relationship = ".$relationship;
+		//echo $query;
 		
 		$db = Db::instance();
 		$result = $db->lookup($query);
@@ -165,39 +167,42 @@ class ProjectUser extends DbObject
 	
 	public static function getFollowers($projectID=null)
 	{
-		// if($projectID == null) return null;
-		
-		// $query = "SELECT pu.user_id AS user_id FROM ".self::DB_TABLE." pu";
-		// $query .= " INNER JOIN ".User::DB_TABLE." u ON ";
-		// $query .= " pu.user_id = u.id";
-		// $query .= " WHERE pu.project_id = ".$projectID;
-		// $query .= " AND pu.user_id NOT IN (";
-			// $query .= " SELECT DISTINCT user_1_id FROM ".Event::DB_TABLE;
-			// $query .= " WHERE project_id = ".$projectID;
-		// $query .= " )";
-		// $query .= " AND pu.user_id NOT IN (";
-			// $query .= " SELECT DISTINCT user_2_id FROM ".Event::DB_TABLE;
-			// $query .= " WHERE project_id = ".$projectID;
-		// $query .= " )";
-		// $query .= " AND pu.relationship = ".self::FOLLOWER;
-		// $query .= " ORDER BY u.username ASC"; // alphabetical
-		// //echo $query;
-		
-		// $db = Db::instance();
-		// $result = $db->lookup($query);
-		// if(!mysql_num_rows($result)) return array();
-
-		// $users = array();
-		// while($row = mysql_fetch_assoc($result))
-			// $users[$row['user_id']] = User::load($row['user_id']);		
-		// return $users;
-		
 		return (self::getUsersByRelationship($projectID,self::FOLLOWER));
 	}	
 	
-	public static function getContributors($projectID=null) {
-		return (self::getUsersByRelationship($projectID,self::CONTRIBUTOR));
-	}	
+	// public static function getContributors($projectID=null) {
+	// //	return (self::getUsersByRelationship($projectID,self::CONTRIBUTOR));
+		// return (Accepted::getUsersByProjectID($projectID));
+	// }	
+	
+	// get users who have accepted any task in this project
+	public static function getOnlyContributors($projectID=null, $limit=null) {
+		if($projectID == null) return null;
+		$project = Project::load($projectID);
+		$projectCreator = $project->getCreator();
+		
+		$query = "SELECT creator_id AS id FROM ".Accepted::DB_TABLE;
+		$query .= " WHERE project_id = ".$projectID;
+		$query .= " AND status != ".Accepted::STATUS_RELEASED;
+		$query .= " AND creator_id NOT IN (";
+			$query .= " SELECT user_id FROM ".self::DB_TABLE;
+			$query .= " WHERE project_id = ".$projectID;
+			$query .= " AND relationship != ".self::FOLLOWER;
+		$query .= " )";
+		$query .= " AND creator_id != ".$projectCreator->getID();
+		$query .= " ORDER BY status DESC, date_created DESC";
+		if($limit != null)
+			$query .= " LIMIT ".$limit;
+			
+		$db = Db::instance();
+		$result = $db->lookup($query);
+		if(!mysql_num_rows($result)) return array();
+
+		$users = array();
+		while($row = mysql_fetch_assoc($result))
+			$users[$row['id']] = User::load($row['id']);
+		return $users;	
+	}
 	
 	public static function getOrganizers($projectID=null)
 	{

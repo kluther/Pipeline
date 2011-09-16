@@ -8,17 +8,17 @@ $fork->startBlockSet('body');
 
 ?>
 
-<div class="left">
+<td class="left">
 
-page not found
+<p>Sorry, that page is not available.</p>
 
-</div>
+</td>
 
-<div class="right">
 
-right
+<td class="extra"> </td>
 
-</div>
+<td class="right"> </td>
+
 
 <?php
 

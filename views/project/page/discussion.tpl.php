@@ -17,7 +17,7 @@ $fork->startBlockSet('body');
 
 ?>
 
-<div class="left">
+<td class="left">
 
 <?php
 	$SOUP->render('project/partial/discussion', array(
@@ -26,9 +26,13 @@ $fork->startBlockSet('body');
 	));
 ?>
 
-</div>
+</td>
 
-<div class="right">
+<td class="right">
+
+<?php
+	$SOUP->render('project/partial/yourRole', array());
+?>
 
 <?php
 	$SOUP->render('site/partial/activity', array(
@@ -39,7 +43,8 @@ $fork->startBlockSet('body');
 	));
 ?>
 
-</div>
+</td>
+<td class="extra"> </td>
 
 <?php
 

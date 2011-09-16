@@ -56,16 +56,12 @@ if($project != null)
 				<li class="left"><a href="<?= Url::findProjects() ?>">Find Projects</a></li>
 				<!--li class="left"><a href="<?= Url::startAProject() ?>">Start a Project</a></li-->
 				<li class="left"><a href="http://pipeline.cc.gatech.edu/">About Pipeline</a></li>
+				<li class="left"><a href="<?= Url::help() ?>">Help</a></li>
 			</ul>
 		</div><!-- end .funnel -->
 	</div><!-- end .primary-nav -->
-	<div class="heading">
-		<div class="funnel">
-			<?php 
-				if($project != null) {
-					$SOUP->render('project/partial/yourRole', array());
-				}
-			?>
+	<div class="funnel">
+		<div class="heading">
 			<h2>
 				<a href="<?= $headingURL ?>"><?= $pageTitle ?></a>
 				<?php if($project != null): ?><span class="status"><?= $status ?></span><?php endif; ?>
@@ -103,7 +99,9 @@ if($project != null)
 			<?php endforeach; ?>
 			</div>
 		<?php endif; ?>
-		<?= $body ?>
+		<table id="columns">
+			<tr><?= $body ?></tr>
+		</table>
 	</div><!-- end .funnel -->
 </div><!-- end .page-body -->
 <div id="feedback"></div><!-- #feedback -->

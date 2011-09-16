@@ -216,6 +216,65 @@ class Discussion extends DbObject
 	public static function getActivityDiscussionsByProjectID($projectID=null, $limit=null) {
 		return (self::getByProjectID($projectID, ACTIVITY_ID, $limit));
 	}
+	
+	public static function getByUserID($userID=null, $projectID=null, $limit=null, $deleted=false) {
+		if ($userID == null) return null;
+		
+		$query = "SELECT DISTINCT parent_id FROM ".self::DB_TABLE;
+		$query .= " WHERE creator_id=".$userID;
+		if($projectID != null)
+			$query .= " AND project_id=".$projectID;
+//		$query .= " AND parent_id IS NOT NULL";
+		if($deleted===true)
+			$query .= " AND deleted=1";
+		elseif($deleted===false)
+			$query .= " AND deleted=0";
+		$query .= " ORDER BY date_created DESC";
+		if($limit!=null)
+			$query .= " LIMIT ".$limit;		
+		//echo $query;
+		
+		$db = Db::instance();
+		$result = $db->lookup($query);		
+		if (!mysql_num_rows($result)) {return null;}
+		
+		$discussions = array();
+		while ($row = mysql_fetch_assoc($result))
+			$discussions[$row['parent_id']] = self::load($row['parent_id']);
+		
+		return $discussions;		
+	}
+	
+	public static function getMoreDiscussions($userID=null, $projectID=null, $limit=null, $deleted=false) {
+		if ( ($userID == null) || ($projectID == null) ) return null;
+		
+		$query = "SELECT DISTINCT parent_id AS id FROM ".self::DB_TABLE;
+		$query .= " WHERE parent_id NOT IN (";
+			$query .= " SELECT id FROM ".self::DB_TABLE;
+			$query .= " WHERE creator_id = ".$userID;
+			$query .= " AND project_id = ".$projectID;
+		$query .= " )";
+		$query .= " AND project_id=".$projectID;
+//		$query .= " AND parent_id IS NOT NULL";
+		if($deleted===true)
+			$query .= " AND deleted=1";
+		elseif($deleted===false)
+			$query .= " AND deleted=0";
+		$query .= " ORDER BY date_created DESC";
+		if($limit!=null)
+			$query .= " LIMIT ".$limit;		
+		//echo $query;
+		
+		$db = Db::instance();
+		$result = $db->lookup($query);		
+		if (!mysql_num_rows($result)) {return null;}
+		
+		$discussions = array();
+		while ($row = mysql_fetch_assoc($result))
+			$discussions[$row['id']] = self::load($row['id']);
+		
+		return $discussions;		
+	}
 
 	public static function getByProjectID($projectID=null, $category=null, $limit=null, $deleted=false)
 	{

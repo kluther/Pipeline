@@ -7,20 +7,20 @@ $fork->startBlockSet('body');
 
 ?>
 
-<div class="left">
-
-
+<td class="left">
 
 <?php
 	$SOUP->render('site/partial/register', array(
 		));
 ?>
 
-</div><!-- end .left -->
+</td><!-- end .left -->
 
-<div class="right">
+<td class="right">
 
-</div><!-- end .right -->
+</td><!-- end .right -->
+
+<td class="extra"> </td>
 
 <?php
 

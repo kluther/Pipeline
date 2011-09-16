@@ -3,6 +3,7 @@
 $invite = $SOUP->get('invite', null);
 
 $fork = $SOUP->fork();
+$fork->set('title', 'Register');
 $fork->startBlockSet('body');
 
 ?>
