@@ -31,7 +31,7 @@ function formatPitch($pitch) {
 
 /* generic function for formatting paragraphs of HTML text */
 function formatParagraphs($paragraphs) {
-	$formatted = html_entity_decode($paragraphs);
+	$formatted = html_entity_decode($paragraphs, ENT_QUOTES, 'ISO-8859-15');
 	$formatted = str_replace("\n","<br />",$formatted);
 	return $formatted;
 }
@@ -75,7 +75,7 @@ function formatProjectLink($projectID=null)
 {
 	if($projectID == null) return null;
 	$project = Project::load($projectID);
-	$formatted = '<a href="'.Url::project($projectID).'">'.html_entity_decode($project->getTitle()).'</a>';
+	$formatted = '<a href="'.Url::project($projectID).'">'.html_entity_decode($project->getTitle(), ENT_QUOTES, 'ISO-8859-15').'</a>';
 	return $formatted;
 }
 
@@ -134,7 +134,7 @@ function formatTimeTag($t, $tagName = 'span')
 
 function formatSpecs($specs) {
 	if(empty($specs)) return null;
-	$specs = html_entity_decode($specs);
+	$specs = html_entity_decode($specs, ENT_QUOTES, 'ISO-8859-15');
 	$lines = explode("\n",$specs); // line feeds
 
 	$formattedSpecs = array();
@@ -155,7 +155,7 @@ function formatSpecs($specs) {
 
 function formatRules($rules) {
 	if(empty($rules)) return null;
-	$rules = html_entity_decode($rules);
+	$rules = html_entity_decode($rules, ENT_QUOTES, 'ISO-8859-15');
 	$lines = explode("\n",$rules); // line feeds
 
 	$formattedRules = array();
