@@ -364,6 +364,16 @@ ul.users input[type=button] {
 	font-size: 90%;
 	}
 
+ul.users li.invited {
+	display: none;
+	}
+
+/* CSS override for jqueryUI dialog */
+.ui-dialog  div.invite-box blockquote {
+	padding: 1em 2em;
+	font-size: 90%;
+	}
+	
 /* BASICS */
 
 div#pitch div.edit div.input,
@@ -573,10 +583,11 @@ div.panel-header {
 		text-transform: uppercase;
 		padding: 1em 0;
 		}
-	div.panel-header input.editButton, div.panel-header input.createButton {
+	div.panel-header input.editButton,
+	div.panel-header input.createButton,
+	div.panel-header input.extraButton {
 		display: block;
 		float: right;
-
 		}
 
 div.panel-body {

@@ -9,6 +9,10 @@ function formatFileSize($size) {
     return round($size, $decPlaces).$units[$i];
 }
 
+function formatInvitationMessage($message) {
+	return (formatParagraphs($message));
+}
+
 function formatUpdate($update) {
 	return (formatParagraphs($update));
 }

@@ -84,6 +84,29 @@ class Invitation extends DbObject
 	
 	/* static methods */
 	
+	public static function getByProjectID($projectID=null, $relationship=null, $responded=null) {
+		if($projectID == null) return null;
+		
+		$query = " SELECT id FROM ".self::DB_TABLE;
+		$query .= " WHERE project_id = ".$projectID;
+		if($relationship != null)
+			$query .= " AND relationship = ".$relationship;
+		if($responded===true)
+			$query .= " AND response IS NOT NULL";
+		elseif($responded===false)
+			$query .= " AND response IS NULL";			
+		$query .= " ORDER BY ISNULL(date_responded) ASC";
+		
+		$db = Db::instance();
+		$result = $db->lookup($query);
+		if(!mysql_num_rows($result)) return array();
+
+		$invitations = array();
+		while($row = mysql_fetch_assoc($result))
+			$invitations[$row['id']] = self::load($row['id']);
+		return $invitations;			
+	}
+	
 	public static function findByCode($code=null) {
 		if($code === null) return null;
 		

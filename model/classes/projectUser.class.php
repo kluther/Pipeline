@@ -210,14 +210,21 @@ class ProjectUser extends DbObject
 	}	
 	
 	// avoid calling this... use one of the aliased functions above instead
-	public static function getUsersByRelationship($projectID=null, $relationship=null)
-	{
+	public static function getUsersByRelationship($projectID=null, $relationship=null) {
 		if($projectID == null) return null;
+		$project = Project::load($projectID);
+		$projectCreator = $project->getCreator();		
 		
 		$query = "SELECT pu.user_id AS user_id FROM ".self::DB_TABLE." pu";
 		$query .= " INNER JOIN ".User::DB_TABLE." u ON ";
 		$query .= " pu.user_id = u.id";
 		$query .= " WHERE pu.project_id = ".$projectID;
+		$query .= " AND pu.user_id NOT IN (";
+			$query .= "SELECT creator_id FROM ".Accepted::DB_TABLE;
+			$query .= " WHERE project_id = ".$projectID;
+			$query .= " AND status != ".Accepted::STATUS_RELEASED;			
+		$query .= " )";
+		$query .= " AND pu.user_id != ".$projectCreator->getID();		
 		if($relationship !== null)
 			$query .= " AND pu.relationship = ".$relationship;
 		$query .= " ORDER BY u.username ASC"; // alphabetical
