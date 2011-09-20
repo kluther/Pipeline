@@ -18,6 +18,7 @@ $organizers = $project->getOrganizers();
 $organizerInvites = Invitation::getByProjectID($project->getID(), ProjectUser::ORGANIZER);
 
 $contributors = $project->getOnlyContributors();
+$contributorInvites = Invitation::getByProjectID($project->getID(), ProjectUser::CONTRIBUTOR);
 
 $followers = $project->getFollowers();
 $followerInvites = Invitation::getByProjectID($project->getID(), ProjectUser::FOLLOWER);
@@ -34,6 +35,7 @@ $soup->set('creator', $creator);
 $soup->set('organizers', $organizers);
 $soup->set('organizerInvites', $organizerInvites);
 $soup->set('contributors', $contributors);
+$soup->set('contributorInvites', $contributorInvites);
 $soup->set('banned', $banned);
 $soup->set('followers', $followers);
 $soup->set('followerInvites', $followerInvites);

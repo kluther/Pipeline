@@ -7,6 +7,7 @@ class Invitation extends DbObject
 	protected $inviteeID;
 	protected $inviteeEmail;
 	protected $projectID;
+	protected $taskID;
 	protected $relationship;
 	protected $invitationCode;
 	protected $invitationMessage;
@@ -28,6 +29,7 @@ class Invitation extends DbObject
 			'invitee_id' => null,
 			'invitee_email' => null,
 			'project_id' => 0,
+			'task_id' => null,
 			'relationship' => 0,
 			'invitation_code' => null,
 			'invitation_message' => null,
@@ -44,6 +46,7 @@ class Invitation extends DbObject
 		$this->inviteeID = $args['invitee_id'];
 		$this->inviteeEmail = $args['invitee_email'];
 		$this->projectID = $args['project_id'];
+		$this->taskID = $args['task_id'];
 		$this->relationship = $args['relationship'];
 		$this->invitationCode = $args['invitation_code'];
 		$this->invitationMessage = $args['invitation_message'];
@@ -69,6 +72,7 @@ class Invitation extends DbObject
 			'invitee_id' => $this->inviteeID,
 			'invitee_email' => $this->inviteeEmail,
 			'project_id' => $this->projectID,
+			'task_id' => $this->taskID,
 			'relationship' => $this->relationship,
 			'invitation_code' => $this->invitationCode,
 			'invitation_message' => $this->invitationMessage,
@@ -171,6 +175,15 @@ class Invitation extends DbObject
 	public function setProjectID($newProjectID)
 	{
 		$this->projectID = $newProjectID;
+		$this->modified = true;
+	}
+	
+	public function getTaskID() {
+		return ($this->taskID);
+	}
+	
+	public function setTaskID($newTaskID) {
+		$this->taskID = $newTaskID;
 		$this->modified = true;
 	}
 	

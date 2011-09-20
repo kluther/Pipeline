@@ -373,6 +373,14 @@ ul.users li.invited {
 	padding: 1em 2em;
 	font-size: 90%;
 	}
+
+.ui-dialog div.invite-box a {
+	text-decoration: none;
+	}
+	.ui-dialog div.invite-box a:hover {
+		text-decoration: underline;
+		}
+
 	
 /* BASICS */
 

@@ -67,7 +67,7 @@ html {
 	background-color: #eeeeee;
 	}	
 
-a {
+a, .ui-dialog div.invite-box a {
 	color: #369;
 	}	
 		

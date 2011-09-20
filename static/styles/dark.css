@@ -67,7 +67,7 @@ html {
 	background-color: #000;
 	}	
 
-a, h1 a {
+a, h1 a, .ui-dialog div.invite-box a {
 	color: LightBlue;
 	}	
 		
