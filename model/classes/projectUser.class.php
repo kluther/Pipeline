@@ -11,7 +11,7 @@ class ProjectUser extends DbObject
 	
 	const BANNED = 0;
 	const FOLLOWER = 1;
-//	const CONTRIBUTOR = 5;
+	const CONTRIBUTOR = 5;
 	const ORGANIZER = 10;
 	
 	public function __construct($args=array())

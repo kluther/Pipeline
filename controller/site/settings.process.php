@@ -27,6 +27,9 @@ if($action == 'notification') {
 		case 'chkOrganizeProject':
 			$user->setNotifyOrganizeProject($value);
 			break;
+		case 'chkContributeProject':
+			$user->setNotifyContributeProject($value);
+			break;			
 		case 'chkFollowProject':
 			$user->setNotifyFollowProject($value);
 			break;

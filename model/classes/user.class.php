@@ -20,6 +20,7 @@ class User extends DbObject
 	protected $notifyCommentTaskUpdate;
 	protected $notifyFollowProject;
 	protected $notifyOrganizeProject;
+	protected $notifyContributeProject;
 	protected $notifyBannedProject;
 	protected $notifyDiscussionStarted;
 	protected $notifyDiscussionReply;
@@ -51,6 +52,7 @@ class User extends DbObject
 			'notify_comment_task_update' => 1,
 			'notify_follow_project' => 1,
 			'notify_organize_project' => 1,
+			'notify_contribute_project' => 1,
 			'notify_banned_project' => 1,
 			'notify_discussion_started' => 1,
 			'notify_discussion_reply' => 1,
@@ -80,6 +82,7 @@ class User extends DbObject
 		$this->notifyCommentTaskUpdate = $args['notify_comment_task_update'];
 		$this->notifyFollowProject = $args['notify_follow_project'];
 		$this->notifyOrganizeProject = $args['notify_organize_project'];
+		$this->notifyContributeProject = $args['notify_contribute_project'];
 		$this->notifyBannedProject = $args['notify_banned_project'];
 		$this->notifyDiscussionStarted = $args['notify_discussion_started'];
 		$this->notifyDiscussionReply = $args['notify_discussion_reply'];
@@ -140,6 +143,38 @@ class User extends DbObject
 		}		
 	}	
 	
+	public static function getPossibleContributorUsernames($projectID=null) {
+		if($projectID === null) return null;
+		$project = Project::load($projectID);
+		$creatorID = $project->getCreatorID();
+		
+		$query = "SELECT username FROM ".User::DB_TABLE;	
+		// not banned
+		$query .= " WHERE id NOT IN (";
+			$query .= " SELECT user_id FROM ".ProjectUser::DB_TABLE;
+			$query .= " WHERE project_id = ".$projectID;
+			$query .= " AND relationship = ".ProjectUser::BANNED;
+		$query .= " )";
+		// not already a contributor
+		$query .= " AND id NOT IN (";
+			$query .= " SELECT creator_id FROM ".Accepted::DB_TABLE;
+			$query .= " WHERE project_id = ".$projectID;
+			$query .= " AND status != ".Accepted::STATUS_RELEASED;
+		$query .= " )";
+		$query .= " ORDER BY username ASC";
+		
+		$db = Db::instance();
+		$result = $db->lookup($query);
+		
+		if(!mysql_num_rows($result))
+			return array();
+		
+		$usernames = array();
+		while($row = mysql_fetch_assoc($result))
+			$usernames[] = $row['username'];
+		return $usernames;		
+	}
+	
 	public static function getUnaffiliatedUsernames($projectID=null) {
 		if($projectID === null) return null;
 		$project = Project::load($projectID);
@@ -150,7 +185,13 @@ class User extends DbObject
 		$query .= " WHERE id NOT IN (";
 			$query .= " SELECT user_id FROM ".ProjectUser::DB_TABLE;
 			$query .= " WHERE project_id = ".$projectID;
-		$query .= ")";
+		$query .= " )";
+		// contributors
+		$query .= " AND id NOT IN (";
+			$query .= " SELECT creator_id FROM ".Accepted::DB_TABLE;
+			$query .= " WHERE project_id = ".$projectID;
+			$query .= " AND status != ".Accepted::STATUS_RELEASED;
+		$query .= " )";
 		// project creator
 		$query .= " AND id != ".$creatorID;
 		$query .= " ORDER BY username ASC";
@@ -212,6 +253,7 @@ class User extends DbObject
 			'notify_comment_task_update' => $this->notifyCommentTaskUpdate,
 			'notify_follow_project' => $this->notifyFollowProject,
 			'notify_organize_project' => $this->notifyOrganizeProject,
+			'notify_contribute_project' => $this->notifyContributeProject,
 			'notify_banned_project' => $this->notifyBannedProject,
 			'notify_discussion_started' => $this->notifyDiscussionStarted,
 			'notify_discussion_reply' => $this->notifyDiscussionReply,
@@ -482,6 +524,15 @@ class User extends DbObject
 		$this->notifyOrganizeProject = $newNotifyOrganizeProject;
 		$this->modified = true;
 	}
+	
+	public function getNotifyContributeProject() {
+		return ($this->notifyContributeProject);
+	}
+	
+	public function setNotifyContributeProject($newNotifyContributeProject) {
+		$this->notifyContributeProject = $newNotifyContributeProject;
+		$this->modified = true;
+	}	
 
 	public function getNotifyBannedProject() {
 		return ($this->notifyBannedProject);
