@@ -145,9 +145,9 @@ class Project extends DbObject
 		$query .= " )";
 		// contributor
 		$query .= " OR id IN (";
-			$query .= " SELECT DISTINCT project_id FROM ".Event::DB_TABLE;
-			$query .= " WHERE user_1_id = ".$userID;
-			$query .= " OR user_2_id = ".$userID;
+			$query .= " SELECT DISTINCT project_id FROM ".Accepted::DB_TABLE;
+			$query .= " WHERE creator_id = ".$userID;
+			//$query .= " OR user_2_id = ".$userID;
 		$query .= "))";
 		// not banned
 		$query .= " AND id NOT IN (";
@@ -156,6 +156,7 @@ class Project extends DbObject
 			$query .= " AND relationship = ".ProjectUser::BANNED;
 		$query .= " )";
 		$query .= " ORDER BY ISNULL(deadline) ASC, title ASC";
+		//echo $query;
 		if($limit != null)
 			$query .= " LIMIT ".$limit;
 			

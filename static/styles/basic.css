@@ -226,6 +226,40 @@ ul.comments div.post-reply {
 		margin-right: 0;
 		}
 		
+	
+/* DASHBOARD INVITATIONS */
+
+ul.invitations p {
+	padding-left: 22px;
+	font-size: 100%;
+	}
+
+ul.invitations span.datetime {
+	font-size: 95%;
+	}
+	
+ul.invitations blockquote {
+	padding: 0.5em 0.5em 0.5em 3em;
+	font-size: 90%;	
+	}
+	
+ul.invitations div.buttons {
+	margin: 0 0 0.5em 0;
+	text-align: right;
+	}
+	
+ul.invitations input {
+	margin: 0 0 0 0.5em;
+	}
+	
+ul.invitations p.project {
+	background: url(./../images/icons/clapperboard.png) no-repeat 0 0.5em;
+	}
+
+ul.invitations p.task {
+	background: url(./../images/icons/task.png) no-repeat 0 0.5em;
+	}			
+		
 /* uploads */
 
 div.upload {
@@ -334,6 +368,7 @@ div#profile div.view p {
 	div#profile div.view p.biography {
 		margin: 1em 0 1em 55px;
 	}
+
 		
 /* USER LISTS */
 
@@ -524,6 +559,7 @@ em, i {
 
 span.datetime {
 	font-style: italic;
+	white-space: nowrap;
 	}
 
 .hidden {

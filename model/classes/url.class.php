@@ -60,6 +60,11 @@ class Url
 		return self::base();
 	}
 	
+	public static function dashboardProcess()
+	{
+		return (self::base().'/dashboard/process');
+	}	
+	
 	public static function findProjects()
 	{
 		return (self::base().'/projects');

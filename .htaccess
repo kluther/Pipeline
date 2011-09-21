@@ -21,6 +21,8 @@ RewriteRule ^up/(.+)$ upload/$1 [L]
 ### HOME PAGE ###
 
 RewriteRule ^$ controller/site/index_c.php [L]
+RewriteRule ^dashboard/process/?$ controller/site/dashboard.process.php [L]
+RewriteRule ^dashboard/?$ controller/site/index_c.php [L]
 
 ### HELP ###
 

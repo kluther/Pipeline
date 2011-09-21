@@ -9,6 +9,12 @@ function formatFileSize($size) {
     return round($size, $decPlaces).$units[$i];
 }
 
+
+function formatTitle($title) {
+	$formatted = html_entity_decode($title, ENT_QUOTES, 'ISO-8859-15');
+	return $formatted;
+}
+
 function formatInvitationMessage($message) {
 	return (formatParagraphs($message));
 }

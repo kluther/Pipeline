@@ -160,25 +160,46 @@ switch($action)
 		if($code != null) {
 			// get the invitation
 			$invite = Invitation::findByCode($code);
-			// add the user to the project
-			$pu = new ProjectUser(array(
-				'project_id' => $invite->getProjectID(),
-				'user_id' => $user->getID(),
-				'relationship' => $invite->getRelationship()
-			));
-			$pu->save();
+			$relationship = $invite->getRelationship();
+			if($relationship == ProjectUser::CONTRIBUTOR) {
+				// join the user to the task
+				$a = new Accepted(array(
+					'creator_id' => $invite->getInviteeID(),
+					'project_id' => $invite->getProjectID(),
+					'task_id' => $invite->getTaskID(),
+					'status' => Accepted::STATUS_ACCEPTED
+				));
+				$a->save();
+			} else {
+				// add the user to the project
+				$pu = new ProjectUser(array(
+					'project_id' => $invite->getProjectID(),
+					'user_id' => $invite->getInviteeID(),
+					'relationship' => $invite->getRelationship()
+				));
+				$pu->save();
+			}
 			// update the invite
 			$invite->setResponse(Invitation::ACCEPTED);
 			$invite->setDateResponded(date("Y-m-d H:i:s"));
 			$invite->save();
 			// log the event
-			$eventTypeID = ($invite->getRelationship() == ProjectUser::ORGANIZER) ? 'accept_organizer_invitation' : 'accept_follower_invitation';
+			if($relationship == ProjectUser::ORGANIZER) {
+				$eventTypeID = 'accept_organizer_invitation';
+			} elseif($relationship == ProjectUser::FOLLOWER) {
+				$eventTypeID = 'accept_follower_invitation';
+			} else {
+				$eventTypeID = 'accept_contributor_invitation';
+			}
+			
+			//$eventTypeID = ($invite->getRelationship() == ProjectUser::ORGANIZER) ? 'accept_organizer_invitation' : 'accept_follower_invitation';
 			$logEvent = new Event(array(
 				'event_type_id' => $eventTypeID,
-				'user_1_id' => $user->getID(),
+				'user_1_id' => $invite->getInviteeID(),
 				'user_2_id' => $invite->getInviterID(),
 				'project_id' => $invite->getProjectID(),
 				'item_1_id' => $invite->getID(),
+				'item_2_id' => $invite->getTaskID()
 			));
 			$logEvent->save();
 			// send us to the project we just joined

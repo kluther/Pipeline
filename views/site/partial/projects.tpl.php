@@ -2,7 +2,7 @@
 include_once TEMPLATE_PATH.'/site/helper/format.php';
 
 $projects = $SOUP->get('projects', array());
-$user = $SOUP->get('user', null);
+$user = $SOUP->get('user', Session::getUser());
 $title = $SOUP->get('title', 'Projects');
 
 $fork = $SOUP->fork();

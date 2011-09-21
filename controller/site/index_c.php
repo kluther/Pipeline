@@ -10,7 +10,7 @@ if(Session::isLoggedIn()) {
 	$events = Event::getDashboardEvents($user->getID(), 10);
 	// $updates = Update::getByUserID($user->getID());
 	// $discussions = Discussion::getByUserID($user->getID());
-	$invitations = array();
+	$invitations = Invitation::getByUserID(Session::getUserID());
 	$yourTasks = Task::getYourTasks($user->getID());
 	
 	$soup->set('projects', $projects);
