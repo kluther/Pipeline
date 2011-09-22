@@ -35,7 +35,8 @@ $fork->startBlockSet('body');
 	$SOUP->render('project/partial/tasks', array(
 		'id' => 'moreTasks',
 		'tasks' => $moreTasks,
-		'title' => 'More Tasks'
+		'title' => 'More Tasks',
+		'hasPermission' => false
 	));
 ?>
 

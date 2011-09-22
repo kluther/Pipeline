@@ -34,7 +34,8 @@ $fork->startBlockSet('body');
 	$SOUP->render('project/partial/discussions',array(
 		'discussions' => $moreDiscussions,
 		'size' => 'large',
-		'title' => 'More Discussions'
+		'title' => 'More Discussions',
+		'hasPermission' => false
 	));
 ?>
 
