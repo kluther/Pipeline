@@ -109,6 +109,27 @@ class Invitation extends DbObject
 		return $invitations;	
 	}
 	
+	public static function getByTaskID($taskID=null, $responded=null) {
+		if($taskID == null) return null;
+		
+		$query = " SELECT id FROM ".self::DB_TABLE;
+		$query .= " WHERE task_id = ".$taskID;
+		if($responded===true)
+			$query .= " AND response IS NOT NULL";
+		elseif($responded===false)
+			$query .= " AND response IS NULL";			
+		$query .= " ORDER BY ISNULL(date_responded) ASC";
+		
+		$db = Db::instance();
+		$result = $db->lookup($query);
+		if(!mysql_num_rows($result)) return array();
+
+		$invitations = array();
+		while($row = mysql_fetch_assoc($result))
+			$invitations[$row['id']] = self::load($row['id']);
+		return $invitations;			
+	}	
+	
 	public static function getByProjectID($projectID=null, $relationship=null, $responded=null) {
 		if($projectID == null) return null;
 		

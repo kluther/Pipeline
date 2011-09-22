@@ -584,7 +584,7 @@ div.clear {
 		width: 150px;
 		text-align: right;
 		padding-top: 0.5em;
-		}		
+		}	
 	
 /* PANELS */
 
@@ -629,7 +629,8 @@ div.panel-header {
 		}
 	div.panel-header input.editButton,
 	div.panel-header input.createButton,
-	div.panel-header input.extraButton {
+	div.panel-header input.extraButton,
+	div.panel-header input.extraButton2 {
 		display: block;
 		float: right;
 		}
@@ -805,6 +806,24 @@ div.input {
 		font-size: 120%;
 		padding: 0.2em;
 		}
+		
+/* narrow version for 'extra' column */	
+	
+td.extra div.input {
+	margin-left: 0;
+	}
+	
+td.extra div.clear {
+	margin: 0.5em 0; 
+	}
+	
+td.extra div.clear > label {
+	float: none;
+	display: block;
+	width: auto;
+	text-align: left;
+	padding: 0 0 0.5em 0;
+	}
 
 span#username_check, span#pw_check {
 	font-weight: bold;
