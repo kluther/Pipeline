@@ -211,7 +211,7 @@ if($joined != null) {
 
 // invited contributors
 
-if(!empty($contributorInvites)) {
+if($hasInvitePermission && !empty($contributorInvites)) {
 	foreach($contributorInvites as $ci) {
 		// don't list accepted invites
 		if($ci->getResponse() == Invitation::ACCEPTED) {

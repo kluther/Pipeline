@@ -142,18 +142,36 @@ div.your-role {
 	}
 
 input[type=button], input[type=submit] {
-	background-color: slategray;
-	color: #eeeeee;
+	border-color: #ccc;
+	background-color: #eeeeee;
+	color: #666;
 	}
 	input[type=button]:hover, input[type=submit]:hover {
-		background-color: #369;
+		background-color: #666;
 		color: #fff;
 	}
 input.create[type=button] {
-	background-color: #396;
+	color: #396;
 	}
 	input.create[type=button]:hover {
-		background-color: green;
+		background-color: #396;
+		color: #fff;
+		}	
+
+input.edit[type=button] {
+	color: #369;
+	}
+	input.edit[type=button]:hover {
+		background-color: #369;
+		color: #fff;	
+		}
+		
+input.delete[type=button] {
+	color: #B22222;
+	}
+	input.delete[type=button]:hover {
+		background-color: #B22222;
+		color: #fff;	
 		}		
 		
 input[type=button][disabled="disabled"], input[type=submit][disabled="disabled"], .disabledButton{

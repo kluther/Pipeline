@@ -773,7 +773,7 @@ input[type=button], input[type=submit] {
 	margin: 6px 0 6px 0.5em; padding: 4px 6px;
 	font-weight:bold;
 	/*background: url("./../images/button.png") repeat-x center left;*/
-	border: none;
+	border: 2px solid;
 	-moz-border-radius: .5em;
 	-webkit-border-radius: .5em;
 	border-radius: .5em;	
