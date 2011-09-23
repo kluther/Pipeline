@@ -80,11 +80,11 @@ span.required {
 	}
 	
 .good{
-	color: #2E8B57 !important;
+	color: #2E8B57;
 	}
 
 .bad {
-	color: #B22222 !important;
+	color: #B22222;
 	}	
 	
 label {
@@ -150,26 +150,26 @@ input[type=button], input[type=submit] {
 		background-color: #666;
 		color: #fff;
 	}
-input.create[type=button] {
+input.createButton[type=button], input.good[type=button] {
 	color: #396;
 	}
-	input.create[type=button]:hover {
+	input.createButton[type=button]:hover, input.good[type=button]:hover {
 		background-color: #396;
 		color: #fff;
 		}	
 
-input.edit[type=button] {
+input.editButton[type=button] {
 	color: #369;
 	}
-	input.edit[type=button]:hover {
+	input.editButton[type=button]:hover {
 		background-color: #369;
 		color: #fff;	
 		}
 		
-input.delete[type=button] {
+input.deleteButton[type=button], input.bad[type=button] {
 	color: #B22222;
 	}
-	input.delete[type=button]:hover {
+	input.deleteButton[type=button]:hover, input.bad[type=button]:hover {
 		background-color: #B22222;
 		color: #fff;	
 		}		

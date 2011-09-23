@@ -785,7 +785,7 @@ input[type=button], input[type=submit] {
 
 /* disabled buttons */
 input[type=button][disabled="disabled"], input[type=submit][disabled="disabled"], .disabledButton{
-	border: none;
+	/*border: 2px solid;*/
 	background: url("./../images/loader.gif") no-repeat 5px 50%;
 	padding-left: 25px;
 	}

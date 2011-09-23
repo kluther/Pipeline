@@ -79,7 +79,7 @@ if(empty($invitations)) {
 		
 		// only show response buttons if user hasn't responded yet
 		if($i->getResponse() === null) {
-			echo '<div class="buttons"><input class="accept" type="button" value="Accept" /> <input class="decline" type="button" value="Decline" /></div>';
+			echo '<div class="buttons"><input class="accept good" type="button" value="Accept" /> <input class="decline bad" type="button" value="Decline" /></div>';
 		} else {
 			//echo '<div class="line"></div>';
 			// show the response
