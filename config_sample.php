@@ -6,6 +6,9 @@
 	define('UPLOAD_PATH', SYSTEM_PATH.'/upload'); # absolute path to where uploads are <- CHANGE THIS
 	define('THUMB_PATH', UPLOAD_PATH.'/thumb'); # absolute path to where thumbnails are <- CHANGE THIS
 	define('PREVIEW_PATH', UPLOAD_PATH.'/preview'); # absolute path to where previews are <- CHANGE THIS
+	define('USER_PICTURE_PATH', UPLOAD_PATH.'/user'); # absolute path to unedited user pictures
+	define('USER_PICTURE_LARGE_PATH', USER_PICTURE_PATH.'/large'); # absolute path to large user picture thumbnail
+	define('USER_PICTURE_SMALL_PATH', USER_PICTURE_PATH.'/small'); # absolute path to small user picture thumbnail
 	
 	define('BASE_URI', 'http://pipeline.cc.gatech.edu'); # base URI for this Pipeline instance <- CHANGE THIS
 	define('PIPELINE_NAME', 'Pipeline Demo'); # name of this Pipeline instance <- CHANGE THIS

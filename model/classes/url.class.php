@@ -35,6 +35,18 @@ class Url
 		return (self::uploads().'/pr');
 	}
 	
+	public static function userPictures() {
+		return (self::uploads().'/user');
+	}
+		
+	public static function userPicturesLarge() {
+		return (self::userPictures().'/lg');
+	}
+	
+	public static function userPicturesSmall() {
+		return (self::userPictures().'/sm');
+	}
+	
 	public static function images()
 	{
 		return (self::base().'/images');
@@ -162,12 +174,17 @@ class Url
 		return (self::user($userID).'/process');
 	}
 	
+	public static function userPictureProcess($userID=null) {
+		if($userID == null) return null;
+		return (self::user($userID).'/upload');
+	}	
+	
 	public static function userPictureSmall($userID=null)
 	{
 		if($userID == null) return null;
 		$user = User::load($userID);
-		if($user->getPictureSmall() != '')
-			$url = self::uploadsDir().'/thumb/'.$user->getPictureSmall();
+		if($user->getPicture() != '')
+			$url = self::userPicturesSmall().'//'.$user->getPicture();
 		else
 			$url = self::images().'/user32x32.jpg';
 		return $url;
@@ -177,8 +194,8 @@ class Url
 	{
 		if($userID == null) return null;
 		$user = User::load($userID);
-		if($user->getPictureLarge() != '')
-			$url = self::uploadsDir().'/thumb/'.$user->getPictureLarge();
+		if($user->getPicture() != '')
+			$url = self::userPicturesLarge().'/'.$user->getPicture();
 		else
 			$url = self::images().'/user48x48.jpg';
 		return $url;

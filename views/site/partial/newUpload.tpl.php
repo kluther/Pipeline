@@ -76,6 +76,8 @@ function initializeUploader() {
 			uploader.destroy();
 			displayNotification(obj.error.message, "error");
 			initializeUploader();
+			$('#<?= $uploadButtonID ?>').removeAttr("disabled");
+			$('#<?= $uploadButtonID ?>').removeClass('disabledButton');		
 		}
 	});
 

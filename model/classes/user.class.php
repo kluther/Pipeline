@@ -31,6 +31,11 @@ class User extends DbObject
 	
 	const DB_TABLE = 'user';
 	
+	const PICTURE_LARGE_MAX_WIDTH = 48;
+	const PICTURE_LARGE_MAX_HEIGHT = 48;
+	const PICTURE_SMALL_MAX_WIDTH = 36;
+	const PICTURE_SMALL_MAX_HEIGHT = 36;
+	
 	public function __construct($args = array())
 	{
 		$defaultArgs = array(

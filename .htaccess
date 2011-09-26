@@ -14,6 +14,9 @@ RewriteRule ^images/(.+)$ static/images/$1 [L]
 
 RewriteRule ^download/(\d+)/(.+)?$ controller/site/download_c.php?fi=$1&fn=$2 [QSA,L]
 RewriteRule ^upload/process/?$ controller/site/upload.process.php [L]
+RewriteRule ^up/user/sm/(.+)$ upload/user/small/$1 [L]
+RewriteRule ^up/user/lg/(.+)$ upload/user/large/$1 [L]
+RewriteRule ^up/user/(.+)$ upload/user/$1 [L]
 RewriteRule ^up/th/(.+)$ upload/thumb/$1 [L]
 RewriteRule ^up/pr/(.+)$ upload/preview/$1 [L]
 RewriteRule ^up/(.+)$ upload/$1 [L]
@@ -112,3 +115,4 @@ RewriteRule ^projects/([a-z0-9-]+)/?$ controller/project/activity_c.php?slug=$1&
 
 RewriteRule ^users/([a-zA-Z0-9-]{6,20})/?$ controller/site/user_c.php?un=$1 [QSA,L]
 RewriteRule ^users/([a-zA-Z0-9-]{6,20})/process/?$ controller/site/user.process.php?un=$1 [QSA,L]
+RewriteRule ^users/([a-zA-Z0-9-]{6,20})/upload/?$ controller/site/userPicture.process.php [L]

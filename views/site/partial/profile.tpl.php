@@ -44,8 +44,18 @@ $fork->startBlockSet('body');
 
 <?php if($hasPermission): ?>
 
+<script type="text/javascript" src="http://bp.yahooapis.com/2.4.21/browserplus-min.js"></script>
+<script type="text/javascript" src="<?= Url::base() ?>/lib/plupload/js/plupload.js"></script>
+<script type="text/javascript" src="<?= Url::base() ?>/lib/plupload/js/plupload.gears.js"></script>
+<script type="text/javascript" src="<?= Url::base() ?>/lib/plupload/js/plupload.silverlight.js"></script>
+<script type="text/javascript" src="<?= Url::base() ?>/lib/plupload/js/plupload.flash.js"></script>
+<script type="text/javascript" src="<?= Url::base() ?>/lib/plupload/js/plupload.browserplus.js"></script>
+<script type="text/javascript" src="<?= Url::base() ?>/lib/plupload/js/plupload.html4.js"></script>
+<script type="text/javascript" src="<?= Url::base() ?>/lib/plupload/js/plupload.html5.js"></script>
+
 <script type="text/javascript">
 $(document).ready(function(){
+
 	$("#txtBirthdate").datepicker({
 		changeMonth: true,
 		changeYear: true,
@@ -71,10 +81,132 @@ $(document).ready(function(){
 		var edit = $("#profile .edit");
 		var view = $("#profile .view");
 		toggleEditView(edit, view);
-		if($(view).is(":hidden"))
+		if($(view).is(":hidden")) {
 			$('#txtEmail').focus();
+			initializeUploader();
+		}
 	});	
+	
+	// check if passwords match
+	$("#txtPassword").blur(function(){
+		checkPasswordMatch();
+		});	
+	$("#txtConfirmPassword").blur(function(){
+		checkPasswordMatch();
+		});	
+	
+	<?php if($user->getPicture() != null): ?>
+	
+	$('#btnRemovePicture').click(function(){
+		buildPost({
+			'processPage': '<?= Url::userPictureProcess(Session::getUserID()) ?>',
+			'info':{
+				'action':'remove-picture'
+			},
+			'buttonID': '#btnRemovePicture'
+		});
+	});
+	
+	<?php endif; ?>
+
 });
+
+function checkPasswordMatch()
+{
+	var pw = $("#txtPassword").val()
+	var pw2 = $("#txtConfirmPassword").val()
+	if( (pw != '') && (pw2 != '') ) {
+		if(pw == pw2)
+			$('#pw_check').removeClass("bad").addClass("good").text("Match");
+		else
+			$('#pw_check').removeClass("good").addClass("bad").text("No match");
+		}
+	else {
+		$('#pw_check').text("");
+	}
+}
+
+function initializeUploader() {
+
+	var uploadButtonID = 'btnUploadPicture';
+
+	// // clear file list
+	// $('#filelist').html('');
+
+	var uploader = new plupload.Uploader({
+		runtimes : 'flash,html5,gears,silverlight,browserplus',
+		browse_button : uploadButtonID,
+		max_file_size : '500kb',
+		chunk_size : '100kb',
+		url : '<?= Url::userPictureProcess(Session::getUserID()) ?>',
+		unique_names : true,
+		//resize : {width : 320, height : 240, quality : 90},
+		flash_swf_url : '<?= Url::base() ?>/lib/plupload/js/plupload.flash.swf',
+		silverlight_xap_url : '<?= Url::base() ?>/lib/plupload/js/plupload.silverlight.xap',
+		filters : [
+			{title : "Allowed files", extensions : "jpg,jpeg,gif,png"}
+		]
+	});
+	
+	uploader.init();
+
+	// uploader.bind('Init', function(up, params) {
+		// $('#filelist').html("<div>Current runtime: " + params.runtime + "</div>");
+	// });
+
+	uploader.bind('FilesAdded', function(up, files) {
+		for (var i in files) {
+			$('#picture-filename').html(files[i].name + ' (' + plupload.formatSize(files[i].size) + ') <strong></strong>');
+		}
+		$('#'+uploadButtonID).attr('disabled','disabled');
+		$('#'+uploadButtonID).addClass('disabledButton');						
+		uploader.start();		
+	});
+	
+	uploader.bind('Error', function(up, error) {
+		// stop
+		uploader.stop();
+		uploader.destroy();
+		displayNotification(error.message, "error");
+		// reset
+		$('#'+uploadButtonID).removeAttr("disabled");
+		$('#'+uploadButtonID).removeClass('disabledButton');		
+		initializeUploader();
+	});
+
+	// uploader.bind('UploadFile', function(up, file) {
+
+	// });
+
+	uploader.bind('UploadProgress', function(up, file) {
+		$('#picture-filename strong').text(file.percent + "%");
+	});
+	
+	uploader.bind('UploadComplete', function(up, files) {
+		displayNotification('Picture uploaded.');
+		$('#'+uploadButtonID).removeAttr("disabled");
+		$('#'+uploadButtonID).removeClass('disabledButton');			
+	});
+	
+	uploader.bind('FileUploaded', function(up, file, response) {
+		var obj = $.parseJSON(response.response);
+		if(obj.error) {
+			// stop
+			uploader.stop();
+			uploader.destroy();
+			displayNotification(obj.error.message, "error");
+			// reset
+			$('#'+uploadButtonID).removeAttr("disabled");
+			$('#'+uploadButtonID).removeClass('disabledButton');			
+			initializeUploader();			
+		} else {
+			$('#picture-filename').html('');
+			$('#user-picture').attr('src','');
+			$('#user-picture').attr('src','<?= Url::userPicturesLarge() ?>/'+obj.id);
+		}
+	});
+}
+
 </script>
 
 <div class="edit hidden">
@@ -83,13 +215,17 @@ $(document).ready(function(){
 
 <input type="hidden" name="action" value="edit" />
 
-<!--div class="clear">
+<div class="clear">
 	<label>Picture</label>
 	<div class="input">
-		<img src="<?= Url::userPictureLarge($user->getID()) ?>" />
-		<input id="btnRemovePicture" type="button" value="Remove" />
+		<img id="user-picture" src="<?= Url::userPictureLarge($user->getID()) ?>" alt="Profile picture" />		
+		<input id="btnUploadPicture" type="button" value="Upload" /> <span id="picture-filename"></span>
+		<?php if($user->getPicture() != null): ?>
+			<input id="btnRemovePicture" type="button" value="Remove" />
+		<?php endif; ?>	
+		<p>JPG, GIF, or PNG only, max 500 kb</p>
 	</div>
-</div-->
+</div>
 <div class="clear">
 	<label for="txtEmail">Email Address<span class="required">*</span></label>
 	<div class="input">
@@ -188,7 +324,7 @@ if( ($age != null) &&
 
 if($bio != null) {
 	echo '<div class="line" style="margin: 1em 0 0 55px;"></div>';
-	echo '<p class="biography">'.html_entity_decode($bio).'</p>';
+	echo '<p class="biography">'.formatParagraphs($bio).'</p>';
 }
 ?>
 <div class="clear"></div>
