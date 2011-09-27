@@ -58,12 +58,29 @@ function formatUserPicture($userID=null, $size='large') {
 	}
 }
 
-function formatUserLink($userID=null)
+function formatUserLink($userID=null, $projectID=null)
 {
 	if($userID == null) return null;
 	$user = User::load($userID);
 	$formatted = '<a href="'.Url::user($userID).'">'.$user->getUsername().'</a>';
+	// add star to trusted users
+	if($projectID != null) {
+		if(ProjectUser::isTrusted($userID, $projectID)) {
+			$formatted .= '*';
+		}
+	}
 	return $formatted;
+}
+
+function formatUserStrip($userID=null, $projectID=null) {
+	if( ($userID === null) || ($projectID === null) ) return null;
+	
+	$numTasksLed = formatCount(count(Task::getByLeaderID($projectID, $userID)), 'task', 'tasks', 'no');
+	$numTaskContributions = formatCount(count(Update::getByUserID($userID, $projectID)), 'task contribution', 'task contributions', 'no');
+	$numTaskComments = formatCount(count(Comment::getByUserID($userID, $projectID)), 'task comment', 'task comments', 'no');
+	
+	$strip = $numTasksLed.' led <span class="slash">/</span> '.$numTaskContributions.' <span class="slash">/</span> '.$numTaskComments;
+	return ($strip);
 }
 
 function formatProjectStatus($status=null) {
@@ -85,7 +102,7 @@ function formatProjectLink($projectID=null)
 {
 	if($projectID == null) return null;
 	$project = Project::load($projectID);
-	$formatted = '<a href="'.Url::project($projectID).'">'.html_entity_decode($project->getTitle(), ENT_QUOTES, 'ISO-8859-15').'</a>';
+	$formatted = '<a href="'.Url::project($projectID).'">'.formatTitle($project->getTitle()).'</a>';
 	return $formatted;
 }
 

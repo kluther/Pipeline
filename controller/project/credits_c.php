@@ -11,19 +11,25 @@ if($project == null)
 	exit();
 }
 
-$creatorID = $project->getCreatorID();
-$creator = User::load($creatorID);
+// $creatorID = $project->getCreatorID();
+// $creator = User::load($creatorID);
 
-$organizers = $project->getOrganizers();
-$organizerInvites = Invitation::getByProjectID($project->getID(), ProjectUser::ORGANIZER);
+// $organizers = $project->getOrganizers();
+// $organizerInvites = Invitation::getByProjectID($project->getID(), ProjectUser::ORGANIZER);
 
-$contributors = $project->getOnlyContributors();
-$contributorInvites = Invitation::getByProjectID($project->getID(), ProjectUser::CONTRIBUTOR);
+// $contributors = $project->getOnlyContributors();
+// $contributorInvites = Invitation::getByProjectID($project->getID(), ProjectUser::CONTRIBUTOR);
 
-$followers = $project->getFollowers();
-$followerInvites = Invitation::getByProjectID($project->getID(), ProjectUser::FOLLOWER);
+// $followers = $project->getFollowers();
+$followerInvites = $project->getInvitations();
 
 $banned = $project->getBanned();
+
+$trustedContributors = $project->getTrustedContributors();
+$untrustedContributors = $project->getUntrustedContributors();
+
+$trustedFollowers = $project->getTrustedFollowers();
+$untrustedFollowers = $project->getUntrustedFollowers();
 
 $discussions = Discussion::getPeopleDiscussionsByProjectID($project->getID(), 3);
 
@@ -31,13 +37,19 @@ $events = Event::getPeopleEventsByProjectID($project->getID(), 5);
 
 $soup = new Soup();
 $soup->set('project', $project);
-$soup->set('creator', $creator);
-$soup->set('organizers', $organizers);
-$soup->set('organizerInvites', $organizerInvites);
-$soup->set('contributors', $contributors);
-$soup->set('contributorInvites', $contributorInvites);
+// $soup->set('creator', $creator);
+// $soup->set('organizers', $organizers);
+// $soup->set('organizerInvites', $organizerInvites);
+// $soup->set('contributors', $contributors);
+$soup->set('trustedContributors', $trustedContributors);
+$soup->set('untrustedContributors', $untrustedContributors);
+
+$soup->set('trustedFollowers', $trustedFollowers);
+$soup->set('untrustedFollowers', $untrustedFollowers);
+
+// $soup->set('contributorInvites', $contributorInvites);
 $soup->set('banned', $banned);
-$soup->set('followers', $followers);
+// $soup->set('followers', $followers);
 $soup->set('followerInvites', $followerInvites);
 $soup->set('events', $events);
 

@@ -50,7 +50,7 @@ RewriteRule ^login/?$ controller/site/login_c.php [L]
 ### REGISTER ###
 
 RewriteRule ^register/process/?$ controller/site/register.process.php [L]
-RewriteRule ^register/([a-z0-9]{40})/?$ controller/site/register_c.php?code=$1 [QSA,L]
+RewriteRule ^register/(.+)/?$ controller/site/register_c.php?email=$1 [QSA,L]
 RewriteRule ^register/?$ controller/site/register_c.php [L]
 
 ### CONSENT FORMS ###
@@ -63,6 +63,7 @@ RewriteRule ^consent/?$ controller/site/consent_c.php [L]
 
 RewriteRule ^projects/([a-z0-9-]+)/basics/process/?$ controller/project/details.process.php?slug=$1 [QSA,L]
 RewriteRule ^projects/([a-z0-9-]+)/basics/?$ controller/project/details_c.php?slug=$1 [QSA,L]
+RewriteRule ^projects/([a-z0-9-]+)/?$ controller/project/details_c.php?slug=$1 [QSA,L]
 
 ### UPDATES ###
 
@@ -109,7 +110,6 @@ RewriteRule ^projects/([a-z0-9-]+)/activity/tasks/?$ controller/project/activity
 RewriteRule ^projects/([a-z0-9-]+)/activity/discussions/?$ controller/project/activity_c.php?slug=$1&filter=discussions [QSA,L]
 RewriteRule ^projects/([a-z0-9-]+)/activity/people/?$ controller/project/activity_c.php?slug=$1&filter=people [QSA,L]
 RewriteRule ^projects/([a-z0-9-]+)/activity/?$ controller/project/activity_c.php?slug=$1&filter=all [QSA,L]
-RewriteRule ^projects/([a-z0-9-]+)/?$ controller/project/activity_c.php?slug=$1&filter=all [QSA,L]
 
 ### USERS ###
 

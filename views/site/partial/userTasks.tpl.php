@@ -16,10 +16,9 @@ $hasPermission = $SOUP->get('hasPermission', null);
 
 // allow values to be passed in
 if($hasPermission === null) {
-	// only organizers or creator may create tasks
+	// only admin and trusted may create tasks
 	$hasPermission = ( Session::isAdmin() ||
-						ProjectUser::isOrganizer(Session::getUserID(), $project->getID()) ||
-						ProjectUser::isCreator(Session::getUserID(), $project->getID()) );
+						$project->isTrusted(Session::getUserID()) );
 }
 
 $fork = $SOUP->fork();
@@ -60,7 +59,7 @@ if($tasks != null) {
 		// relationship to task
 		$relationship = '';
 		if($user->getID() == $task->getLeaderID()) {
-			$relationship = 'task leader';
+			$relationship = 'leading';
 		} else {
 			$accepted = Accepted::getByUserID($user->getID(), $task->getID());
 			if($accepted != null) {

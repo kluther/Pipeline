@@ -18,7 +18,7 @@ switch($action)
 	case "register":
 
 		// assign POST data to variables
-		$code = 	 Filter::alphanum($_POST['code']);
+	//	$code = 	 Filter::alphanum($_POST['code']);
 		$uname = 	 Filter::text($_POST['uname']);
 		$pw = 		 Filter::text($_POST['pw']);
 		$pw2 = 		 Filter::text($_POST['pw2']);
@@ -144,74 +144,25 @@ switch($action)
 		$logEvent->save();
 		
 		// email confirmation
-		$msg = '<p>You have successfully registered for <a href="'.Url::base().'">'.PIPELINE_NAME.'</a>.</p>';
-		$msg .= '<p>Your username is '.formatUserLink($user->getID()).'. Have fun!</p>';
-		$email = array(
+		$body = '<p>You have successfully registered for <a href="'.Url::base().'">'.PIPELINE_NAME.'</a>.</p>';
+		$body .= '<p>Your username is '.formatUserLink($user->getID()).'. Have fun!</p>';
+		$newEmail = array(
 			'to' => $email,
-			'subject' => 'Welcome to '.PIPELINE_NAME.'!',
-			'message' => $msg
+			'subject' => '['.PIPELINE_NAME.'] Welcome to '.PIPELINE_NAME.'!',
+			'message' => $body
 		);
-		Email::send($email);
+		Email::send($newEmail);
 		
 		// log us into the new account
 		Session::signIn($user->getId());
 		
-		// see if we were invited to do anything special
-		if($code != null) {
-			// get the invitation
-			$invite = Invitation::findByCode($code);
-			$relationship = $invite->getRelationship();
-			if($relationship == ProjectUser::CONTRIBUTOR) {
-				// join the user to the task
-				$a = new Accepted(array(
-					'creator_id' => $invite->getInviteeID(),
-					'project_id' => $invite->getProjectID(),
-					'task_id' => $invite->getTaskID(),
-					'status' => Accepted::STATUS_ACCEPTED
-				));
-				$a->save();
-			} else {
-				// add the user to the project
-				$pu = new ProjectUser(array(
-					'project_id' => $invite->getProjectID(),
-					'user_id' => $invite->getInviteeID(),
-					'relationship' => $invite->getRelationship()
-				));
-				$pu->save();
-			}
-			// update the invite
-			$invite->setResponse(Invitation::ACCEPTED);
-			$invite->setDateResponded(date("Y-m-d H:i:s"));
-			$invite->save();
-			// log the event
-			if($relationship == ProjectUser::ORGANIZER) {
-				$eventTypeID = 'accept_organizer_invitation';
-			} elseif($relationship == ProjectUser::FOLLOWER) {
-				$eventTypeID = 'accept_follower_invitation';
-			} else {
-				$eventTypeID = 'accept_contributor_invitation';
-			}
-			
-			//$eventTypeID = ($invite->getRelationship() == ProjectUser::ORGANIZER) ? 'accept_organizer_invitation' : 'accept_follower_invitation';
-			$logEvent = new Event(array(
-				'event_type_id' => $eventTypeID,
-				'user_1_id' => $invite->getInviteeID(),
-				'user_2_id' => $invite->getInviterID(),
-				'project_id' => $invite->getProjectID(),
-				'item_1_id' => $invite->getID(),
-				'item_2_id' => $invite->getTaskID()
-			));
-			$logEvent->save();
-			// send us to the project we just joined
-			$successUrl = Url::details($invite->getProjectID());
-		} else {
-			$successUrl = Url::base();
-		}
+		// link any email invites to this user
+		Invitation::linkByEmail($email, $user->getID());
 
 		// set confirm message and send us away
 		Session::setMessage("Registration successful! Welcome aboard.");
 		$json = array( 'success' => '1',
-			   'successUrl' => $successUrl);
+			   'successUrl' => Url::dashboard());
 		echo json_encode($json);
 		break;
 		

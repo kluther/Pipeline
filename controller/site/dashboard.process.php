@@ -3,7 +3,13 @@ require_once("../../global.php");
 
 $inviteID = Filter::numeric($_POST['inviteID']);
 $invite = Invitation::load($inviteID);
-$relationship = $invite->getRelationship();
+
+if(ProjectUser::isAffiliated($invite->getInviteeID(), $invite->getProjectID())) {
+	// already affiliated; can't follow
+	Session::setMessage('You are already affiliated with this project.');
+	header('Location: '.Url::error());
+	exit();
+}
 
 $response = Filter::alphanum($_POST['response']);
 if($response == 'accept') {
@@ -13,48 +19,20 @@ if($response == 'accept') {
 }
 
 if($response == Invitation::ACCEPTED) {
-	if($relationship == ProjectUser::CONTRIBUTOR) {
-		// join the user to the task
-		$a = new Accepted(array(
-			'creator_id' => $invite->getInviteeID(),
-			'project_id' => $invite->getProjectID(),
-			'task_id' => $invite->getTaskID(),
-			'status' => Accepted::STATUS_ACCEPTED
-		));
-		$a->save();
-	} else {
-		// add the user to the project
-		$pu = new ProjectUser(array(
-			'project_id' => $invite->getProjectID(),
-			'user_id' => $invite->getInviteeID(),
-			'relationship' => $invite->getRelationship()
-		));
-		$pu->save();
-	}
+	// add the user to the project
+	$pu = new ProjectUser(array(
+		'project_id' => $invite->getProjectID(),
+		'user_id' => $invite->getInviteeID(),
+		'relationship' => ProjectUser::FOLLOWER,
+		'trusted' => $invite->getTrusted()
+	));
+	$pu->save();
 	
-	// get event type ID and success message
-	if($relationship == ProjectUser::ORGANIZER) {
-		$eventTypeID = 'accept_organizer_invitation';
-		$successMsg = 'You accepted the organizer invitation.';
-	} elseif($relationship == ProjectUser::FOLLOWER) {
-		$eventTypeID = 'accept_follower_invitation';
-		$successMsg = 'You accepted the follower invitation.';
-	} else {
-		$eventTypeID = 'accept_contributor_invitation';
-		$successMsg = 'You accepted the contributor invitation.';
-	}	
+	$eventTypeID = 'accept_follower_invitation';
+	$successMsg = 'You accepted the follower invitation.';	
 } else {
-	// get event type ID and success message
-	if($relationship == ProjectUser::ORGANIZER) {
-		$eventTypeID = 'decline_organizer_invitation';
-		$successMsg = 'You declined the organizer invitation.';
-	} elseif($relationship == ProjectUser::FOLLOWER) {
-		$eventTypeID = 'decline_follower_invitation';
-		$successMsg = 'You declined the follower invitation.';
-	} else {
-		$eventTypeID = 'decline_contributor_invitation';
-		$successMsg = 'You declined the contributor invitation.';
-	}	
+	$eventTypeID = 'decline_follower_invitation';
+	$successMsg = 'You declined the follower invitation.';
 }
 
 // update the invite
@@ -68,8 +46,7 @@ $logEvent = new Event(array(
 	'user_1_id' => $invite->getInviteeID(),
 	'user_2_id' => $invite->getInviterID(),
 	'project_id' => $invite->getProjectID(),
-	'item_1_id' => $invite->getID(),
-	'item_2_id' => $invite->getTaskID()
+	'item_1_id' => $invite->getID()
 ));
 $logEvent->save();
 

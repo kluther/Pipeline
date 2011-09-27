@@ -3,7 +3,6 @@ include_once TEMPLATE_PATH.'/site/helper/format.php';
 
 $task = $SOUP->get('task');
 $joined = $SOUP->get('accepted');
-$contributorInvites = $SOUP->get('contributorInvites');
 
 // num joined
 $numJoined = $task->getNumAccepted();
@@ -35,13 +34,6 @@ if(Session::isLoggedIn() && // must be logged in
 	}
 }
 
-// can user invite contributors?
-
-$hasInvitePermission = ( Session::isAdmin() ||
-					ProjectUser::isOrganizer(Session::getUserID(), $task->getProjectID()) ||
-					ProjectUser::isCreator(Session::getUserID(), $task->getProjectID()) ||
-					ProjectUser::isContributor(Session::getUserID(), $task->getProjectID()) );
-
 $fork = $SOUP->fork();
 $fork->set('title', 'Contributors');
 $fork->set('id', 'contributors');
@@ -52,10 +44,7 @@ if($hasJoinPermission) {
 	$fork->set('creatable', true);
 	$fork->set('createLabel', 'Contribute');
 }
-$fork->set('extraButton', $hasInvitePermission);
-$fork->set('extraButtonLabel', 'Invite');
-$fork->set('extraButton2', $hasInvitePermission);
-$fork->set('extraButton2Label', 'Show Invited');
+
 
 $fork->startBlockSet('body');
 
@@ -86,94 +75,6 @@ $(document).ready(function() {
 
 <?php endif; ?>
 
-<?php if($hasInvitePermission): ?>
-
-	$('#contributors .extraButton2').click(function() {
-		var invited = $("#contributors li.invited");
-		if($(invited).is(":hidden")) {
-			$(invited).fadeIn();
-		} else {
-			$(invited).hide();
-		}
-	});	
-	
-	$('#contributors div.invite-box').dialog({
-		autoOpen: false,
-		title: 'View Contributor Invitation',
-		modal: true,
-		width: 500
-	});
-	
-	$('#contributors .viewInvite').click(function(){
-		var id = $(this).attr('id').substring(11);
-		$('#invite-box-'+id).dialog('open');
-	});	
-
-	$("#contributors .extraButton").click(function(){
-		var invite = $("#contributors .invite");
-		var view = $("#contributors .view");
-		toggleEditView(view, invite);
-		if($(view).is(":hidden"))
-			$('#txtInviteContributors').focus();
-	});
-	
-	$("#btnCancelContributors").click(function(){
-		$("#contributors .invite").hide();
-		$("#contributors .view").fadeIn();
-	});	
-
-	$( "#txtInviteContributors" )
-		// don't navigate away from the field on tab when selecting an item
-		.bind( "keydown", function( event ) {
-			if ( event.keyCode === $.ui.keyCode.TAB &&
-					$( this ).data( "autocomplete" ).menu.active ) {
-				event.preventDefault();
-			}
-		})
-		.autocomplete({
-			source: function( request, response ) {
-				$.getJSON( '<?= Url::peopleSearch($task->getProjectID()) ?>/possible-contributors', {
-					term: extractLast( request.term )
-				}, response );
-			},
-			search: function() {
-				// custom minLength
-				var term = extractLast( this.value );
-				if ( term.length < 2 ) {
-					return false;
-				}
-			},
-			focus: function() {
-				// prevent value inserted on focus
-				return false;
-			},
-			select: function( event, ui ) {
-				var terms = split( this.value );
-				// remove the current input
-				terms.pop();
-				// add the selected item
-				terms.push( ui.item.value );
-				// add placeholder to get the comma-and-space at the end
-				terms.push( "" );
-				this.value = terms.join( ", " );
-				return false;
-			}
-		});		
-		
-	$('#btnInviteContributors').click(function() {
-		buildPost({
-			'processPage': '<?= Url::peopleProcess($task->getProjectID()) ?>',
-			'info': {
-				'action': 'invite-contributors',
-				'invitees': $('#txtInviteContributors').val(),
-				'taskID': '<?= $task->getID() ?>',
-				'message': $('#txtInviteContributorsMessage').val()
-			},
-			'buttonID': '#btnInviteContributors'
-		});
-	});	
-
-<?php endif; ?>
 	
 });
 
@@ -185,7 +86,7 @@ $(document).ready(function() {
 
 <?php
 
-if( !empty($joined) || !empty($contributorInvites) ) {
+if( !empty($joined) ) {
 	echo '<div class="line"></div>';
 	echo '<ul class="segmented-list users">';
 }
@@ -209,87 +110,13 @@ if($joined != null) {
 	}
 }
 
-// invited contributors
-
-if($hasInvitePermission && !empty($contributorInvites)) {
-	foreach($contributorInvites as $ci) {
-		// don't list accepted invites
-		if($ci->getResponse() == Invitation::ACCEPTED) {
-			continue;
-		}
-		
-		$inviteeLink = ($ci->getInviteeID() != null) ? formatUserLink($ci->getInviteeID()) : '<a href="mailto:'.$ci->getInviteeEmail().'">'.$ci->getInviteeEmail().'</a>';
-		
-		echo '<li class="invited">';
-		// View Invitation button
-		echo '<input id="invitation-'.$ci->getID().'" type="button" class="viewInvite" value="View Invitation" />';
-		// invite box
-		echo '<div id="invite-box-'.$ci->getID().'" class="invite-box hidden">';
-		// inviter message
-		//$task = Task::load($ci->getTaskID());
-		echo '<p>'.formatUserLink($ci->getInviterID()).' invited '.$inviteeLink.' to contribute to the task <a href="'.Url::task($task->getID()).'">'.formatTitle($task->getTitle()).'</a>. ('.formatTimeTag($ci->getDateCreated()).')</p>';
-		if($ci->getInvitationMessage() != null)
-			echo '<blockquote>'.formatInvitationMessage($ci->getInvitationMessage()).'</blockquote>';
-		// invitee response
-		echo '<div class="line"></div>';
-		if($ci->getResponse() == Invitation::DECLINED) {
-			echo '<p>'.$inviteeLink.' <span class="bad">declined</span> the invitation. ('.formatTimeTag($ci->getDateResponded()).')</p>';
-			if($ci->getResponseMessage() != null)
-				echo '<blockquote>'.formatInvitationMessage($ci->getResponseMessage()).'</blockquote>';
-		} else {
-			echo '<p>(no response yet)</p>';
-		}
-		echo '</div>';		
-		// invitee picture and username
-		if($ci->getInviteeID() != null) {
-			echo formatUserPicture($ci->getInviteeID(), 'small');
-		} 
-		echo '<h6 class="primary">'.$inviteeLink.'</h6>';
-		
-		// response
-		if($ci->getResponse() == Invitation::DECLINED) {
-			echo '<p class="secondary"><span class="bad">declined</span></p>';
-		} else {
-			echo '<p class="secondary">invited</p>';
-		}
-		echo '</li>';
-	}
-}
-
-if( !empty($joined) || !empty($contributorInvites) ) {
+if( !empty($joined) ) {
 	echo '</ul>';
 }
 
 ?>
 
 </div>
-
-<?php if($hasInvitePermission): ?>
-
-<div class="invite hidden">
-	<div class="clear">
-		<label for="txtInviteContributors">People to Invite<span class="required">*</span></label>
-		<div class="input">
-			<input type="text" id="txtInviteContributors" />
-			<p>Usernames or email addresses, separated by commas</p>
-		</div>
-	</div>
-	<div class="clear">
-		<label for="txtInviteContributorsMessage">Message</label>
-		<div class="input">
-			<textarea id="txtInviteContributorsMessage"></textarea>
-			<p>Why the recipient(s) should contribute to this task</p>
-		</div>
-	</div>	
-	<div class="clear">
-		<div class="input">
-			<input type="button" id="btnInviteContributors" value="Invite" />
-			<input type="button" id="btnCancelContributors" value="Cancel" />
-		</div>
-	</div>
-</div>
-
-<?php endif; ?>
 
 <?php
 

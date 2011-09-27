@@ -6,13 +6,12 @@ $project = $SOUP->get('project');
 $deadline = $project->getDeadline();
 $deadline = ($deadline != null) ? formatTimeTag($deadline) : '(none)';
 
-$venue = $project->getVenue();
-$venue = ($venue != null) ? $venue : '(none)';
+// $venue = $project->getVenue();
+// $venue = ($venue != null) ? $venue : '(none)';
 
-// only organizers or creator may edit
+// only admin or trusted may edit
 $hasPermission = ( Session::isAdmin() ||
-					ProjectUser::isOrganizer(Session::getUserID(), $project->getID()) ||
-					ProjectUser::isCreator(Session::getUserID(), $project->getID()) );
+					$project->isTrusted(Session::getUserID()) );
 
 $fork = $SOUP->fork();
 $fork->set('id', 'progress');

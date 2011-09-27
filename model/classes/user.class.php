@@ -180,39 +180,6 @@ class User extends DbObject
 		return $usernames;		
 	}
 	
-	public static function getUnaffiliatedUsernames($projectID=null) {
-		if($projectID === null) return null;
-		$project = Project::load($projectID);
-		$creatorID = $project->getCreatorID();
-		
-		$query = "SELECT username FROM ".User::DB_TABLE;	
-		// project users
-		$query .= " WHERE id NOT IN (";
-			$query .= " SELECT user_id FROM ".ProjectUser::DB_TABLE;
-			$query .= " WHERE project_id = ".$projectID;
-		$query .= " )";
-		// contributors
-		$query .= " AND id NOT IN (";
-			$query .= " SELECT creator_id FROM ".Accepted::DB_TABLE;
-			$query .= " WHERE project_id = ".$projectID;
-			$query .= " AND status != ".Accepted::STATUS_RELEASED;
-		$query .= " )";
-		// project creator
-		$query .= " AND id != ".$creatorID;
-		$query .= " ORDER BY username ASC";
-		
-		$db = Db::instance();
-		$result = $db->lookup($query);
-		
-		if(!mysql_num_rows($result))
-			return array();
-		
-		$usernames = array();
-		while($row = mysql_fetch_assoc($result))
-			$usernames[] = $row['username'];
-		return $usernames;			
-	}	
-	
 	// public static function findUsers($username = null, $limit = null)
 	// {
 		// if ($username == null) return null;

@@ -19,8 +19,6 @@ if($projects != null) {
 		$relationship = '';
 		if(ProjectUser::isCreator($user->getID(), $p->getID())) {
 			$relationship = 'creator';
-		} elseif(ProjectUser::isOrganizer($user->getID(), $p->getID())) {
-			$relationship = 'organizer';
 		} elseif(ProjectUser::isContributor($user->getID(), $p->getID())) {
 			$relationship = 'contributor';
 		} elseif(ProjectUser::isFollower($user->getID(), $p->getID())) {

@@ -17,7 +17,7 @@ $fork->startBlockSet('body');
 		});
 		
 		$('#txtLeader').autocomplete({
-			source: '<?= Url::peopleSearch($project->getID()) ?>/organizers',
+			source: '<?= Url::peopleSearch($project->getID()) ?>/trusted',
 			minLength: 2
 		});
 		
@@ -49,7 +49,7 @@ $fork->startBlockSet('body');
 	<label for="txtLeader">Leader<span class="required">*</span></label>
 	<div class="input">
 		<input id="txtLeader" name="txtLeader" type="text" />
-		<p>An organizer to lead this task</p>
+		<p>A <a href="<?= Url::help() ?>">trusted user</a> to lead this task</p>
 	</div>
 </div>
 

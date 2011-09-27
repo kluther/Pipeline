@@ -11,6 +11,7 @@ if(Session::isLoggedIn()) {
 	// $updates = Update::getByUserID($user->getID());
 	// $discussions = Discussion::getByUserID($user->getID());
 	$invitations = Invitation::getByUserID(Session::getUserID());
+	$unrespondedInvites = Invitation::getByUserID(Session::getUserID(), null, false);
 	$yourTasks = Task::getYourTasks($user->getID());
 	
 	$soup->set('projects', $projects);
@@ -19,6 +20,7 @@ if(Session::isLoggedIn()) {
 	// $soup->set('updates', $updates);
 	// $soup->set('discussions', $discussions);
 	$soup->set('invitations', $invitations);
+	$soup->set('unrespondedInvites', $unrespondedInvites);
 	$soup->set('tasks', $yourTasks);
 	$soup->render('site/page/dashboard');
 } else {	

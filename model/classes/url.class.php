@@ -92,9 +92,9 @@ class Url
 		return (self::base().'/register');
 	}
 	
-	public static function registerWithCode($code=null) {
-		if($code === null) return null;
-		return (self::register().'/'.$code);
+	public static function registerWithEmail($email=null) {
+		if($email === null) return null;
+		return (self::register().'/'.urlencode($email));
 	}	
 	
 	public static function registerProcess()

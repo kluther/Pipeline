@@ -1,6 +1,6 @@
 <?php
 
-$invite = $SOUP->get('invite', null);
+$email = $SOUP->get('email');
 
 $fork = $SOUP->fork();
 $fork->set('title', 'Register');
@@ -97,8 +97,6 @@ function registerUser()
 
 <div class="line"></div>
 
-<input type="hidden" id="hdnInvitationCode" value="<?= ($invite != null) ? $invite->getInvitationCode() : '' ?>" />
-
 <div class="clear">
 	<label for="txtUsername">Username<span class="required">*</span></label>
 	<div class="input">
@@ -124,7 +122,7 @@ function registerUser()
 <div class="clear">
 	<label for="txtEmail">Email Address<span class="required">*</span></label>
 	<div class="input">
-		<input id="txtEmail" type="text" maxlength="255" value="<?= ($invite != null) ? $invite->getInviteeEmail() : '' ?>" />
+		<input id="txtEmail" type="text" maxlength="255" value="<?= (!empty($email)) ? $email : '' ?>" />
 		<p>Must be valid to receive email notifications</p>
 	</div>
 </div>

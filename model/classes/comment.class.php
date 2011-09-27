@@ -183,6 +183,24 @@ class Comment extends DbObject
 		return $comments;		
 	}
 	
+	public static function getByUserID($userID=null, $projectID=null) {
+		if( ($userID === null) || ($projectID === null) ) return null;
+		
+		$query = "SELECT id FROM ".self::DB_TABLE;
+		$query .= " WHERE creator_id = ".$userID;
+		$query .= " AND project_id = ".$projectID;
+		
+		$db = Db::instance();
+		$result = $db->lookup($query);		
+		if (!mysql_num_rows($result)) {return null;}
+		
+		$comments = array();
+		while ($row = mysql_fetch_assoc($result))
+			$comments[$row['parent_id']] = self::load($row['parent_id']);
+		
+		return $comments;			
+	}
+	
 	// --- only getters and setters below here --- //	
 	
 	public function getID()

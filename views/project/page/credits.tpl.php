@@ -19,25 +19,34 @@ $fork->startBlockSet('body');
 ?>
 
 <td class="left">
-
 <?php
-	$SOUP->render('project/partial/creator', array(
+	$SOUP->render('project/partial/newContributors', array(
 	));
 ?>
 
 <?php
-	$SOUP->render('project/partial/organizers', array(
+	$SOUP->render('project/partial/newFollowers', array(
 	));
 ?>
 
 <?php
-	$SOUP->render('project/partial/contributors', array(
-	));
+	// $SOUP->render('project/partial/creator', array(
+	// ));
 ?>
 
 <?php
-	$SOUP->render('project/partial/followers', array(
-	));
+	// $SOUP->render('project/partial/organizers', array(
+	// ));
+?>
+
+<?php
+	// $SOUP->render('project/partial/contributors', array(
+	// ));
+?>
+
+<?php
+	// $SOUP->render('project/partial/followers', array(
+	// ));
 ?>
 
 <?php

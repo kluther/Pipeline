@@ -7,9 +7,7 @@ class Invitation extends DbObject
 	protected $inviteeID;
 	protected $inviteeEmail;
 	protected $projectID;
-	protected $taskID;
-	protected $relationship;
-	protected $invitationCode;
+	protected $trusted;
 	protected $invitationMessage;
 	protected $response;
 	protected $responseMessage;
@@ -29,9 +27,7 @@ class Invitation extends DbObject
 			'invitee_id' => null,
 			'invitee_email' => null,
 			'project_id' => 0,
-			'task_id' => null,
-			'relationship' => 0,
-			'invitation_code' => null,
+			'trusted' => 0,
 			'invitation_message' => null,
 			'response' => null,
 			'response_message' => null,
@@ -46,9 +42,7 @@ class Invitation extends DbObject
 		$this->inviteeID = $args['invitee_id'];
 		$this->inviteeEmail = $args['invitee_email'];
 		$this->projectID = $args['project_id'];
-		$this->taskID = $args['task_id'];
-		$this->relationship = $args['relationship'];
-		$this->invitationCode = $args['invitation_code'];
+		$this->trusted = $args['trusted'];
 		$this->invitationMessage = $args['invitation_message'];
 		$this->response = $args['response'];
 		$this->responseMessage = $args['response_message'];
@@ -72,9 +66,7 @@ class Invitation extends DbObject
 			'invitee_id' => $this->inviteeID,
 			'invitee_email' => $this->inviteeEmail,
 			'project_id' => $this->projectID,
-			'task_id' => $this->taskID,
-			'relationship' => $this->relationship,
-			'invitation_code' => $this->invitationCode,
+			'trusted' => $this->trusted,
 			'invitation_message' => $this->invitationMessage,
 			'response' => $this->response,
 			'response_message' => $this->responseMessage,
@@ -88,15 +80,20 @@ class Invitation extends DbObject
 	
 	/* static methods */
 	
-	public static function getByUserID($userID=null, $responded=null) {
+	public static function getByUserID($userID=null, $projectID=null, $responded=null) {
 		if($userID == null) return null;
+		
+		$user = User::load($userID);
+		$email = $user->getEmail();
 		
 		$query = " SELECT id FROM ".self::DB_TABLE;
 		$query .= " WHERE invitee_id = ".$userID;
 		if($responded===true)
 			$query .= " AND response IS NOT NULL";
 		elseif($responded===false)
-			$query .= " AND response IS NULL";			
+			$query .= " AND response IS NULL";
+		if($projectID !== null)
+			$query .= " AND project_id = ".$projectID;
 		$query .= " ORDER BY date_responded DESC, date_created DESC";
 		
 		$db = Db::instance();
@@ -109,55 +106,20 @@ class Invitation extends DbObject
 		return $invitations;	
 	}
 	
-	public static function getByTaskID($taskID=null, $responded=null) {
-		if($taskID == null) return null;
-		
-		$query = " SELECT id FROM ".self::DB_TABLE;
-		$query .= " WHERE task_id = ".$taskID;
-		if($responded===true)
-			$query .= " AND response IS NOT NULL";
-		elseif($responded===false)
-			$query .= " AND response IS NULL";			
-		$query .= " ORDER BY ISNULL(date_responded) ASC";
-		
-		$db = Db::instance();
-		$result = $db->lookup($query);
-		if(!mysql_num_rows($result)) return array();
-
-		$invitations = array();
-		while($row = mysql_fetch_assoc($result))
-			$invitations[$row['id']] = self::load($row['id']);
-		return $invitations;			
-	}	
-	
-	public static function getByProjectID($projectID=null, $relationship=null, $responded=null) {
-		if($projectID == null) return null;
-		
-		$query = " SELECT id FROM ".self::DB_TABLE;
-		$query .= " WHERE project_id = ".$projectID;
-		if($relationship != null)
-			$query .= " AND relationship = ".$relationship;
-		if($responded===true)
-			$query .= " AND response IS NOT NULL";
-		elseif($responded===false)
-			$query .= " AND response IS NULL";			
-		$query .= " ORDER BY ISNULL(date_responded) ASC";
-		
-		$db = Db::instance();
-		$result = $db->lookup($query);
-		if(!mysql_num_rows($result)) return array();
-
-		$invitations = array();
-		while($row = mysql_fetch_assoc($result))
-			$invitations[$row['id']] = self::load($row['id']);
-		return $invitations;			
+	public static function hasInvitations($userID=null, $projectID=null) {
+		$invitations = self::getByUserID($userID, $projectID, $responded=false);
+		if(!empty($invitations))
+			return true;
+		else
+			return false;
 	}
 	
-	public static function findByCode($code=null) {
-		if($code === null) return null;
+	
+	public static function findByEmail($email=null) {
+		if($email === null) return null;
 		
 		$query = "SELECT id FROM ".self::DB_TABLE;
-		$query .= " WHERE invitation_code = '".$code."'";
+		$query .= " WHERE invitee_email = '".$email."'";
 		
 		$db = Db::instance();
 		$result = $db->lookup($query);
@@ -167,7 +129,62 @@ class Invitation extends DbObject
 			return (self::load($row['id']));
 		else
 			return null;
+	}	
+	
+	public static function linkByEmail($email=null, $userID=null) {
+		if( ($email === null) || ($userID === null) ) return null;
+		
+		$query = "UPDATE ".self::DB_TABLE;
+		$query .= " SET invitee_id = ".$userID;
+		$query .= " WHERE invitee_email = '".$email."'";
+		echo $query;
+		
+		$db = Db::instance();
+		$db->execute($query);
 	}
+	
+	// public static function getByTaskID($taskID=null, $responded=null) {
+		// if($taskID == null) return null;
+		
+		// $query = " SELECT id FROM ".self::DB_TABLE;
+		// $query .= " WHERE task_id = ".$taskID;
+		// if($responded===true)
+			// $query .= " AND response IS NOT NULL";
+		// elseif($responded===false)
+			// $query .= " AND response IS NULL";			
+		// $query .= " ORDER BY ISNULL(date_responded) ASC";
+		
+		// $db = Db::instance();
+		// $result = $db->lookup($query);
+		// if(!mysql_num_rows($result)) return array();
+
+		// $invitations = array();
+		// while($row = mysql_fetch_assoc($result))
+			// $invitations[$row['id']] = self::load($row['id']);
+		// return $invitations;			
+	// }	
+	
+	public static function getByProjectID($projectID=null, $responded=null) {
+		if($projectID == null) return null;
+		
+		$query = " SELECT id FROM ".self::DB_TABLE;
+		$query .= " WHERE project_id = ".$projectID;
+		if($responded===true)
+			$query .= " AND response IS NOT NULL";
+		elseif($responded===false)
+			$query .= " AND response IS NULL";			
+		$query .= " ORDER BY ISNULL(date_responded) ASC";
+		
+		$db = Db::instance();
+		$result = $db->lookup($query);
+		if(!mysql_num_rows($result)) return array();
+
+		$invitations = array();
+		while($row = mysql_fetch_assoc($result))
+			$invitations[$row['id']] = self::load($row['id']);
+		return $invitations;			
+	}
+
 	
 	// --- only getters and setters below here --- //	
 	
@@ -220,30 +237,12 @@ class Invitation extends DbObject
 		$this->modified = true;
 	}
 	
-	public function getTaskID() {
-		return ($this->taskID);
+	public function getTrusted() {
+		return ($this->trusted);
 	}
 	
-	public function setTaskID($newTaskID) {
-		$this->taskID = $newTaskID;
-		$this->modified = true;
-	}
-	
-	public function getRelationship() {
-		return ($this->relationship);
-	}
-	
-	public function setRelationship($newRelationship) {
-		$this->relationship = $newRelationship;
-		$this->modified = true;
-	}
-	
-	public function getInvitationCode() {
-		return ($this->invitationCode);
-	}
-	
-	public function setInvitationCode($newInvitationCode) {
-		$this->invitationCode = $newInvitationCode;
+	public function setTrusted($newTrusted) {
+		$this->trusted = $newTrusted;
 		$this->modified = true;
 	}
 	

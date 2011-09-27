@@ -82,29 +82,97 @@ class Project extends DbObject
 		$db->store($this, __CLASS__, self::DB_TABLE, $db_properties);
 	}
 	
-	public function getOrganizers()
-	{
-		return(ProjectUser::getOrganizers($this->id));
+	public function isContributor($userID=null) {
+		return(ProjectUser::isContributor($userID, $this->id));
 	}
 	
-	public function getOnlyContributors()
-	{
-		return (ProjectUser::getOnlyContributors($this->id));
+	public function isFollower($userID=null) {
+		return(ProjectUser::isFollower($userID, $this->id));
 	}
 	
-	public function getFollowers()
-	{
-		return(ProjectUser::getFollowers($this->id));
+	public function isBanned($userID=null) {
+		return(ProjectUser::isBanned($userID, $this->id));
+	}	
+	
+	public function isCreator($userID=null) {
+		return(ProjectUser::isCreator($userID, $this->id));
+	}	
+	
+	public function isTrusted($userID=null) {
+		return(ProjectUser::isTrusted($userID, $this->id));
+	}	
+	
+	public function isAffiliated($userID=null) {
+		return(ProjectUser::isAffiliated($userID, $this->id));
 	}
 	
-	public function getBanned()
-	{
-		return(ProjectUser::getBanned($this->id));
+	public function getTrustedContributors() {
+		return(ProjectUser::getTrustedContributors($this->id));
 	}
+	
+	public function getUntrustedContributors() {
+		return(ProjectUser::getUntrustedContributors($this->id));
+	}
+	
+	// public function getContributors() {
+		// return(ProjectUser::getContributors($this->id));
+	// }	
+
+	public function getTrustedFollowers() {
+		return(ProjectUser::getTrustedFollowers($this->id));
+	}
+	
+	public function getUntrustedFollowers() {
+		return(ProjectUser::getUntrustedFollowers($this->id));
+	}
+	
+	public function getBanned() {
+		return(projectUser::getBanned($this->id));
+	}
+	
+	// public function getFollowers() {
+		// return(ProjectUser::getFollowers($this->id));
+	// }		
+	
+	// public function getOrganizers()
+	// {
+		// return(ProjectUser::getOrganizers($this->id));
+	// }
+	
+	// public function getOnlyContributors()
+	// {
+		// return (ProjectUser::getOnlyContributors($this->id));
+	// }
+	
+	// public function getFollowers()
+	// {
+		// return(ProjectUser::getFollowers($this->id));
+	// }
+	
+	// public function getBanned()
+	// {
+		// return(ProjectUser::getBanned($this->id));
+	// }
 	
 	public function getTasks($status=null, $limit=null) {
 		return(Task::getByProjectID($this->id, $status, $limit));
 	}
+	
+	public function getInvitations($responded=null) {
+		return(Invitation::getByProjectID($this->id, $responded));
+	}
+	
+	public function getUnaffiliatedUsernames() {
+		return(ProjectUser::getUnaffiliatedUsernames($this->id));
+	}
+	
+	public function getBannableUsernames() {
+		return(ProjectUser::getBannableUsernames($this->id));
+	}
+	
+	public function getTrustedUsernames() {
+		return(ProjectUser::getTrustedUsernames($this->id));
+	}	
 	
 	/* static methods */
 	

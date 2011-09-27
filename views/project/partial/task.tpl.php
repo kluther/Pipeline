@@ -5,18 +5,15 @@ $task = $SOUP->get('task');
 $project = $SOUP->get('project');
 $leader = User::load($task->getLeaderID());
 
-// only organizers or creator may create or edit
+// only admin or trusted may edit
 $hasPermission = ( Session::isAdmin() ||
-					ProjectUser::isOrganizer(Session::getUserID(), $project->getID()) ||
-					ProjectUser::isCreator(Session::getUserID(), $project->getID()) );
+					$project->isTrusted(Session::getUserID()) );
 
 $fork = $SOUP->fork();
 
 $fork->set('id', 'task');
 $fork->set('editable', $hasPermission);
-$fork->set('editLabel', 'Edit Task');
-$fork->set('creatable', $hasPermission);
-$fork->set('createLabel', 'New Task');
+$fork->set('editLabel', 'Edit');
 $fork->set('title', 'Task Info');
 
 $fork->startBlockSet('body');
@@ -28,10 +25,6 @@ $fork->startBlockSet('body');
 <script type="text/javascript">
 $(document).ready(function(){
 
-	$('#task .createButton').click(function() {
-		window.location = '<?= Url::taskNew($project->getID()) ?>';
-	});
-		
 	$("#txtDeadline").datepicker({
 		changeMonth: true,
 		changeYear: true,
@@ -39,7 +32,7 @@ $(document).ready(function(){
 	});
 	
 	$('#txtLeader').autocomplete({
-		source: '<?= Url::peopleSearch($project->getID()) ?>/organizers',
+		source: '<?= Url::peopleSearch($project->getID()) ?>/trusted',
 		minLength: 2
 	});
 	
@@ -87,7 +80,7 @@ $(document).ready(function(){
 	<label for="txtLeader">Leader<span class="required">*</span></label>
 	<div class="input">
 		<input id="txtLeader" name="txtLeader" type="text" value="<?= $leader->getUsername() ?>" />
-		<p>An organizer to lead this task</p>
+		<p>A <a href="<?= Url::help() ?>">trusted user</a> to lead this task</p>
 	</div>
 </div>
 
