@@ -46,18 +46,18 @@ $(document).ready(function(){
 		});
 	});
 	
+	$("#task .editButton").click(function(){
+		$(this).hide();
+		$("#task .view").hide();
+		$("#task .edit").fadeIn();
+		$('#txtTitle').focus();			
+	});
+	
 	$("#btnCancelTask").click(function(){
 		$("#task .edit").hide();
 		$("#task .view").fadeIn();
-	});
-	
-	$("#task .editButton").click(function(){
-		var edit = $("#task .edit");
-		var view = $("#task .view");
-		toggleEditView(edit, view);
-		if($(view).is(":hidden"))
-			$('#txtTitle').focus();
-	});		
+		$("#task .editButton").fadeIn();
+	});	
 });
 </script>
 

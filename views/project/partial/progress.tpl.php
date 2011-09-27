@@ -43,19 +43,19 @@ $(document).ready(function(){
 			},
 			'buttonID':'#btnEditProgress'
 		});
+	});	
+	
+	$("#progress .editButton").click(function(){
+		$(this).hide();
+		$("#progress .view").hide();
+		$("#progress .edit").fadeIn();
+		$('#selStatus').focus();			
 	});
 	
 	$("#btnCancelProgress").click(function(){
 		$("#progress .edit").hide();
 		$("#progress .view").fadeIn();
-	});
-	
-	$("#progress .editButton").click(function(){
-		var edit = $("#progress .edit");
-		var view = $("#progress .view");
-		toggleEditView(edit, view);
-		if($(view).is(":hidden"))
-			$('#selStatus').focus();
+		$("#progress .editButton").fadeIn();
 	});		
 });
 </script>

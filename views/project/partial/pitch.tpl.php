@@ -34,17 +34,19 @@ $(document).ready(function(){
 			'buttonID':'#btnSavePitch'
 		});
 	});
-	$("#btnCancelPitch").mousedown(function(){
+
+	$("#pitch .editButton").click(function(){
+		$(this).hide();
+		$("#pitch .view").hide();
+		$("#pitch .edit").fadeIn();
+		$('#txtPitch').focus();			
+	});
+	
+	$("#btnCancelPitch").click(function(){
 		$("#pitch .edit").hide();
 		$("#pitch .view").fadeIn();
-	});
-	$("#pitch .editButton").click(function(){
-		var edit = $("#pitch .edit");
-		var view = $("#pitch .view");
-		toggleEditView(edit, view);
-		if($(view).is(":hidden"))
-			$('#txtPitch').focus();
-	});
+		$("#pitch .editButton").fadeIn();
+	});	
 });
 
 </script>
