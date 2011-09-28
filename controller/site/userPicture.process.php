@@ -2,8 +2,8 @@
 require_once("../../global.php");
 
 if(!Session::isLoggedIn()) {
-	header('Location: '.Url::error());
-	exit();
+	$json = array('error' => 'You must be logged in.');
+	exit(json_encode($json));	
 }
 
 $user = Session::getUser();
