@@ -6,8 +6,13 @@ $data = $SOUP->get('data', array());
 $project = $SOUP->get('project');
 $filter = $SOUP->get('filter');
 
-$lineColor = '666666';
-$bgColor = 'ffffff';
+if(STYLE_SHEET == 'dark.css') {
+	$lineColor = 'cccccc';
+	$bgColor = '222222';
+} else {
+	$lineColor = '666666';
+	$bgColor = 'ffffff';
+}
 
 $height=50;
 $width=570;

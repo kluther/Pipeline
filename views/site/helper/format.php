@@ -50,7 +50,7 @@ function formatUserPicture($userID=null, $size='large') {
 	if($userID == null) return null;
 	$user = User::load($userID);
 	if($size == 'large') {
-		return ('<a class="picture" href="'.Url::user($user->getID()).'" title="'.$user->getUsername().'"><img src="'.Url::userPictureLarge($user->getID()).'" /></a>');
+		return ('<a class="picture large" href="'.Url::user($user->getID()).'" title="'.$user->getUsername().'"><img src="'.Url::userPictureLarge($user->getID()).'" /></a>');
 	} elseif($size == 'small') {
 		return ('<a class="picture small" href="'.Url::user($user->getID()).'" title="'.$user->getUsername().'"><img src="'.Url::userPictureSmall($user->getID()).'" /></a>');
 	} else {
