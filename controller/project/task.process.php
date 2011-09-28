@@ -41,8 +41,8 @@ if ( ($action == 'create') || ($action == 'edit') ) {
 		$json = array('error' => 'The user you specified to lead this task does not exist.');
 		exit(json_encode($json));
 	} elseif( !ProjectUser::isCreator($leader->getID(), $project->getID()) &&
-		!ProjectUser::isOrganizer($leader->getID(), $project->getID()) ) {
-		$json = array('error' => 'The user you specified cannot lead this task. Only the creator or an organizer may lead tasks.');
+		!ProjectUser::isTrusted($leader->getID(), $project->getID()) ) {
+		$json = array('error' => 'Only the project creator or a trusted member may lead tasks.');
 		exit(json_encode($json));
 	}
 	
@@ -313,6 +313,29 @@ if($action == 'create') {
 		exit(json_encode($json));	
 	}
 } elseif($action == 'accept') {
+	// join user to project, if they're not already
+	$pu = ProjectUser::find(Session::getUserID(), $project->getID());
+	if(empty($pu)) {
+		// not a member yet, so make them one
+		$pu = new ProjectUser(array(
+			'project_id' => $project->getID(),
+			'user_id' => Session::getUserID(),
+			'relationship' => ProjectUser::MEMBER
+		));
+	} elseif($project->isFollower(Session::getUserID())) {
+		// convert follower to member
+		$pu->setRelationship(ProjectUser::MEMBER);	
+	}
+	$pu->save();
+	
+	// log it
+	$logEvent = new Event(array(
+		'event_type_id' => 'join_project',
+		'project_id' => $project->getID(),
+		'user_1_id' => Session::getUserID()
+	));
+	$logEvent->save();	
+
 	// accept the task
 	$accepted = new Accepted(array(
 		'creator_id' => Session::getUserID(),

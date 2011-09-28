@@ -35,8 +35,7 @@ if($task->getStatus() == Task::STATUS_OPEN) {
 			}
 		} else {
 			// user hasn't joined task
-			if( Session::isAdmin() ||
-				$project->isFollower(Session::getUserID()) || // must be admin, follower, or not banned
+			if( Session::isAdmin() || // must be admin, follower, or not banned
 				!$project->isBanned(Session::getUserID()) ) {
 				$hasJoinPermission = true;
 			}
