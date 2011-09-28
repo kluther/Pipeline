@@ -106,7 +106,7 @@ div.panel.small ul.segmented-list h6.primary {
 		}
 		div.panel.small ul.segmented-list p.secondary a {
 			}
-	
+			
 /* PROJECTS LIST */
 ul.projects h6.primary {
 	background-image: url(./../images/icons/clapperboard.png);
@@ -538,11 +538,11 @@ h2 {
 		-webkit-border-radius: 0.5em;
 		border-radius: 0.5em;	
 		}	
-
+/*
 h5.closed a, h6.closed a {
 	text-decoration: line-through;
 	}
-	
+*/
 div.line {
 	border-top: 1px solid;
 	margin: 0.5em 0;
@@ -786,7 +786,7 @@ input[type=button], input[type=submit] {
 /* disabled buttons */
 input[type=button][disabled="disabled"], input[type=submit][disabled="disabled"], .disabledButton{
 	/*border: 2px solid;*/
-	background: url("./../images/loader.gif") no-repeat 5px 50%;
+	background: no-repeat 5px 50%;
 	padding-left: 25px;
 	}
 		

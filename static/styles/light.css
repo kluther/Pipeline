@@ -150,6 +150,7 @@ input[type=button], input[type=submit] {
 		background-color: #666;
 		color: #fff;
 	}
+	/*
 input.createButton[type=button], input.good[type=button] {
 	color: #396;
 	}
@@ -172,11 +173,12 @@ input.deleteButton[type=button], input.bad[type=button] {
 	input.deleteButton[type=button]:hover, input.bad[type=button]:hover {
 		background-color: #B22222;
 		color: #fff;	
-		}		
+		}*/		
 		
 input[type=button][disabled="disabled"], input[type=submit][disabled="disabled"], .disabledButton{
 	background-color: #dddddd;
 	color: #999;
+	background-image: url("./../images/loader_light.gif");
 	}		
 	
 input[type=text], input[type=password],

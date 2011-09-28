@@ -76,15 +76,15 @@ h2 {
 	}			
 				
 span.required {
-	color: red;
+	color: #B22222;
 	}
 	
 .good{
-	color: #2E8B57 !important;
+	color: #2E8B57;
 	}
 
 .bad {
-	color: #B22222 !important;
+	color: #B22222;
 	}	
 	
 label {
@@ -101,6 +101,10 @@ span.slash {
 	
 div.panel {
 	background-color: #222222;	
+	}	
+	
+td.right div.panel {
+	background-color: #000;
 	}	
 	
 div.panel-header {
@@ -132,13 +136,29 @@ div.breadcrumbs h3 {
 	color: #fff;
 	}
 	
-div.your-role div {
+div.your-role {
 	background-color: #333;
-	border-color: #666;
+	border-color: #444;
 	}
-	div.your-role p {
-		color: #fff;
-		}
+
+	
+input[type=button], input[type=submit] {
+	border-color: #444444;
+	background-color: #000;
+	color: #ccc;
+	}
+	input[type=button]:hover, input[type=submit]:hover {
+		background-color: #ccc;
+		color: #000;
+	}
+	
+		
+input[type=button][disabled="disabled"], input[type=submit][disabled="disabled"], .disabledButton{
+	background-color: #222222;
+	color: #ccc;
+	background-image: url("./../images/loader_dark.gif");
+	}		
+
 
 input[type=text], input[type=password],
 input.textbox, textarea, select {
@@ -153,23 +173,3 @@ input[type=text]:focus, input[type=password]:focus,
 input[type=file]:focus, textarea:focus, select:focus {
 	border-color: #F2CD58;
 }
-	
-input[type=button], input[type=submit] {
-	background-color: #666;
-	color: #dddddd;
-	}
-	input[type=button]:hover, input[type=submit]:hover {
-		background-color: slategray;
-		color: #fff;
-	}
-input.create[type=button] {
-	}
-	input.create[type=button]:hover {
-		}		
-		
-input[type=button][disabled="disabled"], input[type=submit][disabled="disabled"], .disabledButton{
-	background-color: #dddddd;
-	color: #999;
-	}		
-
-	
