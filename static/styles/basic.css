@@ -419,24 +419,6 @@ ul.users li.invited {
 	
 /* BASICS */
 
-div#pitch div.edit div.input,
-div#specs div.edit div.input,
-div#rules div.edit div.input{
-	margin-left: 100px;
-	}
-	
-div#pitch div.edit label,
-div#specs div.edit label,
-div#rules div.edit label {
-	width: 80px;
-}	
-	
-div#pitch div.edit textarea,
-div#specs div.edit textarea,
-div#rules div.edit textarea {
-	width: 450px;
-	}	
-
 div#pitch div.view {
 	padding: 0.5em 0;
 	}	
@@ -831,7 +813,7 @@ span#username_check, span#pw_check {
 	}
 	
 textarea {
-	width: 300px;
+	width: 90%;
 	height: 200px;
 	overflow: auto;
 	font-size: 120%;
