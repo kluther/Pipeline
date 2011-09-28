@@ -83,9 +83,6 @@ class Invitation extends DbObject
 	public static function getByUserID($userID=null, $projectID=null, $responded=null) {
 		if($userID == null) return null;
 		
-		$user = User::load($userID);
-		$email = $user->getEmail();
-		
 		$query = " SELECT id FROM ".self::DB_TABLE;
 		$query .= " WHERE invitee_id = ".$userID;
 		if($responded===true)

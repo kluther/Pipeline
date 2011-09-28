@@ -67,9 +67,9 @@ foreach($invitations as $i) {
 	}
 
 	if($i->getTrusted()) {
-		echo '<p class="project">'.formatUserLink($i->getInviterID(), $project->getID()).' invited you to join the project '.formatProjectLink($i->getProjectID()).'. ('.formatTimeTag($i->getDateCreated()).')</p>';
-	} else {
 		echo '<p class="project">'.formatUserLink($i->getInviterID(), $project->getID()).' invited you to join the project '.formatProjectLink($i->getProjectID()).' as a <a href="'.Url::help().'">trusted member</a>. ('.formatTimeTag($i->getDateCreated()).')</p>';
+	} else {
+		echo '<p class="project">'.formatUserLink($i->getInviterID(), $project->getID()).' invited you to join the project '.formatProjectLink($i->getProjectID()).'. ('.formatTimeTag($i->getDateCreated()).')</p>';
 	}
 	
 	// show the invitation message, if it exists
@@ -79,7 +79,12 @@ foreach($invitations as $i) {
 	
 	// only show response buttons if user hasn't responded yet
 	if($i->getResponse() === null) {
-		echo '<div class="buttons"><input class="accept" type="button" value="Accept" /> <input class="decline" type="button" value="Decline" /></div>';
+		echo '<div class="buttons">';
+		// don't allow accept invitation if already affiliated
+		if(!$project->isAffiliated($i->getInviteeID())) {
+			echo '<input class="accept" type="button" value="Accept" /> ';
+		}
+		echo '<input class="decline" type="button" value="Decline" /></div>';
 	} else {
 		//echo '<div class="line"></div>';
 		// show the response

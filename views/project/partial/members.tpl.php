@@ -190,9 +190,9 @@ $(document).ready(function(){
 	</div>
 	<?php endif; ?>
 	<div class="clear">
-		<label for="txtInviteFollowersMessage">Message</label>
+		<label for="txtInviteMembersMessage">Message</label>
 		<div class="input">
-			<textarea id="txtInviteFollowersMessage"></textarea>
+			<textarea id="txtInviteMembersMessage"></textarea>
 			<p>Why the recipient(s) should join this project</p>
 		</div>
 	</div>	

@@ -4,22 +4,9 @@ require_once("../../global.php");
 $inviteID = Filter::numeric($_POST['inviteID']);
 $invite = Invitation::load($inviteID);
 
-if( ProjectUser::isMember($invite->getInviteeID(), $invite->getProjectID()) ||
-	ProjectUser::isTrusted($invite->getInviteeID(), $invite->getProjectID())	) {
-	// already a member; can't join
-	Session::setMessage('You are already a member of this project.');
-	header('Location: '.Url::error());
-	exit();
-}
-
 $response = Filter::alphanum($_POST['response']);
-if($response == 'accept') {
-	$response = Invitation::ACCEPTED;
-} else {
-	$response = Invitation::DECLINED;
-}
 
-if($response == Invitation::ACCEPTED) {
+if($response == 'accept') {
 	// add the user to the project
 	if($invite->getTrusted) {
 		$relationship = ProjectUser::TRUSTED;
@@ -33,17 +20,24 @@ if($response == Invitation::ACCEPTED) {
 	));
 	$pu->save();
 	
+	// update the invite
+	$invite->setResponse(Invitation::ACCEPTED);
+	$invite->setDateResponded(date("Y-m-d H:i:s"));
+	$invite->save();
+	
+	// prep for logging
 	$eventTypeID = 'accept_member_invitation';
 	$successMsg = 'You accepted the invitation.';	
 } else {
+	// update the invite
+	$invite->setResponse(Invitation::DECLINED);
+	$invite->setDateResponded(date("Y-m-d H:i:s"));
+	$invite->save();	
+
+	// prep for logging
 	$eventTypeID = 'decline_member_invitation';
 	$successMsg = 'You declined the invitation.';
 }
-
-// update the invite
-$invite->setResponse($response);
-$invite->setDateResponded(date("Y-m-d H:i:s"));
-$invite->save();
 
 // log the event
 $logEvent = new Event(array(
