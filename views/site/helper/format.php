@@ -58,6 +58,16 @@ function formatUserPicture($userID=null, $size='large') {
 	}
 }
 
+function formatBlankUserPicture($url=null, $size='large') {
+	if($size == 'large') {
+		return ('<a class="picture" href="'.$url.'"><img src="'.Url::blankUserPictureLarge().'" /></a>');
+	} elseif($size == 'small') {
+		return ('<a class="picture small" href="'.$url.'"><img src="'.Url::blankUserPictureSmall().'" /></a>');
+	} else {
+		return '';
+	}
+}
+
 function formatUserLink($userID=null, $projectID=null)
 {
 	if($userID == null) return null;
@@ -67,7 +77,7 @@ function formatUserLink($userID=null, $projectID=null)
 	if($projectID != null) {
 		if( (ProjectUser::isTrusted($userID, $projectID)) ||
 			(ProjectUser::isCreator($userID, $projectID)) ){
-			$formatted .= '*';
+			$formatted .= '<a href="'.Url::help().'" title="trusted member">*</a>';
 		}
 	}
 	return $formatted;

@@ -275,6 +275,8 @@ if($hasInvitePermission && !empty($memberInvites)) {
 		// invitee picture and username
 		if($mi->getInviteeID() != null) {
 			echo formatUserPicture($mi->getInviteeID(), 'small');
+		} else {
+			echo formatBlankUserPicture('mailto:'.$mi->getInviteeEmail(), 'small');
 		}
 		echo '<h6 class="primary">'.$inviteeLink.'</h6>';
 		

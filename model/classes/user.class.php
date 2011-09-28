@@ -18,9 +18,8 @@ class User extends DbObject
 	protected $notifyEditTaskAccepted;
 	protected $notifyCommentTaskAccepted;
 	protected $notifyCommentTaskUpdate;
-	protected $notifyFollowProject;
-	protected $notifyOrganizeProject;
-	protected $notifyContributeProject;
+	protected $notifyInviteProject;
+	protected $notifyTrustProject;
 	protected $notifyBannedProject;
 	protected $notifyDiscussionStarted;
 	protected $notifyDiscussionReply;
@@ -48,16 +47,15 @@ class User extends DbObject
 			'sex' => null,
 			'location' => null,
 			'biography' => null,
-			'picture' => '',
-			'picture_small' => '',
-			'picture_large' => '',
+			'picture' => null,
+			'picture_small' => null,
+			'picture_large' => null,
 			'notify_comment_task_leading' => 1,
 			'notify_edit_task_accepted' => 1,
 			'notify_comment_task_accepted' => 1,
 			'notify_comment_task_update' => 1,
-			'notify_follow_project' => 1,
-			'notify_organize_project' => 1,
-			'notify_contribute_project' => 1,
+			'notify_invite_project' => 1,
+			'notify_trust_project' => 1,
 			'notify_banned_project' => 1,
 			'notify_discussion_started' => 1,
 			'notify_discussion_reply' => 1,
@@ -85,9 +83,8 @@ class User extends DbObject
 		$this->notifyEditTaskAccepted = $args['notify_edit_task_accepted'];
 		$this->notifyCommentTaskAccepted = $args['notify_comment_task_accepted'];
 		$this->notifyCommentTaskUpdate = $args['notify_comment_task_update'];
-		$this->notifyFollowProject = $args['notify_follow_project'];
-		$this->notifyOrganizeProject = $args['notify_organize_project'];
-		$this->notifyContributeProject = $args['notify_contribute_project'];
+		$this->notifyInviteProject = $args['notify_invite_project'];
+		$this->notifyTrustProject = $args['notify_trust_project'];
 		$this->notifyBannedProject = $args['notify_banned_project'];
 		$this->notifyDiscussionStarted = $args['notify_discussion_started'];
 		$this->notifyDiscussionReply = $args['notify_discussion_reply'];
@@ -223,9 +220,8 @@ class User extends DbObject
 			'notify_edit_task_accepted' => $this->notifyEditTaskAccepted,
 			'notify_comment_task_accepted' => $this->notifyCommentTaskAccepted,
 			'notify_comment_task_update' => $this->notifyCommentTaskUpdate,
-			'notify_follow_project' => $this->notifyFollowProject,
-			'notify_organize_project' => $this->notifyOrganizeProject,
-			'notify_contribute_project' => $this->notifyContributeProject,
+			'notify_invite_project' => $this->notifyInviteProject,
+			'notify_trust_project' => $this->notifyTrustProject,
 			'notify_banned_project' => $this->notifyBannedProject,
 			'notify_discussion_started' => $this->notifyDiscussionStarted,
 			'notify_discussion_reply' => $this->notifyDiscussionReply,
@@ -479,33 +475,24 @@ class User extends DbObject
 		$this->modified = true;
 	}
 
-	public function getNotifyFollowProject() {
-		return ($this->notifyFollowProject);
+	public function getNotifyInviteProject() {
+		return ($this->notifyInviteProject);
 	}
 	
-	public function setNotifyFollowProject($newNotifyFollowProject) {
-		$this->notifyFollowProject = $newNotifyFollowProject;
+	public function setNotifyInviteProject($newNotifyInviteProject) {
+		$this->notifyInviteProject = $newNotifyInviteProject;
 		$this->modified = true;
 	}
 
-	public function getNotifyOrganizeProject() {
-		return ($this->notifyOrganizeProject);
+	public function getNotifyTrustProject() {
+		return ($this->notifyTrustProject);
 	}
 	
-	public function setNotifyOrganizeProject($newNotifyOrganizeProject) {
-		$this->notifyOrganizeProject = $newNotifyOrganizeProject;
+	public function setNotifyTrustProject($newNotifyTrustProject) {
+		$this->notifyTrustProject = $newNotifyTrustProject;
 		$this->modified = true;
 	}
 	
-	public function getNotifyContributeProject() {
-		return ($this->notifyContributeProject);
-	}
-	
-	public function setNotifyContributeProject($newNotifyContributeProject) {
-		$this->notifyContributeProject = $newNotifyContributeProject;
-		$this->modified = true;
-	}	
-
 	public function getNotifyBannedProject() {
 		return ($this->notifyBannedProject);
 	}

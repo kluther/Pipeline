@@ -186,9 +186,13 @@ class Url
 		if($user->getPicture() != '')
 			$url = self::userPicturesSmall().'//'.$user->getPicture();
 		else
-			$url = self::images().'/user32x32.jpg';
+			$url = self::blankUserPictureSmall();
 		return $url;
 	}
+	
+	public static function blankUserPictureSmall() {
+		return (self::images().'/user32x32.jpg');
+	}	
 	
 	public static function userPictureLarge($userID=null)
 	{
@@ -197,9 +201,13 @@ class Url
 		if($user->getPicture() != '')
 			$url = self::userPicturesLarge().'/'.$user->getPicture();
 		else
-			$url = self::images().'/user48x48.jpg';
+			$url = self::blankUserPictureLarge();
 		return $url;
 	}	
+	
+	public static function blankUserPictureLarge() {
+		return (self::images().'/user48x48.jpg');
+	}
 	
 	public static function project($projectID=null)
 	{

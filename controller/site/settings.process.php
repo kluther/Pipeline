@@ -24,14 +24,11 @@ if($action == 'notification') {
 		case 'chkCommentTaskUpdate':
 			$user->setNotifyCommentTaskUpdate($value);
 			break;
-		case 'chkOrganizeProject':
-			$user->setNotifyOrganizeProject($value);
-			break;
-		case 'chkContributeProject':
-			$user->setNotifyContributeProject($value);
+		case 'chkInviteProject':
+			$user->setNotifyInviteProject($value);
 			break;			
-		case 'chkFollowProject':
-			$user->setNotifyFollowProject($value);
+		case 'chkTrustProject':
+			$user->setNotifyTrustProject($value);
 			break;
 		case 'chkBannedProject':
 			$user->setNotifyBannedProject($value);
