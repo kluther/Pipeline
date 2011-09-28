@@ -112,7 +112,6 @@ class ProjectUser extends DbObject
 		$query .= " WHERE pu.project_id = ".$projectID;
 		$query .= " AND pu.relationship = ".self::MEMBER;
 		$query .= " OR pu.relationship = ".self::TRUSTED;
-		$query .= " OR pu.relationship = ".self::CREATOR;
 		$query .= " ORDER BY u.username ASC";	
 		//echo $query.'<br />';
 		

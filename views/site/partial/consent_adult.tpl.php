@@ -1,4 +1,5 @@
 <?php
+$email = $SOUP->get('email');
 
 $fork = $SOUP->fork();
 $fork->startBlockSet('body');
@@ -9,15 +10,12 @@ $fork->startBlockSet('body');
 $(document).ready(function(){
 	$('#txtConsentEmail').focus();
 	
-	$('#btnAgree').mousedown(function(){
-		var email = $('#txtConsentEmail').val();
-		var name = $('#txtConsentName').val();
-		
+	$('#btnAgree').mousedown(function(){	
 		buildPost({
 			'processPage':'<?= Url::consentProcess() ?>',
 			'info':{
-				'email':email,
-				'name':name
+				'email': $('#txtConsentEmail').val(),
+				'name': $('#txtConsentName').val()
 			},
 			'buttonID':'#btnAgree'
 		});
@@ -31,14 +29,16 @@ $(document).ready(function(){
 
 </script>
 
-(consent form goes here)
+<p>Please read the following consent form and then complete the form below it.</p>
+
+<a title="View Adult Web Consent Testing on Scribd" href="http://www.scribd.com/doc/66688220/Adult-Web-Consent-Testing?secret_password=4nzp5x09db318hcu9e2" style="margin: 12px auto 6px auto; font-family: Helvetica,Arial,Sans-serif; font-style: normal; font-variant: normal; font-weight: normal; font-size: 14px; line-height: normal; font-size-adjust: none; font-stretch: normal; -x-system-font: none; display: block; text-decoration: underline;">Adult Web Consent Testing</a> <object id="doc_4038" name="doc_4038" height="600" width="100%" type="application/x-shockwave-flash" data="http://d1.scribdassets.com/ScribdViewer.swf" style="outline:none;" >            <param name="movie" value="http://d1.scribdassets.com/ScribdViewer.swf">             <param name="wmode" value="opaque">             <param name="bgcolor" value="#ffffff">             <param name="allowFullScreen" value="true">             <param name="allowScriptAccess" value="always">             <param name="FlashVars" value="document_id=66688220&access_key=key-2jmjwupwefagkjdsw3ad&page=1&viewMode=list">             <embed id="doc_4038" name="doc_4038" src="http://d1.scribdassets.com/ScribdViewer.swf?document_id=66688220&access_key=key-2jmjwupwefagkjdsw3ad&page=1&viewMode=list" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" height="600" width="100%" wmode="opaque" bgcolor="#ffffff"></embed>         </object>
 
 <div class="line"></div>
 
 <div class="clear">
 	<label for="txtConsentEmail">Email Address<span class="required">*</span></label>
 	<div class="input">
-		<input id="txtConsentEmail" type="text" />
+		<input id="txtConsentEmail" type="text" value="<?= (!empty($email)) ? $email : '' ?>" />
 		<p>Must be valid</p>
 	</div>
 </div>
@@ -52,7 +52,7 @@ $(document).ready(function(){
 </div>
 <div class="clear">
 	<div class="input">
-		<p><strong>Have read and understood the information on this page and do you agree to participate?</strong></p>	
+		<p><strong>Have you read and understood the information in the document above and do you agree to participate?</strong></p>	
 		<input type="button" id="btnAgree" value="Yes, I Agree" />
 		<input type="button" id="btnNoThanks" value="No Thanks" />
 	</div>

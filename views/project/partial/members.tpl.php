@@ -210,17 +210,18 @@ $(document).ready(function(){
 
 <ul class="segmented-list users">
 
+	<li>
+		<?= formatUserPicture($project->getCreatorID(), 'small') ?>
+		<h6 class="primary"><?= formatUserLink($project->getCreatorID(), $project->getID()) ?></h6>
+		<p class="secondary">creator</p>
+	</li>
+
 <?php
 
 // never empty because there is always a creator
 foreach($allMembers as $m) {
 	echo '<li>';
-	if($project->isCreator($m->getID())) {
-		// creator
-		echo formatUserPicture($m->getID(), 'small');
-		echo '<h6 class="primary">'.formatUserLink($m->getID(), $project->getID()).'</h6>';
-		echo '<p class="secondary">creator</p>';
-	} elseif($project->isTrusted($m->getID())) {
+	if($project->isTrusted($m->getID())) {
 		// trusted member
 		if($hasEditPermission) {
 			echo '<input id="ban-'.$m->getID().'" type="button" class="ban" value="Ban" /> <input id="untrust-'.$m->getID().'" type="button" class="untrust" value="Untrust" />';

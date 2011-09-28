@@ -46,7 +46,7 @@ function logIn(){
 <input type="hidden" id="referer" name="referer" value="<?= $referer ?>" />
 <input id="btnLogIn" type="button" value="Log In" />
 
-<p>Don't have an account yet? <a href="<?= Url::register() ?>">Register for free!</a></p>
+<p>Don't have an account yet? <a href="<?= Url::consent() ?>">Register for free!</a></p>
 
 </td>
 

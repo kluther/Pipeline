@@ -55,8 +55,11 @@ RewriteRule ^register/?$ controller/site/register_c.php [L]
 
 ### CONSENT FORMS ###
 
+RewriteRule ^consent/adult/(.+)/?$ controller/site/consent_adult_c.php?email=$1 [L]
 RewriteRule ^consent/adult/?$ controller/site/consent_adult_c.php [L]
 RewriteRule ^consent/minor/?$ controller/site/consent_minor_c.php [L]
+RewriteRule ^consent/process/?$ controller/site/consent.process.php [L]
+RewriteRule ^consent/(.+)/?$ controller/site/consent_c.php?email=$1 [QSA,L]
 RewriteRule ^consent/?$ controller/site/consent_c.php [L]
 
 ### BASICS ###

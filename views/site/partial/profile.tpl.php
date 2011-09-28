@@ -223,7 +223,7 @@ function initializeUploader() {
 		<?php if($user->getPicture() != null): ?>
 			<input id="btnRemovePicture" type="button" value="Remove" />
 		<?php endif; ?>	
-		<p>JPG, GIF, or PNG only, max 500 kb</p>
+		<p>Square, max 500 kb, must be .jpg, .gif, or .png</p>
 	</div>
 </div>
 <div class="clear">

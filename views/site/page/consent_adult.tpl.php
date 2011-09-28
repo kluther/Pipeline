@@ -1,10 +1,11 @@
 <?php
+
 	$fork = $SOUP->fork();
 	$fork->set('pageTitle', 'Study Consent');
 	$fork->startBlockSet('body');
 ?>
 
-<div class="left">
+<td class="left">
 
 	<?php
 		$SOUP->render('site/partial/consent_adult',array(
@@ -13,9 +14,10 @@
 		);
 	?>
 
-</div>
+</td>
 
-<div class="right"> </div>
+<td class="right"> </td>
+<td class="extra"> </td>
 
 <?php
 	$fork->endBlockSet();

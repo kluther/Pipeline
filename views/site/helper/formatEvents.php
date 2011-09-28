@@ -36,28 +36,28 @@ function formatEvent($event, $showProject=false)
 					);					
 				break;	
 			case 'join_project':
-				$predicate = ($showProject) ? formatProjectLink($event->getProjectID()) : '';
+				$predicate = ($showProject) ? ' '.formatProjectLink($event->getProjectID()) : '';
 				$formatted = sprintf("%s joined the project%s.",
 						formatUserLink($event->getUser1ID(), $event->getProjectID()),
 						$predicate
 					);					
 				break;					
 			case 'leave_project':
-				$predicate = ($showProject) ? formatProjectLink($event->getProjectID()) : '';
+				$predicate = ($showProject) ? ' '.formatProjectLink($event->getProjectID()) : '';
 				$formatted = sprintf("%s left the project%s.",
 						formatUserLink($event->getUser1ID(), $event->getProjectID()),
 						$predicate
 					);					
 				break;	
 			case 'follow_project':
-				$predicate = ($showProject) ? formatProjectLink($event->getProjectID()) : '';
+				$predicate = ($showProject) ? ' '.formatProjectLink($event->getProjectID()) : '';
 				$formatted = sprintf("%s followed the project%s.",
 						formatUserLink($event->getUser1ID(), $event->getProjectID()),
 						$predicate
 					);					
 				break;	
 			case 'unfollow_project':
-				$predicate = ($showProject) ? formatProjectLink($event->getProjectID()) : '';
+				$predicate = ($showProject) ? ' '.formatProjectLink($event->getProjectID()) : '';
 				$formatted = sprintf("%s unfollowed the project%s.",
 						formatUserLink($event->getUser1ID(), $event->getProjectID()),
 						$predicate

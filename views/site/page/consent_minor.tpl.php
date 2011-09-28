@@ -8,15 +8,18 @@
 
 </script>
 
-<div class="left">
+<td class="td">
 
-	<h3>Parental Consent Form and Minor Assent Form</h3>
+	<?php
+		$SOUP->render('site/partial/consent_minor',array(
+			'title' => "Minor Consent Form"
+			)
+		);
+	?>
+</td>
 
-
-
-</div>
-
-<div class="right"> </div>
+<td class="right"> </td>
+<td class="extra"> </td>
 
 <?php
 	$fork->endBlockSet();

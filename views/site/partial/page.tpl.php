@@ -50,7 +50,7 @@ if($project != null)
 				<li class="right"><a href="<?= Url::profile() ?>"><?= Session::getUsername() ?></a></li>	
 				<!--li class="right"><a href="<?= Url::inbox() ?>">Inbox</a></li-->				
 			<?php else: ?>
-				<li class="right"><a href="<?= Url::register() ?>">Register</a></li>
+				<li class="right"><a href="<?= Url::consent() ?>">Register</a></li>
 				<li class="right"><a href="<?= Url::logIn() ?>">Log In</a></li>
 			<?php endif; ?>
 				<li class="left"><a href="<?= Url::findProjects() ?>">Find Projects</a></li>

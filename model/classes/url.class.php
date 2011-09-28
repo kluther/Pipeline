@@ -87,24 +87,25 @@ class Url
 		return (self::base().'/projects/start');
 	}
 	
-	public static function register()
-	{
-		return (self::base().'/register');
+	public static function register($email=null) {
+		if(!empty($email)) {
+			return (self::base().'/register/'.urlencode($email));
+		} else {
+			return (self::base().'/register');
+		}
 	}
-	
-	public static function registerWithEmail($email=null) {
-		if($email === null) return null;
-		return (self::register().'/'.urlencode($email));
-	}	
 	
 	public static function registerProcess()
 	{
 		return (self::register().'/process');
 	}
 	
-	public static function consent()
-	{
-		return (self::base().'/consent');
+	public static function consent($email=null) {
+		if(!empty($email)) {
+			return (self::base().'/consent/'.urlencode($email));
+		} else {
+			return (self::base().'/consent');
+		}
 	}
 	
 	public static function consentProcess()
@@ -112,9 +113,12 @@ class Url
 		return (self::consent().'/process');
 	}
 	
-	public static function adultConsent()
-	{
-		return (self::consent().'/adult');
+	public static function adultConsent($email=null) {
+		if(!empty($email)) {
+			return (self::consent().'/adult/'.urlencode($email));
+		} else {
+			return (self::consent().'/adult');
+		}
 	}
 	
 	public static function minorConsent()

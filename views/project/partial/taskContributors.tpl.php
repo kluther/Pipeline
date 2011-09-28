@@ -49,7 +49,7 @@ $fork->set('title', 'Contributors');
 $fork->set('id', 'contributors');
 if($hasJoinPermission) {
 	$fork->set('creatable', true);
-	$fork->set('createLabel', 'Join');
+	$fork->set('createLabel', 'Join Task');
 } elseif($hasContributePermission) {
 	$fork->set('creatable', true);
 	$fork->set('createLabel', 'Contribute');
