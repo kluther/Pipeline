@@ -5,12 +5,11 @@ require_once('./../../global.php');
 $slug = Filter::text($_GET['slug']);
 $project = Project::getProjectFromSlug($slug);
 if($project == null) {
-	Session::setMessage('That project does not exist.');
-	header('Location: '.Url::error());
-	exit();
+	$json = array('error' => 'That project does not exist.');
+	exit(json_encode($json));	
 }
 
-$action = Filter::alphanum($_POST['action']);
+$action = Filter::text($_POST['action']);
 
 if($action == "pitch") {
 	// edit the pitch

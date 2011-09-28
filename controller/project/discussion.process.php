@@ -2,14 +2,12 @@
 require_once('./../../global.php');
 require_once TEMPLATE_PATH.'/site/helper/format.php'; 
 
-$slug = Filter::text($_GET['slug']);
-	
 // check project
+$slug = Filter::text($_GET['slug']);
 $project = Project::getProjectFromSlug($slug);
 if($project == null) {
-	Session::setMessage('That project does not exist.');
-	header('Location: '.Url::error());
-	exit();
+	$json = array('error' => 'That project does not exist.');
+	exit(json_encode($json));	
 }
 
 //$token = Filter::alphanum($_POST['token']);
