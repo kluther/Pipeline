@@ -5,8 +5,7 @@ $slug = Filter::text($_GET['slug']);
 $project = Project::getProjectFromSlug($slug);
 
 // kick us out if slug invalid
-if($project == null)
-{
+if($project == null) {
 	header('Location: '.Url::error());
 	exit();
 }
@@ -20,16 +19,19 @@ if($project == null)
 // $contributors = $project->getOnlyContributors();
 // $contributorInvites = Invitation::getByProjectID($project->getID(), ProjectUser::CONTRIBUTOR);
 
-// $followers = $project->getFollowers();
-$followerInvites = $project->getInvitations();
+$followers = $project->getFollowers();
+//$followerInvites = $project->getInvitations();
 
 $banned = $project->getBanned();
 
-$trustedContributors = $project->getTrustedContributors();
-$untrustedContributors = $project->getUntrustedContributors();
+$allMembers = $project->getAllMembers();
+$memberInvites = $project->getInvitations();
 
-$trustedFollowers = $project->getTrustedFollowers();
-$untrustedFollowers = $project->getUntrustedFollowers();
+//$trustedContributors = $project->getTrustedContributors();
+//$untrustedContributors = $project->getUntrustedContributors();
+
+//$trustedFollowers = $project->getTrustedFollowers();
+//$untrustedFollowers = $project->getUntrustedFollowers();
 
 $discussions = Discussion::getPeopleDiscussionsByProjectID($project->getID(), 3);
 
@@ -37,20 +39,22 @@ $events = Event::getPeopleEventsByProjectID($project->getID(), 5);
 
 $soup = new Soup();
 $soup->set('project', $project);
+$soup->set('allMembers', $allMembers);
+$soup->set('memberInvites', $memberInvites);
 // $soup->set('creator', $creator);
 // $soup->set('organizers', $organizers);
 // $soup->set('organizerInvites', $organizerInvites);
 // $soup->set('contributors', $contributors);
-$soup->set('trustedContributors', $trustedContributors);
-$soup->set('untrustedContributors', $untrustedContributors);
+//$soup->set('trustedContributors', $trustedContributors);
+//$soup->set('untrustedContributors', $untrustedContributors);
 
-$soup->set('trustedFollowers', $trustedFollowers);
-$soup->set('untrustedFollowers', $untrustedFollowers);
+//$soup->set('trustedFollowers', $trustedFollowers);
+//$soup->set('untrustedFollowers', $untrustedFollowers);
 
 // $soup->set('contributorInvites', $contributorInvites);
 $soup->set('banned', $banned);
-// $soup->set('followers', $followers);
-$soup->set('followerInvites', $followerInvites);
+$soup->set('followers', $followers);
+//$soup->set('followerInvites', $followerInvites);
 $soup->set('events', $events);
 
 $soup->set('discussions', $discussions);

@@ -82,8 +82,16 @@ class Project extends DbObject
 		$db->store($this, __CLASS__, self::DB_TABLE, $db_properties);
 	}
 	
-	public function isContributor($userID=null) {
-		return(ProjectUser::isContributor($userID, $this->id));
+	public function isCreator($userID=null) {
+		return(ProjectUser::isCreator($userID, $this->id));
+	}	
+	
+	public function isTrusted($userID=null) {
+		return(ProjectUser::isTrusted($userID, $this->id));
+	}		
+	
+	public function isMember($userID=null) {
+		return(ProjectUser::isMember($userID, $this->id));
 	}
 	
 	public function isFollower($userID=null) {
@@ -94,45 +102,25 @@ class Project extends DbObject
 		return(ProjectUser::isBanned($userID, $this->id));
 	}	
 	
-	public function isCreator($userID=null) {
-		return(ProjectUser::isCreator($userID, $this->id));
-	}	
-	
-	public function isTrusted($userID=null) {
-		return(ProjectUser::isTrusted($userID, $this->id));
-	}	
-	
 	public function isAffiliated($userID=null) {
 		return(ProjectUser::isAffiliated($userID, $this->id));
-	}
-	
-	public function getTrustedContributors() {
-		return(ProjectUser::getTrustedContributors($this->id));
-	}
-	
-	public function getUntrustedContributors() {
-		return(ProjectUser::getUntrustedContributors($this->id));
 	}
 	
 	// public function getContributors() {
 		// return(ProjectUser::getContributors($this->id));
 	// }	
 
-	public function getTrustedFollowers() {
-		return(ProjectUser::getTrustedFollowers($this->id));
-	}
-	
-	public function getUntrustedFollowers() {
-		return(ProjectUser::getUntrustedFollowers($this->id));
+	public function getAllMembers() {
+		return(ProjectUser::getAllMembers($this->id));
 	}
 	
 	public function getBanned() {
 		return(projectUser::getBanned($this->id));
 	}
 	
-	// public function getFollowers() {
-		// return(ProjectUser::getFollowers($this->id));
-	// }		
+	public function getFollowers() {
+		return(ProjectUser::getFollowers($this->id));
+	}		
 	
 	// public function getOrganizers()
 	// {
@@ -162,16 +150,16 @@ class Project extends DbObject
 		return(Invitation::getByProjectID($this->id, $responded));
 	}
 	
-	public function getUnaffiliatedUsernames() {
-		return(ProjectUser::getUnaffiliatedUsernames($this->id));
+	public function getUnaffiliatedUsernames($term=null) {
+		return(ProjectUser::getUnaffiliatedUsernames($this->id, $term));
 	}
 	
-	public function getBannableUsernames() {
-		return(ProjectUser::getBannableUsernames($this->id));
+	public function getBannableUsernames($term=null) {
+		return(ProjectUser::getBannableUsernames($this->id, $term));
 	}
 	
-	public function getTrustedUsernames() {
-		return(ProjectUser::getTrustedUsernames($this->id));
+	public function getTrustedUsernames($term=null) {
+		return(ProjectUser::getTrustedUsernames($this->id, $term));
 	}	
 	
 	/* static methods */

@@ -6,17 +6,17 @@ class ProjectUser extends DbObject
 	protected $userID;
 	protected $projectID;
 	protected $relationship;
-	protected $trusted;
 	
 	const DB_TABLE = 'project_user';
 	
 	const BANNED = 0;
 	const FOLLOWER = 1;
-	const CONTRIBUTOR = 5;
-	const CREATOR = 10;
+	const MEMBER = 5;
+	const TRUSTED = 10;
+	const CREATOR = 101;
 	
-	const TRUSTED = 1;
-	const UNTRUSTED = 0;
+	// const TRUSTED = 1;
+	// const UNTRUSTED = 0;
 	//const ORGANIZER = 10;
 	
 	public function __construct($args=array())
@@ -25,8 +25,7 @@ class ProjectUser extends DbObject
 			'id' => null,
 			'user_id' => 0,
 			'project_id' => 0,
-			'relationship' => 0,
-			'trusted' => 0
+			'relationship' => 0
 		);	
 		
 		$args += $defaultArgs;
@@ -35,7 +34,6 @@ class ProjectUser extends DbObject
 		$this->userID = $args['user_id'];
 		$this->projectID = $args['project_id'];
 		$this->relationship = $args['relationship'];
-		$this->trusted = $args['trusted'];
 	}	
 	
 	public static function load($id)
@@ -52,8 +50,7 @@ class ProjectUser extends DbObject
 		$db_properties = array(
 			'user_id' => $this->userID,
 			'project_id' => $this->projectID,
-			'relationship' => $this->relationship,
-			'trusted' => $this->trusted
+			'relationship' => $this->relationship
 		);		
 		$db->store($this, __CLASS__, self::DB_TABLE, $db_properties);
 	}
@@ -105,54 +102,47 @@ class ProjectUser extends DbObject
 		// $db = Db::instance();
 		// $db->execute($query);
 	// }
-	
-	
-	public static function isTrusted($userID=null, $projectID=null) {
-		if( ($userID === null) || ($projectID === null) ) return null;
+
+	public static function getAllMembers($projectID=null) {
+		if($projectID === null) return null;
 		
-		$query = "SELECT * FROM ".self::DB_TABLE;
-		$query .= " WHERE user_id = ".$userID;
-		$query .= " AND project_id = ".$projectID;
-		$query .= " AND trusted = ".self::TRUSTED;
-		//echo $query;
+		$query = "SELECT user_id AS id FROM ".self::DB_TABLE." pu";
+		$query .= " INNER JOIN ".User::DB_TABLE." u ON ";
+		$query .= " pu.user_id = u.id";
+		$query .= " WHERE pu.project_id = ".$projectID;
+		$query .= " AND pu.relationship = ".self::MEMBER;
+		$query .= " OR pu.relationship = ".self::TRUSTED;
+		$query .= " OR pu.relationship = ".self::CREATOR;
+		$query .= " ORDER BY u.username ASC";	
+		//echo $query.'<br />';
 		
 		$db = Db::instance();
 		$result = $db->lookup($query);
-		if(!mysql_num_rows($result))
-			return false;
-		else
-			return true;	
-	}		
-	
-	public static function getTrustedContributors($projectID=null) {
-		return(self::getContributors($projectID, self::TRUSTED));
+		if(!mysql_num_rows($result)) return array();
+
+		$users = array();
+		while($row = mysql_fetch_assoc($result))
+			$users[$row['id']] = User::load($row['id']);
+		return $users;			
 	}
 	
-	public static function getUntrustedContributors($projectID=null) {
-		return(self::getContributors($projectID, self::UNTRUSTED));
+	public static function getTrusted($projectID=null) {
+		return(self::getByProjectID($projectID, self::TRUSTED));
+	}
+	
+	public static function getMembers($projectID=null) {
+		return(self::getByProjectID($projectID, self::MEMBER));
 	}	
 	
-	public static function getContributors($projectID=null, $trusted=null) {
-		return(self::getByProjectID($projectID, self::CONTRIBUTOR, $trusted));
-	}
-	
-	public static function getTrustedFollowers($projectID=null) {
-		return(self::getFollowers($projectID, self::TRUSTED));
-	}
-	
-	public static function getUntrustedFollowers($projectID=null) {
-		return(self::getFollowers($projectID, self::UNTRUSTED));
-	}	
-	
-	public static function getFollowers($projectID=null, $trusted=null) {
-		return(self::getByProjectID($projectID, self::FOLLOWER, $trusted));
+	public static function getFollowers($projectID=null) {
+		return(self::getByProjectID($projectID, self::FOLLOWER));
 	}
 
 	public static function getBanned($projectID=null) {
 		return(self::getByProjectID($projectID, self::BANNED));
 	}
 	
-	public static function getBannableUsernames($projectID=null) {
+	public static function getBannableUsernames($projectID=null, $term=null) {
 		if($projectID === null) return null;
 		
 		$query = "SELECT username FROM ".User::DB_TABLE;
@@ -162,6 +152,8 @@ class ProjectUser extends DbObject
 			$query .= " AND relationship = ".self::BANNED; // can't be banned
 			$query .= " OR relationship = ".self::CREATOR; // can't be creator
 		$query .= " )";
+		if(!empty($term))
+			$query .= " AND username LIKE '%".$term."%'";
 		$query .= " ORDER BY username ASC";
 		
 		$db = Db::instance();
@@ -174,14 +166,17 @@ class ProjectUser extends DbObject
 		return $usernames;		
 	}
 	
-	public static function getTrustedUsernames($projectID=null) {
+	public static function getTrustedUsernames($projectID=null, $term=null) {
 		if($projectID === null) return null;
 		
 		$query = "SELECT u.username AS username FROM ".User::DB_TABLE." u";	
 		$query .= " INNER JOIN ".self::DB_TABLE." pu";
 		$query .= " ON u.id = pu.user_id";
 		$query .= " WHERE pu.project_id = ".$projectID;
-		$query .= " AND pu.trusted = ".self::TRUSTED;
+		$query .= " AND (pu.relationship = ".self::TRUSTED;
+		$query .= " OR pu.relationship = ".self::CREATOR.")";
+		if(!empty($term))
+			$query .= " AND u.username LIKE '%".$term."%'";		
 		$query .= " ORDER BY u.username ASC";
 		
 		$db = Db::instance();
@@ -196,7 +191,7 @@ class ProjectUser extends DbObject
 		return $usernames;			
 	}	
 	
-	public static function getUnaffiliatedUsernames($projectID=null) {
+	public static function getUnaffiliatedUsernames($projectID=null, $term=null) {
 		if($projectID === null) return null;
 		
 		$query = "SELECT username FROM ".User::DB_TABLE;	
@@ -204,6 +199,8 @@ class ProjectUser extends DbObject
 			$query .= " SELECT user_id FROM ".self::DB_TABLE;
 			$query .= " WHERE project_id = ".$projectID;
 		$query .= " )";
+		if(!empty($term))
+			$query .= " AND username LIKE '%".$term."%'";		
 		$query .= " ORDER BY username ASC";
 		
 		$db = Db::instance();
@@ -218,7 +215,7 @@ class ProjectUser extends DbObject
 		return $usernames;			
 	}		
 	
-	public static function getByProjectID($projectID=null, $relationship=null, $trusted=null) {
+	public static function getByProjectID($projectID=null, $relationship=null) {
 		if($projectID == null) return null;
 		
 		$query = "SELECT user_id AS id FROM ".self::DB_TABLE." pu";
@@ -227,9 +224,6 @@ class ProjectUser extends DbObject
 		$query .= " WHERE pu.project_id = ".$projectID;
 		if($relationship !== null) {
 			$query .= " AND pu.relationship = ".$relationship;
-		}
-		if($trusted !== null) {
-			$query .= " AND pu.trusted = ".$trusted;
 		}
 		$query .= " ORDER BY u.username ASC";	
 		//echo $query.'<br />';
@@ -269,9 +263,13 @@ class ProjectUser extends DbObject
 	public static function isCreator($userID=null, $projectID=null) {
 		return (self::hasRelationship($userID,$projectID,self::CREATOR));	
 	}
+
+	public static function isTrusted($userID=null, $projectID=null) {
+		return (self::hasRelationship($userID,$projectID,self::TRUSTED));
+	}
 	
-	public static function isContributor($userID=null, $projectID=null) {
-		return (self::hasRelationship($userID,$projectID,self::CONTRIBUTOR));
+	public static function isMember($userID=null, $projectID=null) {
+		return (self::hasRelationship($userID,$projectID,self::MEMBER));
 	}
 	
 	public static function isFollower($userID=null, $projectID=null)
@@ -443,12 +441,4 @@ class ProjectUser extends DbObject
 		$this->modified = true;
 	}
 	
-	public function getTrusted() {
-		return ($this->trusted);
-	}
-	
-	public function setTrusted($newTrusted) {
-		$this->trusted = $newTrusted;
-		$this->modified = true;
-	}
 }

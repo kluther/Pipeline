@@ -25,15 +25,11 @@ $fork->startBlockSet('body');
 $(document).ready(function(){
 
 	$('#invitations .extraButton').click(function() {
+		$(this).hide();
+		$('#invitations li.none').hide();
 		var responded = $("#invitations li.responded");
-		if($(responded).is(":hidden")) {
-			$('#invitations li.none').hide();
-			$(responded).fadeIn();
-		} else {
-			$(responded).hide();
-			$('#invitations li.none').show();
-		}
-	});	
+		$(responded).fadeIn();
+	});		
 
 	$('#invitations div.buttons input[type="button"]').click(function(){
 		var id = $(this).parent().parent().attr('id').substring(11);
@@ -70,7 +66,11 @@ foreach($invitations as $i) {
 		echo '<li id="invitation-'.$i->getID().'">';
 	}
 
-	echo '<p class="project">'.formatUserLink($i->getInviterID()).' invited you to follow the project '.formatProjectLink($i->getProjectID()).'. ('.formatTimeTag($i->getDateCreated()).')</p>';
+	if($i->getTrusted()) {
+		echo '<p class="project">'.formatUserLink($i->getInviterID(), $project->getID()).' invited you to join the project '.formatProjectLink($i->getProjectID()).'. ('.formatTimeTag($i->getDateCreated()).')</p>';
+	} else {
+		echo '<p class="project">'.formatUserLink($i->getInviterID(), $project->getID()).' invited you to join the project '.formatProjectLink($i->getProjectID()).' as a <a href="'.Url::help().'">trusted member</a>. ('.formatTimeTag($i->getDateCreated()).')</p>';
+	}
 	
 	// show the invitation message, if it exists
 	if($i->getInvitationMessage() != null) {
@@ -84,9 +84,9 @@ foreach($invitations as $i) {
 		//echo '<div class="line"></div>';
 		// show the response
 		if($i->getResponse() == Invitation::ACCEPTED) {
-			echo '<p>You <span class="good">accepted</span> this invitation. ('.formatTimeTag($i->getDateResponded()).')</p>';					
+			echo '<p>You accepted this invitation. ('.formatTimeTag($i->getDateResponded()).')</p>';					
 		} else {
-			echo '<p>You <span class="bad">declined</span> this invitation. ('.formatTimeTag($i->getDateResponded()).')</p>';		
+			echo '<p>You declined this invitation. ('.formatTimeTag($i->getDateResponded()).')</p>';		
 		}
 		// show the response message, if it exists
 		if($i->getResponseMessage() != null) {

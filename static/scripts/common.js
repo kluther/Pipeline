@@ -35,9 +35,9 @@ function buildPost(options){
 function displayNotification(message,type)
 {
 	if (type == "error")
-		$("#feedback").feedback(message, {duration: 3000, type: "error"});
+		$("#feedback").feedback(message, {duration: 5000, type: "error"});
 	else
-		$("#feedback").feedback(message, {duration: 3000});
+		$("#feedback").feedback(message, {duration: 5000});
 }
 
 function toggleEditView(edit, view)

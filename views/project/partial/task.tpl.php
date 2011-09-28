@@ -80,7 +80,7 @@ $(document).ready(function(){
 	<label for="txtLeader">Leader<span class="required">*</span></label>
 	<div class="input">
 		<input id="txtLeader" name="txtLeader" type="text" value="<?= $leader->getUsername() ?>" />
-		<p>A <a href="<?= Url::help() ?>">trusted user</a> to lead this task</p>
+		<p>A <a href="<?= Url::help() ?>">trusted member</a> to lead this task</p>
 	</div>
 </div>
 
@@ -136,7 +136,7 @@ $(document).ready(function(){
 	<a class="picture large" href="<?= Url::user($task->getLeaderID()) ?>"><img src="<?= Url::userPictureLarge($task->getLeaderID()) ?>" /></a>
 	<div class="text">
 		<p class="caption">task leader</p>
-		<p class="username"><?= formatUserLink($task->getLeaderID()) ?></p>
+		<p class="username"><?= formatUserLink($task->getLeaderID(), $project->getID()) ?></p>
 	</div>
 </div>
 

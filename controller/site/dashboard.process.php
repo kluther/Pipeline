@@ -4,9 +4,10 @@ require_once("../../global.php");
 $inviteID = Filter::numeric($_POST['inviteID']);
 $invite = Invitation::load($inviteID);
 
-if(ProjectUser::isAffiliated($invite->getInviteeID(), $invite->getProjectID())) {
-	// already affiliated; can't follow
-	Session::setMessage('You are already affiliated with this project.');
+if( ProjectUser::isMember($invite->getInviteeID(), $invite->getProjectID()) ||
+	ProjectUser::isTrusted($invite->getInviteeID(), $invite->getProjectID())	) {
+	// already a member; can't join
+	Session::setMessage('You are already a member of this project.');
 	header('Location: '.Url::error());
 	exit();
 }
@@ -20,19 +21,23 @@ if($response == 'accept') {
 
 if($response == Invitation::ACCEPTED) {
 	// add the user to the project
+	if($invite->getTrusted) {
+		$relationship = ProjectUser::TRUSTED;
+	} else {
+		$relationship = ProjectUser::MEMBER;
+	}
 	$pu = new ProjectUser(array(
 		'project_id' => $invite->getProjectID(),
 		'user_id' => $invite->getInviteeID(),
-		'relationship' => ProjectUser::FOLLOWER,
-		'trusted' => $invite->getTrusted()
+		'relationship' => $relationship
 	));
 	$pu->save();
 	
-	$eventTypeID = 'accept_follower_invitation';
-	$successMsg = 'You accepted the follower invitation.';	
+	$eventTypeID = 'accept_member_invitation';
+	$successMsg = 'You accepted the invitation.';	
 } else {
-	$eventTypeID = 'decline_follower_invitation';
-	$successMsg = 'You declined the follower invitation.';
+	$eventTypeID = 'decline_member_invitation';
+	$successMsg = 'You declined the invitation.';
 }
 
 // update the invite

@@ -1,10 +1,6 @@
 <?php
 
 $project = $SOUP->get('project');
-//$creator = $SOUP->get('creator');
-//$organizers = $SOUP->get('organizers');
-//$contributors = $SOUP->get('contributors');
-// $followers = $SOUP->get('followers');
 
 $fork = $SOUP->fork();
 
@@ -20,33 +16,13 @@ $fork->startBlockSet('body');
 
 <td class="left">
 <?php
-	$SOUP->render('project/partial/newContributors', array(
+	$SOUP->render('project/partial/members', array(
 	));
 ?>
 
 <?php
-	$SOUP->render('project/partial/newFollowers', array(
+	$SOUP->render('project/partial/followers', array(
 	));
-?>
-
-<?php
-	// $SOUP->render('project/partial/creator', array(
-	// ));
-?>
-
-<?php
-	// $SOUP->render('project/partial/organizers', array(
-	// ));
-?>
-
-<?php
-	// $SOUP->render('project/partial/contributors', array(
-	// ));
-?>
-
-<?php
-	// $SOUP->render('project/partial/followers', array(
-	// ));
 ?>
 
 <?php

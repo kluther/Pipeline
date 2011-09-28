@@ -1,6 +1,7 @@
 <?php
 include_once TEMPLATE_PATH.'/site/helper/format.php';
 
+$project = $SOUP->get('project');
 $updates = $SOUP->get('updates', array());
 $update = $SOUP->get('update', null);
 $title = $SOUP->get('title', 'Updates');
@@ -53,7 +54,7 @@ if($updates != null) {
 			
 			echo '<p class="secondary">';
 			echo 'posted '.formatTimeTag($u->getDateCreated());
-			echo ' by '.formatUserLink($u->getCreatorID());
+			echo ' by '.formatUserLink($u->getCreatorID(), $project->getID());
 			echo '</p>'; // .secondary
 			echo '</li>';
 	}

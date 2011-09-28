@@ -65,7 +65,8 @@ function formatUserLink($userID=null, $projectID=null)
 	$formatted = '<a href="'.Url::user($userID).'">'.$user->getUsername().'</a>';
 	// add star to trusted users
 	if($projectID != null) {
-		if(ProjectUser::isTrusted($userID, $projectID)) {
+		if( (ProjectUser::isTrusted($userID, $projectID)) ||
+			(ProjectUser::isCreator($userID, $projectID)) ){
 			$formatted .= '*';
 		}
 	}

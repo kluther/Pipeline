@@ -17,7 +17,8 @@ $hasPermission = $SOUP->get('hasPermission', null);
 if($hasPermission === null) {
 	// only organizers or creator may create tasks
 	$hasPermission = ( Session::isAdmin() ||
-						$project->isTrusted(Session::getUserID()) );
+						$project->isTrusted(Session::getUserID()) ||
+						$project->isCreator(Session::getUserID()) );
 }
 
 $fork = $SOUP->fork();

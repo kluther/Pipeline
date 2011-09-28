@@ -10,8 +10,9 @@ $size = $SOUP->get('size');
 
 // allow values to be passed in
 if($hasPermission === null) {
-	// any logged-in user may create
-	$hasPermission = Session::isLoggedIn();
+	// any logged-in user may discuss
+	$hasPermission = ( Session::isLoggedIn() &&
+						!$project->isBanned(Session::getUserID()) );
 }
 
 $fork = $SOUP->fork();
@@ -80,9 +81,9 @@ if($discussions != null) {
 			if($size != 'small')
 				echo formatCount(count($replies),'reply','replies','no').' <span class="slash">/</span>'; // number of replies
 			$latestReply = reset($replies);				
-			echo ' last reply '.formatTimeTag($latestReply->getDateCreated()).' by '.formatUserLink($latestReply->getCreatorID()); // last reply
+			echo ' last reply '.formatTimeTag($latestReply->getDateCreated()).' by '.formatUserLink($latestReply->getCreatorID(), $project->getID()); // last reply
 		} else {
-			echo 'posted '.formatTimeTag($discussion->getDateCreated()).' by '.formatUserLink($discussion->getCreatorID());
+			echo 'posted '.formatTimeTag($discussion->getDateCreated()).' by '.formatUserLink($discussion->getCreatorID(), $project->getID());
 		}
 		
 		echo '</p>'; // .secondary

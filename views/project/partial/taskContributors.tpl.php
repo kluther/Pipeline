@@ -1,6 +1,7 @@
 <?php
 include_once TEMPLATE_PATH.'/site/helper/format.php';
 
+$project = $SOUP->get('project');
 $task = $SOUP->get('task');
 $joined = $SOUP->get('accepted');
 
@@ -21,16 +22,25 @@ else {
 
 $hasJoinPermission = false;
 $hasContributePermission = false;
-if(Session::isLoggedIn() && // must be logged in
-	(!ProjectUser::isBanned(Session::getUserID(), $task->getProjectID())) && // can't be banned
-	($task->getStatus() == Task::STATUS_OPEN) ) { // task must be open
-	// now determine between "Join" and "Contribute"
-	if(Accepted::getByUserID(Session::getUserID(), $task->getID()) != null) {
-		// user has already joined
-		$hasContributePermission = true;
-	} else {
-		// user hasn't joined yet
-		$hasJoinPermission = true;
+
+if($task->getStatus() == Task::STATUS_OPEN) {
+	if(Session::isLoggedIn()) {
+		if(Accepted::getByUserID(Session::getUserID(), $task->getID()) !== null) {
+			// user has joined task
+			if( Session::isAdmin() ||
+				$project->isMember(Session::getUserID()) ||
+				$project->isTrusted(Session::getUserID()) ||
+				$project->isCreator(Session::getUserID()) ) {
+				$hasContributePermission = true;
+			}
+		} else {
+			// user hasn't joined task
+			if( Session::isAdmin() ||
+				$project->isFollower(Session::getUserID()) || // must be admin, follower, or not banned
+				!$project->isBanned(Session::getUserID()) ) {
+				$hasJoinPermission = true;
+			}
+		}
 	}
 }
 
@@ -97,7 +107,7 @@ if($joined != null) {
 	foreach($joined as $j) {
 		echo '<li>';
 		echo formatUserPicture($j->getCreatorID(), 'small');
-		echo '<h6 class="primary">'.formatUserLink($j->getCreatorID()).'</h6>';
+		echo '<h6 class="primary">'.formatUserLink($j->getCreatorID(), $project->getID()).'</h6>';
 		$latestUpdate = $j->getLatestUpdate();
 		if($latestUpdate != null) {
 			echo '<p class="secondary contribution"><a href="'.Url::update($latestUpdate->getID()).'">last contributed '.formatTimeTag($latestUpdate->getDateCreated()).'</a></p>';

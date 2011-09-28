@@ -1,12 +1,14 @@
 <?php
 include_once TEMPLATE_PATH.'/site/helper/format.php';
 
+$project = $SOUP->get('project');
 $comments = $SOUP->get('comments',array());
 $processURL = $SOUP->get('processURL');
 $parentID = $SOUP->get('parentID');
 
 // any logged-in user may comment
-$hasPermission = Session::isLoggedIn();
+$hasPermission = ( Session::isLoggedIn() &&
+					!$project->isBanned(Session::getUserID()) );
 
 $fork = $SOUP->fork();
 $fork->set('title', 'Comments');
@@ -65,7 +67,7 @@ if($comments != null) {
 		echo '<a class="picture large" href="'.Url::user($comment->getCreatorID()).'"><img src="'.Url::userPictureLarge($comment->getCreatorID()).'" /></a>';
 		if($hasPermission)
 			echo '<input class="replyButton" type="button" value="Reply" />';
-		echo '<p class="headline">'.formatUserLink($comment->getCreatorID()).' <span class="slash">/</span> <span class="when">'.formatTimeTag($comment->getDateCreated()).'</span></p>';					
+		echo '<p class="headline">'.formatUserLink($comment->getCreatorID(), $project->getID()).' <span class="slash">/</span> <span class="when">'.formatTimeTag($comment->getDateCreated()).'</span></p>';					
 		echo '<p class="message">'.formatComment($comment->getMessage()).'</p>';			
 		//echo '<p class="when">'.formatTimeTag($comment->getDateCreated()).'</p>';
 		echo '</li>';
@@ -75,7 +77,7 @@ if($comments != null) {
 			foreach($replies as $reply) {
 				echo '<li class="comment-reply">';
 				echo '<a class="picture large" href="'.Url::user($reply->getCreatorID()).'"><img src="'.Url::userPictureLarge($reply->getCreatorID()).'" /></a>';		
-				echo '<p class="headline">'.formatUserLink($reply->getCreatorID()).' <span class="slash">/</span> <span class="when">'.formatTimeTag($reply->getDateCreated()).'</span></p>';					
+				echo '<p class="headline">'.formatUserLink($reply->getCreatorID(), $project->getID()).' <span class="slash">/</span> <span class="when">'.formatTimeTag($reply->getDateCreated()).'</span></p>';					
 				echo '<p class="message">'.formatComment($reply->getMessage()).'</p>';			
 				//echo '<p class="when">'.formatTimeTag($reply->getDateCreated()).'</p>';				
 				echo '</li>';

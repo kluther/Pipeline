@@ -11,79 +11,85 @@ function formatEvent($event, $showProject=false)
 						'<a href="'.Url::base().'">'.PIPELINE_NAME.'</a>'
 					);
 					break;
-			case 'accept_organizer_invitation':
+			case 'accept_member_invitation':
 				$predicate = ($showProject) ? 'the project '.formatProjectLink($event->getProjectID()) : "this project";
-				$formatted = sprintf("%s accepted %s's invitation to help organize %s.",
-						formatUserLink($event->getUser1ID()),
-						formatUserLink($event->getUser2ID()),
+				$formatted = sprintf("%s accepted %s's invitation to join %s.",
+						formatUserLink($event->getUser1ID(), $event->getProjectID()),
+						formatUserLink($event->getUser2ID(), $event->getProjectID()),
 						$predicate
 					);
 				break;
-			case 'accept_follower_invitation':
-				$predicate = ($showProject) ? 'the project '.formatProjectLink($event->getProjectID()) : "this project";
-				$formatted = sprintf("%s accepted %s's invitation to follow %s.",
-						formatUserLink($event->getUser1ID()),
-						formatUserLink($event->getUser2ID()),
-						$predicate
-					);
-				break;
-			case 'make_organizer':
-				$predicate = ($showProject) ? ' of the project '.formatProjectLink($event->getProjectID()) : '';
-				$formatted = sprintf("%s made %s an organizer%s.",
-						formatUserLink($event->getUser1ID()),
-						formatUserLink($event->getUser2ID()),
+			case 'trust_member':
+				$predicate = ($showProject) ? ' in the project '.formatProjectLink($event->getProjectID()) : '';
+				$formatted = sprintf("%s trusted %s%s.",
+						formatUserLink($event->getUser1ID(), $event->getProjectID()),
+						formatUserLink($event->getUser2ID(), $event->getProjectID()),
 						$predicate
 					);
 				break;	
-			case 'revoke_organizer':
-				$predicate = ($showProject) ? ' for the project '.formatProjectLink($event->getProjectID()) : '';
-				$formatted = sprintf("%s revoked %s's organizer status%s.",
-						formatUserLink($event->getUser1ID()),
-						formatUserLink($event->getUser2ID()),
+			case 'untrust_member':
+				$predicate = ($showProject) ? ' in the project '.formatProjectLink($event->getProjectID()) : '';
+				$formatted = sprintf("%s untrusted %s%s.",
+						formatUserLink($event->getUser1ID(), $event->getProjectID()),
+						formatUserLink($event->getUser2ID(), $event->getProjectID()),
 						$predicate
 					);					
-				break;		
-			case 'resign_organizer':
-				$predicate = ($showProject) ? ' of the project '.formatProjectLink($event->getProjectID()) : '';
-				$formatted = sprintf("%s resigned as an organizer%s.",
-						formatUserLink($event->getUser1ID()),
+				break;	
+			case 'join_project':
+				$predicate = ($showProject) ? formatProjectLink($event->getProjectID()) : '';
+				$formatted = sprintf("%s joined the project%s.",
+						formatUserLink($event->getUser1ID(), $event->getProjectID()),
+						$predicate
+					);					
+				break;					
+			case 'leave_project':
+				$predicate = ($showProject) ? formatProjectLink($event->getProjectID()) : '';
+				$formatted = sprintf("%s left the project%s.",
+						formatUserLink($event->getUser1ID(), $event->getProjectID()),
 						$predicate
 					);					
 				break;	
 			case 'follow_project':
-				$predicate = ($showProject) ? 'the project '.formatProjectLink($event->getProjectID()) : 'this project';
-				$formatted = sprintf("%s is following %s.",
-						formatUserLink($event->getUser1ID()),
+				$predicate = ($showProject) ? formatProjectLink($event->getProjectID()) : '';
+				$formatted = sprintf("%s followed the project%s.",
+						formatUserLink($event->getUser1ID(), $event->getProjectID()),
+						$predicate
+					);					
+				break;	
+			case 'unfollow_project':
+				$predicate = ($showProject) ? formatProjectLink($event->getProjectID()) : '';
+				$formatted = sprintf("%s unfollowed the project%s.",
+						formatUserLink($event->getUser1ID(), $event->getProjectID()),
 						$predicate
 					);					
 				break;				
 			case 'ban_user':
 				$predicate = ($showProject) ? ' from the project '.formatProjectLink($event->getProjectID()) : '';
 				$formatted = sprintf("%s banned %s%s.",
-						formatUserLink($event->getUser1ID()),
-						formatUserLink($event->getUser2ID()),
+						formatUserLink($event->getUser1ID(), $event->getProjectID()),
+						formatUserLink($event->getUser2ID(), $event->getProjectID()),
 						$predicate
 					);
 				break;
 			case 'unban_user':
 				$predicate = ($showProject) ? ' from the project '.formatProjectLink($event->getProjectID()) : '';
 				$formatted = sprintf("%s unbanned %s%s.",
-						formatUserLink($event->getUser1ID()),
-						formatUserLink($event->getUser2ID()),
+						formatUserLink($event->getUser1ID(), $event->getProjectID()),
+						formatUserLink($event->getUser2ID(), $event->getProjectID()),
 						$predicate
 					);
 				break;
 			case 'create_project':
 				$predicate = ($showProject) ? 'the project '.formatProjectLink($event->getProjectID()) : 'this project';
 				$formatted = sprintf("%s created %s.",
-						formatUserLink($event->getUser1ID()),
+						formatUserLink($event->getUser1ID(), $event->getProjectID()),
 						formatProjectLink($event->getProjectID())
 					);
 				break;
 			case 'edit_pitch':
 				$predicate = ($showProject) ? ' for the project '.formatProjectLink($event->getProjectID()) : '';
 				$formatted = sprintf("%s edited the %s%s.",
-						formatUserLink($event->getUser1ID()),
+						formatUserLink($event->getUser1ID(), $event->getProjectID()),
 						'<a href="'.Url::pitch($event->getProjectID()).'">pitch</a>',
 						$predicate
 					);
@@ -91,7 +97,7 @@ function formatEvent($event, $showProject=false)
 			case 'edit_specs':
 				$predicate = ($showProject) ? ' for the project '.formatProjectLink($event->getProjectID()) : '';
 				$formatted = sprintf("%s edited the %s%s.",
-						formatUserLink($event->getUser1ID()),
+						formatUserLink($event->getUser1ID(), $event->getProjectID()),
 						'<a href="'.Url::specs($event->getProjectID()).'">specs</a>',
 						$predicate
 					);
@@ -99,7 +105,7 @@ function formatEvent($event, $showProject=false)
 			case 'edit_rules':
 				$predicate = ($showProject) ? ' for the project '.formatProjectLink($event->getProjectID()) : '';
 				$formatted = sprintf("%s edited the %s%s.",
-						formatUserLink($event->getUser1ID()),
+						formatUserLink($event->getUser1ID(), $event->getProjectID()),
 						'<a href="'.Url::rules($event->getProjectID()).'">rules</a>',
 						$predicate
 					);					
@@ -108,7 +114,7 @@ function formatEvent($event, $showProject=false)
 				$predicate = ($showProject) ? 'the project '.formatProjectLink($event->getProjectID()) : 'this project';
 				$status = $event->getData2();
 				$formatted = sprintf("%s changed the %s of %s to &ldquo;%s.&rdquo;",
-						formatUserLink($event->getUser1ID()),
+						formatUserLink($event->getUser1ID(), $event->getProjectID()),
 						'<a href="'.Url::status($event->getProjectID()).'">status</a>',
 						$predicate,
 						formatProjectStatus($status)
@@ -119,7 +125,7 @@ function formatEvent($event, $showProject=false)
 				if($deadline != null) {
 					$predicate = ($showProject) ? 'the project '.formatProjectLink($event->getProjectID()) : 'this project';
 					$formatted = sprintf("%s changed the %s of %s to %s.",
-							formatUserLink($event->getUser1ID()),
+							formatUserLink($event->getUser1ID(), $event->getProjectID()),
 							'<a href="'.Url::deadline($event->getProjectID()).'">deadline</a>',
 							$predicate,
 							strftime("%a, %b %d, %Y", strtotime($deadline))
@@ -127,7 +133,7 @@ function formatEvent($event, $showProject=false)
 				} else {
 					$predicate = ($showProject) ? 'the project '.formatProjectLink($event->getProjectID()) : 'this project';
 					$formatted = sprintf("%s removed the %s for %s.",
-							formatUserLink($event->getUser1ID()),
+							formatUserLink($event->getUser1ID(), $event->getProjectID()),
 							'<a href="'.Url::deadline($event->getProjectID()).'">deadline</a>',
 							$predicate
 						);				
@@ -139,7 +145,7 @@ function formatEvent($event, $showProject=false)
 				$title = $discussion->getTitle();
 				$url = Url::discussion($discussion->getID());
 				$formatted = sprintf("%s posted the discussion %s%s.",
-						formatUserLink($event->getUser1ID()),
+						formatUserLink($event->getUser1ID(), $event->getProjectID()),
 						'<a href="'.$url.'">'.$title.'</a>',
 						$predicate
 					);					
@@ -150,7 +156,7 @@ function formatEvent($event, $showProject=false)
 				$title = $discussion->getTitle();
 				$url = Url::discussion($discussion->getID());
 				$formatted = sprintf("%s replied to the discussion %s%s.",
-						formatUserLink($event->getUser1ID()),
+						formatUserLink($event->getUser1ID(), $event->getProjectID()),
 						'<a href="'.$url.'">'.$title.'</a>',
 						$predicate
 					);					
@@ -161,7 +167,7 @@ function formatEvent($event, $showProject=false)
 				$title = $task->getTitle();
 				$url = Url::task($task->getID());
 				$formatted = sprintf("%s created the task %s%s.",
-						formatUserLink($event->getUser1ID()),
+						formatUserLink($event->getUser1ID(), $event->getProjectID()),
 						'<a href="'.$url.'">'.$title.'</a>',
 						$predicate
 					);
@@ -172,7 +178,7 @@ function formatEvent($event, $showProject=false)
 				$title = $task->getTitle();
 				$url = Url::task($task->getID());
 				$formatted = sprintf("%s edited the name of the task %s%s.",
-						formatUserLink($event->getUser1ID()),
+						formatUserLink($event->getUser1ID(), $event->getProjectID()),
 						'<a href="'.$url.'">'.$title.'</a>',
 						$predicate
 					);
@@ -185,13 +191,13 @@ function formatEvent($event, $showProject=false)
 				$status = $event->getData2();
 				if($status == Task::STATUS_CLOSED) {
 					$formatted = sprintf("%s closed the task %s%s.",
-							formatUserLink($event->getUser1ID()),
+							formatUserLink($event->getUser1ID(), $event->getProjectID()),
 							'<a href="'.$url.'">'.$title.'</a>',
 							$predicate
 						);
 				} else {
 					$formatted = sprintf("%s opened the task %s%s.",
-							formatUserLink($event->getUser1ID()),
+							formatUserLink($event->getUser1ID(), $event->getProjectID()),
 							'<a href="'.$url.'">'.$title.'</a>',
 							$predicate
 						);				
@@ -203,7 +209,7 @@ function formatEvent($event, $showProject=false)
 				$title = $task->getTitle();
 				$url = Url::task($task->getID());
 				$formatted = sprintf("%s edited the # people needed for the task %s%s.",
-						formatUserLink($event->getUser1ID()),
+						formatUserLink($event->getUser1ID(), $event->getProjectID()),
 						'<a href="'.$url.'">'.$title.'</a>',
 						$predicate
 					);
@@ -214,10 +220,10 @@ function formatEvent($event, $showProject=false)
 				$title = $task->getTitle();
 				$url = Url::task($task->getID());
 				$formatted = sprintf("%s changed the leader of the task %s%s to %s.",
-						formatUserLink($event->getUser1ID()),
+						formatUserLink($event->getUser1ID(), $event->getProjectID()),
 						'<a href="'.$url.'">'.$title.'</a>',
 						$predicate,
-						formatUserLink($event->getUser2ID())
+						formatUserLink($event->getUser2ID(), $event->getProjectID())
 					);
 				break;				
 			case 'edit_task_description':
@@ -226,7 +232,7 @@ function formatEvent($event, $showProject=false)
 				$title = $task->getTitle();
 				$url = Url::task($task->getID());
 				$formatted = sprintf("%s edited the instructions for the task %s%s.",
-						formatUserLink($event->getUser1ID()),
+						formatUserLink($event->getUser1ID(), $event->getProjectID()),
 						'<a href="'.$url.'">'.$title.'</a>',
 						$predicate
 					);
@@ -237,7 +243,7 @@ function formatEvent($event, $showProject=false)
 				$title = $task->getTitle();
 				$url = Url::task($task->getID());
 				$formatted = sprintf("%s edited the uploads for the task %s%s.",
-						formatUserLink($event->getUser1ID()),
+						formatUserLink($event->getUser1ID(), $event->getProjectID()),
 						'<a href="'.$url.'">'.$title.'</a>',
 						$predicate
 					);
@@ -250,14 +256,14 @@ function formatEvent($event, $showProject=false)
 				$deadline = $event->getData2();
 				if($deadline != '') {
 					$formatted = sprintf("%s changed the deadline for the task %s%s to %s.",
-							formatUserLink($event->getUser1ID()),
+							formatUserLink($event->getUser1ID(), $event->getProjectID()),
 							'<a href="'.$url.'">'.$title.'</a>',
 							$predicate,
 							strftime("%a, %b %d, %Y", strtotime($deadline))
 						);
 				} else {
 					$formatted = sprintf("%s removed the deadline for the task %s%s.",
-							formatUserLink($event->getUser1ID()),
+							formatUserLink($event->getUser1ID(), $event->getProjectID()),
 							'<a href="'.$url.'">'.$title.'</a>',
 							$predicate
 						);				
@@ -271,7 +277,7 @@ function formatEvent($event, $showProject=false)
 				$taskTitle = $task->getTitle();
 				$taskUrl = Url::task($task->getID());
 				$formatted = sprintf("%s joined the task %s%s.",
-						formatUserLink($event->getUser1ID()),
+						formatUserLink($event->getUser1ID(), $event->getProjectID()),
 						'<a href="'.$taskUrl.'">'.$taskTitle.'</a>',
 						$predicate
 					);			
@@ -288,35 +294,35 @@ function formatEvent($event, $showProject=false)
 				$status = $event->getData2();
 				if($status == Accepted::STATUS_RELEASED) {
 					$formatted = sprintf("%s has %s working on the task %s%s.",
-							formatUserLink($event->getUser1ID()),
+							formatUserLink($event->getUser1ID(), $event->getProjectID()),
 							'<a href="'.$updateUrl.'">stopped</a>',
 							'<a href="'.$taskUrl.'">'.$taskTitle.'</a>',
 							$predicate
 						);	
 				} elseif($status == Accepted::STATUS_ACCEPTED) {
 					$formatted = sprintf("%s has %s working on the task %s%s.",
-							formatUserLink($event->getUser1ID()),
+							formatUserLink($event->getUser1ID(), $event->getProjectID()),
 							'<a href="'.$updateUrl.'">started</a>',
 							'<a href="'.$taskUrl.'">'.$taskTitle.'</a>',
 							$predicate
 						);				
 				} elseif($status == Accepted::STATUS_FEEDBACK) {
 					$formatted = sprintf("%s is %s on his/her work on the task %s%s.",
-							formatUserLink($event->getUser1ID()),
+							formatUserLink($event->getUser1ID(), $event->getProjectID()),
 							'<a href="'.$updateUrl.'">seeking feedback</a>',
 							'<a href="'.$taskUrl.'">'.$taskTitle.'</a>',
 							$predicate
 						);					
 				} elseif($status == Accepted::STATUS_COMPLETED) {
 					$formatted = sprintf("%s has %s working on the task %s%s.",
-							formatUserLink($event->getUser1ID()),
+							formatUserLink($event->getUser1ID(), $event->getProjectID()),
 							'<a href="'.$updateUrl.'">finished</a>',
 							'<a href="'.$taskUrl.'">'.$taskTitle.'</a>',
 							$predicate
 						);						
 				} elseif($status == Accepted::STATUS_PROGRESS) {
 					$formatted = sprintf("%s is %s on the task %s%s.",
-							formatUserLink($event->getUser1ID()),
+							formatUserLink($event->getUser1ID(), $event->getProjectID()),
 							'<a href="'.$updateUrl.'">working</a>',
 							'<a href="'.$taskUrl.'">'.$taskTitle.'</a>',
 							$predicate
@@ -329,7 +335,7 @@ function formatEvent($event, $showProject=false)
 				$title = $task->getTitle();
 				$url = Url::task($task->getID());
 				$formatted = sprintf("%s commented on the task %s%s.",
-						formatUserLink($event->getUser1ID()),
+						formatUserLink($event->getUser1ID(), $event->getProjectID()),
 						'<a href="'.$url.'">'.$title.'</a>',
 						$predicate
 					);		
@@ -340,7 +346,7 @@ function formatEvent($event, $showProject=false)
 				$title = $task->getTitle();
 				$url = Url::task($task->getID());
 				$formatted = sprintf("%s replied to a comment on the task %s%s.",
-						formatUserLink($event->getUser1ID()),
+						formatUserLink($event->getUser1ID(), $event->getProjectID()),
 						'<a href="'.$url.'">'.$title.'</a>',
 						$predicate
 					);		
@@ -350,8 +356,8 @@ function formatEvent($event, $showProject=false)
 				$update = Update::load($event->getItem2ID());
 				$title = $update->getTitle();
 				$url = Url::update($update->getID());
-				$formatted = sprintf("%s commented on the update %s%s.",
-						formatUserLink($event->getUser1ID()),
+				$formatted = sprintf("%s commented on the contribution %s%s.",
+						formatUserLink($event->getUser1ID(), $event->getProjectID()),
 						'<a href="'.$url.'">'.$title.'</a>',
 						$predicate
 					);		
@@ -361,8 +367,8 @@ function formatEvent($event, $showProject=false)
 				$update = Update::load($event->getItem3ID());
 				$title = $update->getTitle();
 				$url = Url::update($update->getID());
-				$formatted = sprintf("%s replied to a comment on the update %s%s.",
-						formatUserLink($event->getUser1ID()),
+				$formatted = sprintf("%s replied to a comment on the contribution %s%s.",
+						formatUserLink($event->getUser1ID(), $event->getProjectID()),
 						'<a href="'.$url.'">'.$title.'</a>',
 						$predicate
 					);		
@@ -372,8 +378,8 @@ function formatEvent($event, $showProject=false)
 				$update = Update::load($event->getItem1ID());
 				$updateTitle = $update->getTitle();
 				$updateUrl = Url::update($update->getID());
-				$formatted = sprintf("%s created the update %s%s.",
-						formatUserLink($event->getUser1ID()),
+				$formatted = sprintf("%s created the contribution %s%s.",
+						formatUserLink($event->getUser1ID(), $event->getProjectID()),
 						'<a href="'.$updateUrl.'">'.$updateTitle.'</a>',
 						$predicate
 					);					
@@ -383,8 +389,8 @@ function formatEvent($event, $showProject=false)
 				$update = Update::load($event->getItem1ID());
 				$updateTitle = $update->getTitle();
 				$updateUrl = Url::update($update->getID());
-				$formatted = sprintf("%s edited the title of the update %s%s.",
-						formatUserLink($event->getUser1ID()),
+				$formatted = sprintf("%s edited the title of the contribution %s%s.",
+						formatUserLink($event->getUser1ID(), $event->getProjectID()),
 						'<a href="'.$updateUrl.'">'.$updateTitle.'</a>',
 						$predicate
 					);					
@@ -394,8 +400,8 @@ function formatEvent($event, $showProject=false)
 				$update = Update::load($event->getItem1ID());
 				$updateTitle = $update->getTitle();
 				$updateUrl = Url::update($update->getID());
-				$formatted = sprintf("%s edited the contents of the update %s%s.",
-						formatUserLink($event->getUser1ID()),
+				$formatted = sprintf("%s edited the contents of the contribution %s%s.",
+						formatUserLink($event->getUser1ID(), $event->getProjectID()),
 						'<a href="'.$updateUrl.'">'.$updateTitle.'</a>',
 						$predicate
 					);					
