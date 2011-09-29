@@ -8,7 +8,7 @@ $response = Filter::alphanum($_POST['response']);
 
 if($response == 'accept') {
 	// add the user to the project
-	if($invite->getTrusted) {
+	if($invite->getTrusted()) {
 		$relationship = ProjectUser::TRUSTED;
 	} else {
 		$relationship = ProjectUser::MEMBER;
