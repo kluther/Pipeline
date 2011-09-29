@@ -21,8 +21,8 @@ $fork->startBlockSet('body');
 ?>
 
 <?php
-	$SOUP->render('project/partial/followers', array(
-	));
+//	$SOUP->render('project/partial/followers', array(
+//	));
 ?>
 
 <?php

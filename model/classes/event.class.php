@@ -194,6 +194,26 @@ class Event extends DbObject
 	
 	//----------------------------------------------------------------------------//
 	
+	public static function getHomeEvents($limit=null) {
+		$query = "SELECT e.id AS id FROM ".self::DB_TABLE." e";
+		$query .= " INNER JOIN ".EventType::DB_TABLE." et ON ";
+		$query .= " e.event_type_id = et.id";
+		$query .= " WHERE et.hidden = 0";
+		$query .= " ORDER BY e.date_created DESC";
+		if($limit != null)
+			$query .= " LIMIT ".$limit;
+		//echo $query;
+		
+		$db = Db::instance();
+		$result = $db->lookup($query);
+		if(!mysql_num_rows($result)) return array();
+
+		$events = array();
+		while($row = mysql_fetch_assoc($result))
+			$events[$row['id']] = self::load($row['id']);
+		return $events;	
+	}
+	
 	public static function getDashboardEvents($userID=null, $limit=null) {
 		if($userID === null) return null;
 		
@@ -201,27 +221,9 @@ class Event extends DbObject
 		$query .= " INNER JOIN ".EventType::DB_TABLE." et ON ";
 		$query .= " e.event_type_id = et.id";
 		$query .= " WHERE (e.project_id IN (";
-		// follower or organizer
 			$query .= " SELECT DISTINCT project_id FROM ".ProjectUser::DB_TABLE;
 			$query .= " WHERE user_id = ".$userID;
 			$query .= " AND relationship != ".ProjectUser::BANNED;
-		$query .= " )";
-		// creator
-		$query .= " OR e.project_id IN (";
-			$query .= " SELECT DISTINCT id FROM ".Project::DB_TABLE;
-			$query .= " WHERE creator_id = ".$userID;
-		$query .= " )";
-		// contributor
-		$query .= " OR e.project_id IN (";
-			$query .= " SELECT DISTINCT project_id FROM ".self::DB_TABLE;
-			$query .= " WHERE user_1_id = ".$userID;
-			$query .= " OR user_2_id = ".$userID;
-		$query .= " ))";
-		// not banned
-		$query .= " AND e.project_id NOT IN (";
-			$query .= " SELECT DISTINCT project_id FROM ".ProjectUser::DB_TABLE;
-			$query .= " WHERE user_id = ".$userID;
-			$query .= " AND relationship = ".ProjectUser::BANNED;
 		$query .= " )";
 		$query .= " AND et.hidden = 0";
 		$query .= " ORDER BY e.date_created DESC";

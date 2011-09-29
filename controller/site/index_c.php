@@ -25,5 +25,7 @@ if(Session::isLoggedIn()) {
 	$soup->render('site/page/dashboard');
 } else {	
 	// home page
+	$events = Event::getHomeEvents(10);
+	$soup->set('events', $events);
 	$soup->render('site/page/home');
 }

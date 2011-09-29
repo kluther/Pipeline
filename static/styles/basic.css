@@ -835,6 +835,100 @@ input.textbox, textarea, select {
 	font-family: Verdana, sans-serif;
 }
 
+/* HOME PAGE */
+
+div.home {
+	overflow: hidden;
+	width: 100%;
+	}
+	
+div.home div.top {
+	overflow: hidden;
+	width: 100%;
+	border-bottom: 2px solid;
+	padding-left: 50px;
+	}
+	
+div.home td.left {
+	padding-left: 50px;
+	}
+	
+div.home td.right {
+	width: 30%;
+	}
+	div.home td.right div.panel-header {
+		border-top: none;
+		}
+
+div.home div.bottom {
+	padding: 15px 0 25px 50px;
+	}		
+		
+div.home  h1 {
+	font-size: 300%;
+	margin: 0; padding: 35px 0;
+	}
+	div.home h1 span {
+		font-size: 50%;
+		padding-left: 2em;
+		}
+		div.home h1 span a:link, div.home h1 span a:visited {
+			font-family: "Coustard", serif;
+			font-weight: normal;
+			}
+	
+div.home h2 {
+	font-size: 200%;
+	display: block;
+	margin: 0; padding: 35px 0;
+	}
+	
+div.home td.get-started {
+	width: 300px;
+	text-align: center;
+	padding-top: 35px;
+	}
+	div.home td.get-started a:link, div.home td.get-started a:visited {
+		display: block;
+		padding: 15px 10px;
+		margin: 5px auto 30px auto;
+		width: 50%;
+		border: 2px solid;
+		font-family: "Coustard", serif;
+		font-weight: normal;
+		font-size: 150%;
+		-moz-border-radius: .5em;
+		-webkit-border-radius: .5em;
+		border-radius: .5em;		
+		}
+	div.home td.get-started a:hover {
+		text-decoration: none;
+		}
+
+div.home div.features {
+	padding-top: 20px;
+	font-size: 125%;
+	}
+	div.home div.features p {
+		margin-bottom: 20px;
+		}	
+	div.home div.features h3 {
+		font-size: 135%;
+		display: block;
+		margin: 0; padding: 0;
+		font-family: "Coustard", serif;
+		font-weight: normal;		
+		}	
+	
+div.home div.meta {
+	font-size: 110%;
+	padding: 10px 0 35px 0;
+	}
+	div.home div.meta p {
+		margin-bottom: 5px;
+		}
+	
+
 /* ERRORS */
 
 div#feedback {

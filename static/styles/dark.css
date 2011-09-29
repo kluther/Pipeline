@@ -140,7 +140,51 @@ div.your-role {
 	background-color: #333;
 	border-color: #444;
 	}
+	
+div.home {
+	background-color: #222222;
+	}
+	
+div.home div.top {
+	background-color: #000;
+	border-color: #444444;
+	}
+	
+div.home td.right div.panel {
+	background-color: #222222;
+	}
 
+div.home div.bottom {
+	background-color: #000;
+	}
+				
+div.home h1 span {
+	color: #ccc;
+	}
+	div.home h1 span a:link, div.home h1 span a:visited {
+		color: #fff;
+		}
+	
+div.home td.get-started a:link, div.home td.get-started a:visited {
+	border-color: #666;
+	background-color: LightBlue;
+	color: #333;		
+	}
+div.home td.get-started a:hover {
+	background-color: #eeeeee;
+	color: #666;
+	}
+	
+div.home div.features {
+	color: #ccc;
+	}
+	div.home div.features h3 {
+		color: #eeeeee;		
+		}	
+	
+div.home div.meta {
+	color: #ccc;
+	}
 	
 input[type=button], input[type=submit] {
 	border-color: #444444;
