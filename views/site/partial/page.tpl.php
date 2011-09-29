@@ -19,7 +19,11 @@ if($project != null)
 	<link rel="icon" type="image/png" href="<?= Url::images() ?>/icons/clapperboard.png" />
 	<link rel="stylesheet" type="text/css" href="<?= Url::styles() ?>/basic.css" />
 	<link rel="stylesheet" type="text/css" href="<?= Url::styles() ?>/<?= STYLE_SHEET ?>" />
-	<link rel="stylesheet" type="text/css" href="<?= Url::styles() ?>/jquery-ui-1.8.16.custom.css" />
+	<?php if(STYLE_SHEET == 'dark.css'): ?>
+	<link rel="stylesheet" type="text/css" href="<?= Url::styles() ?>/jquery-ui-darkness.css" />
+	<?php else: ?>
+	<link rel="stylesheet" type="text/css" href="<?= Url::styles() ?>/jquery-ui-redmond.css" />
+	<?php endif; ?>
 	<script type="text/javascript" src="http://www.google.com/jsapi"></script>
 	<script type="text/javascript"> 
 		google.load("jquery", "1");

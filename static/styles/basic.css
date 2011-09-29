@@ -894,8 +894,8 @@ div.home td.get-started {
 		margin: 5px auto 30px auto;
 		width: 50%;
 		border: 2px solid;
-		font-family: "Coustard", serif;
-		font-weight: normal;
+
+		font-weight: bold;
 		font-size: 150%;
 		-moz-border-radius: .5em;
 		-webkit-border-radius: .5em;
@@ -916,8 +916,7 @@ div.home div.features {
 		font-size: 135%;
 		display: block;
 		margin: 0; padding: 0;
-		font-family: "Coustard", serif;
-		font-weight: normal;		
+	font-weight: bold;
 		}	
 	
 div.home div.meta {

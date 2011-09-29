@@ -8,7 +8,11 @@ require_once TEMPLATE_PATH.'/site/helper/format.php';
 	<link rel="icon" type="image/png" href="<?= Url::images() ?>/icons/clapperboard.png" />
 	<link rel="stylesheet" type="text/css" href="<?= Url::styles() ?>/basic.css" />
 	<link rel="stylesheet" type="text/css" href="<?= Url::styles() ?>/<?= STYLE_SHEET ?>" />
-	<link rel="stylesheet" type="text/css" href="<?= Url::styles() ?>/jquery-ui-1.8.16.custom.css" />
+	<?php if(STYLE_SHEET == 'dark.css'): ?>
+	<link rel="stylesheet" type="text/css" href="<?= Url::styles() ?>/jquery-ui-darkness.css" />
+	<?php else: ?>
+	<link rel="stylesheet" type="text/css" href="<?= Url::styles() ?>/jquery-ui-redmond.css" />
+	<?php endif; ?>
 	<link href='http://fonts.googleapis.com/css?family=Coustard' rel='stylesheet' type='text/css' />
 	<script type="text/javascript" src="http://www.google.com/jsapi"></script>
 	<script type="text/javascript"> 
@@ -37,7 +41,7 @@ require_once TEMPLATE_PATH.'/site/helper/format.php';
 		
 		<div class="features">
 
-			<h3>Lead it your way</h3>
+			<h3>Lead projects your way</h3>
 			<p>Run a democracy, a dictatorship, or something in between, and adjust on-the-fly.</p>
 
 			<h3>Volunteer-friendly</h3>
