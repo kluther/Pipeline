@@ -12,7 +12,7 @@ finfo_close($finfo);
 $ext = pathinfo($uploadedFile, PATHINFO_EXTENSION);
 
 // validate MIME type and extension
-if( !Upload::isAllowedMime($mime) || !Upload::isAllowedExtension($ext) ) {
+if( !Upload::isAllowedExtension($ext) ) {
 	// delete the file we just uploaded and send us back
 	chown($uploadedFile, 666);
 	unlink($uploadedFile);
