@@ -29,7 +29,7 @@ $(document).ready(function(){
 
 </script>
 
-<p>Please read the following consent form and then complete the form below it.</p>
+<p>Please read the following consent form and then complete the form below it. Feel free to <a href="mailto:<?= CONTACT_EMAIL ?>">email us</a> with any questions or concerns.</p>
 
 <a title="View Adult Web Consent Testing on Scribd" href="http://www.scribd.com/doc/66688220/Adult-Web-Consent-Testing?secret_password=4nzp5x09db318hcu9e2" style="margin: 12px auto 6px auto; font-family: Helvetica,Arial,Sans-serif; font-style: normal; font-variant: normal; font-weight: normal; font-size: 14px; line-height: normal; font-size-adjust: none; font-stretch: normal; -x-system-font: none; display: block; text-decoration: underline;">Adult Web Consent Testing</a> <object id="doc_4038" name="doc_4038" height="600" width="100%" type="application/x-shockwave-flash" data="http://d1.scribdassets.com/ScribdViewer.swf" style="outline:none;" >            <param name="movie" value="http://d1.scribdassets.com/ScribdViewer.swf">             <param name="wmode" value="opaque">             <param name="bgcolor" value="#ffffff">             <param name="allowFullScreen" value="true">             <param name="allowScriptAccess" value="always">             <param name="FlashVars" value="document_id=66688220&access_key=key-2jmjwupwefagkjdsw3ad&page=1&viewMode=list">             <embed id="doc_4038" name="doc_4038" src="http://d1.scribdassets.com/ScribdViewer.swf?document_id=66688220&access_key=key-2jmjwupwefagkjdsw3ad&page=1&viewMode=list" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" height="600" width="100%" wmode="opaque" bgcolor="#ffffff"></embed>         </object>
 

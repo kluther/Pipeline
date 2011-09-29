@@ -14,6 +14,7 @@
 	define('PIPELINE_NAME', 'Pipeline Demo'); # name of this Pipeline instance <- CHANGE THIS
 	define('STYLE_SHEET', 'light.css'); # name of CSS stylesheet <- CHANGE THIS
 	define('TIME_ZONE', 'America/New_York'); # name of PHP time zone <- CHANGE THIS
+	define('CONTACT_EMAIL', 'email@address.com'); # contact email address <- CHANGE THIS
 	
 	define('DB_HOST', 'localhost'); # database host <- CHANGE THIS
 	define('DB_USERNAME', 'root'); # database username <- CHANGE THIS

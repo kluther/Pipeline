@@ -23,8 +23,8 @@ if(!empty($name)) {
 	$body .= "<p>Additionally, you have requested that we use your real name if we refer to you in our publications.</p>";
 }
 $body .= '<p>The consent form is available for viewing and printing at <a href="http://www.scribd.com/doc/66688220/Adult-Web-Consent-Testing?secret_password=4nzp5x09db318hcu9e2">this link</a>. Please retain a copy for your records.</p>';
-$body .= '<p>If you have any questions or concerns, please contact the research team at <a href="mailto:pipeline@cc.gatech.edu">pipeline@cc.gatech.edu</a>. Thank you for your participation!</p>';
-$body .= '<p>-- <a href="'.BASE_URI.'">The Pipeline team</a></p>';
+$body .= '<p>If you have any questions or concerns, please contact the research team at <a href="mailto:'.CONTACT_EMAIL.'">'.CONTACT_EMAIL.'</a>. Thank you for your participation!</p>';
+$body .= '<p>-- <a href="http://pipeline.cc.gatech.edu/">The Pipeline team</a> at Georgia Tech</p>';
 $newEmail = array(
 	'to' => $email,
 	'subject' => 'Georgia Tech study consent form',
