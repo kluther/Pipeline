@@ -3,9 +3,10 @@ include_once TEMPLATE_PATH.'/site/helper/format.php';
 
 $project = $SOUP->get('project');
 
-// only admin or trusted may edit
+// admin, trusted, creator may edit
 $hasPermission = ( Session::isAdmin() ||
-					$project->isTrusted(Session::getUserID()) );
+					$project->isTrusted(Session::getUserID()) ||
+					$project->isCreator(Session::getUserID()) );
 
 $formattedPitch = ($project->getPitch() != '') ? formatPitch($project->getPitch()) : '(none)';					
 					

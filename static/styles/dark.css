@@ -167,7 +167,7 @@ div.home h1 span {
 	
 div.home td.get-started a:link, div.home td.get-started a:visited {
 	border-color: #666;
-	background-color: LightBlue;
+	background-color: #ccc;
 	color: #333;		
 	}
 div.home td.get-started a:hover {

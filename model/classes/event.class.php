@@ -220,7 +220,7 @@ class Event extends DbObject
 		$query = "SELECT DISTINCT e.id AS id FROM ".self::DB_TABLE." e";
 		$query .= " INNER JOIN ".EventType::DB_TABLE." et ON ";
 		$query .= " e.event_type_id = et.id";
-		$query .= " WHERE (e.project_id IN (";
+		$query .= " WHERE e.project_id IN (";
 			$query .= " SELECT DISTINCT project_id FROM ".ProjectUser::DB_TABLE;
 			$query .= " WHERE user_id = ".$userID;
 			$query .= " AND relationship != ".ProjectUser::BANNED;

@@ -10,7 +10,8 @@ if($project == null) {
 	header('Location: '.Url::error());
 	exit();
 } elseif( (!Session::isAdmin()) &&
-	(!$project->isTrusted(Session::getUserID())) ) {
+	(!$project->isTrusted(Session::getUserID())) &&
+	(!$project->isCreator(Session::getUserID())) ) {
 	header('Location: '.Url::error());
 	exit();	
 }

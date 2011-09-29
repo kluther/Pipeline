@@ -9,9 +9,10 @@ $deadline = ($deadline != null) ? formatTimeTag($deadline) : '(none)';
 // $venue = $project->getVenue();
 // $venue = ($venue != null) ? $venue : '(none)';
 
-// only admin or trusted may edit
+// admin, trusted, creator may edit
 $hasPermission = ( Session::isAdmin() ||
-					$project->isTrusted(Session::getUserID()) );
+					$project->isTrusted(Session::getUserID()) ||
+					$project->isCreator(Session::getUserID()) );
 
 $fork = $SOUP->fork();
 $fork->set('id', 'progress');

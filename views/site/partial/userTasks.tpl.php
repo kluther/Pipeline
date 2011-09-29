@@ -16,9 +16,10 @@ $hasPermission = $SOUP->get('hasPermission', null);
 
 // allow values to be passed in
 if($hasPermission === null) {
-	// only admin and trusted may create tasks
+	// admin, trusted, creator may create
 	$hasPermission = ( Session::isAdmin() ||
-						$project->isTrusted(Session::getUserID()) );
+					$project->isTrusted(Session::getUserID()) ||
+					$project->isCreator(Session::getUserID()) );
 }
 
 $fork = $SOUP->fork();
