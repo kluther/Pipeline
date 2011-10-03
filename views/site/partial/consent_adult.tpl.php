@@ -43,7 +43,7 @@ $(document).ready(function(){
 	</div>
 </div>
 <div class="clear">
-	<label for="txtConsentName">Full Name</label>
+	<label for="txtConsentName">Name (optional)</label>
 	<div class="input">
 		<input id="txtConsentName" type="text" />
 		<p>Type your name to request that we use your real name if we refer to you in our publications.</p>
