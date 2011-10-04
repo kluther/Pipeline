@@ -193,7 +193,7 @@ $(document).ready(function(){
 		<label for="txtInviteMembersMessage">Message</label>
 		<div class="input">
 			<textarea id="txtInviteMembersMessage"></textarea>
-			<p>Why the recipient(s) should join this project</p>
+			<p>Why the recipient(s) should join this project, <a class="help-link" href="<?= Url::help() ?>#help-html-allowed">some HTML allowed</a></p>
 		</div>
 	</div>	
 	<div class="clear">

@@ -17,7 +17,7 @@
 </td>
 
 <td class="right"> </td>
-<td class="extra"> </td>
+
 
 <?php
 	$fork->endBlockSet();

@@ -35,14 +35,11 @@ $fork->startBlockSet('body');
 <td class="right">
 
 <?php
-	$SOUP->render('project/partial/yourRole', array());
-?>
-
-<?php
 	$SOUP->render('project/partial/discussions',array(
 		'title' => 'Recent Discussions',
 		'cat' => 'people',
-		'size' => 'small'
+		'size' => 'small',
+		'class' => 'subtle'
 	));
 ?>
 
@@ -50,12 +47,13 @@ $fork->startBlockSet('body');
 	$SOUP->render('site/partial/activity', array(
 	//	'title' => "Recent Activity",
 		'size' => 'small',
-		'olderURL' => Url::activityPeople($project->getID())
+		'olderURL' => Url::activityPeople($project->getID()),
+		'class' => 'subtle'
 		));
 ?>
 
 </td>
-<td class="extra"></td>
+
 
 <?php
 

@@ -2,4 +2,4 @@
 require_once('./../../global.php');
 $referer = $_SERVER['HTTP_REFERER'];
 Session::signOut();
-header('Location: '.$referer);
+header('Location: '.Url::base());

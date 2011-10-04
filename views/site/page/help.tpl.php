@@ -68,6 +68,12 @@ $fork->startBlockSet('body');
 
 <div class="line"> </div>
 
+<h3 id="help-html-allowed">Which HTML tags can I use?</h3>
+
+<p>If a textbox is marked "Some HTML allowed," you can use the following HTML tags: &lt;a&gt; &lt;strong&gt; &lt;b&gt; &lt;em&gt; &lt;i&gt;. Otherwise HTML isn't allowed.</p>
+
+<div class="line"> </div>
+
 <h3 id="help-diff-comment-disc">What's the difference between comments and discussions?</h3>
 
 <p>Posts on tasks or contributions are called <em>comments</em>. Comments are best for leaving feedback on a specific task or contribution.</p>
@@ -109,8 +115,6 @@ $fork->startBlockSet('body');
 </div>
 
 </td>
-
-<td class="extra"> </td>
 
 <td class="right"> </td>
 

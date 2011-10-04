@@ -62,10 +62,16 @@ if($project != null)
 				<li class="left"><a href="http://pipeline.cc.gatech.edu/">About Pipeline</a></li>
 				<li class="left"><a href="<?= Url::help() ?>">Help</a></li>
 			</ul>
-		</div><!-- end .funnel -->
+		</div><!-- end .funnel -->	
 	</div><!-- end .primary-nav -->
 	<div class="funnel">
 		<div class="heading">
+			<?php
+				if($project != null) {
+					$SOUP->render('project/partial/yourRole', array(
+					));
+				}
+			?>			
 			<h2>
 				<a href="<?= $headingURL ?>"><?= $pageTitle ?></a>
 				<?php if($project != null): ?><span class="status"><?= $status ?></span><?php endif; ?>
@@ -94,12 +100,10 @@ if($project != null)
 			<div class="breadcrumbs">
 			<h3><?= $breadcrumbs[0][0] ?></h3>
 			<?php foreach (array_slice($breadcrumbs, 1) as $crumb): ?>
-
-					&laquo;
-					<a href="<?= $crumb[1] ?>">
-						<?= $crumb[0] ?>
-					</a>
-	
+				&laquo;
+				<a href="<?= $crumb[1] ?>">
+					<?= $crumb[0] ?>
+				</a>
 			<?php endforeach; ?>
 			</div>
 		<?php endif; ?>

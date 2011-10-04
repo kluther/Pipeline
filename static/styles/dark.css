@@ -112,6 +112,9 @@ span.slash {
 div.panel {
 	background-color: #222222;	
 	}	
+	div.panel.subtle {
+		background-color: #000;
+		}
 	
 td.right div.panel {
 	background-color: #000;
@@ -146,11 +149,6 @@ div.breadcrumbs h3 {
 	color: #fff;
 	}
 	
-div.your-role {
-	background-color: #333;
-	border-color: #444;
-	}
-	
 div.home {
 	background-color: #222222;
 	}
@@ -158,10 +156,6 @@ div.home {
 div.home div.top {
 	background-color: #000;
 	border-color: #444444;
-	}
-	
-div.home td.right div.panel {
-	background-color: #222222;
 	}
 
 div.home div.bottom {
@@ -175,12 +169,12 @@ div.home h1 span {
 		color: #fff;
 		}
 	
-div.home td.get-started a:link, div.home td.get-started a:visited {
+div.home div.get-started a:link, div.home div.get-started a:visited {
 	border-color: #666;
 	background-color: #ccc;
 	color: #333;		
 	}
-div.home td.get-started a:hover {
+div.home div.get-started a:hover {
 	background-color: #eeeeee;
 	color: #666;
 	}

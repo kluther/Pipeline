@@ -2,6 +2,7 @@
 include_once TEMPLATE_PATH.'/site/helper/format.php';
 
 $user = $SOUP->get('user');
+$title = $SOUP->get('title', 'Profile');
 
 // separator
 $slash = ' <span class="slash">/</span> ';
@@ -37,7 +38,7 @@ $hasPermission = ($user->getID() == Session::getUserID());
 
 $fork = $SOUP->fork();
 $fork->set('id', 'profile');
-$fork->set('title', "Profile");
+$fork->set('title', $title);
 $fork->set('editable', $hasPermission);
 $fork->startBlockSet('body');
 ?>

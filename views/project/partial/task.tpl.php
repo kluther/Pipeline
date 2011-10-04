@@ -89,6 +89,7 @@ $(document).ready(function(){
 	<label for="txtDescription">Instructions<span class="required">*</span></label>
 	<div class="input">
 		<textarea id="txtDescription" name="txtDescription"><?= $task->getDescription() ?></textarea>
+		<p><a class="help-link" href="<?= Url::help() ?>#help-html-allowed">Some HTML allowed</a></p>
 	</div>
 </div>
 

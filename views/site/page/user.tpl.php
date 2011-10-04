@@ -13,17 +13,14 @@ $fork->startBlockSet('body');
 
 <?php
 	$SOUP->render('site/partial/profile', array(
+		'title' => $user->getUsername().'\'s Profile'
 	));
 ?>
-
-</td>
-
-<td class="extra">
 
 <?php
 	$SOUP->render('site/partial/projects', array(
 		'hasPermission' => false,
-		'size' => 'small'
+		'title' => $user->getUsername().'\'s Projects'		
 	));
 ?>
 
@@ -32,7 +29,7 @@ $fork->startBlockSet('body');
 		'user' => $user,
 		'tasks' => $tasks,
 		'hasPermission' => false,
-		'size' => 'small'
+		'title' => $user->getUsername().'\'s Tasks'		
 	));
 ?>
 
@@ -43,7 +40,9 @@ $fork->startBlockSet('body');
 <?php
 	$SOUP->render('site/partial/activity', array(
 		'size' => 'small',
-		'showProject' => true
+		'showProject' => true,
+		'class' => 'subtle',
+		'title' => $user->getUsername().'\'s Recent Activity'		
 	));
 ?>
 

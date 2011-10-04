@@ -58,7 +58,7 @@ $(document).ready(function(){
 	<label for="txtPitch">Pitch<span class="required">*</span></label>
 	<div class="input">
 		<textarea id="txtPitch"><?= $project->getPitch() ?></textarea>
-		<p>Allowed tags: &lt;a&gt; &lt;strong&gt; &lt;b&gt; &lt;em&gt; &lt;i&gt;</p>
+		<p><a class="help-link" href="<?= Url::help() ?>#help-html-allowed">Some HTML allowed</a></p>
 	</div>
 </div>
 

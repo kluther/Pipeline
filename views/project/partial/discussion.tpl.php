@@ -65,7 +65,7 @@ foreach($replies as $reply) {
 		<textarea id="txtReplyMessage"></textarea>	
 		<div class="buttons">
 			<input type="button" class="right" id="btnReply" value="Post Reply" />
-			<p class="right">Allowed tags: &lt;a&gt; &lt;strong&gt; &lt;b&gt; &lt;em&gt; &lt;i&gt;</p>
+			<p class="right"><a class="help-link" href="<?= Url::help() ?>#help-html-allowed">Some HTML allowed</a></p>
 		</div>
 	</li>
 <?php endif; ?>	

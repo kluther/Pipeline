@@ -34,20 +34,18 @@ $fork->startBlockSet('body');
 
 <td class="right">
 
-<?php
-	$SOUP->render('project/partial/yourRole', array());
-?>
 
 <?php
 	$SOUP->render('project/partial/discussions',array(
 		'title' => 'Recent Discussions',
 		'cat' => 'activity',
-		'size' => 'small'
+		'size' => 'small',
+		'class' => 'subtle'
 	));
 ?>
 
 </td>
-<td class="extra"> </td>
+
 
 <?php
 

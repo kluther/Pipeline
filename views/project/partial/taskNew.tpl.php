@@ -57,6 +57,7 @@ $fork->startBlockSet('body');
 	<label for="txtDescription">Instructions<span class="required">*</span></label>
 	<div class="input">
 		<textarea id="txtDescription" name="txtDescription"></textarea>
+		<p><a class="help-link" href="<?= Url::help() ?>#help-html-allowed">Some HTML allowed</a></p>
 	</div>
 </div>
 

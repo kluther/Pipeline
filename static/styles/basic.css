@@ -641,14 +641,10 @@ td.left {
 	}
 	
 td.right {
-	width: 25%;
+	width: 500px;
 	padding-left: 1.5em;
 	}
 	
-td.extra {
-	width: 30%;
-	padding-left: 1.5em;
-	}
 /*
 div.left {
 	width: auto;
@@ -680,21 +676,16 @@ div.breadcrumbs {
 		}	
 
 div.your-role {
-/*	float: right;
-	width: 25%;
-	margin-top: 1em;*/
-	margin-bottom: 2em;
+	float: right;
+	width: 500px;
+	margin-top: 2em;
 	}
-	div.your-role  {
-		padding: 0.5em 1em;
-		border: 2px solid;
-		-moz-border-radius: .5em;
-		-webkit-border-radius: .5em;
-		border-radius: .5em;
+	div.your-role p {
+		margin: 0; padding: 0 0 0 22px;
+		background: url(./../images/icons/star-empty.png) no-repeat 0 0;
 		}
-	div.your-role p {}
 	div.your-role input {
-		margin: 0.5em 0;
+		margin: 1em 0 0 22px;
 		}
 		
 /* HELP */
@@ -775,7 +766,7 @@ div.input {
 	div.input input[type="password"]{
 		font-size: 120%;
 		padding: 0.2em;
-		width: 210px;
+		width: 50%;
 		}
 	div.input select {
 		font-size: 120%;
@@ -847,7 +838,7 @@ div.home td.left {
 	}
 	
 div.home td.right {
-	width: 30%;
+	width: 500px;
 	}
 	div.home td.right div.panel-header {
 		border-top: none;
@@ -876,16 +867,15 @@ div.home h2 {
 	margin: 0; padding: 35px 0;
 	}
 	
-div.home td.get-started {
-	width: 300px;
+div.home div.get-started {
 	text-align: center;
 	padding-top: 35px;
 	}
-	div.home td.get-started a:link, div.home td.get-started a:visited {
+	div.home div.get-started a:link, div.home div.get-started a:visited {
 		display: block;
 		padding: 15px 10px;
 		margin: 5px auto 30px auto;
-		width: 50%;
+		width: 150px;
 		border: 2px solid;
 
 		font-weight: bold;
@@ -894,7 +884,7 @@ div.home td.get-started {
 		-webkit-border-radius: .5em;
 		border-radius: .5em;		
 		}
-	div.home td.get-started a:hover {
+	div.home div.get-started a:hover {
 		text-decoration: none;
 		}
 

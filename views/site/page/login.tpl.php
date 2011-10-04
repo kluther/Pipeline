@@ -50,8 +50,6 @@ function logIn(){
 
 </td>
 
-<td class="extra"> </td>
-
 <td class="right"> </td>
 
 <?php

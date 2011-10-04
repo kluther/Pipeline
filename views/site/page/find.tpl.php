@@ -18,7 +18,6 @@ $fork->startBlockSet('body');
 
 <td class="right"> </td>
 
-<td class="extra"> </td>
 
 <?php
 

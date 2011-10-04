@@ -23,14 +23,6 @@ $fork->startBlockSet('body');
 	));
 ?>
 
-</td>
-
-<td class="extra">
-
-<?php
-	$SOUP->render('project/partial/progress',array(
-	));
-?>
 
 <?php
 	$SOUP->render('project/partial/specs',array(
@@ -42,19 +34,24 @@ $fork->startBlockSet('body');
 	));
 ?>
 
+
 </td>
 
 <td class="right">
 
+
+
 <?php
-	$SOUP->render('project/partial/yourRole', array());
+	$SOUP->render('project/partial/progress',array(
+	));
 ?>
 
 <?php
 	$SOUP->render('project/partial/discussions',array(
 		'title' => 'Recent Discussions',
 		'cat' => 'basics',
-		'size' => 'small'
+		'size' => 'small',
+		'class' => 'subtle'
 	));
 ?>
 
@@ -63,7 +60,8 @@ $fork->startBlockSet('body');
 		'title' => "Recent Activity",
 		'size' => 'small',
 		'events' => $events,
-		'olderURL' => Url::activityDetails($project->getID())
+		'olderURL' => Url::activityDetails($project->getID()),
+		'class' => 'subtle'
 		));
 ?>
 

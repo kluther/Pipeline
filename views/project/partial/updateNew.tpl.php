@@ -39,7 +39,7 @@ $fork->startBlockSet('body');
 	<label for="txtMessage">Message<span class="required">*</span></label>
 	<div class="input">
 		<textarea id="txtMessage" name="txtMessage"></textarea>
-		<p>Write your contribution here</p>
+		<p>Write your contribution here, <a class="help-link" href="<?= Url::help() ?>#help-html-allowed">some HTML allowed</a></p>
 	</div>
 </div>
 

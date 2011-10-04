@@ -61,22 +61,22 @@ require_once TEMPLATE_PATH.'/site/helper/format.php';
 		</div><!-- .meta -->
 
 	</td><!-- .left -->
-	
-	<td class="get-started">
-		<p style="font-size: 120%;">First time here?</p>
-		<a href="<?= Url::consent() ?>">Get Started</a>
-		
-		<p>Already registered?</p>
-		<a href="<?= Url::logIn() ?>">Log In</a>
-	</td>		
 
 	<td class="right">
+		<div class="get-started">
+			<p style="font-size: 120%;">First time here?</p>
+			<a href="<?= Url::consent() ?>">Get Started</a>
+			
+			<p>Already registered?</p>
+			<a href="<?= Url::logIn() ?>">Log In</a>
+		</div>
+		
 		<?php
-			$SOUP->render('site/partial/activity', array(
-				'size' => 'large',
-				'showProject' => true,
-				'title' => 'Recent Activity in '.PIPELINE_NAME
-			));
+			// $SOUP->render('site/partial/activity', array(
+				// 'size' => 'large',
+				// 'showProject' => true,
+				// 'title' => 'Recent Activity in '.PIPELINE_NAME
+			// ));
 		?>
 	</td><!-- .right -->
 

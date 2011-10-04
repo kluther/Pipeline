@@ -23,8 +23,7 @@ $fork->startBlockSet('body');
 
 </td>
 
-
-<td class="extra">
+<td class="right">
 
 <?php
 	$SOUP->render('project/partial/discussions',array(
@@ -33,14 +32,6 @@ $fork->startBlockSet('body');
 		'title' => 'Your Discussions',
 		'hasPermission' => false
 	));
-?>
-
-</td>
-
-<td class="right">
-
-<?php
-	$SOUP->render('project/partial/yourRole', array());
 ?>
 
 </td>

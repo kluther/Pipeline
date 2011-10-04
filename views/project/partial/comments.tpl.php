@@ -37,7 +37,7 @@ $fork->startBlockSet('body');
 			if($(li).find('.post-reply').is(':visible')) {
 				$(li).find('.post-reply').remove();
 			} else {
-				$(li).append('<div class="hidden post-reply"><div class="line"></div><div><textarea></textarea><div class="buttons"><input type="button" class="right" value="Post Reply" /><p class="right">Allowed tags: &lt;a&gt; &lt;strong&gt; &lt;b&gt; &lt;em&gt; &lt;i&gt;</p></div></div></div>');
+				$(li).append('<div class="hidden post-reply"><div class="line"></div><div><textarea></textarea><div class="buttons"><input type="button" class="right" value="Post Reply" /><p class="right"><a class="help-link" href="<?= Url::help() ?>#help-html-allowed">Some HTML allowed</a></p></div></div></div>');
 				$(li).find('.post-reply input[type="button"]').click(function(){
 					buildPost({
 						'processPage':'<?= $processURL ?>',
@@ -94,8 +94,8 @@ if($comments != null) {
 	<li class="comment">
 		<textarea id="txtComment"></textarea>
 		<div class="buttons">
-			<input type="button" class="right" id="btnComment" value="Post Comment" />		
-			<p class="right">Allowed tags: &lt;a&gt; &lt;strong&gt; &lt;b&gt; &lt;em&gt; &lt;i&gt;</p>
+			<input type="button" class="right" id="btnComment" value="Post Comment" />	
+			<p class="right"><a class="help-link" href="<?= Url::help() ?>#help-html-allowed">Some HTML allowed</a></p>
 		</div>
 	</li>
 	

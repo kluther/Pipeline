@@ -6,6 +6,7 @@ $cat = $SOUP->get('cat');
 $title = $SOUP->get('title', 'Discussions');
 $hasPermission = $SOUP->get('hasPermission', null);
 $discussions = $SOUP->get('discussions', array());
+$class = $SOUP->get('class');
 $size = $SOUP->get('size');
 
 // allow values to be passed in
@@ -17,7 +18,7 @@ if($hasPermission === null) {
 
 $fork = $SOUP->fork();
 $fork->set('title', $title);
-$fork->set('class', 'discussions');
+$fork->set('class', $class .= ' discussions');
 $fork->set('creatable', $hasPermission);
 
 // generate URL for new discussion, if has permission

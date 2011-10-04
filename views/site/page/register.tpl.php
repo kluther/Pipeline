@@ -20,7 +20,6 @@ $fork->startBlockSet('body');
 
 </td><!-- end .right -->
 
-<td class="extra"> </td>
 
 <?php
 

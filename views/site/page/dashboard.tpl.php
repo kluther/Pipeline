@@ -24,39 +24,22 @@ $fork->startBlockSet('body');
 	));
 ?>
 
-<?php
-	// $SOUP->render('project/partial/userUpdates', array(
-		// 'title' => 'Your Contributions',
-		// 'hasPermission' => false
-	// ));
-?>
-
-<?php
-	// $SOUP->render('project/partial/discussions', array(
-		// 'title' => 'Your Discussions',
-		// 'hasPermission' => false
-	// ));
-?>
-
 </td>
 
-<td class="extra">
-
+<td class="right">
 
 <?php
 	$SOUP->render('site/partial/invitations', array(
 	));
 ?>
 
-</td>
-
-<td class="right">
 
 <?php
 	$SOUP->render('site/partial/activity', array(
 		'showProject' => true,
 		'title' => 'Recent Activity in Your Projects',
-		'size' => 'small'
+		'size' => 'small',
+		'class' => 'subtle'
 	));
 ?>
 
