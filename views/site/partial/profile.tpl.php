@@ -33,6 +33,9 @@ $loc = $user->getLocation();
 // bio
 $bio = $user->getBiography();
 
+// name
+$name = $user->getName();
+
 // must be current user to edit
 $hasPermission = ($user->getID() == Session::getUserID());
 
@@ -247,18 +250,19 @@ function initializeUploader() {
 		<input id="txtConfirmPassword" name="txtConfirmPassword" type="password" />
 		<span id="pw_check"></span>
 	</div>
+</div>
+<div class="clear">
+	<label for="txtBirthdate">Birth date<span class="required">*</span></label>
+	<div class="input">
+		<input id="txtBirthdate" name="txtBirthdate" type="text" value="<?= ($user->getDOB() != '') ? date("Y-m-d",strtotime($user->getDOB())) : '' ?>" />
+		<p>Hidden for members younger than 18</p>
+	</div>
 </div>	
 <div class="clear">
 	<label for="txtName">Name</label>
 	<div class="input">
 		<input id="txtName" name="txtName" type="text" maxlength="255" value="<?= $user->getName() ?>" />
-		<p>Your real name</p>
-	</div>
-</div>
-<div class="clear">
-	<label for="txtBirthdate">Birthdate</label>
-	<div class="input">
-		<input id="txtBirthdate" name="txtBirthdate" type="text" value="<?= ($user->getDOB() != '') ? date("Y-m-d",strtotime($user->getDOB())) : '' ?>" />
+		<p>Hidden for members younger than 18</p>
 	</div>
 </div>
 <div class="clear">
@@ -269,19 +273,22 @@ function initializeUploader() {
 			<option value="M">Male</option>
 			<option value="F">Female</option>
 		</select>
+		<p>Hidden for members younger than 18</p>
 	</div>
 </div>
 <div class="clear">
 	<label for="txtLocation">Location</label>
 	<div class="input">
 		<input id="txtLocation" name="txtLocation" type="text" maxlength="255" value="<?= $loc ?>" />
+		<p>Hidden for members younger than 18</p>
 	</div>
 </div>
 <div class="clear">
 	<label for="txtBiography">About</label>
 	<div class="input">
-		<textarea id="txtBiography" name="txtBiography"><?= html_entity_decode($bio) ?></textarea>
-		<p>A bit about yourself</p>
+		<textarea id="txtBiography" name="txtBiography"><?= $bio ?></textarea>
+		<p>Hidden for members younger than 18</p>
+		<p><a class="help-link" href="<?= Url::help() ?>#help-html-allowed">Some HTML allowed</a></p>
 	</div>
 </div>
 <div class="clear">
@@ -300,37 +307,27 @@ function initializeUploader() {
 
 <?= formatUserPicture($user->getID()) ?>
 <h5 class="username"><?= formatUserLink($user->getID()) ?></h5>
-<p class="contact"><?= ($user->getName() != null) ? $user->getName().$slash : '' ?> <a href="mailto:<?= $user->getEmail() ?>">send email</a></p>
+<p class="contact"><?= (!empty($name) && $age >= 18) ? $name.$slash : '' ?> <a href="mailto:<?= $user->getEmail() ?>">send email</a> <span class="slash">/</span> last login <?= formatTimeTag($user->getLastLogin()) ?></p>
 <?php
-if( ($age != null) &&
-	($sex != null) &&
-	($loc != null) ) {
-	echo '<p class="asl">'.$age.' years old'.$slash.$sex.$slash.'from '.$loc.'</p>';
-} elseif( ($age != null) &&
-	($sex != null) ) {
-	echo '<p class="asl">'.$age.' years old'.$slash.$sex.'</p>';
-} elseif( ($age != null) &&
-	($loc != null) ) {
-	echo '<p class="asl">'.$age.' years old'.$slash.'from '.$loc.'</p>';
-} elseif( ($sex != null) &&
-	($loc != null) ) {
-	echo '<p class="asl">'.$sex.$slash.'from '.$loc.'</p>';	
-} elseif($age != null) {
-	echo '<p class="asl">'.$age.' years old</p>';
-} elseif($sex != null) {
-	echo '<p class="asl">'.$sex.'</p>';
-} elseif($loc != null) {
-	echo '<p class="asl">from '.$loc.'</p>';
-}
-
-if($bio != null) {
-	echo '<div class="line" style="margin: 1em 0 0 55px;"></div>';
-	echo '<p class="biography">'.formatParagraphs($bio).'</p>';
+if($age >= 18) {
+	// adult, so show everything
+	echo '<p class="asl">';
+	echo $age.' years old';
+	if(!empty($sex)) {
+		echo $slash.$sex;
+	}
+	if(!empty($loc)) {
+		echo $slash.'from '.$loc;
+	}
+	echo '</p>';	
+	if(!empty($bio)) {
+		echo '<div class="line" style="margin: 1em 0 0 55px;"></div>';
+		echo '<p class="biography">'.formatParagraphs($bio).'</p>';
+	}	
 }
 ?>
 <div class="clear"></div>
 </div><!-- .view -->
-
 
 
 <?php

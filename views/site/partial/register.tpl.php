@@ -102,8 +102,8 @@ function registerUser()
 	<div class="input">
 		<input id="txtUsername" type="text" maxlength="20" />
 		<span id="username_check"></span>
-		<p>Letters, numbers, and hyphens only</p>
-		<p>Max 20 characters</p>
+		<p><strong>Do not use your full name</strong></p>		
+		<p>Letters, numbers, and hyphens only, max 20 characters</p>
 	</div>
 </div>
 <div class="clear">
@@ -122,21 +122,22 @@ function registerUser()
 <div class="clear">
 	<label for="txtEmail">Email Address<span class="required">*</span></label>
 	<div class="input">
-		<input id="txtEmail" type="text" maxlength="255" value="<?= (!empty($email)) ? $email : '' ?>" />
+		<input id="txtEmail" type="text" maxlength="255" value="<?= (!empty($email)) ? $email : '' ?>" readonly="readonly" />
 		<p>Must be valid to receive email notifications</p>
+	</div>
+</div>
+<div class="clear">
+	<label for="txtBirthdate">Birth date<span class="required">*</span></label>
+	<div class="input">
+		<input id="txtBirthdate" type="text" />
+		<p>Hidden for members younger than 18</p>
 	</div>
 </div>
 <div class="clear">
 	<label for="txtName">Name</label>
 	<div class="input">
 		<input id="txtName" type="text" maxlength="255" />
-		<p>Your real name</p>
-	</div>
-</div>
-<div class="clear">
-	<label for="txtBirthdate">Birthdate</label>
-	<div class="input">
-		<input id="txtBirthdate" type="text" />
+		<p>Hidden for members younger than 18</p>
 	</div>
 </div>
 <div class="clear">
@@ -147,19 +148,22 @@ function registerUser()
 			<option value="M">Male</option>
 			<option value="F">Female</option>
 		</select>
+		<p>Hidden for members younger than 18</p>		
 	</div>
 </div>
 <div class="clear">
 	<label for="txtLocation">Location</label>
 	<div class="input">
 		<input id="txtLocation" type="text" maxlength="255" />
+		<p>Hidden for members younger than 18</p>
 	</div>
 </div>
 <div class="clear">
 	<label for="txtBiography">About</label>
 	<div class="input">
 		<textarea id="txtBiography"></textarea>
-		<p>A bit about yourself</p>
+		<p>Hidden for members younger than 18</p>		
+		<p><a class="help-link" href="<?= Url::help() ?>#help-html-allowed">Some HTML allowed</a></p>
 	</div>
 </div>
 <div class="clear">

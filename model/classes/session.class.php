@@ -19,6 +19,11 @@ class Session
 		else
 			$user = User::loadByUserName($userInfo);
 		
+		// last login
+		$user->setLastLogin(date("Y-m-d H:i:s"));
+		$user->save();
+		
+		// set up session
 		$_SESSION[BASE_URI]['user_id'] = $user->getId();
 		$_SESSION[BASE_URI]['username'] = $user->getUserName();	
 		$_SESSION[BASE_URI]['admin'] = $user->getAdmin();
