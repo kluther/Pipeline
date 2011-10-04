@@ -61,7 +61,7 @@ if($discussions != null) {
 	{
 		$url = Url::discussion($discussion->getID());
 		$title = $discussion->getTitle();
-		$replies = $discussion->getReplies("ASC"); // ascending sort so we get latest
+		$replies = $discussion->getReplies();
 		
 		echo '<li>';
 
