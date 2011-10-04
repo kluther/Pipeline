@@ -61,6 +61,7 @@ ul.segmented-list {
 		/*position: relative;*/
 		overflow: hidden; /*ie fix*/
 		width: auto;
+		background: no-repeat 0 0.5em;
 		}
 	ul.segmented-list li:first-child {
 		border-top: 0;
@@ -69,7 +70,6 @@ ul.segmented-list {
 ul.segmented-list h6.primary {
 	font-size: 120%;
 	margin: 0; padding: 0 0 0 22px;
-	background: no-repeat 0 3px;
 	}
 	ul.segmented-list h6.primary span.status, ul.segmented-list p.secondary span.status {
 		float: right;
@@ -96,7 +96,6 @@ ul.segmented-list p.secondary {
 div.panel.small ul.segmented-list h6.primary {
 	font-size: 90%;	
 	margin: 0; padding: 0 0 2px 22px;
-	background-position: 0 0;
 	}
 	div.panel.small ul.segmented-list h6.primary span.status {
 		float: none;
@@ -108,26 +107,20 @@ div.panel.small ul.segmented-list h6.primary {
 			}
 			
 /* PROJECTS LIST */
-ul.projects h6.primary {
+ul.projects li {
 	background-image: url(./../images/icons/clapperboard.png);
 	}
 			
 /* TASK LIST */
 
-ul.tasks h6.primary {
+ul.tasks li {
 	background-image: url(./../images/icons/task.png);
 	}
 
 /* UPDATES LIST */
 	
-ul.updates h6.primary {
+ul.updates li {
 	background-image: url(./../images/icons/pin.png);
-	}
-	
-div.panel.small ul.segmented-list h6.primary.contribution {
-	background-image: url(./../images/icons/pin.png);
-	clear: both;
-	margin: 5px 0 0 18px;
 	}
 	
 /* TASK/UPDATE MAIN CONTENT */
@@ -167,7 +160,7 @@ div.person-box {
 	
 /* DISCUSSION LISTS */
 	
-ul.discussions h6.primary {
+ul.discussions li {
 	background-image: url(./../images/icons/balloon.png);
 	}
 	
@@ -436,37 +429,37 @@ div.activity-filter select {
 	margin-top: 0.6em;
 	}
 
-ul.activity h6.create {
+ul.activity li.create {
 	background-image: url(./../images/icons/plus-circle.png);
 	}
-ul.activity h6.edit {
+ul.activity li.edit {
 	background-image: url(./../images/icons/pencil.png);
 	}	
-ul.activity h6.edit-basics {
+ul.activity li.edit-basics {
 	background-image: url(./../images/icons/clipboard--pencil.png);
 	}		
-ul.activity h6.create-task {
+ul.activity li.create-task {
 	background-image: url(./../images/icons/task--plus.png);
 	}		
-ul.activity h6.edit-task, ul.activity h6.edit-leader {
+ul.activity li.edit-task, ul.activity li.edit-leader {
 	background-image: url(./../images/icons/task--pencil.png);
 	}	
-ul.activity h6.accept-task {
+ul.activity li.accept-task {
 	background-image: url(./../images/icons/task--arrow.png);
 	}
-ul.activity h6.create-update {
+ul.activity li.create-update {
 	background-image: url(./../images/icons/pin--plus.png);
 	}		
-ul.activity h6.edit-update {
+ul.activity li.edit-update {
 	background-image: url(./../images/icons/pin--pencil.png);
 	}
-ul.activity h6.create-comment, ul.activity h6.create-discussion {
+ul.activity li.create-comment, ul.activity li.create-discussion {
 	background-image: url(./../images/icons/balloon--plus.png);
 	}
-ul.activity h6.edit-comment, ul.activity h6.edit-discussion {
+ul.activity li.edit-comment, ul.activity li.edit-discussion {
 	background-image: url(./../images/icons/balloon--pencil.png);
 	}	
-ul.activity h6.people {
+ul.activity li.people {
 	background-image: url(./../images/icons/users.png);
 	}		
 			
