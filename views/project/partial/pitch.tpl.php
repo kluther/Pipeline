@@ -57,7 +57,7 @@ $(document).ready(function(){
 <div class="clear">
 	<label for="txtPitch">Pitch<span class="required">*</span></label>
 	<div class="input">
-		<textarea id="txtPitch"><?= html_entity_decode($project->getPitch()) ?></textarea>
+		<textarea id="txtPitch"><?= $project->getPitch() ?></textarea>
 		<p>Allowed tags: &lt;a&gt; &lt;strong&gt; &lt;b&gt; &lt;em&gt; &lt;i&gt;</p>
 	</div>
 </div>

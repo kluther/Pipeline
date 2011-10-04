@@ -41,7 +41,7 @@ Class Filter {
 	{
 		if ($input != null)
 		{
-			$input = htmlspecialchars($input);
+		//	$input = htmlspecialchars($input);
 			return filter_var($input, FILTER_SANITIZE_SPECIAL_CHARS);
 		}
 		return false;

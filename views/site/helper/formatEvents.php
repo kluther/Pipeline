@@ -208,11 +208,22 @@ function formatEvent($event, $showProject=false)
 				$task = Task::load($event->getItem1ID());
 				$title = $task->getTitle();
 				$url = Url::task($task->getID());
-				$formatted = sprintf("%s edited the # people needed for the task %s%s.",
-						formatUserLink($event->getUser1ID(), $event->getProjectID()),
-						'<a href="'.$url.'">'.$title.'</a>',
-						$predicate
-					);
+				$numNeeded = $event->getData2();
+				if($numNeeded != '') {
+					$formatted = sprintf("%s changed the # people needed for the task %s%s to %s.",
+							formatUserLink($event->getUser1ID(), $event->getProjectID()),
+							'<a href="'.$url.'">'.$title.'</a>',
+							$predicate,
+							$numNeeded
+						);
+				} else {
+					$formatted = sprintf("%s changed the # people needed for the task %s%s to &#8734;.",
+							formatUserLink($event->getUser1ID(), $event->getProjectID()),
+							'<a href="'.$url.'">'.$title.'</a>',
+							$predicate,
+							$numNeeded
+						);				
+				}
 				break;			
 			case 'edit_task_leader':
 				$predicate = ($showProject) ? ' in the project '.formatProjectLink($event->getProjectID()) : '';
@@ -284,7 +295,7 @@ function formatEvent($event, $showProject=false)
 				break;
 			case 'edit_accepted_status':
 				$predicate = ($showProject) ? ' in the project '.formatProjectLink($event->getProjectID()) : '';
-				$update = $event->getItem1ID();
+				$update = Update::load($event->getItem1ID());
 				$updateTitle = $update->getTitle();
 				$updateUrl = Url::update($update->getID());							
 				$accepted = Accepted::load($event->getItem2ID());

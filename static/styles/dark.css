@@ -67,10 +67,9 @@ html {
 	background-color: #000;
 	}	
 
-a, h1 a, .ui-dialog div.invite-box a {
+a, h1 a, .ui-dialog div.invite-box a, .ui-dialog div.diff-box a {
 	color: LightBlue;
 	}	
-
 		
 h2 {
 	color: #fff;
@@ -86,6 +85,16 @@ span.required {
 
 .bad {
 	color: #B22222;
+	}	
+	
+ins {
+	color: #2E8B57;
+	background-color: #dfd;
+	}
+
+del {
+	color: #B22222;
+	background-color: #fdd;
 	}	
 	
 label {

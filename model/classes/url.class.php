@@ -11,6 +11,10 @@ class Url
 		return (self::base().'/error');
 	}
 	
+	public static function diff() {
+		return (self::base().'/diff');
+	}
+	
 	public static function uploads()
 	{
 		return (self::base().'/up');

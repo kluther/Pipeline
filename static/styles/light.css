@@ -67,7 +67,7 @@ html {
 	background-color: #eeeeee;
 	}	
 
-a, .ui-dialog div.invite-box a {
+a, .ui-dialog div.invite-box a, .ui-dialog div.diff-box a {
 	color: #369;
 	}	
 		
@@ -79,13 +79,23 @@ span.required {
 	color: #B22222;
 	}
 	
-.good{
+.good {
 	color: #2E8B57;
 	}
 
 .bad {
 	color: #B22222;
 	}	
+	
+ins {
+	color: #2E8B57;
+	background-color: #dfd;
+	}
+
+del {
+	color: #B22222;
+	background-color: #fdd;
+	}
 	
 label {
 	color: #666;

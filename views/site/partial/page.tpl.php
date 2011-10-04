@@ -92,12 +92,12 @@ if($project != null)
 	<div class="funnel">
 		<?php if(count($breadcrumbs) > 1): ?>
 			<div class="breadcrumbs">
-			<h3><?= html_entity_decode($breadcrumbs[0][0]) ?></h3>
+			<h3><?= $breadcrumbs[0][0] ?></h3>
 			<?php foreach (array_slice($breadcrumbs, 1) as $crumb): ?>
 
 					&laquo;
 					<a href="<?= $crumb[1] ?>">
-						<?= html_entity_decode($crumb[0]) ?>
+						<?= $crumb[0] ?>
 					</a>
 	
 			<?php endforeach; ?>

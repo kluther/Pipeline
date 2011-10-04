@@ -75,29 +75,6 @@ class Event extends DbObject
 		);		
 		$db->store($this, __CLASS__, self::DB_TABLE, $db_properties);
 		
-		// // was this a contribution?
-		// $et = EventType::load($this->eventTypeID);
-		// if($et->getContribution() == true) {
-			// // only project-related events can be contributions
-			// if($this->projectID != null) {
-				// $pu = ProjectUser::find($this->user1ID, $this->projectID);
-				// if($pu != null) {
-					// if($pu->getRelationship() == ProjectUser::FOLLOWER) {
-						// // only followers can be upgraded to contributors
-						// $pu->setRelationship(ProjectUser::CONTRIBUTOR);
-						// $pu->save();
-					// }
-				// } else {
-					// // no pre-existing relationship to project, so create new ProjectUser
-					// $pu = new ProjectUser(array(
-						// 'user_id' => $this->user1ID,
-						// 'project_id' => $this->projectID,
-						// 'relationship' => ProjectUser::CONTRIBUTOR
-					// ));
-					// $pu->save();
-				// }
-			// }
-		// }
 	}
 	
 	/* ------------------------------------------------------------------*/
@@ -131,68 +108,6 @@ class Event extends DbObject
 		}
 		return $data;
 	}
-	
-	/* ------------------------------------------------------------------*/
-	
-	// public static function isContributor($userID=null, $projectID=null)
-	// {
-		// if( ($userID == null) || ($projectID == null) ) return null;
-		
-		// $project = Project::load($projectID);
-		// $creatorID = $project->getCreatorID();
-		// if($userID == $creatorID)
-			// return false; // can't be creator
-		
-		// $query = "SELECT id FROM ".self::DB_TABLE." e";
-		// $query .= " INNER JOIN ".EventType::DB_TABLE." et ON ";
-		// $query .= " e.event_type_id = et.id";		
-		// $query .= " WHERE e.project_id = ".$projectID;
-		// $query .= " AND e.user_1_id = ".$userID;
-		// $query .= " AND et.contribution = 1";
-		// //$query .= " AND user_1_id NOT IN ("; // can't be organizer
-		// //	$query .= "SELECT user_id FROM ".ProjectUser::DB_TABLE;
-		// //	$query .= " WHERE project_id = ".$projectID;
-		// //$query .= ")";
-
-		// $db = Db::instance();
-		// $result = $db->lookup($query);
-		// if(!mysql_num_rows($result))
-			// return false;
-		// else
-			// return true;
-	// }
-	
-	// public static function getContributorsByProjectID($projectID=null)
-	// {
-		// if($projectID == null) return null;
-		
-		// $project = Project::load($projectID);
-		// $creatorID = $project->getCreatorID();
-		
-		// $query = "SELECT DISTINCT e.user_1_id AS user_id FROM ".self::DB_TABLE." e";
-		// $query .= " INNER JOIN ".User::DB_TABLE." u ON";
-		// $query .= " e.user_1_id = u.id";
-		// $query .= " WHERE e.project_id = ".$projectID;
-		// $query .= " AND e.user_1_id NOT IN ("; // leave out organizers
-			// $query .= "SELECT user_id FROM ".ProjectUser::DB_TABLE;
-			// $query .= " WHERE project_id = ".$projectID;
-			// $query .= " AND (relationship =".ProjectUser::BANNED.")";
-			// $query .= " OR (relationship =".ProjectUser::ORGANIZER.")";
-		// $query .= ")";
-		// $query .= " AND e.user_1_id != ".$creatorID; // leave out creator
-		// $query .= " ORDER BY u.username ASC"; // alphabetical
-
-		// $db = Db::instance();
-		// $result = $db->lookup($query);
-		// if(!mysql_num_rows($result)) return array();
-
-		// $events = array();
-		// while($row = mysql_fetch_assoc($result))
-			// $events[$row['user_id']] = User::load($row['user_id']);
-		// return $events;
-	// }
-	
-	//----------------------------------------------------------------------------//
 	
 	public static function getHomeEvents($limit=null) {
 		$query = "SELECT e.id AS id FROM ".self::DB_TABLE." e";
@@ -270,7 +185,7 @@ class Event extends DbObject
 		$query .= " AND e.event_type_id = 'create_update_comment')";
 		$query .= " OR (e.item_2_id = ".$taskID;
 		$query .= " AND e.event_type_id = 'accept_task')";			
-		$query .= " OR (e.item_2_id = ".$taskID;
+		$query .= " OR (e.item_3_id = ".$taskID;
 		$query .= " AND e.event_type_id = 'edit_accepted_status')";	
 		$query .= " OR (e.item_3_id = ".$taskID;
 		$query .= " AND e.event_type_id = 'create_task_comment_reply')";
@@ -311,6 +226,8 @@ class Event extends DbObject
 		$query .= " AND e.event_type_id = 'edit_update_title')";
 		$query .= " OR (e.item_1_id = ".$updateID;
 		$query .= " AND e.event_type_id = 'edit_update_message')";		
+		$query .= " OR (e.item_1_id = ".$updateID;
+		$query .= " AND e.event_type_id = 'edit_accepted_status')";		
 		$query .= " OR (e.item_2_id = ".$updateID;
 		$query .= " AND e.event_type_id = 'create_update_comment')";
 		$query .= " OR (e.item_3_id = ".$updateID;
@@ -424,6 +341,13 @@ class Event extends DbObject
 		$cssClass = $et->getCssClass();
 		return $cssClass;
 	}
+	
+	public function isDiffable()
+	{
+		$et = EventType::load($this->getEventTypeID());
+		$diffable = $et->getDiffable();
+		return $diffable;
+	}	
 	
 	// --- only getters and setters below here --- //	
 	

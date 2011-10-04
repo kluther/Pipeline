@@ -1,5 +1,6 @@
 <?php
 include_once SYSTEM_PATH.'/lib/human_time_diff.php';
+include_once SYSTEM_PATH.'/lib/finediff.php';
 
 function formatFileSize($size) {
 	// some code from http://www.php.net/manual/en/function.filesize.php#100097
@@ -7,12 +8,6 @@ function formatFileSize($size) {
     for ($i = 0; $size >= 1024 && $i < 4; $i++) $size /= 1024;
 	$decPlaces = ($i>=2) ? 1 : 0;
     return round($size, $decPlaces).$units[$i];
-}
-
-
-function formatTitle($title) {
-	$formatted = html_entity_decode($title, ENT_QUOTES, 'ISO-8859-15');
-	return $formatted;
 }
 
 function formatInvitationMessage($message) {
@@ -41,9 +36,9 @@ function formatPitch($pitch) {
 
 /* generic function for formatting paragraphs of HTML text */
 function formatParagraphs($paragraphs) {
-	$formatted = html_entity_decode($paragraphs, ENT_QUOTES, 'ISO-8859-15');
-	$formatted = str_replace("\n","<br />",$formatted);
-	return $formatted;
+	$paragraphs = str_replace("&#10;","<br />",$paragraphs);
+	$paragraphs = html_entity_decode($paragraphs, ENT_QUOTES, 'UTF-8');
+	return $paragraphs;
 }
 
 function formatUserPicture($userID=null, $size='large') {
@@ -109,11 +104,26 @@ function formatProjectStatus($status=null) {
 	}
 }
 
+	
+function formatAcceptedStatus($status=null) {
+	if($status === null) return null;
+	if($status == Accepted::STATUS_ACCEPTED)
+		return "started";
+	elseif($status == Accepted::STATUS_FEEDBACK)
+		return "seeking feedback";
+	elseif($status == Accepted::STATUS_COMPLETED)
+		return "finished";
+	elseif($status == Accepted::STATUS_PROGRESS)
+		return "working";
+	else
+		return "stopped";		
+}
+
 function formatProjectLink($projectID=null)
 {
 	if($projectID == null) return null;
 	$project = Project::load($projectID);
-	$formatted = '<a href="'.Url::project($projectID).'">'.formatTitle($project->getTitle()).'</a>';
+	$formatted = '<a href="'.Url::project($projectID).'">'.$project->getTitle().'</a>';
 	return $formatted;
 }
 
@@ -170,10 +180,11 @@ function formatTimeTag($t, $tagName = 'span')
 	return "<{$tagName} class=\"datetime\" title=\"{$title}\">{$text}</{$tagName}>";
 }
 
+
 function formatSpecs($specs) {
 	if(empty($specs)) return null;
-	$specs = html_entity_decode($specs, ENT_QUOTES, 'ISO-8859-15');
-	$lines = explode("\n",$specs); // line feeds
+	//$specs = filter_var($specs,FILTER_SANITIZE_SPECIAL_CHARS);
+	$lines = explode("&#10;",$specs); // line feeds
 
 	$formattedSpecs = array();
 	for($i=0; $i<count($lines); $i++)
@@ -193,8 +204,8 @@ function formatSpecs($specs) {
 
 function formatRules($rules) {
 	if(empty($rules)) return null;
-	$rules = html_entity_decode($rules, ENT_QUOTES, 'ISO-8859-15');
-	$lines = explode("\n",$rules); // line feeds
+	//$rules = filter_var($rules,FILTER_SANITIZE_SPECIAL_CHARS);
+	$lines = explode("&#10;",$rules); // line feeds
 
 	$formattedRules = array();
 	for($i=0; $i<count($lines); $i++) {
@@ -206,4 +217,19 @@ function formatRules($rules) {
 			$formattedRules[$i] = '<span>'.$lines[$i].'</span>';
 	}
 	return $formattedRules;
+}
+
+/* From http://cubiq.org/the-perfect-php-clean-url-generator */
+function toAscii($str, $replace=array(), $delimiter='-')
+{
+	if( !empty($replace) ) {
+		$str = str_replace((array)$replace, ' ', $str);
+	}
+
+	$clean = iconv('UTF-8', 'ASCII//TRANSLIT', $str);
+	$clean = preg_replace("/[^a-zA-Z0-9\/_|+ -]/", '', $clean);
+	$clean = strtolower(trim($clean, '-'));
+	$clean = preg_replace("/[\/_|+ -]+/", $delimiter, $clean);
+
+	return $clean;
 }

@@ -129,11 +129,11 @@ if($action == 'create') {
 	if($creator->getID() != Session::getUserID()) { // don't email yourself
 		if($creator->getNotifyDiscussionStarted()) {
 			// compose email
-			$body = "<p>".formatUserLink(Session::getUserID()).' replied to your discussion <a href="'.Url::discussion($discussionID).'">'.formatTitle($discussion->getTitle()).'</a> in the project '.formatProjectLink($project->getID()).'. The reply was:</p>';
+			$body = "<p>".formatUserLink(Session::getUserID()).' replied to your discussion <a href="'.Url::discussion($discussionID).'">'.$discussion->getTitle().'</a> in the project '.formatProjectLink($project->getID()).'. The reply was:</p>';
 			$body .= "<blockquote>".formatDiscussionReply($message)."</blockquote>";
 			$email = array(
 				'to' => $creator->getEmail(),
-				'subject' => '['.PIPELINE_NAME.'] New reply to your discussion in '.formatTitle($project->getTitle()),
+				'subject' => '['.PIPELINE_NAME.'] New reply to your discussion in '.$project->getTitle(),
 				'message' => $body
 			);
 			// send email
@@ -147,11 +147,11 @@ if($action == 'create') {
 		if($r->getID() != Session::getUserID()) { // don't email yourself
 			if($r->getNotifyDiscussionReply()) {
 				// compose email
-				$body = "<p>".formatUserLink(Session::getUserID()).' replied to the discussion <a href="'.Url::discussion($discussionID).'">'.formatTitle($discussion->getTitle()).'</a> in the project '.formatProjectLink($project->getID()).'. The reply was:</p>';
+				$body = "<p>".formatUserLink(Session::getUserID()).' replied to the discussion <a href="'.Url::discussion($discussionID).'">'.$discussion->getTitle().'</a> in the project '.formatProjectLink($project->getID()).'. The reply was:</p>';
 				$body .= "<blockquote>".formatDiscussionReply($message)."</blockquote>";
 				$email = array(
 					'to' => $r->getEmail(),
-					'subject' => '['.PIPELINE_NAME.'] New reply to a discussion in '.formatTitle($project->getTitle()),
+					'subject' => '['.PIPELINE_NAME.'] New reply to a discussion in '.$project->getTitle(),
 					'message' => $body
 				);
 				// send email
