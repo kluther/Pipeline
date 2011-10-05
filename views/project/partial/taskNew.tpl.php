@@ -1,6 +1,8 @@
 <?php
 
 $project = $SOUP->get('project');
+$user = Session::getUser();
+$username = $user->getUsername();
 
 $fork = $SOUP->fork();
 $fork->set('title', "New Task");
@@ -48,7 +50,7 @@ $fork->startBlockSet('body');
 <div class="clear">
 	<label for="txtLeader">Leader<span class="required">*</span></label>
 	<div class="input">
-		<input id="txtLeader" name="txtLeader" type="text" />
+		<input id="txtLeader" name="txtLeader" type="text" value="<?= $username  ?>" />
 		<p>A <a href="<?= Url::help() ?>">trusted member</a> to lead this task</p>
 	</div>
 </div>
