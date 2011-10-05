@@ -97,11 +97,17 @@ switch($action)
 			exit(json_encode($json));
 		}
 		
-		if(!filter_var($email, FILTER_VALIDATE_EMAIL))
+		if(!Filter::email($email))
 		{
 			$json = array( 'error' => 'You must provide a valid email address to register.' );
 			exit(json_encode($json));
 		}	
+		
+		// must provide birthdate
+		if(empty($birthdate)) {
+			$json = array( 'error' => 'You must provide a valid birth date to register.' );
+			exit(json_encode($json));		
+		}
 		
 		// convert birthdate to MySQL format
 		$dob = strtotime($birthdate);
@@ -117,12 +123,11 @@ switch($action)
 		$user->setUsername($uname);		
 		$user->setEmail($email);
 		$user->setPassword($pw);	
+		$user->setDOB($dob);
 		
 		// optional fields
 		if($name != '')
 			$user->setName($name);
-		if($birthdate != '')
-			$user->setDOB($dob);
 		if($sex != '')
 			$user->setSex($sex);
 		if($location != '')
