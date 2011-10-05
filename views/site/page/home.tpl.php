@@ -27,17 +27,29 @@ require_once TEMPLATE_PATH.'/site/helper/format.php';
 
 	<div class="top">
 
+		<div class="funnel">
+	
 		<h1><?= PIPELINE_NAME ?><span>powered by <a href="http://pipeline.cc.gatech.edu/">Pipeline</a></span></h1>
+		
+		</div>
 
 	</div><!-- .top -->
 
-	<table><tr>
-	
-	<td class="left">
+	<div class="funnel">
+
+
 
 		<h2>Pipeline is a new way to create together on the Web.</h2>
 
 		<div class="line"></div>
+		
+		<div class="get-started">
+			<p style="font-size: 120%;">First time here?</p>
+			<a href="<?= Url::consent() ?>">Get Started</a>
+			
+			<p>Already registered?</p>
+			<a href="<?= Url::logIn() ?>">Log In</a>
+		</div>		
 		
 		<div class="features">
 
@@ -60,16 +72,6 @@ require_once TEMPLATE_PATH.'/site/helper/format.php';
 			<p>Developed by researchers at Georgia Tech</p>
 		</div><!-- .meta -->
 
-	</td><!-- .left -->
-
-	<td class="right">
-		<div class="get-started">
-			<p style="font-size: 120%;">First time here?</p>
-			<a href="<?= Url::consent() ?>">Get Started</a>
-			
-			<p>Already registered?</p>
-			<a href="<?= Url::logIn() ?>">Log In</a>
-		</div>
 		
 		<?php
 			// $SOUP->render('site/partial/activity', array(
@@ -78,12 +80,14 @@ require_once TEMPLATE_PATH.'/site/helper/format.php';
 				// 'title' => 'Recent Activity in '.PIPELINE_NAME
 			// ));
 		?>
-	</td><!-- .right -->
 
-	</tr></table>
+	
+	</div>
 
 	<div class="bottom">
-		<a href="http://pipeline.cc.gatech.edu/">About Pipeline</a> <span class="slash">/</span> <a href="http://pipeline.cc.gatech.edu/blog">Blog</a> <span class="slash">/</span> <a href="http://pipeline.cc.gatech.edu/research">Research</a> <span class="slash">/</span> <a href="http://pipeline.cc.gatech.edu/team">Team</a> <span class="slash">/</span> <a href="http://pipeline.cc.gatech.edu/contact">Contact</a>
+		<div class="funnel">
+			<a href="http://pipeline.cc.gatech.edu/">About Pipeline</a> <span class="slash">/</span> <a href="http://pipeline.cc.gatech.edu/blog">Blog</a> <span class="slash">/</span> <a href="http://pipeline.cc.gatech.edu/research">Research</a> <span class="slash">/</span> <a href="http://pipeline.cc.gatech.edu/team">Team</a> <span class="slash">/</span> <a href="http://pipeline.cc.gatech.edu/contact">Contact</a>
+		</div>
 	</div>
 
 </div><!-- .home -->

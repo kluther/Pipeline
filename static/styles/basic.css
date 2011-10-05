@@ -834,22 +834,10 @@ div.home div.top {
 	overflow: hidden;
 	width: 100%;
 	border-bottom: 2px solid;
-	padding-left: 50px;
 	}
-	
-div.home td.left {
-	padding-left: 50px;
-	}
-	
-div.home td.right {
-	width: 500px;
-	}
-	div.home td.right div.panel-header {
-		border-top: none;
-		}
 
 div.home div.bottom {
-	padding: 15px 0 25px 50px;
+	padding: 15px 0 25px 0;
 	}		
 		
 div.home  h1 {
@@ -872,8 +860,9 @@ div.home h2 {
 	}
 	
 div.home div.get-started {
+	float: right;
+	width: 300px;
 	text-align: center;
-	padding-top: 35px;
 	}
 	div.home div.get-started a:link, div.home div.get-started a:visited {
 		display: block;
@@ -881,7 +870,6 @@ div.home div.get-started {
 		margin: 5px auto 30px auto;
 		width: 150px;
 		border: 2px solid;
-
 		font-weight: bold;
 		font-size: 150%;
 		-moz-border-radius: .5em;
@@ -894,16 +882,16 @@ div.home div.get-started {
 
 div.home div.features {
 	padding-top: 20px;
-	font-size: 125%;
 	}
 	div.home div.features p {
 		margin-bottom: 20px;
+		font-size: 115%;
 		}	
 	div.home div.features h3 {
 		font-size: 135%;
 		display: block;
 		margin: 0; padding: 0;
-	font-weight: bold;
+		font-weight: bold;
 		}	
 	
 div.home div.meta {
