@@ -28,9 +28,9 @@ $fork->startBlockSet('body');
 
 <p><em>Members</em> are people who joined a project. They can do most things you'd want to do in a project: join and contribute to tasks, edit their contributions, post comments, and participate in discussions. They can also invite others to join the project.</p>
 
-<p><em>Trusted members</em> are members with access to some project-level abilities. They can create and lead tasks, edit the project settings, and ban/unban users from the project. They can also trust/untrust other members.</p>
+<p><em>Trusted members</em> are members with access to some project-level abilities. They can create and lead tasks, edit the project settings, and ban/unban users from the project. They can also trust/untrust other members. Trusted members are identified by an asterisk (*) after their usernames.</p>
 
-<p>The <em>creator</em> is the person who started the project. Creators are trusted members but can never be banned or untrusted.</p>
+<p>The <em>creator</em> is the person who started the project. Creators are like trusted members but can never be banned or untrusted.</p>
 
 <p>Note that <em>anyone</em> on the Web can view Pipeline projects, and any logged-in user can post comments and participate in discussions.</p>
 
@@ -42,7 +42,7 @@ $fork->startBlockSet('body');
 
 <p>A <em>contribution</em> is someone's work on a task.</p>
 
-<p>Every task has one <em>leader</em> and one or more <em>contributors</em>. Only trusted members can lead a task, but any logged-in user can contribute to a task.</p>
+<p>Every task has one <em>leader</em> and one or more <em>contributors</em>. Only trusted members can lead or create a task, but any logged-in user can contribute to a task.</p>
 
 <div class="line"> </div>
 
