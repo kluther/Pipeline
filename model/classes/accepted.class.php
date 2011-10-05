@@ -78,6 +78,7 @@ class Accepted extends DbObject
 		
 		$query = "SELECT id FROM ".self::DB_TABLE;
 		$query .= " WHERE task_id = ".$taskID;
+		$query .= " AND status != ".self::STATUS_RELEASED;
 		$query .= " ORDER BY date_created DESC, status DESC";
 			
 		$db = Db::instance();
@@ -148,13 +149,16 @@ class Accepted extends DbObject
 	{
 		if($taskID == null) return null;
 		
-		$query = "SELECT id FROM ".self::DB_TABLE;
-		$query .= " WHERE task_id = ".$taskID;
-		$query .= " AND status != ".self::STATUS_RELEASED;
-		$query .= " ORDER BY status DESC, date_created DESC";
+		$query = "SELECT a.id AS id FROM ".self::DB_TABLE." a";
+		$query .= " INNER JOIN ".User::DB_TABLE." u ON ";
+		$query .= " a.creator_id = u.id";
+		$query .= " WHERE a.task_id = ".$taskID;
+		$query .= " AND a.status != ".self::STATUS_RELEASED;
+		$query .= " ORDER BY u.username ASC";
+		//$query .= " ORDER BY status DESC, date_created DESC";
 		if($limit != null)
 			$query .= " LIMIT ".$limit;
-			
+		
 		$db = Db::instance();
 		$result = $db->lookup($query);
 		if(!mysql_num_rows($result)) return array();

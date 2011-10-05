@@ -40,8 +40,8 @@ class Breadcrumbs
 		$title = $task->getTitle();
 		$projectID = $task->getProjectID();
 		return array_merge(
-			self::oneCrumb($title, Url::task($taskID)),
-			self::tasks($projectID)
+			self::tasks($projectID),
+			self::oneCrumb($title, Url::task($taskID))
 		);		
 	}
 	
@@ -50,8 +50,8 @@ class Breadcrumbs
 		if($projectID == null) return null;
 		$title = 'New Task';
 		return array_merge(
-			self::oneCrumb($title, Url::taskNew($projectID)),
-			self::tasks($projectID)
+			self::tasks($projectID),
+			self::oneCrumb($title, Url::taskNew($projectID))
 		);		
 	}	
 	
@@ -64,8 +64,8 @@ class Breadcrumbs
 		$title = $update->getTitle();
 		$accepted = Accepted::load($update->getAcceptedID());
 		return array_merge(
-			self::oneCrumb($title, Url::update($updateID)),
-			self::task($accepted->getTaskID())
+			self::task($accepted->getTaskID()),
+			self::oneCrumb($title, Url::update($updateID))
 		);
 	}
 	
@@ -73,8 +73,8 @@ class Breadcrumbs
 		if($taskID == null) return null;
 		$title = 'New Contribution';
 		return array_merge(
-			self::oneCrumb($title, Url::updateNew($taskID)),
-			self::task($taskID)
+			self::task($taskID),
+			self::oneCrumb($title, Url::updateNew($taskID))
 		);
 	}
 
@@ -90,8 +90,8 @@ class Breadcrumbs
 		$title = $discussion->getTitle();
 		$projectID = $discussion->getProjectID();
 		return array_merge(
-			self::oneCrumb($title, Url::discussion($discussionID)),
-			self::discussions($projectID)
+			self::discussions($projectID),
+			self::oneCrumb($title, Url::discussion($discussionID))
 		);
 	}
 	
@@ -99,8 +99,8 @@ class Breadcrumbs
 		if($projectID == null) return null;
 		$title = 'New Discussion';
 		return array_merge(
-			self::oneCrumb($title, Url::discussionNew($projectID)),
-			self::discussions($projectID)
+			self::discussions($projectID),
+			self::oneCrumb($title, Url::discussionNew($projectID))
 		);
 	}
 	

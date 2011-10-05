@@ -98,13 +98,14 @@ if($project != null)
 	<div class="funnel">
 		<?php if(count($breadcrumbs) > 1): ?>
 			<div class="breadcrumbs">
-			<h3><?= $breadcrumbs[0][0] ?></h3>
-			<?php foreach (array_slice($breadcrumbs, 1) as $crumb): ?>
-				&laquo;
+			<!--h3><?= $breadcrumbs[0][0] ?></h3-->
+			<?php foreach (array_slice($breadcrumbs,0,-1) as $crumb): ?>
 				<a href="<?= $crumb[1] ?>">
 					<?= $crumb[0] ?>
 				</a>
+				&raquo;
 			<?php endforeach; ?>
+			<?= $breadcrumbs[count($breadcrumbs)-1][0] ?>
 			</div>
 		<?php endif; ?>
 		<table id="columns">

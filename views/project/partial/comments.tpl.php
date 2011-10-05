@@ -10,9 +10,9 @@ $parentID = $SOUP->get('parentID');
 $hasPermission = ( Session::isLoggedIn() &&
 					!$project->isBanned(Session::getUserID()) );
 
-$fork = $SOUP->fork();
-$fork->set('title', 'Comments');
-$fork->startBlockSet('body');
+//$fork = $SOUP->fork();
+//$fork->set('title', 'Comments');
+//$fork->startBlockSet('body');
 ?>
 
 <?php if($hasPermission): ?>
@@ -59,12 +59,16 @@ $fork->startBlockSet('body');
 
 <?php endif; ?>
 
+<div class="line"> </div>
+
+<h5 class="comments">Comments</h5>
+
 <ul class="segmented-list comments">
 <?php
 if($comments != null) {
 	foreach($comments as $comment) {
 		echo '<li id="comment-'.$comment->getID().'">';
-		echo '<a class="picture large" href="'.Url::user($comment->getCreatorID()).'"><img src="'.Url::userPictureLarge($comment->getCreatorID()).'" /></a>';
+		echo formatUserPicture($comment->getCreatorID(), 'small');
 		if($hasPermission)
 			echo '<input class="replyButton" type="button" value="Reply" />';
 		echo '<p class="headline">'.formatUserLink($comment->getCreatorID(), $project->getID()).' <span class="slash">/</span> <span class="when">'.formatTimeTag($comment->getDateCreated()).'</span></p>';					
@@ -76,7 +80,7 @@ if($comments != null) {
 		if($replies != null) {
 			foreach($replies as $reply) {
 				echo '<li class="comment-reply">';
-				echo '<a class="picture large" href="'.Url::user($reply->getCreatorID()).'"><img src="'.Url::userPictureLarge($reply->getCreatorID()).'" /></a>';		
+				echo formatUserPicture($comment->getCreatorID(), 'small');		
 				echo '<p class="headline">'.formatUserLink($reply->getCreatorID(), $project->getID()).' <span class="slash">/</span> <span class="when">'.formatTimeTag($reply->getDateCreated()).'</span></p>';					
 				echo '<p class="message">'.formatComment($reply->getMessage()).'</p>';			
 				//echo '<p class="when">'.formatTimeTag($reply->getDateCreated()).'</p>';				
@@ -103,5 +107,5 @@ if($comments != null) {
 </ul>
 <?php
 
-$fork->endBlockSet();
-$fork->render('site/partial/panel');
+//$fork->endBlockSet();
+//$fork->render('site/partial/panel');

@@ -123,6 +123,15 @@ div.panel-header {
 	div.panel-header h4 {
 		color: #666;
 		}	
+	div.panel-header input[type=submit],
+	div.panel-header input[type=button] {
+		background-color: #eeeeee;
+		}
+		div.panel-header input[type=submit]:hover,
+		div.panel-header input[type=button]:hover {
+			background-color: #666;
+			color: #fff;
+		}
 		
 div.panel-body {
 	/*color: #eeeeee;*/
@@ -187,9 +196,10 @@ div.home div.meta {
 	}	
 
 input[type=button], input[type=submit] {
-	border-color: #ccc;
-	background-color: #eeeeee;
+	/*border-color: #ccc;*/
+	background-color: #dddddd;
 	color: #666;
+	cursor: pointer;
 	}
 	input[type=button]:hover, input[type=submit]:hover {
 		background-color: #666;

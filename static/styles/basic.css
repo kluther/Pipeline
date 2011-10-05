@@ -129,6 +129,10 @@ div#task h5, div#update h5 {
 	font-size: 150%;
 	margin-top: 0.25em;
 	}
+	div#task h5.comments, div#update h5.comments {
+		font-size: 120%;
+		padding: 0 0 0.5em 0;
+		}
 	
 div#task span.status, div#update span.status, div#progress span.status {
 	display: inline;
@@ -143,7 +147,7 @@ div#task span.status, div#update span.status, div#progress span.status {
 div.person-box {
 	float: right;
 	width: auto;
-	margin-left: 0.5em;
+	margin-left: 1em;
 	}
 	div.person-box div.text {
 		float: right;
@@ -171,13 +175,13 @@ ul.replies h5 {
 	margin-bottom: 0.5em;
 	}
 ul.replies p.headline, ul.comments p.headline {
-	margin: 0; padding: 0.5em 0 0 0;
+	margin: 0; padding: 0;
 	font-size: 100%;
-	margin-left: 55px;
+	margin-left: 40px;
 	}
 ul.replies p.message, ul.comments p.message {
 	font-size: 100%;
-	margin-left: 55px;
+	margin-left: 40px;
 	}
 ul.replies span.when, ul.comments span.when {
 	font-size: 90%;
@@ -205,11 +209,11 @@ ul.comments input.replyButton {
 	}			
 
 ul.comments li.comment-reply {
-	margin-left: 55px;
+	margin-left: 40px;
 	}
 ul.comments div.post-reply {
 	text-align: right;
-	margin-left: 55px;
+	margin-left: 40px;
 	}
 	ul.comments div.post-reply textarea {
 		width: 455px;
@@ -389,7 +393,6 @@ ul.users p.secondary {
 ul.users input[type=button] {
 	float: right;
 	margin: 0 0 0 1em;
-	font-size: 90%;
 	}
 
 ul.users li.invited {
@@ -414,6 +417,7 @@ ul.users li.invited {
 
 div#pitch div.view {
 	padding: 0.5em 0;
+	line-height: 1.3em;
 	}	
 	
 /* ACTIVITY FEED */
@@ -641,7 +645,7 @@ td.left {
 	}
 	
 td.right {
-	width: 500px;
+	width: 400px;
 	padding-left: 1.5em;
 	}
 	
@@ -662,7 +666,7 @@ div.right {
 	}
 */
 div.funnel {
-	width: 90%;
+	width: 1000px;
 	margin: 0 auto;
 	}
 	
@@ -677,7 +681,7 @@ div.breadcrumbs {
 
 div.your-role {
 	float: right;
-	width: 500px;
+	width: 400px;
 	margin-top: 2em;
 	}
 	div.your-role p {
@@ -737,9 +741,9 @@ input[type=button], input[type=submit] {
 	font-family:Verdana, sans-serif;
 	font-size: 85%;
 	margin: 6px 0 6px 0.5em; padding: 4px 6px;
-	font-weight:bold;
+	font-weight: bold;
 	/*background: url("./../images/button.png") repeat-x center left;*/
-	border: 2px solid;
+	border: none;
 	-moz-border-radius: .5em;
 	-webkit-border-radius: .5em;
 	border-radius: .5em;	
@@ -774,7 +778,7 @@ div.input {
 		}
 		
 /* narrow version for 'extra' column */	
-	
+/*
 td.extra div.input {
 	margin-left: 0;
 	}
@@ -790,7 +794,7 @@ td.extra div.clear > label {
 	text-align: left;
 	padding: 0 0 0.5em 0;
 	}
-
+*/
 span#username_check, span#pw_check {
 	font-weight: bold;
 	font-size: 90%;

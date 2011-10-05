@@ -107,11 +107,12 @@ if($joined != null) {
 		echo '<li>';
 		echo formatUserPicture($j->getCreatorID(), 'small');
 		echo '<h6 class="primary">'.formatUserLink($j->getCreatorID(), $project->getID()).'</h6>';
+		$numUpdates = count($j->getUpdates());
 		$latestUpdate = $j->getLatestUpdate();
-		if($latestUpdate != null) {
-			echo '<p class="secondary contribution"><a href="'.Url::update($latestUpdate->getID()).'">last contributed '.formatTimeTag($latestUpdate->getDateCreated()).'</a></p>';
-		//	echo '<h6 class="primary contribution"><a href="'.Url::update($latestUpdate->getID()).'"><strong>'.$latestUpdate->getTitle().'</strong></a></h6>';
-		//	echo '<h6 class="primary contribution">></h6>';
+		if(!empty($latestUpdate)) {
+			echo '<p class="secondary contribution"><a href="'.Url::update($latestUpdate->getID()).'">last contributed '.formatTimeTag($latestUpdate->getDateCreated()).'</a> <span class="slash">/</span> '.$numUpdates.' total</p>';
+		//	echo '<h6 class="primary"><a href="'.Url::update($latestUpdate->getID()).'">'.$latestUpdate->getTitle().'</a></h6>';
+		//	echo '<p class="secondary">posted '.formatTimeTag($latestUpdate->getDateCreated()).' by '.formatUserLink($latestUpdate->getCreatorID(), $latestUpdate->getProjectID()).'</p>';
 		} else {
 			echo '<p class="secondary">joined '.formatTimeTag($j->getDateCreated()).'</p>';
 		}

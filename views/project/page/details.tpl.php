@@ -17,6 +17,12 @@ $fork->startBlockSet('body');
 
 <td class="left">
 
+
+<?php
+	$SOUP->render('project/partial/progress',array(
+	));
+?>
+
 <?php
 	$SOUP->render('project/partial/pitch',array(
 
@@ -41,10 +47,6 @@ $fork->startBlockSet('body');
 
 
 
-<?php
-	$SOUP->render('project/partial/progress',array(
-	));
-?>
 
 <?php
 	$SOUP->render('project/partial/discussions',array(

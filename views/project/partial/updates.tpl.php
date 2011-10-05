@@ -53,7 +53,7 @@ if($updates != null) {
 			echo '</h6>'; // .primary
 			
 			echo '<p class="secondary">';
-			echo 'posted '.formatTimeTag($u->getDateCreated());
+			echo formatTimeTag($u->getDateCreated());
 			echo ' by '.formatUserLink($u->getCreatorID(), $project->getID());
 			echo '</p>'; // .secondary
 			echo '</li>';

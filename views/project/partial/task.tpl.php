@@ -4,6 +4,7 @@ include_once TEMPLATE_PATH.'/site/helper/format.php';
 $task = $SOUP->get('task');
 $project = $SOUP->get('project');
 $leader = User::load($task->getLeaderID());
+$comments = $SOUP->get('comments', array());
 
 // only admin or trusted may edit
 $hasPermission = ( Session::isAdmin() ||
@@ -135,7 +136,7 @@ $(document).ready(function(){
 <div class="view">
 
 <div class="person-box">
-	<a class="picture large" href="<?= Url::user($task->getLeaderID()) ?>"><img src="<?= Url::userPictureLarge($task->getLeaderID()) ?>" /></a>
+	<?= formatUserPicture($task->getLeaderID(), 'small') ?>
 	<div class="text">
 		<p class="caption">task leader</p>
 		<p class="username"><?= formatUserLink($task->getLeaderID(), $project->getID()) ?></p>
@@ -153,7 +154,7 @@ if($task->getStatus() == Task::STATUS_OPEN) {
 $closed = ($task->getStatus() == Task::STATUS_CLOSED) ? ' class="closed"' : ''; // CSS class for strikethrough
 ?>
 
-<h5<?= $closed ?>><a href="<?= Url::task($task->getID()) ?>"><?= $task->getTitle() ?></a></h5>
+<h5><?= $task->getTitle() ?></h5>
 
 <p><?= $status ?> <span class="slash">/</span> <?= ($task->getDeadline() != '') ? 'due '.formatTimeTag($task->getDeadline()) : 'no deadline' ?></p>
 
@@ -163,6 +164,23 @@ $closed = ($task->getStatus() == Task::STATUS_CLOSED) ? ' class="closed"' : ''; 
 
 </div><!-- end .view -->
 
+
+<?php
+	$SOUP->render('site/partial/newUploads', array(
+	//	'uploads' => $uploads
+	));
+?>
+
+<?php
+	$SOUP->render('project/partial/comments', array(
+		'comments' => $comments,
+		'processURL' => Url::taskProcess($task->getID()),
+		'parentID' => $task->getID(),
+		'size' => 'large',
+		//'class' => 'hidden',
+		'id' => 'comments'
+		));
+?>
 
 <?php
 
