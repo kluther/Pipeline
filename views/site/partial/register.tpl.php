@@ -122,7 +122,7 @@ function registerUser()
 <div class="clear">
 	<label for="txtEmail">Email Address<span class="required">*</span></label>
 	<div class="input">
-		<input id="txtEmail" type="text" maxlength="255" value="<?= (!empty($email)) ? $email : '' ?>" readonly="readonly" />
+		<input id="txtEmail" type="text" maxlength="255" value="<?= (!empty($email)) ? $email : '' ?>" />
 		<p>Must be valid to receive email notifications</p>
 	</div>
 </div>
