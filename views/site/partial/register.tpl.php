@@ -130,7 +130,7 @@ function registerUser()
 	<label for="txtBirthdate">Birth date<span class="required">*</span></label>
 	<div class="input">
 		<input id="txtBirthdate" type="text" />
-		<p>Hidden for members younger than 18</p>
+		<p>Will not be visible in profile</p>
 	</div>
 </div>
 <div class="clear">
@@ -147,15 +147,13 @@ function registerUser()
 			<option value="-">--</option>
 			<option value="M">Male</option>
 			<option value="F">Female</option>
-		</select>
-		<p>Hidden for members younger than 18</p>		
+		</select>	
 	</div>
 </div>
 <div class="clear">
 	<label for="txtLocation">Location</label>
 	<div class="input">
 		<input id="txtLocation" type="text" maxlength="255" />
-		<p>Hidden for members younger than 18</p>
 	</div>
 </div>
 <div class="clear">

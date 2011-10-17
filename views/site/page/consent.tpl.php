@@ -9,7 +9,7 @@
 
 $(document).ready(function(){
 	$('#btnAdult').click(function(){
-		window.location = "<?= Url::adultConsent($email) ?>";
+		window.location = "<?= Url::register($email) ?>";
 		});
 	$('#btnMinor').click(function(){
 		window.location = "<?= Url::minorConsent() ?>";
@@ -25,8 +25,8 @@ $(document).ready(function(){
 	<p>First, <strong>please tell us how old you are</strong>.</p>
 
 	<div class="buttons">
-		<input id="btnAdult" class="left" type="button" value="18 Or Older" />
-		<input id="btnMinor" class="left" type="button" value="Younger Than 18" />
+		<input id="btnAdult" class="left" type="button" value="13 Or Older" />
+		<input id="btnMinor" class="left" type="button" value="Younger Than 13" />
 	</div>
 
 </td>

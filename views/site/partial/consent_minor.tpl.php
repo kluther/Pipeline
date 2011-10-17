@@ -31,7 +31,7 @@ $(document).ready(function(){
 
 </script>
 
-<p>Because you're under age 18, you need to complete a special set of consent forms before you can use <?= PIPELINE_NAME ?>. This is required by the Georgia Tech Institutional Review Board (IRB) as part of their <a href="http://www.compliance.gatech.edu/irb-informed-consent/">informed consent protocol</a>.</p>
+<p>Because you're under age 13, you need to complete a special set of consent forms before you can use <?= PIPELINE_NAME ?>. This is required by a U.S. federal law called the <a href="http://business.ftc.gov/privacy-and-security/children%E2%80%99s-online-privacy">Children's Online Privacy Protection Act</a>.</p>
 
 <p>These forms are linked below. The first form must be completed by you and the second must be completed by a parent. Please print them out, complete them, and send them to the research team. You can either scan them and email the files to <a href="mailto:<?= CONTACT_EMAIL ?>"><?= CONTACT_EMAIL ?></a> or fax them to (404) 894-3146. <strong>Please include your email address with the forms</strong> or we won't be able to approve your account.</p>
 

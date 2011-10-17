@@ -99,7 +99,7 @@ $(document).ready(function(){
 		checkPasswordMatch();
 		});	
 	
-	<?php if($user->getPicture() != null): ?>
+	<?php if( ($user->getPicture() != null) && ($age >= 18) ): ?>
 	
 	$('#btnRemovePicture').click(function(){
 		buildPost({
@@ -129,6 +129,8 @@ function checkPasswordMatch()
 		$('#pw_check').text("");
 	}
 }
+
+<?php if($age >= 18): ?>
 
 function initializeUploader() {
 
@@ -211,6 +213,8 @@ function initializeUploader() {
 	});
 }
 
+<?php endif; ?>
+
 </script>
 
 <div class="edit hidden">
@@ -219,6 +223,7 @@ function initializeUploader() {
 
 <input type="hidden" name="action" value="edit" />
 
+<?php if($age >= 18): ?>
 <div class="clear">
 	<label>Picture</label>
 	<div class="input">
@@ -230,6 +235,7 @@ function initializeUploader() {
 		<p>Square, max 500 kb, must be .jpg, .gif, or .png</p>
 	</div>
 </div>
+<?php endif; ?>
 <div class="clear">
 	<label for="txtEmail">Email Address<span class="required">*</span></label>
 	<div class="input">
@@ -255,7 +261,7 @@ function initializeUploader() {
 	<label for="txtBirthdate">Birth date<span class="required">*</span></label>
 	<div class="input">
 		<input id="txtBirthdate" name="txtBirthdate" type="text" value="<?= ($user->getDOB() != '') ? date("Y-m-d",strtotime($user->getDOB())) : '' ?>" />
-		<p>Hidden for members younger than 18</p>
+		<p>Will not be visible in profile</p>
 	</div>
 </div>	
 <div class="clear">
@@ -273,14 +279,12 @@ function initializeUploader() {
 			<option value="M">Male</option>
 			<option value="F">Female</option>
 		</select>
-		<p>Hidden for members younger than 18</p>
 	</div>
 </div>
 <div class="clear">
 	<label for="txtLocation">Location</label>
 	<div class="input">
 		<input id="txtLocation" name="txtLocation" type="text" maxlength="255" value="<?= $loc ?>" />
-		<p>Hidden for members younger than 18</p>
 	</div>
 </div>
 <div class="clear">
@@ -309,22 +313,24 @@ function initializeUploader() {
 <h5 class="username"><?= formatUserLink($user->getID()) ?></h5>
 <p class="contact"><?= (!empty($name) && $age >= 18) ? $name.$slash : '' ?> <a href="mailto:<?= $user->getEmail() ?>">send email</a> <span class="slash">/</span> last login <?= formatTimeTag($user->getLastLogin()) ?></p>
 <?php
-if($age >= 18) {
-	// adult, so show everything
-	echo '<p class="asl">';
-	echo $age.' years old';
-	if(!empty($sex)) {
-		echo $slash.$sex;
-	}
-	if(!empty($loc)) {
-		echo $slash.'from '.$loc;
-	}
-	echo '</p>';	
-	if(!empty($bio)) {
-		echo '<div class="line" style="margin: 1em 0 0 55px;"></div>';
-		echo '<p class="biography">'.formatParagraphs($bio).'</p>';
-	}	
+
+echo '<p class="asl">';
+//	echo $age.' years old';
+if(!empty($sex)) {
+	echo $sex;
 }
+if(!empty($sex) && !empty($loc)) {
+
+}	echo $slash;
+if(!empty($loc)) {
+	echo 'from '.$loc;
+}
+echo '</p>';	
+if(!empty($bio)) {
+	echo '<div class="line" style="margin: 1em 0 0 55px;"></div>';
+	echo '<p class="biography">'.formatParagraphs($bio).'</p>';
+}	
+
 ?>
 <div class="clear"></div>
 </div><!-- .view -->
