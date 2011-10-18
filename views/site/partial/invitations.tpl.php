@@ -58,7 +58,7 @@ if(empty($unrespondedInvites)) {
 foreach($invitations as $i) {
 	// project title
 	$project = Project::load($i->getProjectID());
-	$projectTitle = formatTitle($project->getTitle());
+	$projectTitle = $project->getTitle();
 	
 	if($i->getResponse() != null) {
 		echo '<li id="invitation-'.$i->getID().'" class="responded hidden">';
