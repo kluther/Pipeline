@@ -253,7 +253,7 @@ function formatEvent($event, $showProject=false)
 				$task = Task::load($event->getItem1ID());
 				$title = $task->getTitle();
 				$url = Url::task($task->getID());
-				$formatted = sprintf("%s edited the uploads for the task %s%s.",
+				$formatted = sprintf("%s edited the attached files for the task %s%s.",
 						formatUserLink($event->getUser1ID(), $event->getProjectID()),
 						'<a href="'.$url.'">'.$title.'</a>',
 						$predicate
