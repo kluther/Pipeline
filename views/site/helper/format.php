@@ -36,6 +36,12 @@ function formatPitch($pitch) {
 
 /* generic function for formatting paragraphs of HTML text */
 function formatParagraphs($paragraphs) {
+	$pattern = "/(http:\/\/.*?)(\s|$|&#10;)/";
+	$paragraphs = preg_replace(
+		$pattern,
+		'<a href="$1">$1</a>$2',
+		$paragraphs
+	);
 	$paragraphs = str_replace("&#10;","<br />",$paragraphs);
 	$paragraphs = html_entity_decode($paragraphs, ENT_QUOTES, 'UTF-8');
 	return $paragraphs;
