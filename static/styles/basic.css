@@ -259,6 +259,11 @@ ul.invitations p.task {
 		
 /* uploads */
 
+ul.uploads input.delete {
+	float: right;
+	margin-top: 0;
+	}
+
 div.upload {
 	clear: both;
 	background: url(./../images/icons/document.png) no-repeat 0 3px;

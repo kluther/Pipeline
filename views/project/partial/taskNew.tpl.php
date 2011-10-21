@@ -23,7 +23,9 @@ $fork->startBlockSet('body');
 			minLength: 2
 		});
 		
-		$('#txtTitle').focus();		
+		$('#txtTitle').focus();	
+
+		initializeUploader();
 	});
 	
 	function uploadComplete() {

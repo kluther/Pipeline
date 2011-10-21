@@ -91,8 +91,8 @@ function initializeUploader() {
 	uploader.init();
 }
 
-$(document).ready(function(){
-	initializeUploader();
-});
+//$(document).ready(function(){
+//	initializeUploader();
+//});
 
 </script>

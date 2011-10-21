@@ -216,6 +216,7 @@ class Upload extends DbObject
 			'project_id' => $projectID
 		));
 		$upload->save();
+		return $upload->getID();
 	}
 	
 	/* is this mime type allowed to be uploaded? */

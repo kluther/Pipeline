@@ -40,18 +40,19 @@ $(document).ready(function(){
 	
 	$('#selStatus').val('<?= $task->getStatus() ?>');
 	
-	$('#btnEditTask').click(function(){
-		buildPost({
-			'processPage':'<?= Url::taskProcess($task->getID()) ?>',
-			'info': $('#frmEditItem').serialize(),
-			'buttonID':'#btnEditTask'
-		});
-	});
+	// $('#btnEditTask').click(function(){
+		// buildPost({
+			// 'processPage':'<?= Url::taskProcess($task->getID()) ?>',
+			// 'info': $('#frmEditItem').serialize(),
+			// 'buttonID':'#btnEditTask'
+		// });
+	// });
 	
 	$("#task .editButton").click(function(){
 		$(this).hide();
 		$("#task .view").hide();
 		$("#task .edit").fadeIn();
+		initializeUploader();
 		$('#txtTitle').focus();			
 	});
 	
@@ -61,6 +62,15 @@ $(document).ready(function(){
 		$("#task .editButton").fadeIn();
 	});	
 });
+
+function uploadComplete(){
+	buildPost({
+		'processPage':'<?= Url::taskProcess($task->getID()) ?>',
+		'info': $('#frmEditItem').serialize(),
+		'buttonID':'#btnEditTask'
+	});
+}
+	
 </script>
 
 
@@ -121,6 +131,19 @@ $(document).ready(function(){
 </div>
 
 <div class="clear">
+	<label>Attached Files</label>
+	<div class="input">
+		<input type="button" id="btnSelectFiles" value="Add Files" />
+		<p>Max size 100 MB each</p>
+		<div id="filelist"></div>
+		<?php 
+			$SOUP->render('project/partial/editUploads',array(
+			));
+		?>
+	</div>
+</div>
+
+<div class="clear">
 	<div class="input">
 		<input id="btnEditTask" type="button" value="Save" />
 		<input id="btnCancelTask" type="button" value="Cancel" />
@@ -128,6 +151,13 @@ $(document).ready(function(){
 </div>
 
 </form>
+
+<?php
+	$SOUP->render('site/partial/newUpload', array(
+		'uploadButtonID' => 'btnEditTask',
+		'formID' => 'frmEditItem'
+	));
+?>
 
 </div><!-- end .edit -->
 
@@ -162,14 +192,13 @@ $closed = ($task->getStatus() == Task::STATUS_CLOSED) ? ' class="closed"' : ''; 
 
 <p><?= formatTaskDescription($task->getDescription()) ?></p>
 
-</div><!-- end .view -->
-
-
 <?php
 	$SOUP->render('site/partial/newUploads', array(
 	//	'uploads' => $uploads
 	));
 ?>
+
+</div><!-- end .view -->
 
 <?php
 	$SOUP->render('project/partial/comments', array(

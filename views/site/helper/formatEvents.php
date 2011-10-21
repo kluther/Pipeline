@@ -416,7 +416,18 @@ function formatEvent($event, $showProject=false)
 						'<a href="'.$updateUrl.'">'.$updateTitle.'</a>',
 						$predicate
 					);					
-				break;				
+				break;		
+			case 'edit_update_uploads':
+				$predicate = ($showProject) ? ' in the project '.formatProjectLink($event->getProjectID()) : '';
+				$update = Update::load($event->getItem1ID());
+				$updateTitle = $update->getTitle();
+				$updateUrl = Url::update($update->getID());
+				$formatted = sprintf("%s edited the attached files for the contribution %s%s.",
+						formatUserLink($event->getUser1ID(), $event->getProjectID()),
+						'<a href="'.$updateUrl.'">'.$updateTitle.'</a>',
+						$predicate
+					);					
+				break;					
 			default:
 				$formatted = 'Event type "'.$event->getEventTypeID().'" not found.';
 		}

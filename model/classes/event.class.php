@@ -196,6 +196,8 @@ class Event extends DbObject
 		$query .= " OR (e.item_3_id = ".$taskID;
 		$query .= " AND e.event_type_id = 'edit_update_message')";		
 		$query .= " OR (e.item_3_id = ".$taskID;
+		$query .= " AND e.event_type_id = 'edit_update_uploads')";				
+		$query .= " OR (e.item_3_id = ".$taskID;
 		$query .= " AND e.event_type_id = 'create_update')";
 		$query .= " AND et.hidden = 0";		
 		$query .= " ORDER BY e.date_created DESC";
@@ -226,6 +228,8 @@ class Event extends DbObject
 		$query .= " AND e.event_type_id = 'edit_update_title')";
 		$query .= " OR (e.item_1_id = ".$updateID;
 		$query .= " AND e.event_type_id = 'edit_update_message')";		
+		$query .= " OR (e.item_1_id = ".$updateID;
+		$query .= " AND e.event_type_id = 'edit_update_uploads')";	
 		$query .= " OR (e.item_1_id = ".$updateID;
 		$query .= " AND e.event_type_id = 'edit_accepted_status')";		
 		$query .= " OR (e.item_2_id = ".$updateID;

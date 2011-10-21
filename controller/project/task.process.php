@@ -260,28 +260,56 @@ if($action == 'create') {
 		$modified = true;		
 	}
 	
-	// // attach any uploads
-	// $attached = Upload::attachToItem(
-		// $token,
-		// Upload::TYPE_TASK,
-		// $task->getID(),
-		// $project->getID()
-	// );	
+	// get posted vars for attached files
+	$deleted = $_POST['deleted']; // deleted files
+	$added = $_POST['file']; // added files
 	
-	// if($attached !== false) {
-		// // log it
-		// $firstUpload = reset($attached);
-		// $logEvent = new Event(array(
-			// 'event_type_id' => 'edit_task_uploads',
-			// 'project_id' => $project->getID(),
-			// 'user_1_id' => Session::getUserID(),
-			// 'item_1_id' => $task->getID(),
-			// 'item_2_id' => $firstUpload->getID()
-		// ));
-		// $logEvent->save();
-		// // set flag
-		// $modified = true;
-	// }
+	// are uploads deleted?
+	if(!empty($deleted)) {
+		$deletedIDs = '';
+		foreach($deleted as $d) {
+			// save changes
+			$d = Filter::numeric($d);
+			$upload = Upload::load($d);
+			$upload->setDeleted(true);
+			$upload->save();
+			$deletedIDs .= $d.',';
+		}
+	}
+	
+	// are uploads added?
+	if(!empty($added)) {
+		$addedIDs = '';
+		foreach($added as $stored => $orig) {
+			// save changes
+			$stored = Filter::text($stored);
+			$orig = Filter::text($orig);
+			$uploadID = Upload::saveToDatabase(
+				$orig,
+				$stored,
+				Upload::TYPE_TASK,
+				$task->getID(),
+				$project->getID()
+				);
+			$addedIDs .= $uploadID.',';
+		}
+	}
+	
+	// deal with logging and modified flag for both adds and deletes
+	if(!empty($deletedIDs) || !empty($addedIDs)) {
+		// log it
+		$logEvent = new Event(array(
+			'event_type_id' => 'edit_task_uploads',
+			'user_1_id' => Session::getUserID(),
+			'project_id' => $project->getID(),
+			'item_1_id' => $task->getID(),
+			'data_1' => $deletedIDs,
+			'data_2' => $addedIDs
+		));
+		$logEvent->save();
+		// set flag
+		$modified = true;	
+	}
 	
 	// check flag
 	if($modified) {

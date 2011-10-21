@@ -6,7 +6,8 @@ $fileName = Filter::text($_GET['fn']);
 
 $upload = Upload::load($fileID);
 if( ($upload == null) ||
-		($fileName != $upload->getOriginalName()) ){
+		($fileName != $upload->getOriginalName()) ||
+		($upload->getDeleted() == true) ){
 	header('Location: '.Url::error());
 	exit();
 }

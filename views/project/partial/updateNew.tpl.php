@@ -12,6 +12,7 @@ $fork->startBlockSet('body');
 <script type="text/javascript">
 	$(document).ready(function(){
 		$('#txtTitle').focus();
+		initializeUploader();
 	});
 	
 	function uploadComplete() {
