@@ -177,7 +177,7 @@ $(document).ready(function(){
 		<label for="txtInviteMembers">People to Invite<span class="required">*</span></label>
 		<div class="input">
 			<input type="text" id="txtInviteMembers" />
-			<p>Usernames or email addresses, separated by commas</p>
+			<p>Usernames and/or email addresses, separated by commas</p>
 		</div>
 	</div>
 	<?php if($hasEditPermission): ?>
@@ -185,7 +185,7 @@ $(document).ready(function(){
 		<label for="chkTrustedMember">Trusted<span class="required">*</span></label>
 		<div class="input">
 			<input type="checkbox" id="chkTrustedMember" value="trusted" checked="checked" />
-			<p>Recipients who accept this invitation become <a href="<?= Url::help() ?>">trusted members</a></p>
+			<p>If checked, recipients who accept this invitation become <a href="<?= Url::help() ?>">trusted members</a></p>
 		</div>
 	</div>
 	<?php endif; ?>
@@ -193,7 +193,7 @@ $(document).ready(function(){
 		<label for="txtInviteMembersMessage">Message</label>
 		<div class="input">
 			<textarea id="txtInviteMembersMessage"></textarea>
-			<p>Why the recipient(s) should join this project, <a class="help-link" href="<?= Url::help() ?>#help-html-allowed">some HTML allowed</a></p>
+			<p>Why the recipients should join this project; <a class="help-link" href="<?= Url::help() ?>#help-html-allowed">some HTML allowed</a></p>
 		</div>
 	</div>	
 	<div class="clear">

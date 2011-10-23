@@ -31,6 +31,11 @@ RewriteRule ^dashboard/?$ controller/site/index_c.php [L]
 
 RewriteRule ^help/?$ controller/site/help_c.php [L]
 
+### NEW PROJECT ###
+
+RewriteRule ^projects/new/process/?$ controller/project/project.process.php [L]
+RewriteRule ^projects/new/?$ controller/project/project_new_c.php [L]
+
 ### FIND PROJECTS ###
 
 RewriteRule ^projects/?$ controller/site/find_c.php [L]
@@ -101,8 +106,9 @@ RewriteRule ^projects/([a-z0-9-]+)/discussions/?$ controller/project/discussions
 
 ### PEOPLE ###
 
+RewriteRule ^projects/([a-z0-9-]+)/people/invite/process/?$ controller/project/invite.process.php?slug=$1 [QSA,L]
+RewriteRule ^projects/([a-z0-9-]+)/people/invite/?$ controller/project/invite_c.php?slug=$1 [QSA,L]
 RewriteRule ^projects/([a-z0-9-]+)/people/search/([a-z-]+)/?$ controller/project/peopleSearch.process.php?slug=$1&relationship=$2 [QSA,L]
-#RewriteRule ^projects/([a-z0-9-]+)/people/banned/?$ controller/project/banned_c.php?slug=$1 [QSA,L]
 RewriteRule ^projects/([a-z0-9-]+)/people/process/?$ controller/project/credits.process.php?slug=$1 [QSA,L]
 RewriteRule ^projects/([a-z0-9-]+)/people/?$ controller/project/credits_c.php?slug=$1 [QSA,L]
 

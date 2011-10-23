@@ -57,8 +57,8 @@ if($project != null)
 				<li class="right"><a href="<?= Url::consent() ?>">Register</a></li>
 				<li class="right"><a href="<?= Url::logIn() ?>">Log In</a></li>
 			<?php endif; ?>
+				<li class="left"><a href="<?= Url::projectNew() ?>">Start a Project</a></li>			
 				<li class="left"><a href="<?= Url::findProjects() ?>">Find Projects</a></li>
-				<!--li class="left"><a href="<?= Url::startAProject() ?>">Start a Project</a></li-->
 				<li class="left"><a href="http://pipeline.cc.gatech.edu/">About Pipeline</a></li>
 				<li class="left"><a href="<?= Url::help() ?>">Help</a></li>
 			</ul>

@@ -110,8 +110,8 @@ class ProjectUser extends DbObject
 		$query .= " INNER JOIN ".User::DB_TABLE." u ON ";
 		$query .= " pu.user_id = u.id";
 		$query .= " WHERE pu.project_id = ".$projectID;
-		$query .= " AND pu.relationship = ".self::MEMBER;
-		$query .= " OR pu.relationship = ".self::TRUSTED;
+		$query .= " AND (pu.relationship = ".self::MEMBER;
+		$query .= " OR pu.relationship = ".self::TRUSTED.')';
 		$query .= " ORDER BY u.username ASC";	
 		//echo $query.'<br />';
 		

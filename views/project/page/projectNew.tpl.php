@@ -1,0 +1,1 @@
+<?php$fork = $SOUP->fork();$fork->set('pageTitle', 'Start a Project');$fork->startBlockSet('body');?><td class="left"><?php		$SOUP->render('project/partial/newProject', array());	?></td><td class="right"></td><?php$fork->endBlockSet();$fork->render('site/partial/page');

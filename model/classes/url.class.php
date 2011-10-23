@@ -86,11 +86,6 @@ class Url
 		return (self::base().'/projects');
 	}
 	
-	public static function startAProject()
-	{
-		return (self::base().'/projects/start');
-	}
-	
 	public static function register($email=null) {
 		if(!empty($email)) {
 			return (self::base().'/register/'.urlencode($email));
@@ -223,6 +218,14 @@ class Url
 		$project = Project::load($projectID);
 		$slug = $project->getSlug();
 		return (self::base().'/projects/'.$slug);
+	}
+	
+	public static function projectNew() {
+		return (self::base().'/projects/new');
+	}
+	
+	public static function projectNewProcess() {
+		return(self::projectNew().'/process');
 	}
 	
 	public static function activity($projectID=null)
@@ -397,6 +400,16 @@ class Url
 		if($projectID == null) return null;
 		return (self::people($projectID).'/process');
 	}
+	
+	public static function peopleInvite($projectID=null) {
+		if($projectID == null) return null;
+		return (self::people($projectID).'/invite');
+	}		
+	
+	public static function peopleInviteProcess($projectID=null) {
+		if($projectID == null) return null;
+		return (self::peopleInvite($projectID).'/process');
+	}		
 	
 	public static function peopleSearch($projectID=null) {
 		if($projectID == null) return null;
