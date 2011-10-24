@@ -36,7 +36,7 @@ function formatPitch($pitch) {
 
 /* generic function for formatting paragraphs of HTML text */
 function formatParagraphs($paragraphs) {
-	$pattern = "/(\s|^)(http:\/\/.*?)(\s|$|&#10;)/";
+	$pattern = "/(\s|^|&#10;)(http:\/\/.*?)(\s|$|&#10;)/";
 	$paragraphs = preg_replace(
 		$pattern,
 		'<a href="$1">$1</a>$2',
