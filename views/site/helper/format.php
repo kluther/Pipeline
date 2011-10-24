@@ -39,7 +39,7 @@ function formatParagraphs($paragraphs) {
 	$pattern = "/(\s|^|&#10;)(http:\/\/.*?)(\s|$|&#10;)/";
 	$paragraphs = preg_replace(
 		$pattern,
-		'<a href="$1">$1</a>$2',
+		'$1<a href="$2">$2</a>$3',
 		$paragraphs
 	);
 	$paragraphs = str_replace("&#10;","<br />",$paragraphs);
