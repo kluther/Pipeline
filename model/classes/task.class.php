@@ -72,23 +72,30 @@ class Task extends DbObject
 	}
 	
 	public static function getYourTasks($userID=null, $projectID=null, $limit=null) {
-		return (self::getByUserID($userID, $projectID, $limit));
+		return (self::getByUserID($userID, $projectID, null, $limit));
 	}
 	
-	public static function getByUserID($userID=null, $projectID=null, $limit=null)
+	public static function getByUserID($userID=null, $projectID=null, $private=null, $limit=null)
 	{
 		if($userID == null) return null;
 		
-		$query = "SELECT id FROM ".self::DB_TABLE;
-		$query .= " WHERE ((leader_id = ".$userID.")";
-		$query .= " OR (id IN ";
+		$query = "SELECT t.id AS id FROM ".self::DB_TABLE." t";
+		$query .= " INNER JOIN ".Project::DB_TABLE." p";
+		$query .= " ON t.project_id = p.id";
+		$query .= " WHERE ((t.leader_id = ".$userID.")";
+		$query .= " OR (t.id IN ";
 			$query .= " (SELECT task_id FROM ".Accepted::DB_TABLE;
 			$query .= " WHERE creator_id = ".$userID;
 			$query .= " AND status != ".Accepted::STATUS_RELEASED.")";
 		$query .= " ))";
 		if($projectID != null)
-			$query .= " AND project_id = ".$projectID;
-		$query .= " ORDER BY status DESC, ISNULL(deadline) ASC, title ASC";
+			$query .= " AND t.project_id = ".$projectID;
+		if($private === true) {
+			$query .= " AND private=1";
+		} elseif($private === false) {
+			$query .= " AND private=0";
+		}
+		$query .= " ORDER BY t.status DESC, ISNULL(t.deadline) ASC, t.title ASC";
 		if($limit != null)
 			$query .= " LIMIT ".$limit;
 		//echo $query;

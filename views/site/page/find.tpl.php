@@ -10,7 +10,7 @@ $fork->startBlockSet('body');
 <td class="left">
 
 <?php
-	$SOUP->render('site/partial/lookingForHelp', array(
+	$SOUP->render('site/partial/publicProjects', array(
 	));
 ?>
 

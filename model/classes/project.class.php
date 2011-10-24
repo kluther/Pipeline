@@ -105,10 +105,6 @@ class Project extends DbObject
 	public function isAffiliated($userID=null) {
 		return(ProjectUser::isAffiliated($userID, $this->id));
 	}
-	
-	// public function getContributors() {
-		// return(ProjectUser::getContributors($this->id));
-	// }	
 
 	public function getAllMembers() {
 		return(ProjectUser::getAllMembers($this->id));
@@ -121,26 +117,6 @@ class Project extends DbObject
 	public function getFollowers() {
 		return(ProjectUser::getFollowers($this->id));
 	}		
-	
-	// public function getOrganizers()
-	// {
-		// return(ProjectUser::getOrganizers($this->id));
-	// }
-	
-	// public function getOnlyContributors()
-	// {
-		// return (ProjectUser::getOnlyContributors($this->id));
-	// }
-	
-	// public function getFollowers()
-	// {
-		// return(ProjectUser::getFollowers($this->id));
-	// }
-	
-	// public function getBanned()
-	// {
-		// return(ProjectUser::getBanned($this->id));
-	// }
 	
 	public function getTasks($status=null, $limit=null) {
 		return(Task::getByProjectID($this->id, $status, $limit));
@@ -164,15 +140,10 @@ class Project extends DbObject
 	
 	/* static methods */
 	
-	public static function getLookingForHelp($limit=null) {
-		$query = "SELECT DISTINCT id FROM ".self::DB_TABLE;
-		$query .= " WHERE status > ".self::STATUS_COMPLETED;
-		$query .= " AND private = 0";
-		$query .= " AND id IN (";
-			$query .= " SELECT DISTINCT project_id FROM ".Task::DB_TABLE;
-			$query .= " WHERE status = 1";
-		$query .= ") ";
-		$query .= " ORDER BY ISNULL(deadline) ASC, title ASC";
+	public static function getPublicProjects($limit=null) {
+		$query = "SELECT id FROM ".self::DB_TABLE;
+		$query .= " WHERE private = 0";
+		$query .= " ORDER BY status DESC, ISNULL(deadline) ASC, title ASC";
 		if($limit != null)
 			$query .= " LIMIT ".$limit;
 		//echo $query;
@@ -184,10 +155,10 @@ class Project extends DbObject
 		$projects = array();
 		while($row = mysql_fetch_assoc($result))
 			$projects[$row['id']] = self::load($row['id']);
-		return $projects;
+		return $projects;	
 	}
 	
-	public static function getByUserID($userID=null, $limit=null) {
+	public static function getByUserID($userID=null, $private=null, $limit=null) {
 		if($userID === null) return null;
 		
 		$query = "SELECT DISTINCT id FROM ".self::DB_TABLE;
@@ -211,6 +182,11 @@ class Project extends DbObject
 			$query .= " WHERE user_id = ".$userID;
 			$query .= " AND relationship = ".ProjectUser::BANNED;
 		$query .= " )";
+		if($private === true) {
+			$query .= " AND private=1";
+		} elseif($private === false) {
+			$query .= " AND private=0";
+		}
 		$query .= " ORDER BY ISNULL(deadline) ASC, title ASC";
 		//echo $query;
 		if($limit != null)

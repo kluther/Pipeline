@@ -9,6 +9,7 @@ $pitch =    Filter::formattedText($_POST['txtPitch']);
 $specs =    Filter::text($_POST['txtSpecs']);
 $rules =    Filter::text($_POST['txtRules']);
 $deadline = Filter::text($_POST['txtDeadline']);
+$private =  Filter::text($_POST['chkPrivate']);
 
 // validate data
 if(empty($title)) {
@@ -31,6 +32,9 @@ if( ($formattedDeadline === false) && ($deadline != '') ) {
 // format deadline for MYSQL
 $formattedDeadline = ($formattedDeadline != '') ? date("Y-m-d H:i:s", $formattedDeadline) : null;
 
+// format private
+$private = (empty($private)) ? 0 : 1;
+
 // create the project
 
 $project = new Project(array(
@@ -42,7 +46,7 @@ $project = new Project(array(
 	'rules' => $rules,
 	'status' => Project::STATUS_PRE_PRODUCTION,
 	'deadline' => $formattedDeadline,
-	'private' => 0
+	'private' => $private
 ));
 $project->save();
 

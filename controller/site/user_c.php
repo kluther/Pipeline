@@ -10,9 +10,9 @@ if($user === null) {
 	exit();
 }
 
-$events = Event::getUserEvents($user->getID(), 10);
-$tasks = Task::getByUserID($user->getID());
-$projects = Project::getByUserID($user->getID());
+$events = Event::getUserEvents($user->getID(), false, 10);
+$tasks = Task::getByUserID($user->getID(), null, false);
+$projects = Project::getByUserID($user->getID(), false);
 
 $soup = new Soup();
 $soup->set('user', $user);

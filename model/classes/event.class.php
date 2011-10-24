@@ -290,14 +290,21 @@ class Event extends DbObject
 		return (self::getByProjectID($projectID, PEOPLE_ID, $limit));
 	}	
 	
-	public static function getUserEvents($userID=null, $limit=null) {
+	public static function getUserEvents($userID=null, $private=null, $limit=null) {
 		if($userID == null) return null;
 		
 		$query = "SELECT e.id AS id FROM ".self::DB_TABLE." e";
 		$query .= " INNER JOIN ".EventType::DB_TABLE." et ON ";
 		$query .= " e.event_type_id = et.id";		
+		$query .= " INNER JOIN ".Project::DB_TABLE." p ON ";
+		$query .= " p.id = e.project_id";
 		$query .= " WHERE e.user_1_id = ".$userID;
 		$query .= " AND et.hidden = 0";
+		if($private === true) {
+			$query .= " AND p.private=1";
+		} elseif($private === false) {
+			$query .= " AND p.private=0";
+		}
 		$query .= " ORDER BY e.date_created DESC";
 		if($limit != null)
 			$query .= " LIMIT ".$limit;

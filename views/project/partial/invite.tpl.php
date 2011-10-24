@@ -79,7 +79,8 @@ $(document).ready(function(){
 
 </script>
 
-<p><strong>Your project was created!</strong> Now you need a team. Use the form below to invite people to join your shiny new project.</p>
+<p><strong>Your project was created!</strong> Now you need a team.</p>
+<p>Use the form below to invite people to join your shiny new project. Or, you can manually share the <a href="<?= Url::project($project->getID()) ?>">project link</a> with friends via email, social media, etc.</p>
 
 <div class="line"> </div>
 
