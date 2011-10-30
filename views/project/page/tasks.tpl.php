@@ -23,16 +23,16 @@ $fork->startBlockSet('body');
 <?php if(Session::isLoggedIn()): ?>
 
 <?php
-	$SOUP->render('site/partial/userTasks', array(
+	$SOUP->render('project/partial/tasks2', array(
 		'id' => 'yourTasks',
 		'tasks' => $yourTasks,
 		'title' => 'Your Tasks',
-		'user' => User::load(Session::getUserID())
+		'user' => Session::getUser()
 	));
 ?>
 
 <?php
-	$SOUP->render('project/partial/tasks', array(
+	$SOUP->render('project/partial/tasks2', array(
 		'id' => 'moreTasks',
 		'tasks' => $moreTasks,
 		'title' => 'More Tasks',
@@ -43,7 +43,7 @@ $fork->startBlockSet('body');
 <?php else: ?>
 
 <?php
-	$SOUP->render('project/partial/tasks', array(
+	$SOUP->render('project/partial/tasks2', array(
 		'tasks' => $tasks,
 		'title' => 'Tasks'
 	));

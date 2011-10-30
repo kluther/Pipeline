@@ -113,6 +113,50 @@ ul.projects li {
 			
 /* TASK LIST */
 
+table.tasks th {
+	text-align: left;
+	font-weight: normal;
+	padding: 0 1em 0.5em 0;
+	font-size: 95%;
+	}
+
+table.tasks td {
+	border-top: 1px solid;
+	padding: 0.5em 1em 0.5em 0;
+	vertical-align: middle;
+	font-size: 100%;
+	}
+	
+table.tasks td.name {
+	width: 50%;
+	background: url(./../images/icons/task.png) no-repeat 0 0.5em;
+	padding-left: 22px;
+	}
+	table.tasks td.name h6 {
+		font-size: 100%;
+		font-weight: bold;
+		margin: 0; padding: 0;
+		}
+	table.tasks td.name p {
+		font-size: 80%;
+		margin: 0; padding: 0;
+		}
+
+table.tasks td.status,
+table.tasks td.deadline,
+table.tasks td.needed,
+table.tasks td.role {
+	font-size: 95%;
+	}
+	
+table.tasks td.role {
+	padding-right: 0;
+	}
+	
+table.tasks td.needed {
+	text-align: center;
+	}
+
 ul.tasks li {
 	background-image: url(./../images/icons/task.png);
 	}

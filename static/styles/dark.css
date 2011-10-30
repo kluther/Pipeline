@@ -193,6 +193,10 @@ div.home div.meta {
 	color: #ccc;
 	}
 	
+table.tasks td {
+	border-color: #313131;
+	}	
+	
 input[type=button], input[type=submit] {
 	/*border-color: #444444;*/
 	background-color: #444444;
