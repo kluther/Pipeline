@@ -25,7 +25,7 @@ $fork->startBlockSet('body');
 ?>
 
 <?php
-	$SOUP->render('project/partial/tasks2', array(
+	$SOUP->render('project/partial/tasks', array(
 		'user' => $user,
 		'tasks' => $tasks,
 		'hasPermission' => false,

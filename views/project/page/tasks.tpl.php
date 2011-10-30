@@ -23,7 +23,7 @@ $fork->startBlockSet('body');
 <?php if(Session::isLoggedIn()): ?>
 
 <?php
-	$SOUP->render('project/partial/tasks2', array(
+	$SOUP->render('project/partial/tasks', array(
 		'id' => 'yourTasks',
 		'tasks' => $yourTasks,
 		'title' => 'Your Tasks',
@@ -32,7 +32,7 @@ $fork->startBlockSet('body');
 ?>
 
 <?php
-	$SOUP->render('project/partial/tasks2', array(
+	$SOUP->render('project/partial/tasks', array(
 		'id' => 'moreTasks',
 		'tasks' => $moreTasks,
 		'title' => 'More Tasks',
@@ -43,7 +43,7 @@ $fork->startBlockSet('body');
 <?php else: ?>
 
 <?php
-	$SOUP->render('project/partial/tasks2', array(
+	$SOUP->render('project/partial/tasks', array(
 		'tasks' => $tasks,
 		'title' => 'Tasks'
 	));
