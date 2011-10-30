@@ -2,39 +2,65 @@
 include_once TEMPLATE_PATH.'/site/helper/format.php';
 
 $projects = $SOUP->get('projects', array());
-$user = $SOUP->get('user', Session::getUser());
+$user = $SOUP->get('user', null);
 $title = $SOUP->get('title', 'Projects');
 
 $fork = $SOUP->fork();
 $fork->set('title', $title);
 $fork->startBlockSet('body');
 
-if($projects != null) {
+if(!empty($projects)) {
 ?>
-<ul class="segmented-list projects">
-<?php foreach($projects as $p): ?>
-	<li>
-		<?php
-		
-		$relationship = '';
-		if(ProjectUser::isCreator($user->getID(), $p->getID())) {
-			$relationship = 'creator';
-		} elseif(ProjectUser::isTrusted($user->getID(), $p->getID())) {
-			$relationship = 'trusted member';			
-		} elseif(ProjectUser::isMember($user->getID(), $p->getID())) {
-			$relationship = 'member';
-		} elseif(ProjectUser::isFollower($user->getID(), $p->getID())) {
-			$relationship = 'follower';
+<table class="projects">
+	<tr>
+		<th style="padding-left: 22px;">Project</th>
+		<th>Status</th>
+		<th>Deadline</th>
+		<th>Members</th>
+		<?php if(!is_null($user)): ?>
+		<th>Role</th>
+		<?php endif; ?>
+	</tr>
+<?php
+	foreach($projects as $p) {
+		echo '<tr>';
+		// title and pitch
+		echo '<td class="name">';
+		echo '<h6><a href="'.Url::project($p->getID()).'">'.$p->getTitle().'</a></h6>';
+		// echo '<p>';
+		// echo formatPitch(substr($p->getPitch(),0,70));
+		// if(strlen($p->getPitch()) > 70)
+			// echo '...';
+		// echo '</p>';
+		echo '</td>';
+		// status
+		$status = formatProjectStatus($p->getStatus());
+		echo '<td class="status">'.$status.'</td>';
+		// deadline
+		$deadline = $p->getDeadline();
+		$deadline = (empty($deadline)) ? '--' : formatTimeTag($deadline);
+		echo '<td class="deadline">'.$deadline.'</td>';
+		// members
+		$members = count($p->getAllMembers())+1;
+		echo '<td class="members"><a href="'.Url::people($p->getID()).'">'.$members.'</a></td>';
+		// role
+		if(!is_null($user)) {
+			$relationship = '';
+			if(ProjectUser::isCreator($user->getID(), $p->getID())) {
+				$relationship = 'creator';
+			} elseif(ProjectUser::isTrusted($user->getID(), $p->getID())) {
+				$relationship = 'trusted member';			
+			} elseif(ProjectUser::isMember($user->getID(), $p->getID())) {
+				$relationship = 'member';
+			} elseif(ProjectUser::isFollower($user->getID(), $p->getID())) {
+				$relationship = 'follower';
+			}
+			echo '<td class="role">'.$relationship.'</td>';
 		}
-		
-		$deadline = ($p->getDeadline() != '') ? 'due '.formatTimeTag($p->getDeadline()) : 'no deadline';
-		
-		?>
-		<h6 class="primary"><a href="<?= Url::project($p->getID()) ?>"><?= $p->getTitle() ?></a>&nbsp;<span class="status"><?= $relationship ?></span></h6>
-		<p class="secondary"><span class="status"><?= formatProjectStatus($p->getStatus()) ?></span> <span class="slash">/</span> <?= $deadline ?></p>
-	</li>
-<?php endforeach; ?>
-</ul>
+		echo '</tr>';
+	}
+ ?>
+</table>
 <?php
 } else {
 	echo '<p>(none)</p>';

@@ -195,7 +195,13 @@ div.home div.meta {
 	color: #666;
 	}	
 
-table.tasks td {
+table.tasks th,
+table.projects th {
+	color: #888888;
+	}
+	
+table.tasks td,
+table.projects td {
 	border-color: #dddddd;
 	}
 	

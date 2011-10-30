@@ -84,12 +84,12 @@ if(!empty($tasks)) {
 		echo '<table class="tasks">';
 		// table heading
 		echo '<tr>';
-		echo '	<th style="padding-left: 22px;"><a href="#">Task</a></th>';
-		echo '	<th><a href="#">Status</a></th>';
-		echo '	<th><a href="#">Deadline</a></th>';
-		echo '	<th><a href="#">Needed</a></th>';
+		echo '	<th style="padding-left: 22px;">Task</th>';
+		echo '	<th>Status</th>';
+		echo '	<th>Deadline</th>';
+		echo '	<th>Needed</th>';
 		if(!is_null($user)) {
-			echo '	<th><a href="#">Role</a></th>';
+			echo '	<th>Role</th>';
 		}
 		echo '</tr>';
 		foreach($tasks as $t) {
@@ -97,12 +97,18 @@ if(!empty($tasks)) {
 			// title
 			echo '<td class="name">';
 			echo '<h6><a href="'.Url::task($t->getID()).'">'.$t->getTitle().'</a></h6>';
-			// description
-			echo '<p>';
-			echo substr($t->getDescription(),0,70);
-			if(strlen($t->getDescription()) > 70)
-				echo '...';
-			echo '</p>';
+			if(is_null($project)) {
+				// project
+				$ptitle = Project::load($t->getProjectID())->getTitle();
+				echo '<p>in <a href="'.Url::project($t->getProjectID()).'">'.$ptitle.'</a></p>';
+			} else {
+				// description
+				echo '<p>';
+				echo substr($t->getDescription(),0,70);
+				if(strlen($t->getDescription()) > 70)
+					echo '...';
+				echo '</p>';			
+			}
 			echo '</td>';
 			// status
 			if($t->getStatus() == Task::STATUS_OPEN) {

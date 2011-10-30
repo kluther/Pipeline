@@ -20,7 +20,8 @@ $fork->startBlockSet('body');
 <?php
 	$SOUP->render('site/partial/projects', array(
 		'hasPermission' => false,
-		'title' => $user->getUsername().'\'s Projects'		
+		'title' => $user->getUsername().'\'s Projects',
+		'user' => $user
 	));
 ?>
 

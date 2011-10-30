@@ -107,6 +107,55 @@ div.panel.small ul.segmented-list h6.primary {
 			}
 			
 /* PROJECTS LIST */
+
+table.projects th {
+	text-align: left;
+	font-weight: normal;
+	padding: 0 1em 0.5em 0;
+	font-size: 95%;
+	}
+
+table.projects td {
+	border-top: 1px solid;
+	padding: 0.5em 1em 0.5em 0;
+	vertical-align: middle;
+	font-size: 100%;
+	}
+	
+table.projects td.name {
+	width: 50%;
+	background: url(./../images/icons/clapperboard.png) no-repeat 0 center;
+	padding-left: 22px;
+	}
+	table.projects td.name h6 {
+		font-size: 100%;
+		font-weight: bold;
+		margin: 0; padding: 0;
+		}
+	table.projects td.name p {
+		font-size: 80%;
+		margin: 0; padding: 0;
+		}
+
+table.projects td.status,
+table.projects td.deadline,
+table.projects td.members,
+table.projects td.role {
+	font-size: 95%;
+	}
+	
+table.projects td.status {
+	white-space: nowrap;
+	}
+	
+table.projects td.role {
+	padding-right: 0;
+	}
+	
+table.projects td.members {
+	text-align: center;
+	}
+
 ul.projects li {
 	background-image: url(./../images/icons/clapperboard.png);
 	}

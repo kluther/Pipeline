@@ -12,14 +12,15 @@ $fork->startBlockSet('body');
 
 <?php
 	$SOUP->render('site/partial/projects', array(
-		'title' => 'Your Projects'
+		'title' => 'Your Projects',
+		'user' => Session::getUser()
 	));
 ?>
 
 <?php
-	$SOUP->render('site/partial/userTasks', array(
+	$SOUP->render('project/partial/tasks', array(
 		'title' => 'Your Tasks',
-		'user' => User::load(Session::getUserID()),
+		'user' => Session::getUser(),
 		'hasPermission' => false
 	));
 ?>
