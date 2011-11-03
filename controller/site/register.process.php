@@ -24,7 +24,8 @@ switch($action)
 		$pw2 = 		 Filter::text($_POST['pw2']);
 		$email = 	 Filter::email($_POST['email']);
 		$name = 	 Filter::text($_POST['name']);
-		$birthdate = Filter::text($_POST['birthdate']);
+		$month =     Filter::text($_POST['month']);
+		$year =      Filter::text($_POST['year']);
 		$sex =		 Filter::text($_POST['sex']);
 		$location =  Filter::text($_POST['location']);
 		$biography = Filter::text($_POST['biography']);
@@ -104,14 +105,13 @@ switch($action)
 		}	
 		
 		// must provide birthdate
-		if(empty($birthdate)) {
-			$json = array( 'error' => 'You must provide a valid birth date to register.' );
+		if($month == "0" || $year == "0") {
+			$json = array( 'error' => 'You must select a valid birth month and year to register.' );
 			exit(json_encode($json));		
 		}
 		
 		// convert birthdate to MySQL format
-		$dob = strtotime($birthdate);
-		$dob = date("Y-m-d", $dob);		
+		$dob = $year."-".$month."-01";
 		
 		// convert password to MD5 hash
 		$pw = sha1($pw);
