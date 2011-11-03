@@ -51,7 +51,6 @@ $fork->startBlockSet('body');
 			<option value="<?= Accepted::STATUS_PROGRESS ?>"><?= Accepted::getStatusName(Accepted::STATUS_PROGRESS) ?></option>
 			<option value="<?= Accepted::STATUS_FEEDBACK ?>" selected="selected"><?= Accepted::getStatusName(Accepted::STATUS_FEEDBACK) ?></option>
 			<option value="<?= Accepted::STATUS_COMPLETED ?>"><?= Accepted::getStatusName(Accepted::STATUS_COMPLETED) ?></option>
-			<option value="<?= Accepted::STATUS_RELEASED ?>"><?= Accepted::getStatusName(Accepted::STATUS_RELEASED) ?></option>
 		</select>
 	</div>
 </div>

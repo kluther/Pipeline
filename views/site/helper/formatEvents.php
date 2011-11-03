@@ -293,6 +293,19 @@ function formatEvent($event, $showProject=false)
 						$predicate
 					);			
 				break;
+			case 'release_task':
+				$predicate = ($showProject) ? ' in the project '.formatProjectLink($event->getProjectID()) : '';
+				$accepted = Accepted::load($event->getItem1ID());
+				//$acceptedUrl = Url::updates($accepted->getID());
+				$task = Task::load($event->getItem2ID());
+				$taskTitle = $task->getTitle();
+				$taskUrl = Url::task($task->getID());
+				$formatted = sprintf("%s left the task %s%s.",
+						formatUserLink($event->getUser1ID(), $event->getProjectID()),
+						'<a href="'.$taskUrl.'">'.$taskTitle.'</a>',
+						$predicate
+					);			
+				break;				
 			case 'edit_accepted_status':
 				$predicate = ($showProject) ? ' in the project '.formatProjectLink($event->getProjectID()) : '';
 				$update = Update::load($event->getItem1ID());
@@ -303,38 +316,21 @@ function formatEvent($event, $showProject=false)
 				$taskTitle = $task->getTitle();
 				$taskUrl = Url::task($task->getID());
 				$status = $event->getData2();
-				if($status == Accepted::STATUS_RELEASED) {
-					$formatted = sprintf("%s has %s working on the task %s%s.",
+				if($status == Accepted::STATUS_FEEDBACK) {
+					$formatted = sprintf("%s is seeking feedback on his/her work on the task %s%s.",
 							formatUserLink($event->getUser1ID(), $event->getProjectID()),
-							'<a href="'.$updateUrl.'">stopped</a>',
-							'<a href="'.$taskUrl.'">'.$taskTitle.'</a>',
-							$predicate
-						);	
-				} elseif($status == Accepted::STATUS_ACCEPTED) {
-					$formatted = sprintf("%s has %s working on the task %s%s.",
-							formatUserLink($event->getUser1ID(), $event->getProjectID()),
-							'<a href="'.$updateUrl.'">started</a>',
-							'<a href="'.$taskUrl.'">'.$taskTitle.'</a>',
-							$predicate
-						);				
-				} elseif($status == Accepted::STATUS_FEEDBACK) {
-					$formatted = sprintf("%s is %s on his/her work on the task %s%s.",
-							formatUserLink($event->getUser1ID(), $event->getProjectID()),
-							'<a href="'.$updateUrl.'">seeking feedback</a>',
 							'<a href="'.$taskUrl.'">'.$taskTitle.'</a>',
 							$predicate
 						);					
 				} elseif($status == Accepted::STATUS_COMPLETED) {
-					$formatted = sprintf("%s has %s working on the task %s%s.",
+					$formatted = sprintf("%s is finished working on the task %s%s.",
 							formatUserLink($event->getUser1ID(), $event->getProjectID()),
-							'<a href="'.$updateUrl.'">finished</a>',
 							'<a href="'.$taskUrl.'">'.$taskTitle.'</a>',
 							$predicate
 						);						
 				} elseif($status == Accepted::STATUS_PROGRESS) {
-					$formatted = sprintf("%s is %s on the task %s%s.",
+					$formatted = sprintf("%s is working on the task %s%s.",
 							formatUserLink($event->getUser1ID(), $event->getProjectID()),
-							'<a href="'.$updateUrl.'">working</a>',
 							'<a href="'.$taskUrl.'">'.$taskTitle.'</a>',
 							$predicate
 						);						

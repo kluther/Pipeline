@@ -237,7 +237,7 @@ class Accepted extends DbObject
 		elseif($status == self::STATUS_PROGRESS)
 			return "working";
 		else
-			return "stopped";		
+			return "left";		
 	}
 	
 	public function setStatus($newStatus)

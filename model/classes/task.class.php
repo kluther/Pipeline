@@ -187,13 +187,17 @@ class Task extends DbObject
 		return (count($accepted));
 	}
 	
-	
 	// used on Task page
+	
 	public function getAcceptedBy()
 	{
 		$acceptedBy = Accepted::getAcceptedBy($this->getID());
 		return $acceptedBy;
 	}
+	
+	public function getUpdates() {
+		return (Update::getByTaskID($this->id));
+	}	
 
 	
 	// --- only getters and setters below here --- //	

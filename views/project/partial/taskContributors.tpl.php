@@ -4,56 +4,47 @@ include_once TEMPLATE_PATH.'/site/helper/format.php';
 $project = $SOUP->get('project');
 $task = $SOUP->get('task');
 $joined = $SOUP->get('accepted');
+$id = $SOUP->get('id', 'contributors');
+$hasJoinedTask = $SOUP->get('hasJoinedTask', false);
 
-// num joined
-$numJoined = $task->getNumAccepted();
-$numJoined = formatCount($numJoined,'person','people');
-
-// num needed
-$numNeeded = $task->getNumNeeded();
-if($numNeeded == 0)
-	$numNeeded = '&#8734; people';
-else {
-	$numNeeded -= $numJoined;
-	$numNeeded = formatCount($numNeeded,'person','people');
-}
-
-// can user join task or contribute to task?
-
+// can user join or leave task?
+$hasLeavePermission = false;
 $hasJoinPermission = false;
-$hasContributePermission = false;
 
-if($task->getStatus() == Task::STATUS_OPEN) {
-	if(Session::isLoggedIn()) {
-		if(Accepted::getByUserID(Session::getUserID(), $task->getID()) !== null) {
-			// user has joined task
-			if( Session::isAdmin() ||
-				$project->isMember(Session::getUserID()) ||
-				$project->isTrusted(Session::getUserID()) ||
-				$project->isCreator(Session::getUserID()) ) {
-				$hasContributePermission = true;
-			}
-		} else {
-			// user hasn't joined task
-			if( Session::isAdmin() || // must be admin, follower, or not banned
-				!$project->isBanned(Session::getUserID()) ) {
-				$hasJoinPermission = true;
-			}
-		}
+if(Session::isLoggedIn() &&
+	!$project->isBanned(Session::getUserID())) {
+	if($hasJoinedTask) {
+		$hasLeavePermission = true;
+	} else {
+		$hasJoinPermission = true;
 	}
 }
 
+// num joined
+$numJoined = $task->getNumAccepted();
+
+// num needed
+$numNeeded = $task->getNumNeeded();
+
+if(empty($numNeeded))
+	$numNeeded = '&#8734; people';
+else {
+	$numNeeded = $numNeeded - $numJoined;
+	if($numNeeded < 0) $numNeeded = 0;
+	$numNeeded = formatCount($numNeeded,'person','people');
+}
+$numJoined = formatCount($numJoined,'person','people');
+
 $fork = $SOUP->fork();
-$fork->set('title', 'Contributors');
-$fork->set('id', 'contributors');
+$fork->set('title', 'Task Members');
+$fork->set('id', $id);
 if($hasJoinPermission) {
 	$fork->set('creatable', true);
 	$fork->set('createLabel', 'Join Task');
-} elseif($hasContributePermission) {
+} elseif($hasLeavePermission) {
 	$fork->set('creatable', true);
-	$fork->set('createLabel', 'Contribute');
+	$fork->set('createLabel', 'Leave Task');
 }
-
 
 $fork->startBlockSet('body');
 
@@ -65,8 +56,8 @@ $(document).ready(function() {
 
 <?php if($hasJoinPermission): ?>
 
-	var btnJoin = $('#contributors .createButton');
-	btnJoin.click(function() {
+	var btnJoin = $('#<?= $id ?> .createButton');
+	$(btnJoin).click(function() {
 		buildPost({
 			'processPage': '<?= Url::taskProcess($task->getID()) ?>',
 			'info':{
@@ -76,14 +67,20 @@ $(document).ready(function() {
 		});
 	});
 	
-<?php elseif($hasContributePermission): ?>
+<?php elseif($hasLeavePermission): ?>
 
-	$('#contributors .createButton').click(function(){
-		window.location = '<?= Url::updateNew($task->getID()) ?>';
-	});
+	var btnLeave = $('#<?= $id ?> .createButton');
+	$(btnLeave).click(function() {
+		buildPost({
+			'processPage': '<?= Url::taskProcess($task->getID()) ?>',
+			'info':{
+				'action': 'release'
+			},
+			'buttonID': btnLeave
+		});
+	});	
 
 <?php endif; ?>
-
 	
 });
 
@@ -114,7 +111,7 @@ if($joined != null) {
 		//	echo '<h6 class="primary"><a href="'.Url::update($latestUpdate->getID()).'">'.$latestUpdate->getTitle().'</a></h6>';
 		//	echo '<p class="secondary">posted '.formatTimeTag($latestUpdate->getDateCreated()).' by '.formatUserLink($latestUpdate->getCreatorID(), $latestUpdate->getProjectID()).'</p>';
 		} else {
-			echo '<p class="secondary">joined '.formatTimeTag($j->getDateCreated()).'</p>';
+			echo '<p class="secondary">no contributions <span class="slash">/</span> joined '.formatTimeTag($j->getDateCreated()).'</p>';
 		}
 		echo '</li>';
 	}

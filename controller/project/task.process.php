@@ -60,7 +60,7 @@ if ( ($action == 'create') || ($action == 'edit') ) {
 	}
 }
 
-if ( ($action == 'edit') || ($action == 'accept') || ($action == 'comment') || ($action == 'comment-reply') ) {
+if ( ($action == 'edit') || ($action == 'accept') || ($action == 'release') || ($action == 'comment') || ($action == 'comment-reply') ) {
 	// instantiate and validate task
 	$taskID = Filter::numeric($_GET['t']);
 	$task = Task::load($taskID);
@@ -344,32 +344,41 @@ if($action == 'create') {
 	// join user to project, if they're not already
 	$pu = ProjectUser::find(Session::getUserID(), $project->getID());
 	if(empty($pu)) {
-		// not a member yet, so make them one
+		// not a project member yet, so make them one
 		$pu = new ProjectUser(array(
 			'project_id' => $project->getID(),
 			'user_id' => Session::getUserID(),
 			'relationship' => ProjectUser::MEMBER
 		));
+		$pu->save();
+		
+		// log it
+		$logEvent = new Event(array(
+			'event_type_id' => 'join_project',
+			'project_id' => $project->getID(),
+			'user_1_id' => Session::getUserID()
+		));
+		$logEvent->save();			
 	} elseif($project->isFollower(Session::getUserID())) {
 		// convert follower to member
 		$pu->setRelationship(ProjectUser::MEMBER);	
+		$pu->save();
+		
+		// log it
+		$logEvent = new Event(array(
+			'event_type_id' => 'join_project',
+			'project_id' => $project->getID(),
+			'user_1_id' => Session::getUserID()
+		));
+		$logEvent->save();		
 	}
-	$pu->save();
-	
-	// log it
-	$logEvent = new Event(array(
-		'event_type_id' => 'join_project',
-		'project_id' => $project->getID(),
-		'user_1_id' => Session::getUserID()
-	));
-	$logEvent->save();	
 
 	// accept the task
 	$accepted = new Accepted(array(
 		'creator_id' => Session::getUserID(),
 		'project_id' => $project->getID(),
 		'task_id' => $taskID,
-		'status' => Accepted::STATUS_ACCEPTED
+		'status' => Accepted::STATUS_PROGRESS
 	));
 	$accepted->save();
 	
@@ -387,6 +396,30 @@ if($action == 'create') {
 	Session::setMessage('You joined the task. Good luck!');
 	$json = array('success' => '1', 'successUrl' => Url::task($taskID));
 	echo json_encode($json);
+} elseif($action == 'release') {
+	$accepted = Accepted::getByUserID(Session::getUserID(), $taskID);
+	if(!empty($accepted)) {
+		$accepted->setStatus(Accepted::STATUS_RELEASED);
+		$accepted->save();
+		
+		// log it
+		$logEvent = new Event(array(
+			'event_type_id' => 'release_task',
+			'project_id' => $project->getID(),
+			'user_1_id' => Session::getUserID(),
+			'item_1_id' => $accepted->getID(),
+			'item_2_id' => $taskID
+		));
+		$logEvent->save();
+		
+		// send us back
+		Session::setMessage('You left the task.');
+		$json = array('success' => '1', 'successUrl' => Url::tasks($project->getID()));
+		echo json_encode($json);
+	} else {
+		$json = array('error' => 'You never joined that task.');
+		exit(json_encode($json));	
+	}
 } elseif($action == 'comment') {
 	$message = Filter::formattedText($_POST['message']);
 	if($message == '') {

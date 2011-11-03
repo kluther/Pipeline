@@ -209,8 +209,36 @@ table.tasks td.needed {
 ul.tasks li {
 	background-image: url(./../images/icons/task.png);
 	}
+	ul.tasks li h6 {
+		font-weight: bold;
+		}
 
 /* UPDATES LIST */
+	
+table.contribs th {
+	text-align: left;
+	font-weight: normal;
+	padding: 0 1em 0.5em 0;
+	font-size: 90%;
+	}
+
+table.contribs td {
+	border-top: 1px solid;
+	padding: 0.5em 1em 0.5em 0;
+	vertical-align: middle;
+	font-size: 90%;
+	}
+	
+table.contribs td.name {
+	width: 50%;
+	background: url(./../images/icons/pin.png) no-repeat 0 center;
+	padding-left: 22px;
+	}
+	table.contribs td.name h6 {
+		font-weight: bold;
+		margin: 0; padding: 0;
+		}
+
 	
 ul.updates li {
 	background-image: url(./../images/icons/pin.png);

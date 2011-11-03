@@ -196,12 +196,14 @@ div.home div.meta {
 	}	
 
 table.tasks th,
-table.projects th {
+table.projects th,
+table.contribs th {
 	color: #888888;
 	}
 	
 table.tasks td,
-table.projects td {
+table.projects td,
+table.contribs td {
 	border-color: #dddddd;
 	}
 	

@@ -135,7 +135,7 @@ if(!empty($tasks)) {
 			if(!is_null($user)) {
 				// relationship to task
 				if($user->getID() == $t->getLeaderID()) {
-					echo '<td class="role">leading</td>';
+					echo '<td class="role">leader</td>';
 				} else {
 					$accepted = Accepted::getByUserID($user->getID(), $t->getID());
 					if(!empty($accepted)) {
