@@ -56,7 +56,9 @@ if($action == 'create') {
 		'event_type_id' => 'create_discussion',
 		'project_id' => $project->getID(),
 		'user_1_id' => Session::getUserID(),
-		'item_1_id' => $discussion->getID()
+		'item_1_id' => $discussion->getID(),
+		'data_1' => $title,
+		'data_2' => $message
 	));
 	$logEvent->save();
 	
