@@ -574,8 +574,8 @@ ul.activity li.create-task {
 ul.activity li.edit-task, ul.activity li.edit-leader {
 	background-image: url(./../images/icons/task--pencil.png);
 	}	
-ul.activity li.accept-task {
-	background-image: url(./../images/icons/task--arrow.png);
+ul.activity li.task {
+	background-image: url(./../images/icons/task.png);
 	}
 ul.activity li.create-update {
 	background-image: url(./../images/icons/pin--plus.png);
