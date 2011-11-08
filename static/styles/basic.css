@@ -984,6 +984,10 @@ div.home h2 {
 	display: block;
 	margin: 0; padding: 35px 0;
 	}
+	div.home h2 a {
+		font-size: 70%;
+		margin-left: 1em;
+		}
 	
 div.home div.get-started {
 	float: right;

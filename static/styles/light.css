@@ -173,6 +173,10 @@ div.home h1 span {
 	div.home h1 span a:link, div.home h1 span a:visited {
 		color: #000;
 		}
+		
+div.home h2 a {
+	color: #369;
+	}
 	
 div.home div.get-started a:link, div.home div.get-started a:visited {
 	border-color: #ccc;
