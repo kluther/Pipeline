@@ -86,7 +86,7 @@ require_once TEMPLATE_PATH.'/site/helper/format.php';
 
 	<div class="bottom">
 		<div class="funnel">
-			<a href="http://pipeline.cc.gatech.edu/">About Pipeline</a> <span class="slash">/</span> <a href="http://pipeline.cc.gatech.edu/blog">Blog</a> <span class="slash">/</span> <a href="http://pipeline.cc.gatech.edu/research">Research</a> <span class="slash">/</span> <a href="http://pipeline.cc.gatech.edu/team">Team</a> <span class="slash">/</span> <a href="http://pipeline.cc.gatech.edu/contact">Contact</a>
+			<a href="http://pipeline.cc.gatech.edu/">About Pipeline</a> <span class="slash">/</span> <a href="http://pipeline.cc.gatech.edu/features">Features</a> <span class="slash">/</span> <a href="http://pipeline.cc.gatech.edu/blog">Blog</a> <span class="slash">/</span> <a href="http://pipeline.cc.gatech.edu/research">Research</a> <span class="slash">/</span> <a href="http://pipeline.cc.gatech.edu/team">Team</a> <span class="slash">/</span> <a href="http://pipeline.cc.gatech.edu/contact">Contact</a>
 		</div>
 	</div>
 
