@@ -5,17 +5,19 @@ $soup = new Soup();
 
 if(Session::isLoggedIn()) {	
 	// dashboard
-	$projects = Project::getByUserID(Session::getUserID());
-	$user = User::load(Session::getUserID());
-	$events = Event::getDashboardEvents($user->getID(), 10);
+	$yourProjects = Project::getByUserID(Session::getUserID());
+	$publicProjects = Project::getPublicProjects(10); // projects to join
+	//$user = User::load(Session::getUserID());
+	$events = Event::getDashboardEvents(Session::getUserID(), 10);
 	// $updates = Update::getByUserID($user->getID());
 	// $discussions = Discussion::getByUserID($user->getID());
 	$invitations = Invitation::getByUserID(Session::getUserID());
 	$unrespondedInvites = Invitation::getByUserID(Session::getUserID(), null, false);
-	$yourTasks = Task::getYourTasks($user->getID());
+	$yourTasks = Task::getYourTasks(Session::getUserID());
 	
-	$soup->set('projects', $projects);
-	$soup->set('user', $user);
+	$soup->set('yourProjects', $yourProjects);
+	$soup->set('publicProjects', $publicProjects);
+	//$soup->set('user', $user);
 	$soup->set('events', $events);
 	// $soup->set('updates', $updates);
 	// $soup->set('discussions', $discussions);

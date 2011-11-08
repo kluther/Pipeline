@@ -1,7 +1,19 @@
 <?php
 
-$fork = $SOUP->fork();
+$yourProjects = $SOUP->get('yourProjects');
+if(empty($yourProjects)) {
+	$title = 'Projects to Join';
+	$projects = $SOUP->get('publicProjects');
+	$user = null;
+	$footer = '<p><a href="'.Url::findProjects().'">More Projects &raquo;</a></p>';
+} else {
+	$title = 'Your Projects';
+	$projects = $yourProjects;
+	$user = Session::getUser();
+	$footer = null;
+}
 
+$fork = $SOUP->fork();
 $fork->set('pageTitle', "Dashboard");
 $fork->startBlockSet('body');
 
@@ -9,11 +21,12 @@ $fork->startBlockSet('body');
 
 <td class="left">
 
-
 <?php
 	$SOUP->render('site/partial/projects', array(
-		'title' => 'Your Projects',
-		'user' => Session::getUser()
+		'title' => $title,
+		'projects' => $projects,
+		'user' => $user,
+		'footer' => $footer
 	));
 ?>
 
