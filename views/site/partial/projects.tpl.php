@@ -4,13 +4,37 @@ include_once TEMPLATE_PATH.'/site/helper/format.php';
 $projects = $SOUP->get('projects', array());
 $user = $SOUP->get('user', null);
 $title = $SOUP->get('title', 'Projects');
+$id = $SOUP->get('id', 'projects');
+
+$hasPermission = Session::isLoggedIn();
 
 $fork = $SOUP->fork();
 $fork->set('title', $title);
+$fork->set('id', $id);
+if($hasPermission) {
+	$fork->set('creatable', true);
+	$fork->set('createLabel', 'New Project');
+}
+
 $fork->startBlockSet('body');
+
+if($hasPermission) {
+?>
+
+<script type="text/javascript">
+
+$('#<?= $id ?> .createButton').click(function(){
+	window.location = '<?= Url::projectNew() ?>';
+});
+
+</script>
+
+<?php
+}
 
 if(!empty($projects)) {
 ?>
+
 <table class="projects">
 	<tr>
 		<th style="padding-left: 22px;">Project</th>
