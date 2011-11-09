@@ -140,6 +140,10 @@ class Url
 		return (self::base().'/logout');
 	}
 	
+	public static function forgotPassword() {
+		return (self::base().'/forgotpassword');
+	}
+	
 	public static function help() {
 		return (self::base().'/help');
 	}

@@ -104,6 +104,13 @@ switch($action)
 			exit(json_encode($json));
 		}	
 		
+		// must be unique email
+		$ue = User::loadByEmail($email);
+		if(!empty($ue)) {
+			$json = array( 'error' => 'That email address is already in use.' );
+			exit(json_encode($json));		
+		}
+		
 		// must provide birthdate
 		if($month == "0" || $year == "0") {
 			$json = array( 'error' => 'You must select a valid birth month and year to register.' );

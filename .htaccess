@@ -47,9 +47,9 @@ RewriteRule ^settings/?$ controller/site/settings_c.php [L]
 
 ### LOGIN/LOGOUT ###
 
+RewriteRule ^forgotpassword/?$ controller/site/forgot_password_c.php [L]
 RewriteRule ^logout/?$ controller/site/logout.process.php [L]
 RewriteRule ^login/process/?$ controller/site/login.process.php [L]
-
 RewriteRule ^login/?$ controller/site/login_c.php [L]
 
 ### REGISTER ###
