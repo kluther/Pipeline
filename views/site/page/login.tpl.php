@@ -42,8 +42,7 @@ $(document).ready(function(){
 <label>Password <input id="txtPassword" type="password" class="login" /></label>
 <input type="hidden" id="referer" name="referer" value="<?= $referer ?>" />
 <input id="btnLogIn" type="button" value="Log In" />
-<p><a href="<?= Url::forgotPassword() ?>">Forgot your password?</a></p>
-
+<p>Forgot your password? <a href="<?= Url::forgotPassword() ?>">Reset it here.</a></p>
 <p>Don't have an account yet? <a href="<?= Url::consent() ?>">Register for free!</a></p>
 
 </td>
