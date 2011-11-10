@@ -109,6 +109,24 @@ class Event extends DbObject
 		return $data;
 	}
 	
+	// used for admin page
+	public static function getAllEvents($limit=null) {
+		$query = "SELECT id FROM ".self::DB_TABLE;
+		$query .= " ORDER BY date_created DESC";
+		if($limit != null)
+			$query .= " LIMIT ".$limit;
+		//echo $query;
+		
+		$db = Db::instance();
+		$result = $db->lookup($query);
+		if(!mysql_num_rows($result)) return array();
+
+		$events = array();
+		while($row = mysql_fetch_assoc($result))
+			$events[$row['id']] = self::load($row['id']);
+		return $events;	
+	}
+	
 	public static function getHomeEvents($limit=null) {
 		$query = "SELECT e.id AS id FROM ".self::DB_TABLE." e";
 		$query .= " INNER JOIN ".EventType::DB_TABLE." et ON ";

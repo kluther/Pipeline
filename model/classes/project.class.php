@@ -140,6 +140,24 @@ class Project extends DbObject
 	
 	/* static methods */
 	
+	// used for admin page
+	public static function getAllProjects($limit=null) {
+		$query = "SELECT id FROM ".self::DB_TABLE;
+		$query .= " ORDER BY date_created DESC, title ASC";
+		if($limit != null)
+			$query .= " LIMIT ".$limit;
+		//echo $query;
+		
+		$db = Db::instance();
+		$result = $db->lookup($query);
+		if(!mysql_num_rows($result)) return null;
+		
+		$projects = array();
+		while($row = mysql_fetch_assoc($result))
+			$projects[$row['id']] = self::load($row['id']);
+		return $projects;	
+	}
+	
 	public static function getPublicProjects($limit=null) {
 		$query = "SELECT id FROM ".self::DB_TABLE;
 		$query .= " WHERE private = 0";

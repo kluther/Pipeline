@@ -145,6 +145,24 @@ class User extends DbObject
 		}		
 	}	
 	
+	// used for admin page
+	public static function getAllUsers($limit=null) {
+		$query = "SELECT id FROM ".self::DB_TABLE;
+		$query .= " ORDER BY date_created DESC, username ASC";
+		if($limit != null)
+			$query .= " LIMIT ".$limit;
+		//echo $query;
+		
+		$db = Db::instance();
+		$result = $db->lookup($query);
+		if(!mysql_num_rows($result)) return null;
+		
+		$users = array();
+		while($row = mysql_fetch_assoc($result))
+			$users[$row['id']] = self::load($row['id']);
+		return $users;	
+	}
+	
 	public static function getPossibleContributorUsernames($projectID=null) {
 		if($projectID === null) return null;
 		$project = Project::load($projectID);

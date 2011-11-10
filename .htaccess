@@ -27,6 +27,10 @@ RewriteRule ^$ controller/site/index_c.php [L]
 RewriteRule ^dashboard/process/?$ controller/site/dashboard.process.php [L]
 RewriteRule ^dashboard/?$ controller/site/index_c.php [L]
 
+### ADMIN ###
+
+RewriteRule ^admin/?$ controller/site/admin_c.php [L]
+
 ### HELP ###
 
 RewriteRule ^help/?$ controller/site/help_c.php [L]
