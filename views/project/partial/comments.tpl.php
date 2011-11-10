@@ -80,7 +80,7 @@ if($comments != null) {
 		if($replies != null) {
 			foreach($replies as $reply) {
 				echo '<li class="comment-reply">';
-				echo formatUserPicture($comment->getCreatorID(), 'small');		
+				echo formatUserPicture($reply->getCreatorID(), 'small');		
 				echo '<p class="headline">'.formatUserLink($reply->getCreatorID(), $project->getID()).' <span class="slash">/</span> <span class="when">'.formatTimeTag($reply->getDateCreated()).'</span></p>';					
 				echo '<p class="message">'.formatComment($reply->getMessage()).'</p>';			
 				//echo '<p class="when">'.formatTimeTag($reply->getDateCreated()).'</p>';				
