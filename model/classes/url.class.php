@@ -20,6 +20,10 @@ class Url
 		return (self::base().'/up');
 	}
 	
+	public static function admin() {
+		return (self::base().'/admin');
+	}
+	
 	public static function uploadProcess()
 	{
 		return (self::base().'/upload/process');

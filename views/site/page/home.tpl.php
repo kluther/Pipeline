@@ -37,8 +37,6 @@ require_once TEMPLATE_PATH.'/site/helper/format.php';
 
 	<div class="funnel">
 
-
-
 		<h2>Pipeline is a new way to create together on the Web. <a href="http://pipeline.cc.gatech.edu/features">Learn more</a></h2>
 
 		<div class="line"></div>
