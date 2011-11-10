@@ -104,9 +104,10 @@ if(!empty($tasks)) {
 			} else {
 				// description
 				echo '<p>';
-				echo substr($t->getDescription(),0,70);
-				if(strlen($t->getDescription()) > 70)
-					echo '...';
+				$description = strip_tags(formatTaskDescription($t->getDescription()));
+				echo substr($description,0,70);
+				if(strlen($description) > 70)
+					echo '&hellip;';
 				echo '</p>';			
 			}
 			echo '</td>';

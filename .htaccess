@@ -27,6 +27,13 @@ RewriteRule ^$ controller/site/index_c.php [L]
 RewriteRule ^dashboard/process/?$ controller/site/dashboard.process.php [L]
 RewriteRule ^dashboard/?$ controller/site/index_c.php [L]
 
+### INBOX ###
+
+RewriteRule ^inbox/process/?$ controller/site/inbox.process.php [L]
+RewriteRule ^inbox/new/?([a-zA-Z0-9]{6,20})?/?$ controller/site/message_new_c.php?un=$1 [QSA,L]
+RewriteRule ^inbox/(\d+)/?$ controller/site/message_c.php?m=$1 [QSA,L]
+RewriteRule ^inbox/?$ controller/site/inbox_c.php [L]
+
 ### ADMIN ###
 
 RewriteRule ^admin/?$ controller/site/admin_c.php [L]
@@ -126,6 +133,7 @@ RewriteRule ^projects/([a-z0-9-]+)/activity/?$ controller/project/activity_c.php
 
 ### USERS ###
 
-RewriteRule ^users/([a-zA-Z0-9-]{6,20})/?$ controller/site/user_c.php?un=$1 [QSA,L]
-RewriteRule ^users/([a-zA-Z0-9-]{6,20})/process/?$ controller/site/user.process.php?un=$1 [QSA,L]
-RewriteRule ^users/([a-zA-Z0-9-]{6,20})/upload/?$ controller/site/userPicture.process.php [L]
+RewriteRule ^users/search/([a-z-]+)/?$ controller/site/userSearch.process.php?relationship=$1 [QSA,L]
+RewriteRule ^users/([a-zA-Z0-9]{6,20})/?$ controller/site/user_c.php?un=$1 [QSA,L]
+RewriteRule ^users/([a-zA-Z0-9]{6,20})/process/?$ controller/site/user.process.php?un=$1 [QSA,L]
+RewriteRule ^users/([a-zA-Z0-9]{6,20})/upload/?$ controller/site/userPicture.process.php [L]

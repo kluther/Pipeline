@@ -30,6 +30,7 @@ $fork->startBlockSet('body');
 		));
 ?>
 
+<p>Older activity is hidden</p>
 </td>
 
 <td class="right">

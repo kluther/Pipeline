@@ -8,8 +8,14 @@ $selected = $SOUP->get('selected', null);
 $breadcrumbs = $SOUP->get('breadcrumbs', null);
 $project = $SOUP->get('project', null);
 
-if($project != null)
+if(!empty($project)) {
 	$status = formatProjectStatus($project->getStatus());
+}
+
+if(Session::isLoggedIn()) {
+	$user = Session::getUser();
+	$numUnread = $user->getNumUnreadMessages();
+}
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -51,8 +57,8 @@ if($project != null)
 			<?php if(Session::isLoggedIn()): ?>
 				<li class="right"><a href="<?= Url::logOut() ?>">Log Out</a></li>
 				<li class="right"><a href="<?= Url::settings() ?>">Settings</a></li>
-				<li class="right"><a href="<?= Url::profile() ?>"><?= Session::getUsername() ?></a></li>	
-				<!--li class="right"><a href="<?= Url::inbox() ?>">Inbox</a></li-->				
+				<li class="right"><a href="<?= Url::profile() ?>">Profile</a></li>	
+				<li class="right"><a href="<?= Url::inbox() ?>">Inbox<?= ($numUnread>0) ? '<span class="unread">'.$numUnread.'</span>' : '' ?></a></li>				
 			<?php else: ?>
 				<li class="right"><a href="<?= Url::consent() ?>">Register</a></li>
 				<li class="right"><a href="<?= Url::logIn() ?>">Log In</a></li>

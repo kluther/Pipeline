@@ -39,6 +39,9 @@ div.primary-nav {
 	div.primary-nav a {
 		color: #fff;
 		}	
+	div.primary-nav li span.unread {
+		background-color: #333333;
+		}			
 	
 div.secondary-nav {
 

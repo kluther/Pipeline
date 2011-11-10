@@ -152,11 +152,27 @@ class Url
 		return (self::base().'/help');
 	}
 	
-	public static function inbox()
-	{
+	public static function inbox() {
 		return (self::base().'/inbox');
 	}
 	
+	public static function inboxProcess() {
+		return (self::inbox().'/process');
+	}	
+	
+	public static function message($messageID=null) {
+		if($messageID === null) return null;
+		return (self::inbox().'/'.$messageID);
+	}
+	
+	public static function messageNew($username=null) {
+		$url = self::inbox().'/new';
+		if(!empty($username)) {
+			$url .= '/'.$username;
+		}
+		return ($url);
+	}
+
 	public static function settings() {
 		return (self::base().'/settings');
 	}
@@ -218,6 +234,11 @@ class Url
 	
 	public static function blankUserPictureLarge() {
 		return (self::images().'/user48x48.jpg');
+	}
+	
+	public static function userSearch($relationship=null) {
+		if($relationship === null) return null;
+		return (self::base().'/users/search/'.$relationship);
 	}
 	
 	public static function project($projectID=null)

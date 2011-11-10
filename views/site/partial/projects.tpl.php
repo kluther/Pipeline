@@ -51,11 +51,12 @@ if(!empty($projects)) {
 		// title and pitch
 		echo '<td class="name">';
 		echo '<h6><a href="'.Url::project($p->getID()).'">'.$p->getTitle().'</a></h6>';
-		// echo '<p>';
-		// echo formatPitch(substr($p->getPitch(),0,70));
-		// if(strlen($p->getPitch()) > 70)
-			// echo '...';
-		// echo '</p>';
+		echo '<p>';
+		$pitch = strip_tags(formatPitch($p->getPitch()));
+		echo substr($pitch,0,70);
+		if(strlen($pitch) > 70)
+			echo "&hellip;";
+		echo '</p>';
 		echo '</td>';
 		// status
 		$status = formatProjectStatus($p->getStatus());

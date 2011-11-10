@@ -140,7 +140,7 @@ table.projects td {
 	
 table.projects td.name {
 	width: 50%;
-	background: url(./../images/icons/clapperboard.png) no-repeat 0 center;
+	background: url(./../images/icons/clapperboard.png) no-repeat 0 0.5em;
 	padding-left: 22px;
 	}
 	table.projects td.name h6 {
@@ -459,6 +459,14 @@ div.primary-nav li {
 		font-size: 87.5%;
 		padding: 0 1em;
 		}
+	div.primary-nav li span.unread {
+		font-size: 90%;
+		font-weight: bold;		
+		margin: 0 0 0 0.5em; padding: 0.25em 0.5em;
+		-moz-border-radius: 0.5em;
+		-webkit-border-radius: 0.5em;
+		border-radius: 0.5em;		
+		}
 
 /* SECONDARY NAV */
 
@@ -499,7 +507,7 @@ div.primary-nav li {
 div#profile div.view h5 {
 	font-size: 150%;
 	margin-top: 0.25em;
-}
+	}
 
 div#profile div.view p {
 	padding: 0; margin: 0.5em 0 0 55px;
@@ -508,6 +516,37 @@ div#profile div.view p {
 		margin: 1em 0 1em 55px;
 	}
 
+/* INBOX */
+
+
+table.messages td.subject {
+	width: 50%;
+	padding-left: 22px;
+	}
+	table.messages td.subject h6 {
+		font-size: 100%;
+		margin: 0; padding: 0;
+		}
+	table.messages td.subject p {
+		font-size: 80%;
+		margin: 0; padding: 0;
+		}
+
+table.messages td.unread {
+	background: url(./../images/icons/mail.png) no-repeat 0 0.5em;
+	}
+	table.messages td.unread h6 {
+		font-weight: bold;
+		}
+	
+table.messages td.read {
+	background: url(./../images/icons/mail-open.png) no-repeat 0 0.5em;
+	}
+	
+table.messages td.sender,
+table.messages td.sent {
+	font-size: 95%;
+	}
 		
 /* USER LISTS */
 

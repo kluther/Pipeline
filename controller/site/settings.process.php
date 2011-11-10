@@ -42,6 +42,9 @@ if($action == 'notification') {
 		case 'chkMakeTaskLeader':
 			$user->setNotifyMakeTaskLeader($value);
 			break;
+		case 'chkReceiveMessage':
+			$user->setNotifyReceiveMessage($value);
+			break;
 		default:
 			$json = array( 'error' => 'Invalid notification type.' );
 			exit(json_encode($json));

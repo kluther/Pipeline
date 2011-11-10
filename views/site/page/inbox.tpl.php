@@ -1,0 +1,1 @@
+<?php$fork = $SOUP->fork();$fork->set('pageTitle', 'Inbox');$fork->startBlockSet('body');?><td class="left"><?php	$SOUP->render('site/partial/messages', array(		'title' => 'Received Messages'	));?></td><td class="right"></td><?php$fork->endBlockSet();$fork->render('site/partial/page');

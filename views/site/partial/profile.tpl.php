@@ -36,17 +36,36 @@ $bio = $user->getBiography();
 // name
 $name = $user->getName();
 
+// any logged-in user except this user can send message
+$hasSendPermission = (Session::isLoggedIn() && ($user->getID() != Session::getUserID()));
+
 // must be current user to edit
-$hasPermission = ($user->getID() == Session::getUserID());
+$hasEditPermission = ($user->getID() == Session::getUserID());
 
 $fork = $SOUP->fork();
 $fork->set('id', 'profile');
 $fork->set('title', $title);
-$fork->set('editable', $hasPermission);
+$fork->set('creatable', $hasSendPermission);
+$fork->set('createLabel', 'Send Message');
+$fork->set('editable', $hasEditPermission);
 $fork->startBlockSet('body');
 ?>
 
-<?php if($hasPermission): ?>
+<?php if($hasSendPermission): ?>
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+	$('#profile .createButton').click(function(){
+		window.location = '<?= Url::messageNew($user->getUsername()) ?>';
+	});
+});
+
+</script>
+
+<?php endif; ?>
+
+<?php if($hasEditPermission): ?>
 
 <script type="text/javascript" src="http://bp.yahooapis.com/2.4.21/browserplus-min.js"></script>
 <script type="text/javascript" src="<?= Url::base() ?>/lib/plupload/js/plupload.js"></script>
@@ -434,12 +453,14 @@ function initializeUploader() {
 <div class="view">
 
 <?= formatUserPicture($user->getID()) ?>
-<h5 class="username"><?= formatUserLink($user->getID()) ?></h5>
-<p class="contact"><?= (!empty($name) && $age >= 18) ? $name.$slash : '' ?> <a href="mailto:<?= $user->getEmail() ?>">send email</a> <span class="slash">/</span> last login <?= formatTimeTag($user->getLastLogin()) ?></p>
+<h5 class="username"><?= formatUserLink($user->getID()) ?><?= ( (!empty($name)) && ($age >= 18) ) ? ' ('.$name.')' : '' ?></h5>
 <?php
 
-echo '<p class="asl">';
+echo '<p><a href="mailto:'.$user->getEmail().'">'.$user->getEmail().'</a>';
 //	echo $age.' years old';
+if(!empty($sex) || !empty($loc)) {
+	echo $slash;
+}
 if(!empty($sex)) {
 	echo $sex;
 }
@@ -449,7 +470,12 @@ if(!empty($sex) && !empty($loc)) {
 if(!empty($loc)) {
 	echo 'from '.$loc;
 }
-echo '</p>';	
+echo '</p>';
+?>
+<p>last login <?= formatTimeTag($user->getLastLogin()) ?></p>
+<?php
+	
+// biography
 if(!empty($bio)) {
 	echo '<div class="line" style="margin: 1em 0 0 55px;"></div>';
 	echo '<p class="biography">'.formatParagraphs($bio).'</p>';

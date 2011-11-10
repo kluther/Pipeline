@@ -24,6 +24,7 @@ class User extends DbObject
 	protected $notifyDiscussionStarted;
 	protected $notifyDiscussionReply;
 	protected $notifyMakeTaskLeader;
+	protected $notifyReceiveMessage;
 	protected $admin;
 	protected $dateCreated;
 	protected $lastLogin;
@@ -60,6 +61,7 @@ class User extends DbObject
 			'notify_discussion_started' => 1,
 			'notify_discussion_reply' => 1,
 			'notify_make_task_leader' => 1,
+			'notify_receive_message' => 1,
 			'admin' => 0,
 			'date_created' => null,
 			'last_login' => null
@@ -89,6 +91,7 @@ class User extends DbObject
 		$this->notifyDiscussionStarted = $args['notify_discussion_started'];
 		$this->notifyDiscussionReply = $args['notify_discussion_reply'];
 		$this->notifyMakeTaskLeader = $args['notify_make_task_leader'];
+		$this->notifyReceiveMessage = $args['notify_receive_message'];
 		$this->admin = $args['admin'];
 		$this->dateCreated = $args['date_created'];
 		$this->lastLogin = $args['last_login'];
@@ -162,6 +165,27 @@ class User extends DbObject
 			$users[$row['id']] = self::load($row['id']);
 		return $users;	
 	}
+	
+	// used for people search
+	public static function getAllUsernames($term=null, $not=null) {	
+		if($term === null) return null;
+		
+		$query = "SELECT username FROM ".User::DB_TABLE;
+		$query .= " WHERE username LIKE '%".$term."%'";		
+		if(!empty($not)) {
+			$query .= " AND id != ".$not;
+		}
+		$query .= " ORDER BY username ASC";
+		
+		$db = Db::instance();
+		$result = $db->lookup($query);
+		if(!mysql_num_rows($result)) return array();
+		
+		$usernames = array();
+		while($row = mysql_fetch_assoc($result))
+			$usernames[] = $row['username'];
+		return $usernames;		
+	}		
 	
 	public static function getPossibleContributorUsernames($projectID=null) {
 		if($projectID === null) return null;
@@ -244,6 +268,7 @@ class User extends DbObject
 			'notify_discussion_started' => $this->notifyDiscussionStarted,
 			'notify_discussion_reply' => $this->notifyDiscussionReply,
 			'notify_make_task_leader' => $this->notifyMakeTaskLeader,
+			'notify_receive_message' => $this->notifyReceiveMessage,
 			'admin' => $this->admin,
 			'last_login' => $this->lastLogin
 		);		
@@ -282,21 +307,21 @@ class User extends DbObject
 		// return (Discussion::getLastDiscussionByUser($this->id, $projectID, $deleted));
 	// }
 	
-	// public function getReadMessages()
-	// {
-		// return (Message::getReceivedMessagesByUserID($this->id,null,false));
-	// }
+	public function getReadMessages()
+	{
+		return (Message::getReceivedMessagesByUserID($this->id,null,false));
+	}
 	
-	// public function getUnreadMessages()
-	// {
-		// return (Message::getReceivedMessagesByUserID($this->id,null,true));
-	// }
+	public function getUnreadMessages()
+	{
+		return (Message::getReceivedMessagesByUserID($this->id,null,true));
+	}
 	
-	// public function getNumUnreadMessages()
-	// {
-		// $unreadMessages = self::getUnreadMessages();
-		// return (count($unreadMessages));
-	// }
+	public function getNumUnreadMessages()
+	{
+		$unreadMessages = self::getUnreadMessages();
+		return (count($unreadMessages));
+	}
 	
 	public function toString()
 	{
@@ -544,6 +569,15 @@ class User extends DbObject
 	
 	public function setNotifyMakeTaskLeader($newNotifyMakeTaskLeader) {
 		$this->notifyMakeTaskLeader = $newNotifyMakeTaskLeader;
+		$this->modified = true;
+	}
+	
+	public function getNotifyReceiveMessage() {
+		return ($this->notifyReceiveMessage);
+	}
+	
+	public function setNotifyReceiveMessage($newNotifyReceiveMessage) {
+		$this->notifyReceiveMessage = $newNotifyReceiveMessage;
 		$this->modified = true;
 	}
 	
