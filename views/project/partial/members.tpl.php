@@ -3,6 +3,7 @@ include_once TEMPLATE_PATH.'/site/helper/format.php';
 
 $project = $SOUP->get('project');
 $allMembers = $SOUP->get('allMembers');
+$numMembers = count($allMembers)+1;
 $memberInvites = $SOUP->get('memberInvites');
 
 // admin, contributor, trusted, creator may invite
@@ -17,7 +18,7 @@ $hasEditPermission = ( Session::isAdmin() ||
 						$project->isCreator(Session::getUserID()) );
 
 $fork = $SOUP->fork();
-$fork->set('title', 'Members');
+$fork->set('title', 'Members ('.$numMembers.')');
 $fork->set('id', 'members');
 $fork->set('creatable', $hasInvitePermission);
 $fork->set('createLabel', 'Invite Members');

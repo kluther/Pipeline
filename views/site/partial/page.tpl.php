@@ -59,11 +59,11 @@ if($project != null)
 			<?php endif; ?>
 				<li class="left"><a href="<?= Url::projectNew() ?>">Start a Project</a></li>			
 				<li class="left"><a href="<?= Url::findProjects() ?>">Find Projects</a></li>
+				<li class="left"><a href="http://pipeline.cc.gatech.edu/">About Pipeline</a></li>					
 				<li class="left"><a href="<?= Url::help() ?>">Help</a></li>
 			<?php if(Session::isAdmin()): ?>
 				<li class="left"><a href="<?= Url::admin() ?>">Admin</a></li>
-			<?php endif; ?>
-				<li class="left"><a href="http://pipeline.cc.gatech.edu/">About Pipeline</a></li>				
+			<?php endif; ?>			
 			</ul>
 		</div><!-- end .funnel -->	
 	</div><!-- end .primary-nav -->
