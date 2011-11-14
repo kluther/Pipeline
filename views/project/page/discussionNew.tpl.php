@@ -28,7 +28,7 @@ $fork->startBlockSet('body');
 <?php
 	$SOUP->render('project/partial/discussions',array(
 		'discussions' => $yourDiscussions,
-		'size' => 'large',
+		'size' => 'small',
 		'title' => 'Your Discussions',
 		'hasPermission' => false
 	));

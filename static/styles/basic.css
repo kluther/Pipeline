@@ -304,6 +304,12 @@ div.person-box {
 ul.discussions li {
 	background-image: url(./../images/icons/balloon.png);
 	}
+ul.discussions h6 {
+	font-weight: bold;
+	}
+	ul.discussions h6.locked {
+		text-decoration: line-through;
+		}
 	
 /* DISCUSSION REPLIES / COMMENTS */
 
@@ -311,6 +317,9 @@ ul.replies h5 {
 	font-size: 150%;
 	margin-bottom: 0.5em;
 	}
+	ul.replies h5.locked {
+		text-decoration: line-through;
+		}
 ul.replies p.headline, ul.comments p.headline {
 	margin: 0; padding: 0;
 	font-size: 100%;
@@ -334,6 +343,50 @@ ul.replies span.when, ul.comments span.when {
 			margin-right: 0;
 			margin-left: 1em;
 			}
+			
+ul.replies li.reply span.locked {
+	background: url(./../images/icons/lock.png) no-repeat 0 center;
+	padding-left: 22px;
+	text-align: left;
+	}
+	
+table.discussions {
+	}
+	table.discussions td.title {
+		width: 50%;
+		background: url(./../images/icons/balloon.png) no-repeat 0 0.5em;
+		padding-left: 22px;		
+		}
+		table.discussions td.title h6 {
+			font-size: 100%;
+			font-weight: bold;
+			margin: 0; padding: 0;		
+			}
+			table.discussions td.title h6.locked {
+				text-decoration: line-through;
+				}
+		table.discussions td.title p {
+				font-size: 80%;
+				margin: 0; padding: 0;		
+			}
+	table.discussions td.replies,
+	table.discussions td.last-reply {
+		font-size: 95%;
+		}
+	table.discussions td.replies,
+	table.discussions td.category {
+		text-align: center;
+		}
+	table.discussions td.category span {
+		text-transform: uppercase;
+		font-size: 10px;
+		margin: 0; padding: 0.25em 0.5em;
+		-moz-border-radius: 0.5em;
+		-webkit-border-radius: 0.5em;
+		border-radius: 0.5em;
+		white-space: nowrap;
+		}
+	
 
 /* comment replies styles */
 
@@ -644,6 +697,12 @@ ul.activity li.create-comment, ul.activity li.create-discussion {
 ul.activity li.edit-comment, ul.activity li.edit-discussion {
 	background-image: url(./../images/icons/balloon--pencil.png);
 	}	
+ul.activity li.lock-discussion {
+	background-image: url(./../images/icons/lock.png);
+	}
+ul.activity li.unlock-discussion {
+	background-image: url(./../images/icons/lock-unlock.png);
+	}
 ul.activity li.people {
 	background-image: url(./../images/icons/users.png);
 	}		

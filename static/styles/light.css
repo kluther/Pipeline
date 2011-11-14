@@ -216,6 +216,10 @@ table.items td {
 	border-color: #dddddd;
 	}
 	
+table.discussions td.category span {
+	background-color: #eeeeee;
+	}
+	
 input[type=button], input[type=submit] {
 	/*border-color: #ccc;*/
 	background-color: #dddddd;

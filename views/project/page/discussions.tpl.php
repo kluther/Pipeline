@@ -2,8 +2,8 @@
 
 $project = $SOUP->get('project');
 $events = $SOUP->get('events');
-$yourDiscussions = $SOUP->get('yourDiscussions');
-$moreDiscussions = $SOUP->get('moreDiscussions');
+// $yourDiscussions = $SOUP->get('yourDiscussions');
+// $moreDiscussions = $SOUP->get('moreDiscussions');
 $discussions = $SOUP->get('discussions');
 
 $fork = $SOUP->fork();
@@ -20,26 +20,26 @@ $fork->startBlockSet('body');
 
 <td class="left">
 
-<?php if(Session::isLoggedIn()): ?>
+<?php // if(Session::isLoggedIn()): ?>
 
 <?php
-	$SOUP->render('project/partial/discussions',array(
-		'discussions' => $yourDiscussions,
-		'size' => 'large',
-		'title' => 'Your Discussions'
-	));
+	// $SOUP->render('project/partial/discussions',array(
+		// 'discussions' => $yourDiscussions,
+		// 'size' => 'large',
+		// 'title' => 'Your Discussions'
+	// ));
 ?>
 
 <?php
-	$SOUP->render('project/partial/discussions',array(
-		'discussions' => $moreDiscussions,
-		'size' => 'large',
-		'title' => 'More Discussions',
-		'hasPermission' => false
-	));
+	// $SOUP->render('project/partial/discussions',array(
+		// 'discussions' => $moreDiscussions,
+		// 'size' => 'large',
+		// 'title' => 'More Discussions',
+		// 'hasPermission' => false
+	// ));
 ?>
 
-<?php else: ?>
+<?php // else: ?>
 
 <?php
 	$SOUP->render('project/partial/discussions',array(
@@ -49,7 +49,7 @@ $fork->startBlockSet('body');
 	));
 ?>
 
-<?php endif; ?>
+<?php // endif; ?>
 
 </td>
 

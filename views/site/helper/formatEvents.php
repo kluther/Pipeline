@@ -149,7 +149,29 @@ function formatEvent($event, $showProject=false)
 						'<a href="'.$url.'">'.$title.'</a>',
 						$predicate
 					);					
+				break;		
+			case 'lock_discussion':
+				$predicate = ($showProject) ? ' in the project '.formatProjectLink($event->getProjectID()) : '';
+				$discussion = Discussion::load($event->getItem1ID());
+				$title = $discussion->getTitle();
+				$url = Url::discussion($discussion->getID());
+				$formatted = sprintf("%s locked the discussion %s%s.",
+						formatUserLink($event->getUser1ID(), $event->getProjectID()),
+						'<a href="'.$url.'">'.$title.'</a>',
+						$predicate
+					);					
 				break;				
+			case 'unlock_discussion':
+				$predicate = ($showProject) ? ' in the project '.formatProjectLink($event->getProjectID()) : '';
+				$discussion = Discussion::load($event->getItem1ID());
+				$title = $discussion->getTitle();
+				$url = Url::discussion($discussion->getID());
+				$formatted = sprintf("%s unlocked the discussion %s%s.",
+						formatUserLink($event->getUser1ID(), $event->getProjectID()),
+						'<a href="'.$url.'">'.$title.'</a>',
+						$predicate
+					);					
+				break;			
 			case 'create_discussion_reply':
 				$predicate = ($showProject) ? ' in the project '.formatProjectLink($event->getProjectID()) : '';
 				$discussion = Discussion::load($event->getItem2ID());

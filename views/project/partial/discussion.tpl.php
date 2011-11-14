@@ -13,25 +13,46 @@ else
 	$replies = array($discussion);
 	
 // any logged-in user can discuss
-$hasPermission = Session::isLoggedIn();
+$hasReplyPermission = ( Session::isLoggedIn() &&
+					!$discussion->getLocked() );
+$hasLockPermission = (Session::isAdmin() ||
+					$project->isTrusted(Session::getUserID()) ||
+					$project->isCreator(Session::getUserID()) );
+
+// css for discussion title
+$cssLocked = ($discussion->getLocked()) ? ' class="locked"' : '';
 	
 $fork = $SOUP->fork();
 $fork->set('id', 'discussion');
 $fork->set('title', 'Discussion');
-$fork->set('creatable', $hasPermission);
-$fork->set('createLabel', 'New Discussion');
+if($hasLockPermission) {
+	$fork->set('editable', true);
+	if($discussion->getLocked()) {
+		$fork->set('editLabel', 'Unlock Discussion');
+	} else {
+		$fork->set('editLabel', 'Lock Discussion');
+	}
+}
 $fork->startBlockSet('body');
 ?>
 
-<?php if($hasPermission): ?>
-
 <script type="text/javascript">
 	$(document).ready(function(){
-		//$('#txtReplyMessage').focus();
-		$('#discussion .createButton').click(function(){
-			window.location = '<?= Url::discussionNew($discussion->getProjectID()); ?>';
-		});		
 		
+		<?php if($hasLockPermission): ?>
+		$('#discussion .editButton').click(function(){
+			buildPost({
+				'processPage':'<?= Url::discussionProcess($discussion->getID()) ?>',
+				'info':{
+					'action':'lock',
+					'discussionID':<?= $discussion->getID() ?>
+				},
+				'buttonID':$(this)
+			});
+		});
+		<?php endif; ?>
+		
+		<?php if($hasReplyPermission): ?>		
 		$('#btnReply').click(function(){
 			buildPost({
 				'processPage':'<?= Url::discussionProcess($discussion->getID()) ?>',
@@ -43,13 +64,12 @@ $fork->startBlockSet('body');
 				'buttonID':'#btnReply'
 			});
 		});
+		<?php endif; ?>
 	});
 </script>
 
-<?php endif; ?>
-
 <ul class="segmented-list replies">
-	<li><h5><?= $discussion->getTitle() ?></h5></li>
+	<li><h5<?= $cssLocked ?>><?= $discussion->getTitle() ?></h5></li>
 <?php
 
 foreach($replies as $reply) {
@@ -60,7 +80,7 @@ foreach($replies as $reply) {
 	echo '</li>';
 }
 ?>
-<?php if($hasPermission): ?>
+	<?php if($hasReplyPermission): ?>
 	<li class="reply">
 		<textarea id="txtReplyMessage"></textarea>	
 		<div class="buttons">
@@ -68,7 +88,9 @@ foreach($replies as $reply) {
 			<p class="right"><a class="help-link" href="<?= Url::help() ?>#help-html-allowed">Some HTML allowed</a></p>
 		</div>
 	</li>
-<?php endif; ?>	
+	<?php elseif($discussion->getLocked()): ?>
+	<li class="reply"><span class="locked">This discussion is locked.</span></li>
+	<?php endif; ?>	
 </ul>
 
 <?php

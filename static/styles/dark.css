@@ -214,6 +214,10 @@ table.items td {
 	border-color: #313131;
 	}	
 	
+table.discussions td.category span {
+	background-color: #111111;
+	}	
+	
 input[type=button], input[type=submit] {
 	/*border-color: #444444;*/
 	background-color: #444444;

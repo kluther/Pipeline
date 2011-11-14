@@ -17,14 +17,14 @@ $soup = new Soup();
 $soup->set('project', $project);
 $soup->set('events', $events);
 
-if(Session::isLoggedIn()) {
-	$moreDiscussions = Discussion::getMoreDiscussions(Session::getUserID(), $project->getID());
-	$soup->set('moreDiscussions',$moreDiscussions);
-	$yourDiscussions = Discussion::getByUserID(Session::getUserID(), $project->getID());
-	$soup->set('yourDiscussions', $yourDiscussions);
-} else {
+// if(Session::isLoggedIn()) {
+	// $moreDiscussions = Discussion::getMoreDiscussions(Session::getUserID(), $project->getID());
+	// $soup->set('moreDiscussions',$moreDiscussions);
+	// $yourDiscussions = Discussion::getByUserID(Session::getUserID(), $project->getID());
+	// $soup->set('yourDiscussions', $yourDiscussions);
+// } else {
 	$discussions = Discussion::getByProjectID($project->getID());
 	$soup->set('discussions',$discussions);
-}
+// }
 
 $soup->render('project/page/discussions');

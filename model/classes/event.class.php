@@ -286,6 +286,8 @@ class Event extends DbObject
 		$query .= " e.event_type_id = et.id";			
 		$query .= " WHERE e.project_id = ".$projectID;
 		$query .= " AND ( e.item_1_id = ".$discussionID." AND e.event_type_id = 'create_discussion' )";
+		$query .= " OR ( e.item_1_id = ".$discussionID." AND e.event_type_id = 'lock_discussion' )";
+		$query .= " OR ( e.item_1_id = ".$discussionID." AND e.event_type_id = 'unlock_discussion' )";		
 		$query .= " OR ( e.item_2_id = ".$discussionID." AND e.event_type_id = 'create_discussion_reply' )";	
 		$query .= " AND et.hidden = 0";		
 		$query .= " ORDER BY e.date_created DESC";

@@ -10,6 +10,7 @@ class Discussion extends DbObject
 	protected $message;
 	protected $category;
 	protected $deleted;
+	protected $locked;
 	protected $dateCreated;
 		
 	const  DB_TABLE = 'discussion';
@@ -31,7 +32,8 @@ class Discussion extends DbObject
 			'message' => '',
 			'category' => null,
 			'date_created' => null,
-			'deleted' => 0
+			'deleted' => 0,
+			'locked' => 0
 		);
 		
 		$args += $defaultArgs;
@@ -45,6 +47,7 @@ class Discussion extends DbObject
 		$this->category = $args['category'];
 		$this->dateCreated = $args['date_created'];
 		$this->deleted = $args['deleted'];
+		$this->locked = $args['locked'];
 	}
 	
 	public static function load($id)
@@ -65,7 +68,8 @@ class Discussion extends DbObject
 			'title' => $this->title,
 			'message' => $this->message,
 			'category' => $this->category,
-			'deleted' => $this->deleted
+			'deleted' => $this->deleted,
+			'locked' => $this->locked
 		);		
 		$db->store($this, __CLASS__, self::DB_TABLE, $db_properties);
 	}
@@ -94,112 +98,8 @@ class Discussion extends DbObject
 		$result = $discussion->delete();
 		return $result;
 	}
-	
-	// public function isDeleted()
-	// {
-		// // if the comment itself is deleted, we can stop here
-		// if($this->deleted)
-			// return true;
-		// elseif($this->nodeID != null)
-		// {
-			// // it's submission comment
-			// $version = Version::load($this->nodeID);
-			// // if parent version is deleted, so is the comment
-			// if($version->isDeleted())
-				// return true;
-			// else
-				// return false;
-		// }
-		// else
-		// {
-			// // it's a project comment
-			// return false;
-		// }
-	// }
-	
-	// ---Static Methods--- //
-	
-	// public static function getVersionComments($versionID=null, $limit=null, $deleted=false)
-	// {
-		// if($versionID == null) return null;
-		
-		// $query = " SELECT id FROM ".self::DB_TABLE;
-		// $query .= " WHERE node_id = ".$versionID;
-		// $query .= " AND parent_id IS NULL";
-		// if($deleted !== null)
-		// {
-			// if($deleted===true)
-				// $query .= " AND node_id IN (";
-			// else
-				// $query .= " AND node_id NOT IN (";
-				
-			// $query .= " SELECT id FROM ".Version::DB_TABLE;
-			// $query .= " WHERE deleted=1";
-			// $query .= " OR parent_id IN (";
-				// $query .= " SELECT id FROM ".Submission::DB_TABLE;
-				// $query .= " WHERE deleted=1";
-				// $query .= " OR parent_id IN (";
-					// $query .= " SELECT id FROM ".Scene::DB_TABLE;
-					// $query .= " WHERE deleted=1";
-				// $query .= ")";
-			// $query .= " )";
-			// $query .= " )";
-				
-			// if($deleted===true)
-				// $query .= " OR deleted=1";
-			// else
-				// $query .= " AND deleted=0";
-		// }		
-		// $query .= " ORDER BY date_time_created DESC";
-		// if($limit!=null)
-			// $query .= " LIMIT ".$limit;	
-		// //echo $query . "<br>";
-		// $db = Db::instance();
-		// $result = $db->lookup($query);
-		
-		// if (!mysql_num_rows($result)) {return null;}
-		
-		// $comments = array();
-		// while ($row = mysql_fetch_assoc($result))
-			// $comments[$row['id']] = self::load($row['id']);
-		
-		// return $comments;	
-	// }
-	
-	// public static function getNumVersionComments($versionID=null, $deleted=false)
-	// {
-		// $comments = self::getVersionComments($versionID, null, $deleted);
-		// return (count($comments));
-	// }
-	
-	// /* returns both project-level discussions and submission comments */
-	// public static function getRecentDiscussions($projectID=null, $limit=null, $deleted=false)
-	// {
-		// if ($projectID === null) return null;
-		
-		// $db = Db::instance();
-		// $projectID_s = $db->quoteString($projectID);
-		
-		// $query = "SELECT id FROM ".self::DB_TABLE." WHERE project_id=".$projectID_s;
-		// if($deleted===true)
-			// $query .= " AND deleted=1";
-		// elseif($deleted===false)
-			// $query .= " AND deleted=0";
-		// $query .= " ORDER BY date_time_created DESC";
-		// if($limit!=null)
-			// $query .= " LIMIT ".$limit;		
-		// //echo $query;
-		// $result = $db->lookup($query);
-		
-		// if (!mysql_num_rows($result)) {return null;}
-		
-		// $discussions = array();
-		// while ($row = mysql_fetch_assoc($result))
-			// $discussions[$row['id']] = self::load($row['id']);
-		
-		// return $discussions;	
-	// }
 
+	// ---Static Methods--- //
 	
 	public static function getBasicsDiscussionsByProjectID($projectID=null, $limit=null) {
 		return (self::getByProjectID($projectID, BASICS_ID, $limit));
@@ -220,8 +120,9 @@ class Discussion extends DbObject
 	public static function getByUserID($userID=null, $projectID=null, $limit=null, $deleted=false) {
 		if ($userID == null) return null;
 		
-		$query = "SELECT DISTINCT parent_id FROM ".self::DB_TABLE;
+		$query = "SELECT id FROM ".self::DB_TABLE;
 		$query .= " WHERE creator_id=".$userID;
+		$query .= " AND parent_id = id";
 		if($projectID != null)
 			$query .= " AND project_id=".$projectID;
 		$query .= " AND parent_id = id";
@@ -229,38 +130,8 @@ class Discussion extends DbObject
 			$query .= " AND deleted=1";
 		elseif($deleted===false)
 			$query .= " AND deleted=0";
-		$query .= " ORDER BY date_created DESC";
-		if($limit!=null)
-			$query .= " LIMIT ".$limit;		
-		//echo $query;
-		
-		$db = Db::instance();
-		$result = $db->lookup($query);		
-		if (!mysql_num_rows($result)) {return null;}
-		
-		$discussions = array();
-		while ($row = mysql_fetch_assoc($result))
-			$discussions[$row['parent_id']] = self::load($row['parent_id']);
-		
-		return $discussions;		
-	}
-	
-	public static function getMoreDiscussions($userID=null, $projectID=null, $limit=null, $deleted=false) {
-		if ( ($userID == null) || ($projectID == null) ) return null;
-		
-		$query = "SELECT DISTINCT parent_id AS id FROM ".self::DB_TABLE;
-		$query .= " WHERE parent_id NOT IN (";
-			$query .= " SELECT id FROM ".self::DB_TABLE;
-			$query .= " WHERE creator_id = ".$userID;
-			$query .= " AND project_id = ".$projectID;
-		$query .= " )";
-		$query .= " AND project_id=".$projectID;
-		$query .= " AND parent_id = id";
-		if($deleted===true)
-			$query .= " AND deleted=1";
-		elseif($deleted===false)
-			$query .= " AND deleted=0";
-		$query .= " ORDER BY date_created DESC";
+		//$query .= " GROUP BY parent_id";				
+		$query .= " ORDER BY locked ASC, date_created DESC, title ASC";	
 		if($limit!=null)
 			$query .= " LIMIT ".$limit;		
 		//echo $query;
@@ -275,12 +146,44 @@ class Discussion extends DbObject
 		
 		return $discussions;		
 	}
+	
+	// public static function getMoreDiscussions($userID=null, $projectID=null, $limit=null, $deleted=false) {
+		// if ( ($userID == null) || ($projectID == null) ) return null;
+		
+		// $query = "SELECT id FROM ".self::DB_TABLE;
+		// $query .= " WHERE parent_id NOT IN (";
+			// $query .= " SELECT id FROM ".self::DB_TABLE;
+			// $query .= " WHERE creator_id = ".$userID;
+			// $query .= " AND project_id = ".$projectID;
+		// $query .= " )";
+		// $query .= " AND project_id=".$projectID;
+		// $query .= " AND parent_id = id";
+		// if($deleted===true)
+			// $query .= " AND deleted=1";
+		// elseif($deleted===false)
+			// $query .= " AND deleted=0";
+		// $query .= " GROUP BY parent_id";
+		// $query .= " ORDER BY locked ASC, date_created DESC";
+		// if($limit!=null)
+			// $query .= " LIMIT ".$limit;		
+		// //echo $query;
+		
+		// $db = Db::instance();
+		// $result = $db->lookup($query);		
+		// if (!mysql_num_rows($result)) {return null;}
+		
+		// $discussions = array();
+		// while ($row = mysql_fetch_assoc($result))
+			// $discussions[$row['id']] = self::load($row['id']);
+		
+		// return $discussions;		
+	// }
 
 	public static function getByProjectID($projectID=null, $category=null, $limit=null, $deleted=false)
 	{
 		if ($projectID == null) return null;
 		
-		$query = "SELECT DISTINCT parent_id FROM ".self::DB_TABLE;
+		$query = "SELECT parent_id AS id FROM ".self::DB_TABLE;
 		$query .= " WHERE project_id=".$projectID;
 //		$query .= " AND parent_id IS NOT NULL";
 		if($category != null)
@@ -289,7 +192,8 @@ class Discussion extends DbObject
 			$query .= " AND deleted=1";
 		elseif($deleted===false)
 			$query .= " AND deleted=0";
-		$query .= " ORDER BY date_created DESC";
+		//$query .= " GROUP BY parent_id";
+		$query .= " ORDER BY locked ASC, date_created DESC, title ASC";
 		if($limit!=null)
 			$query .= " LIMIT ".$limit;		
 		//echo $query;
@@ -300,9 +204,20 @@ class Discussion extends DbObject
 		
 		$discussions = array();
 		while ($row = mysql_fetch_assoc($result))
-			$discussions[$row['parent_id']] = self::load($row['parent_id']);
+			$discussions[$row['id']] = self::load($row['id']);
 		
 		return $discussions;		
+	}
+	
+	// for discussions template
+	public function getLastReply() {
+		$lastReply = $this->getReplies("DESC", 1, false);
+		if(!empty($lastReply)) {
+			$lastReply = array_pop($lastReply);
+			return ($lastReply);
+		} else {
+			return null;
+		}
 	}
 	
 	public function getReplies($sort="DESC", $limit=null, $deleted=false)
@@ -350,97 +265,7 @@ class Discussion extends DbObject
 			$repliers[$row['id']] = User::load($row['id']);
 		return $repliers;	
 	}
-	
-	// public static function getDiscussionChildren($discussionID=null, $deleted=false)
-	// {
-		// return self::getChildren($discussionID, null, $deleted);
-	// }
-	
-	// public static function getNumDiscussionChildren($discussionID=null, $deleted=false)
-	// {
-		// $comments = self::getChildren($discussionID, null, $deleted);
-		// return (count($comments));
-	// }
-	
-	// public static function getCommentChildren($discussionID=null, $deleted=false)
-	// {
-		// return self::getChildren($discussionID, null, $deleted);
-	// }
-	
-	// public static function getNumCommentChildren($discussionID=null, $deleted=false)
-	// {
-		// $comments = self::getChildren($discussionID, null, $deleted);
-		// return (count($comments));
-	// }
-	
-	
-	// public static function getNumProjectDiscussions($projectID=null, $deleted=false)
-	// {
-		// $comments = self::getProjectDiscussion($projectID, null, $deleted);
-		// return (count($comments));
-	// }
-	
-	// public static function getUserDiscussions($userID=null, $projectID=null, $limit=null, $deleted=false)
-	// {
-		// if($userID==null) return null;
-		
-		// $query = " SELECT id FROM ".self::DB_TABLE;
-		// $query .= " WHERE creator_id = ".$userID;
-		// $query .= ($projectID != null) ? " AND project_id =".$projectID : "";
-		// if($deleted !== null)
-		// {
-			// if($deleted===true)
-				// $query .= " AND node_id IN (";
-			// elseif($deleted===false)
-				// $query .= " AND node_id NOT IN (";
-				
-			// $query .= " SELECT id FROM ".Version::DB_TABLE;
-			// $query .= " WHERE deleted=1";
-			// $query .= " OR parent_id IN (";
-				// $query .= " SELECT id FROM ".Submission::DB_TABLE;
-				// $query .= " WHERE deleted=1";
-				// $query .= " OR parent_id IN (";
-					// $query .= " SELECT id FROM ".Scene::DB_TABLE;
-					// $query .= " WHERE deleted=1";
-				// $query .= ")";
-			// $query .= " )";
-			// $query .= " )";
-				
-			// if($deleted===true)
-				// $query .= " OR deleted=1";
-			// elseif($deleted===false)
-				// $query .= " AND deleted=0";
-		// }		
-		// $query .= " ORDER BY date_time_created DESC";
-		// if($limit!=null)
-			// $query .= " LIMIT ".$limit;	
-		// //echo $query;
-		// $db = Db::instance();
-		// $result = $db->lookup($query);
-		
-		// if (!mysql_num_rows($result)) {return null;}
-		
-		// $discussions = array();
-		// while ($row = mysql_fetch_assoc($result))
-			// $discussions[$row['id']] = self::load($row['id']);
-		
-		// return $discussions;			
-	// }
-	
-	// public static function getNumUserDiscussions($userID=null, $projectID=null, $deleted=false)
-	// {
-		// $discussions = self::getUserDiscussions($userID, $projectID, null, $deleted);
-		// return (count($discussions));
-	// }
-	
-	// public static function getLastDiscussionByUser($userID=null, $projectID=null, $deleted=false)
-	// {
-		// $discussions = self::getUserDiscussions($userID, $projectID, 1, $deleted);
-		// if($discussions == null)
-			// return null;
-		// else
-			// return (reset($discussions));
-	// }	
+
 	
 	// --- only getters and setters below here --- //	
 	
@@ -548,4 +373,13 @@ class Discussion extends DbObject
 		$this->deleted = $newDeleted;
 		$this->modified = true;
 	}	
+	
+	public function getLocked() {
+		return ($this->locked);
+	}
+	
+	public function setLocked($newLocked) {
+		$this->locked = $newLocked;
+		$this->modified = true;
+	}
 }

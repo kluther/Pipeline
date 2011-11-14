@@ -13,7 +13,43 @@ if($project == null) {
 //$token = Filter::alphanum($_POST['token']);
 $action = Filter::text($_POST['action']);
 
-if($action == 'create') {
+if($action == 'lock') {
+	$discussionID = Filter::numeric($_POST['discussionID']);
+	$discussion = Discussion::load($discussionID);
+	
+	// make sure discussion exists
+	if(empty($discussion)) {
+		$json = array( 'error' => 'That discussion does not exist.' );
+		exit(json_encode($json));	
+	}
+	
+	// toggle lock
+	if($discussion->getLocked()) {
+		$discussion->setLocked(false);
+		$eventTypeID = 'unlock_discussion';
+		$successMessage = 'You unlocked the discussion.';
+	} else {
+		$discussion->setLocked(true);
+		$eventTypeID = 'lock_discussion';
+		$successMessage = 'You locked the discussion.';
+	}
+	$discussion->save();
+	
+	// log it
+	$logEvent = new Event(array(
+		'event_type_id' => $eventTypeID,
+		'project_id' => $project->getID(),
+		'user_1_id' => Session::getUserID(),
+		'item_1_id' => $discussion->getID()
+	));
+	$logEvent->save();	
+	
+	// send us back
+	Session::setMessage($successMessage);
+	$json = array('success' => '1');
+	echo json_encode($json);
+	
+} elseif($action == 'create') {
 	// get additional POST variables
 	$title = Filter::text($_POST['title']);
 	$message = Filter::formattedText($_POST['message']);
