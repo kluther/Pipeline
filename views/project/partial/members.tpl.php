@@ -186,7 +186,7 @@ $(document).ready(function(){
 		<label for="chkTrustedMember">Trusted<span class="required">*</span></label>
 		<div class="input">
 			<input type="checkbox" id="chkTrustedMember" value="trusted" checked="checked" />
-			<p>If checked, recipients who accept this invitation become <a href="<?= Url::help() ?>">trusted members</a></p>
+			<p>If checked, recipients who accept this invitation become <a href="<?= Url::help() ?>#help-roles">trusted members</a></p>
 		</div>
 	</div>
 	<?php endif; ?>

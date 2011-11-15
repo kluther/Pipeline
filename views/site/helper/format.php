@@ -82,7 +82,7 @@ function formatUserLink($userID=null, $projectID=null)
 	if($projectID != null) {
 		if( (ProjectUser::isTrusted($userID, $projectID)) ||
 			(ProjectUser::isCreator($userID, $projectID)) ){
-			$formatted .= '<a href="'.Url::help().'" title="trusted member">*</a>';
+			$formatted .= '<a href="'.Url::help().'#help-roles" title="trusted member">*</a>';
 		}
 	}
 	return $formatted;
