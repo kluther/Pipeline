@@ -2,7 +2,7 @@ Options -Indexes
 
 RewriteEngine on
 
-ErrorDocument 404 /demo/controller/site/error_c.php
+ErrorDocument 404 /controller/site/error_c.php
 
 ### STATIC ###
 
