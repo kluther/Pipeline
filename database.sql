@@ -427,6 +427,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `notify_discussion_reply` tinyint(4) unsigned NOT NULL default '1',
   `notify_make_task_leader` tinyint(3) unsigned NOT NULL default '1',
   `notify_receive_message` tinyint(3) unsigned NOT NULL default '1',
+  `notify_mass_email` tinyint(3) unsigned NOT NULL default '1',
   `admin` tinyint(3) unsigned NOT NULL default '0',
   `date_created` timestamp NOT NULL default CURRENT_TIMESTAMP,
   `last_login` timestamp NOT NULL default '0000-00-00 00:00:00',

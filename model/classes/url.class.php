@@ -24,6 +24,10 @@ class Url
 		return (self::base().'/admin');
 	}
 	
+	public static function adminProcess() {
+		return (self::admin().'/process');
+	}
+	
 	public static function uploadProcess()
 	{
 		return (self::base().'/upload/process');

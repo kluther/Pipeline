@@ -25,6 +25,7 @@ class User extends DbObject
 	protected $notifyDiscussionReply;
 	protected $notifyMakeTaskLeader;
 	protected $notifyReceiveMessage;
+	protected $notifyMassEmail;
 	protected $admin;
 	protected $dateCreated;
 	protected $lastLogin;
@@ -62,6 +63,7 @@ class User extends DbObject
 			'notify_discussion_reply' => 1,
 			'notify_make_task_leader' => 1,
 			'notify_receive_message' => 1,
+			'notify_mass_email' => 1,
 			'admin' => 0,
 			'date_created' => null,
 			'last_login' => null
@@ -92,6 +94,7 @@ class User extends DbObject
 		$this->notifyDiscussionReply = $args['notify_discussion_reply'];
 		$this->notifyMakeTaskLeader = $args['notify_make_task_leader'];
 		$this->notifyReceiveMessage = $args['notify_receive_message'];
+		$this->notifyMassEmail = $args['notify_mass_email'];
 		$this->admin = $args['admin'];
 		$this->dateCreated = $args['date_created'];
 		$this->lastLogin = $args['last_login'];
@@ -147,6 +150,42 @@ class User extends DbObject
 			return $obj;
 		}		
 	}	
+
+	public function save()
+	{
+		$db = Db::instance();
+		// map database fields to class properties; omit id and dateCreated
+		$db_properties = array(
+			'username' => $this->username,
+			'password' => $this->password,
+			'email' => $this->email,
+			'name' => $this->name,
+			'dob' => $this->dob,			
+			'sex' => $this->sex,
+			'location' => $this->location,
+			'biography' => $this->biography,
+			'picture' => $this->picture,
+			'picture_small' => $this->pictureSmall,
+			'picture_large' => $this->pictureLarge,
+			'notify_comment_task_leading' => $this->notifyCommentTaskLeading,
+			'notify_edit_task_accepted' => $this->notifyEditTaskAccepted,
+			'notify_comment_task_accepted' => $this->notifyCommentTaskAccepted,
+			'notify_comment_task_update' => $this->notifyCommentTaskUpdate,
+			'notify_invite_project' => $this->notifyInviteProject,
+			'notify_trust_project' => $this->notifyTrustProject,
+			'notify_banned_project' => $this->notifyBannedProject,
+			'notify_discussion_started' => $this->notifyDiscussionStarted,
+			'notify_discussion_reply' => $this->notifyDiscussionReply,
+			'notify_make_task_leader' => $this->notifyMakeTaskLeader,
+			'notify_receive_message' => $this->notifyReceiveMessage,
+			'notify_mass_email' => $this->notifyMassEmail,
+			'admin' => $this->admin,
+			'last_login' => $this->lastLogin
+		);		
+		$db->store($this, __CLASS__, self::DB_TABLE, $db_properties);
+	}
+	
+	// static methods
 	
 	// used for admin page
 	public static function getAllUsers($limit=null) {
@@ -164,6 +203,24 @@ class User extends DbObject
 		while($row = mysql_fetch_assoc($result))
 			$users[$row['id']] = self::load($row['id']);
 		return $users;	
+	}
+	
+	// used for admin page
+	public static function getMassEmailAddresses($limit=500) {
+		$query = "SELECT email FROM ".self::DB_TABLE;
+		$query .= " WHERE notify_mass_email = 1";
+		$query .= " ORDER BY username ASC";
+		if($limit != null)
+			$query .= " LIMIT ".$limit;
+		
+		$db = Db::instance();
+		$result = $db->lookup($query);
+		if(!mysql_num_rows($result)) return null;
+		
+		$emails = array();
+		while($row = mysql_fetch_assoc($result))
+			$emails[] = $row['email'];
+		return $emails;	
 	}
 	
 	// used for people search
@@ -218,94 +275,8 @@ class User extends DbObject
 			$usernames[] = $row['username'];
 		return $usernames;		
 	}
-	
-	// public static function findUsers($username = null, $limit = null)
-	// {
-		// if ($username == null) return null;
-		
-		// $db = Db::instance();
-			
-		// $query = sprintf("SELECT * FROM user WHERE user_name like '%s'",
-				// $username."%"
-			// );
-		// if($limit != null)
-			// $query .= " LIMIT " . $limit;
-			
-		// $result = $db->lookup($query);
-		
-		// if(!mysql_num_rows($result))
-			// return array();
-		
-		// $users = array();
-		// while($row = mysql_fetch_assoc($result))
-			// $users[$row['id']] = self::load($row['id']);
-		// return $users;
-	// }
-
-	public function save()
-	{
-		$db = Db::instance();
-		// map database fields to class properties; omit id and dateCreated
-		$db_properties = array(
-			'username' => $this->username,
-			'password' => $this->password,
-			'email' => $this->email,
-			'name' => $this->name,
-			'dob' => $this->dob,			
-			'sex' => $this->sex,
-			'location' => $this->location,
-			'biography' => $this->biography,
-			'picture' => $this->picture,
-			'picture_small' => $this->pictureSmall,
-			'picture_large' => $this->pictureLarge,
-			'notify_comment_task_leading' => $this->notifyCommentTaskLeading,
-			'notify_edit_task_accepted' => $this->notifyEditTaskAccepted,
-			'notify_comment_task_accepted' => $this->notifyCommentTaskAccepted,
-			'notify_comment_task_update' => $this->notifyCommentTaskUpdate,
-			'notify_invite_project' => $this->notifyInviteProject,
-			'notify_trust_project' => $this->notifyTrustProject,
-			'notify_banned_project' => $this->notifyBannedProject,
-			'notify_discussion_started' => $this->notifyDiscussionStarted,
-			'notify_discussion_reply' => $this->notifyDiscussionReply,
-			'notify_make_task_leader' => $this->notifyMakeTaskLeader,
-			'notify_receive_message' => $this->notifyReceiveMessage,
-			'admin' => $this->admin,
-			'last_login' => $this->lastLogin
-		);		
-		$db->store($this, __CLASS__, self::DB_TABLE, $db_properties);
-	}
 
 	/* instance methods */
-
-	// public function getSubmissions($projectID=null, $limit=null, $deleted=false)
-	// {
-		// return (Submission::getUserSubmissions($this->id, $projectID, $limit, $deleted));		
-	// }
-	
-	// public function getLastSubmission($projectID=null, $deleted=false)
-	// {
-		// return (Submission::getLastSubmissionByUser($this->id, $projectID, $deleted));
-	// }	
-	
-	// public function getActions($projectID = null, $limit = null)
-	// {
-		// return (Action::getUserActions($this->getID(), $projectID, $limit));
-	// }
-	
-	// public function getFiles($projectID=null, $limit=null, $deleted=false)
-	// {
-		// return (File::getUserFiles($this->id, $projectID, $limit, $deleted));
-	// }
-	
-	// public function getDiscussions($projectID=null, $limit=null, $deleted=false)
-	// {
-		// return (Discussion::getUserDiscussions($this->id, $projectID, $limit, $deleted));
-	// }
-	
-	// public function getLastDiscussion($projectID=null, $deleted=false)
-	// {
-		// return (Discussion::getLastDiscussionByUser($this->id, $projectID, $deleted));
-	// }
 	
 	public function getReadMessages()
 	{
@@ -330,26 +301,7 @@ class User extends DbObject
 	
 	// --- only getters and setters below here --- //
 	
-	/* Epic getter -- convert the object data to an array */
-	// public function getArgsArray()
-	// {
-		// $args = array
-		// (
-			// 'id' => $this->id,
-			// 'username' => $this->username,
-			// 'password' => $this->password,
-			// 'email' => $this->email,
-			// 'name' => $this->firstName,
-			// 'dob' => $this->dob,			
-			// 'sex' => $this->sex,
-			// 'location' => $this->location,
-			// 'biography' => $this->biography,
-			// 'date_created' => $this->dateCreated,
-			// 'last_login' => $this->lastLogin
-		// );
-		
-		// return $args;
-	// }
+
 	public function getID()
 	{
 		return ($this->id);
@@ -578,6 +530,15 @@ class User extends DbObject
 	
 	public function setNotifyReceiveMessage($newNotifyReceiveMessage) {
 		$this->notifyReceiveMessage = $newNotifyReceiveMessage;
+		$this->modified = true;
+	}
+	
+	public function getNotifyMassEmail() {
+		return ($this->notifyMassEmail);
+	}
+	
+	public function setNotifyMassEmail($newNotifyMassEmail) {
+		$this->notifyMassEmail = $newNotifyMassEmail;
 		$this->modified = true;
 	}
 	

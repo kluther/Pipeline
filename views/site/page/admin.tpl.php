@@ -31,6 +31,12 @@ $fork->startBlockSet('body');
 	));
 ?>
 
+
+<?php
+	$SOUP->render('site/partial/massEmail',array(
+	));
+?>
+
 </td>
 
 <td class="right">

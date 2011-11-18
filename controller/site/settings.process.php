@@ -45,6 +45,9 @@ if($action == 'notification') {
 		case 'chkReceiveMessage':
 			$user->setNotifyReceiveMessage($value);
 			break;
+		case 'chkMassEmail':
+			$user->setNotifyMassEmail($value);
+			break;
 		default:
 			$json = array( 'error' => 'Invalid notification type.' );
 			exit(json_encode($json));
