@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 2.11.11.1
+-- version 3.2.4
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 16, 2011 at 03:09 PM
--- Server version: 5.0.77
--- PHP Version: 5.3.5
+-- Generation Time: Nov 18, 2011 at 09:16 PM
+-- Server version: 5.1.44
+-- PHP Version: 5.3.1
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
@@ -20,13 +20,13 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 --
 
 CREATE TABLE IF NOT EXISTS `accepted` (
-  `id` int(10) unsigned NOT NULL auto_increment,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `creator_id` int(10) unsigned NOT NULL,
   `project_id` int(10) unsigned NOT NULL,
   `task_id` int(10) unsigned NOT NULL,
-  `status` tinyint(3) unsigned NOT NULL default '0',
-  `date_created` timestamp NOT NULL default CURRENT_TIMESTAMP,
-  PRIMARY KEY  (`id`),
+  `status` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `date_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
   KEY `creator_id` (`creator_id`),
   KEY `project_id` (`project_id`),
   KEY `task_id` (`task_id`)
@@ -44,16 +44,16 @@ CREATE TABLE IF NOT EXISTS `accepted` (
 --
 
 CREATE TABLE IF NOT EXISTS `comment` (
-  `id` int(10) unsigned NOT NULL auto_increment,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `creator_id` int(10) unsigned NOT NULL,
   `project_id` int(10) unsigned NOT NULL,
-  `task_id` int(10) unsigned default NULL,
-  `update_id` int(10) unsigned default NULL,
-  `parent_id` int(10) unsigned default NULL,
+  `task_id` int(10) unsigned DEFAULT NULL,
+  `update_id` int(10) unsigned DEFAULT NULL,
+  `parent_id` int(10) unsigned DEFAULT NULL,
   `message` text NOT NULL,
-  `deleted` tinyint(1) unsigned NOT NULL default '0',
-  `date_created` timestamp NOT NULL default CURRENT_TIMESTAMP,
-  PRIMARY KEY  (`id`),
+  `deleted` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `date_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
   KEY `creator_id` (`creator_id`),
   KEY `project_id` (`project_id`),
   KEY `parent_id` (`parent_id`),
@@ -73,11 +73,11 @@ CREATE TABLE IF NOT EXISTS `comment` (
 --
 
 CREATE TABLE IF NOT EXISTS `consent` (
-  `id` int(10) unsigned NOT NULL auto_increment,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `email` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `date_created` timestamp NOT NULL default CURRENT_TIMESTAMP,
-  PRIMARY KEY  (`id`)
+  `date_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
 --
@@ -92,17 +92,17 @@ CREATE TABLE IF NOT EXISTS `consent` (
 --
 
 CREATE TABLE IF NOT EXISTS `discussion` (
-  `id` int(11) unsigned NOT NULL auto_increment,
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `creator_id` int(11) unsigned NOT NULL,
   `project_id` int(11) unsigned NOT NULL,
-  `parent_id` int(11) unsigned default NULL,
+  `parent_id` int(11) unsigned DEFAULT NULL,
   `title` varchar(255) NOT NULL,
   `message` text NOT NULL,
-  `category` tinyint(3) unsigned default NULL,
-  `deleted` tinyint(1) unsigned NOT NULL default '0',
-  `locked` tinyint(1) unsigned NOT NULL default '0',
-  `date_created` timestamp NOT NULL default CURRENT_TIMESTAMP,
-  PRIMARY KEY  (`id`),
+  `category` tinyint(3) unsigned DEFAULT NULL,
+  `deleted` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `locked` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `date_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
   KEY `creator_id` (`creator_id`),
   KEY `project_id` (`project_id`),
   KEY `parent_id` (`parent_id`)
@@ -120,24 +120,24 @@ CREATE TABLE IF NOT EXISTS `discussion` (
 --
 
 CREATE TABLE IF NOT EXISTS `event` (
-  `id` int(10) unsigned NOT NULL auto_increment,
-  `project_id` int(10) unsigned default NULL,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `project_id` int(10) unsigned DEFAULT NULL,
   `event_type_id` varchar(128) NOT NULL,
   `user_1_id` int(10) unsigned NOT NULL,
-  `user_2_id` int(10) unsigned default NULL,
-  `item_1_id` int(10) unsigned default NULL,
-  `item_2_id` int(10) unsigned default NULL,
-  `item_3_id` int(10) unsigned default NULL,
+  `user_2_id` int(10) unsigned DEFAULT NULL,
+  `item_1_id` int(10) unsigned DEFAULT NULL,
+  `item_2_id` int(10) unsigned DEFAULT NULL,
+  `item_3_id` int(10) unsigned DEFAULT NULL,
   `data_1` text,
   `data_2` text,
   `data_3` text,
-  `date_created` timestamp NOT NULL default CURRENT_TIMESTAMP,
-  PRIMARY KEY  (`id`),
+  `date_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
   KEY `project_id` (`project_id`),
   KEY `event_type_id` (`event_type_id`),
   KEY `user_1_id` (`user_1_id`),
   KEY `user_2_id` (`user_2_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `event`
@@ -152,13 +152,13 @@ CREATE TABLE IF NOT EXISTS `event` (
 
 CREATE TABLE IF NOT EXISTS `event_type` (
   `id` varchar(128) NOT NULL,
-  `description` varchar(255) default NULL,
-  `group` tinyint(1) unsigned default NULL,
-  `css_class` varchar(128) default NULL,
-  `diffable` tinyint(1) unsigned NOT NULL default '0',
-  `hidden` tinyint(1) unsigned NOT NULL default '0',
-  `contribution` tinyint(1) unsigned NOT NULL default '0',
-  PRIMARY KEY  (`id`)
+  `description` varchar(255) DEFAULT NULL,
+  `group` tinyint(1) unsigned DEFAULT NULL,
+  `css_class` varchar(128) DEFAULT NULL,
+  `diffable` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `hidden` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `contribution` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -218,18 +218,18 @@ INSERT INTO `event_type` (`id`, `description`, `group`, `css_class`, `diffable`,
 --
 
 CREATE TABLE IF NOT EXISTS `invitation` (
-  `id` int(10) unsigned NOT NULL auto_increment,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `inviter_id` int(11) unsigned NOT NULL,
-  `invitee_id` int(11) unsigned default NULL,
-  `invitee_email` varchar(255) default NULL,
+  `invitee_id` int(11) unsigned DEFAULT NULL,
+  `invitee_email` varchar(255) DEFAULT NULL,
   `project_id` int(11) unsigned NOT NULL,
-  `trusted` tinyint(3) unsigned NOT NULL default '0',
+  `trusted` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `invitation_message` text,
-  `response` tinyint(3) unsigned default NULL,
+  `response` tinyint(3) unsigned DEFAULT NULL,
   `response_message` text,
-  `date_responded` datetime default NULL,
-  `date_created` timestamp NOT NULL default CURRENT_TIMESTAMP,
-  PRIMARY KEY  (`id`),
+  `date_responded` datetime DEFAULT NULL,
+  `date_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
   KEY `inviter_id` (`inviter_id`),
   KEY `invitee_id` (`invitee_id`),
   KEY `project_id` (`project_id`)
@@ -247,19 +247,19 @@ CREATE TABLE IF NOT EXISTS `invitation` (
 --
 
 CREATE TABLE IF NOT EXISTS `message` (
-  `id` int(10) unsigned NOT NULL auto_increment,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `sender_id` int(10) unsigned NOT NULL,
   `recipient_id` int(10) unsigned NOT NULL,
-  `parent_id` int(10) unsigned default NULL,
+  `parent_id` int(10) unsigned DEFAULT NULL,
   `subject` varchar(255) NOT NULL,
   `body` text NOT NULL,
-  `date_sent` timestamp NOT NULL default CURRENT_TIMESTAMP,
-  `date_read` timestamp NULL default NULL,
-  PRIMARY KEY  (`id`),
+  `date_sent` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `date_read` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
   KEY `sender_id` (`sender_id`),
   KEY `recipient_id` (`recipient_id`),
   KEY `parent_id` (`parent_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `message`
@@ -273,20 +273,20 @@ CREATE TABLE IF NOT EXISTS `message` (
 --
 
 CREATE TABLE IF NOT EXISTS `project` (
-  `id` int(11) unsigned NOT NULL auto_increment,
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `creator_id` int(11) NOT NULL,
   `title` varchar(255) NOT NULL,
   `slug` varchar(512) NOT NULL,
   `pitch` text NOT NULL,
   `specs` text,
   `rules` text,
-  `status` tinyint(3) unsigned NOT NULL default '0',
-  `deadline` datetime default NULL,
-  `venue` varchar(255) default NULL,
-  `private` tinyint(1) unsigned NOT NULL default '0',
-  `date_created` timestamp NOT NULL default CURRENT_TIMESTAMP,
-  PRIMARY KEY  (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=22 ;
+  `status` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `deadline` datetime DEFAULT NULL,
+  `venue` varchar(255) DEFAULT NULL,
+  `private` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `date_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=23 ;
 
 --
 -- Dumping data for table `project`
@@ -300,14 +300,14 @@ CREATE TABLE IF NOT EXISTS `project` (
 --
 
 CREATE TABLE IF NOT EXISTS `project_user` (
-  `id` int(10) unsigned NOT NULL auto_increment,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(10) unsigned NOT NULL,
   `project_id` int(10) unsigned NOT NULL,
   `relationship` tinyint(1) unsigned NOT NULL,
-  PRIMARY KEY  (`id`),
+  PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   KEY `project_id` (`project_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `project_user`
@@ -321,17 +321,17 @@ CREATE TABLE IF NOT EXISTS `project_user` (
 --
 
 CREATE TABLE IF NOT EXISTS `task` (
-  `id` int(10) unsigned NOT NULL auto_increment,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `creator_id` int(11) unsigned NOT NULL,
-  `leader_id` int(10) unsigned default NULL,
+  `leader_id` int(10) unsigned DEFAULT NULL,
   `project_id` int(11) unsigned NOT NULL,
   `title` varchar(255) NOT NULL,
   `description` text NOT NULL,
-  `deadline` datetime default NULL,
-  `status` tinyint(3) unsigned NOT NULL default '0',
-  `num_needed` int(10) unsigned default NULL,
-  `date_created` timestamp NOT NULL default CURRENT_TIMESTAMP,
-  PRIMARY KEY  (`id`),
+  `deadline` datetime DEFAULT NULL,
+  `status` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `num_needed` int(10) unsigned DEFAULT NULL,
+  `date_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
   KEY `creator_id` (`creator_id`),
   KEY `project_id` (`project_id`),
   KEY `leader_id` (`leader_id`)
@@ -345,18 +345,40 @@ CREATE TABLE IF NOT EXISTS `task` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `theme`
+--
+
+CREATE TABLE IF NOT EXISTS `theme` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(128) NOT NULL,
+  `pipeline_stylesheet` varchar(128) NOT NULL,
+  `jqueryui_stylesheet` varchar(128) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `theme`
+--
+
+INSERT INTO `theme` (`id`, `name`, `pipeline_stylesheet`, `jqueryui_stylesheet`) VALUES
+(1, 'light', 'light.css', 'jquery-ui-redmond.css'),
+(2, 'dark', 'dark.css', 'jquery-ui-darkness.css');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `update`
 --
 
 CREATE TABLE IF NOT EXISTS `update` (
-  `id` int(11) unsigned NOT NULL auto_increment,
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `creator_id` int(10) unsigned NOT NULL,
   `accepted_id` int(10) unsigned NOT NULL,
   `project_id` int(10) unsigned NOT NULL,
   `title` varchar(255) NOT NULL,
   `message` text NOT NULL,
-  `date_created` timestamp NOT NULL default CURRENT_TIMESTAMP,
-  PRIMARY KEY  (`id`),
+  `date_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
   KEY `creator_id` (`creator_id`),
   KEY `project_id` (`project_id`),
   KEY `accepted_id` (`accepted_id`)
@@ -374,20 +396,20 @@ CREATE TABLE IF NOT EXISTS `update` (
 --
 
 CREATE TABLE IF NOT EXISTS `upload` (
-  `id` int(10) unsigned NOT NULL auto_increment,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `creator_id` int(10) unsigned NOT NULL,
-  `project_id` int(10) unsigned default NULL,
-  `item_type` varchar(32) default NULL,
-  `item_id` int(11) unsigned default NULL,
+  `project_id` int(10) unsigned DEFAULT NULL,
+  `item_type` varchar(32) DEFAULT NULL,
+  `item_id` int(11) unsigned DEFAULT NULL,
   `original_name` varchar(255) NOT NULL,
   `stored_name` varchar(255) NOT NULL,
-  `mime` varchar(128) default NULL,
-  `size` bigint(20) unsigned default NULL,
-  `height` int(11) default NULL,
-  `width` int(11) default NULL,
-  `deleted` tinyint(1) unsigned NOT NULL default '0',
-  `date_created` timestamp NOT NULL default CURRENT_TIMESTAMP,
-  PRIMARY KEY  (`id`),
+  `mime` varchar(128) DEFAULT NULL,
+  `size` bigint(20) unsigned DEFAULT NULL,
+  `height` int(11) DEFAULT NULL,
+  `width` int(11) DEFAULT NULL,
+  `deleted` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `date_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
   KEY `creator_id` (`creator_id`),
   KEY `project_id` (`project_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
@@ -404,35 +426,36 @@ CREATE TABLE IF NOT EXISTS `upload` (
 --
 
 CREATE TABLE IF NOT EXISTS `user` (
-  `id` int(11) unsigned NOT NULL auto_increment,
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `username` varchar(20) NOT NULL,
   `password` char(40) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `name` varchar(255) default NULL,
-  `dob` datetime default NULL,
-  `sex` char(1) default NULL,
-  `location` varchar(255) default NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `dob` datetime DEFAULT NULL,
+  `sex` char(1) DEFAULT NULL,
+  `location` varchar(255) DEFAULT NULL,
   `biography` text,
-  `picture` varchar(128) default NULL,
-  `picture_small` varchar(128) default NULL,
-  `picture_large` varchar(128) default NULL,
-  `notify_comment_task_leading` tinyint(4) unsigned NOT NULL default '1',
-  `notify_edit_task_accepted` tinyint(4) unsigned NOT NULL default '1',
-  `notify_comment_task_accepted` tinyint(4) unsigned NOT NULL default '1',
-  `notify_comment_task_update` tinyint(4) unsigned NOT NULL default '1',
-  `notify_invite_project` tinyint(4) unsigned NOT NULL default '1',
-  `notify_trust_project` tinyint(4) unsigned NOT NULL default '1',
-  `notify_banned_project` tinyint(4) unsigned NOT NULL default '1',
-  `notify_discussion_started` tinyint(4) unsigned NOT NULL default '1',
-  `notify_discussion_reply` tinyint(4) unsigned NOT NULL default '1',
-  `notify_make_task_leader` tinyint(3) unsigned NOT NULL default '1',
-  `notify_receive_message` tinyint(3) unsigned NOT NULL default '1',
-  `notify_mass_email` tinyint(3) unsigned NOT NULL default '1',
-  `admin` tinyint(3) unsigned NOT NULL default '0',
-  `date_created` timestamp NOT NULL default CURRENT_TIMESTAMP,
-  `last_login` timestamp NOT NULL default '0000-00-00 00:00:00',
-  PRIMARY KEY  (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=48 ;
+  `picture` varchar(128) DEFAULT NULL,
+  `picture_small` varchar(128) DEFAULT NULL,
+  `picture_large` varchar(128) DEFAULT NULL,
+  `theme_id` int(11) DEFAULT NULL,
+  `notify_comment_task_leading` tinyint(4) unsigned NOT NULL DEFAULT '1',
+  `notify_edit_task_accepted` tinyint(4) unsigned NOT NULL DEFAULT '1',
+  `notify_comment_task_accepted` tinyint(4) unsigned NOT NULL DEFAULT '1',
+  `notify_comment_task_update` tinyint(4) unsigned NOT NULL DEFAULT '1',
+  `notify_invite_project` tinyint(4) unsigned NOT NULL DEFAULT '1',
+  `notify_trust_project` tinyint(4) unsigned NOT NULL DEFAULT '1',
+  `notify_banned_project` tinyint(4) unsigned NOT NULL DEFAULT '1',
+  `notify_discussion_started` tinyint(4) unsigned NOT NULL DEFAULT '1',
+  `notify_discussion_reply` tinyint(4) unsigned NOT NULL DEFAULT '1',
+  `notify_make_task_leader` tinyint(3) unsigned NOT NULL DEFAULT '1',
+  `notify_receive_message` tinyint(3) unsigned NOT NULL DEFAULT '1',
+  `notify_mass_email` tinyint(1) unsigned NOT NULL DEFAULT '1',
+  `admin` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `date_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `last_login` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=50 ;
 
 --
 -- Dumping data for table `user`
