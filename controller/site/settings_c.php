@@ -6,6 +6,17 @@ if(!Session::isLoggedIn()) {
 	exit();
 }
 
+// get all themes
+$themes = Theme::getThemes();
+
+// get ID of user's theme
+$u = Session::getUser();
+$userThemeID = $u->getThemeID();
+unset($u);
+
 $soup = new Soup();
+
+$soup->set('themes', $themes);
+$soup->set('userThemeID', $userThemeID);
 
 $soup->render('site/page/settings');

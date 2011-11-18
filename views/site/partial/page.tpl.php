@@ -15,7 +15,14 @@ if(!empty($project)) {
 if(Session::isLoggedIn()) {
 	$user = Session::getUser();
 	$numUnread = $user->getNumUnreadMessages();
+	$theme = Theme::load($user->getThemeID());
+} else {
+	$theme = Theme::load(DEFAULT_THEME_ID); // load default theme
 }
+
+// set up stylesheet variables
+$jqueryuiStylesheet = $theme->getJqueryuiStylesheet();
+$pipelineStylesheet = $theme->getPipelineStylesheet();
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -24,12 +31,8 @@ if(Session::isLoggedIn()) {
 	<title><?= PIPELINE_NAME ?> - <?= $pageTitle ?></title>
 	<link rel="icon" type="image/png" href="<?= Url::images() ?>/icons/clapperboard.png" />
 	<link rel="stylesheet" type="text/css" href="<?= Url::styles() ?>/basic.css" />
-	<link rel="stylesheet" type="text/css" href="<?= Url::styles() ?>/<?= STYLE_SHEET ?>" />
-	<?php if(STYLE_SHEET == 'dark.css'): ?>
-	<link rel="stylesheet" type="text/css" href="<?= Url::styles() ?>/jquery-ui-darkness.css" />
-	<?php else: ?>
-	<link rel="stylesheet" type="text/css" href="<?= Url::styles() ?>/jquery-ui-redmond.css" />
-	<?php endif; ?>
+	<link rel="stylesheet" type="text/css" href="<?= Url::styles() ?>/<?= $pipelineStylesheet ?>" />
+	<link rel="stylesheet" type="text/css" href="<?= Url::styles() ?>/<?= $jqueryuiStylesheet ?>" />
 	<script type="text/javascript" src="http://www.google.com/jsapi"></script>
 	<script type="text/javascript"> 
 		google.load("jquery", "1");

@@ -4,7 +4,27 @@ require_once("../../global.php");
 $user = User::load(Session::getUserID());
 $action = Filter::text($_POST['action']);
 
-if($action == 'notification') {
+if($action == 'theme') {
+	// get the new theme
+	$themeID = Filter::numeric($_POST['themeID']);
+	$theme = Theme::load($themeID);
+	
+	// validate the theme
+	if(empty($theme)) {
+		$json = array( 'error' => 'That theme does not exist.' );
+		exit(json_encode($json));
+	}
+	
+	// save the new theme
+	$user->setThemeID($theme->getID());
+	$user->save();
+	
+	// send us back
+	Session::setMessage("Theme changed.");
+	$json = array('success' => '1');
+	echo json_encode($json);
+	
+} elseif($action == 'notification') {
 	$notificationType = Filter::alphanum($_POST['notificationType']);
 	$notificationValue = Filter::alphanum($_POST['notificationValue']);
 	// convert checkbox value to database-friendly 1 or 0

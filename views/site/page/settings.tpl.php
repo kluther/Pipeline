@@ -14,6 +14,11 @@ $fork->startBlockSet('body');
 	));
 ?>
 
+<?php
+	$SOUP->render('site/partial/theme', array(
+	));
+?>
+
 </td>
 
 <td class="right">

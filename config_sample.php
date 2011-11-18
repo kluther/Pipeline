@@ -12,7 +12,7 @@
 	
 	define('BASE_URI', 'http://pipeline.cc.gatech.edu'); # base URI for this Pipeline instance <- CHANGE THIS
 	define('PIPELINE_NAME', 'Pipeline Demo'); # name of this Pipeline instance <- CHANGE THIS
-	define('STYLE_SHEET', 'light.css'); # name of CSS stylesheet <- CHANGE THIS
+	define('DEFAULT_THEME_ID', 1); # default theme ID <- CHANGE THIS
 	define('TIME_ZONE', 'America/New_York'); # name of PHP time zone <- CHANGE THIS
 	define('CONTACT_EMAIL', 'email@address.com'); # contact email address <- CHANGE THIS
 	

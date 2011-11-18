@@ -14,6 +14,7 @@ class User extends DbObject
 	protected $picture;
 	protected $pictureSmall;
 	protected $pictureLarge;
+	protected $themeID;
 	protected $notifyCommentTaskLeading;
 	protected $notifyEditTaskAccepted;
 	protected $notifyCommentTaskAccepted;
@@ -52,6 +53,7 @@ class User extends DbObject
 			'picture' => null,
 			'picture_small' => null,
 			'picture_large' => null,
+			'theme_id' => 1,
 			'notify_comment_task_leading' => 1,
 			'notify_edit_task_accepted' => 1,
 			'notify_comment_task_accepted' => 1,
@@ -83,6 +85,7 @@ class User extends DbObject
 		$this->picture = $args['picture'];
 		$this->pictureSmall = $args['picture_small'];
 		$this->pictureLarge = $args['picture_large'];
+		$this->themeID = $args['theme_id'];
 		$this->notifyCommentTaskLeading = $args['notify_comment_task_leading'];
 		$this->notifyEditTaskAccepted = $args['notify_edit_task_accepted'];
 		$this->notifyCommentTaskAccepted = $args['notify_comment_task_accepted'];
@@ -167,6 +170,7 @@ class User extends DbObject
 			'picture' => $this->picture,
 			'picture_small' => $this->pictureSmall,
 			'picture_large' => $this->pictureLarge,
+			'theme_id' => $this->themeID,
 			'notify_comment_task_leading' => $this->notifyCommentTaskLeading,
 			'notify_edit_task_accepted' => $this->notifyEditTaskAccepted,
 			'notify_comment_task_accepted' => $this->notifyCommentTaskAccepted,
@@ -432,6 +436,15 @@ class User extends DbObject
 	public function getPicture()
 	{
 		return ($this->picture);
+	}
+	
+	public function getThemeID() {
+		return ($this->themeID);
+	}
+	
+	public function setThemeID($newThemeID) {
+		$this->themeID = $newThemeID;
+		$this->modified = true;
 	}
 	
 	public function getNotifyCommentTaskLeading() {
