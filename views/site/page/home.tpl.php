@@ -13,7 +13,6 @@ require_once TEMPLATE_PATH.'/site/helper/format.php';
 	<?php else: ?>
 	<link rel="stylesheet" type="text/css" href="<?= Url::styles() ?>/jquery-ui-redmond.css" />
 	<?php endif; ?>
-	<link href='http://fonts.googleapis.com/css?family=Coustard' rel='stylesheet' type='text/css' />
 	<script type="text/javascript" src="http://www.google.com/jsapi"></script>
 	<script type="text/javascript"> 
 		google.load("jquery", "1");
