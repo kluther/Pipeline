@@ -11,7 +11,7 @@ $themes = Theme::getThemes();
 
 // get ID of user's theme
 $u = Session::getUser();
-$userThemeID = $u->getThemeID();
+$userThemeID = ($u->getThemeID() != null) ? $u->getThemeID() : DEFAULT_THEME_ID;
 unset($u);
 
 $soup = new Soup();

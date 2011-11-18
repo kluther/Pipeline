@@ -1,13 +1,7 @@
 <?php
 require_once TEMPLATE_PATH.'/site/helper/format.php';
 
-if(Session::isLoggedIn()) {
-	$user = Session::getUser();
-	$theme = Theme::load($user->getThemeID());
-} else {
-	$theme = Theme::load(DEFAULT_THEME_ID); // load default theme
-}
-
+$theme = Theme::load(DEFAULT_THEME_ID);
 // set up stylesheet variables
 $jqueryuiStylesheet = $theme->getJqueryuiStylesheet();
 $pipelineStylesheet = $theme->getPipelineStylesheet();

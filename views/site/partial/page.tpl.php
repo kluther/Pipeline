@@ -15,7 +15,11 @@ if(!empty($project)) {
 if(Session::isLoggedIn()) {
 	$user = Session::getUser();
 	$numUnread = $user->getNumUnreadMessages();
-	$theme = Theme::load($user->getThemeID());
+	if($user->getThemeID() != null) {
+		$theme = Theme::load($user->getThemeID());
+	} else {
+		$theme = Theme::load(DEFAULT_THEME_ID); // load default theme
+	}
 } else {
 	$theme = Theme::load(DEFAULT_THEME_ID); // load default theme
 }
