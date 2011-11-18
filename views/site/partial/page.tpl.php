@@ -64,8 +64,7 @@ if(Session::isLoggedIn()) {
 				<li class="right"><a href="<?= Url::logIn() ?>">Log In</a></li>
 			<?php endif; ?>
 				<li class="left"><a href="<?= Url::projectNew() ?>">Start a Project</a></li>			
-				<li class="left"><a href="<?= Url::findProjects() ?>">Find Projects</a></li>
-				<li class="left"><a href="http://pipeline.cc.gatech.edu/">About Pipeline</a></li>					
+				<li class="left"><a href="<?= Url::findProjects() ?>">Find Projects</a></li>				
 				<li class="left"><a href="<?= Url::help() ?>">Help</a></li>
 			<?php if(Session::isAdmin()): ?>
 				<li class="left"><a href="<?= Url::admin() ?>">Admin</a></li>
@@ -122,6 +121,11 @@ if(Session::isLoggedIn()) {
 		</table>
 	</div><!-- end .funnel -->
 </div><!-- end .page-body -->
+<div class="page-footer">
+	<div class="funnel">
+		powered by <a id="pipeline-logo-sm" href="http://pipeline.cc.gatech.edu/" title="Pipeline">&nbsp;</a> <span class="slash">/</span> <a href="http://pipeline.cc.gatech.edu/features">Features</a> <span class="slash">/</span> <a href="http://pipeline.cc.gatech.edu/screenshots">Screenshots</a> <span class="slash">/</span> <a href="http://pipeline.cc.gatech.edu/blog">Blog</a> <span class="slash">/</span> <a href="http://pipeline.cc.gatech.edu/code">Source Code</a> <span class="slash">/</span> <a href="http://pipeline.cc.gatech.edu/research">Research</a> <span class="slash">/</span> <a href="http://pipeline.cc.gatech.edu/team">Team</a> <span class="slash">/</span> <a href="http://pipeline.cc.gatech.edu/contact">Contact</a>
+	</div>
+</div>
 <div id="feedback"></div><!-- #feedback -->
 
 </body>

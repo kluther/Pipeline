@@ -874,6 +874,20 @@ div.page-body {
 	padding: 1.5em 0;
 	}	
 	
+div.page-footer {
+	padding: 1em 0;
+	font-size: 95%;
+	}
+	div.page-footer a:hover {
+		text-decoration: none;
+		}
+		
+a#pipeline-logo-sm {
+ 	background: no-repeat 0 0;
+ 	padding: 1px 0 20px 68px;
+ 	text-decoration: none;
+	}
+	
 table {
 	width: 100%;
 	}
@@ -1064,51 +1078,48 @@ input.textbox, textarea, select {
 }
 
 /* HOME PAGE */
-
-div.home {
-	overflow: hidden;
-	width: 100%;
-	}
 	
-div.home div.top {
+html.home div.top {
 	overflow: hidden;
 	width: 100%;
 	border-bottom: 2px solid;
 	}
 
-div.home div.bottom {
+html.home div.bottom {
 	padding: 15px 0 25px 0;
 	}		
 		
-div.home  h1 {
+html.home h1 {
 	font-size: 300%;
 	margin: 0; padding: 35px 0;
 	}
-	div.home h1 span {
+	html.home h1 span {
 		font-size: 50%;
 		padding-left: 2em;
 		}
-		div.home h1 span a:link, div.home h1 span a:visited {
-			font-family: "Coustard", serif;
-			font-weight: normal;
-			}
+
+a#pipeline-logo-lg {
+ 	background: no-repeat 0 0;
+ 	padding: 0 0 33px 124px;
+	text-decoration: none;
+	}
 	
-div.home h2 {
+html.home h2 {
 	font-size: 200%;
 	display: block;
 	margin: 0; padding: 35px 0;
 	}
-	div.home h2 a {
+	html.home h2 a {
 		font-size: 70%;
 		margin-left: 1em;
 		}
 	
-div.home div.get-started {
+html.home div.get-started {
 	float: right;
 	width: 300px;
 	text-align: center;
 	}
-	div.home div.get-started a:link, div.home div.get-started a:visited {
+	html.home div.get-started a:link, html.home div.get-started a:visited {
 		display: block;
 		padding: 15px 10px;
 		margin: 5px auto 30px auto;
@@ -1120,29 +1131,29 @@ div.home div.get-started {
 		-webkit-border-radius: .5em;
 		border-radius: .5em;		
 		}
-	div.home div.get-started a:hover {
+	html.home div.get-started a:hover {
 		text-decoration: none;
 		}
 
-div.home div.features {
+html.home div.features {
 	padding-top: 20px;
 	}
-	div.home div.features p {
+	html.home div.features p {
 		margin-bottom: 20px;
 		font-size: 115%;
 		}	
-	div.home div.features h3 {
+	html.home div.features h3 {
 		font-size: 135%;
 		display: block;
 		margin: 0; padding: 0;
 		font-weight: bold;
 		}	
 	
-div.home div.meta {
+html.home div.meta {
 	font-size: 110%;
 	padding: 10px 0 35px 0;
 	}
-	div.home div.meta p {
+	html.home div.meta p {
 		margin-bottom: 5px;
 		}
 	

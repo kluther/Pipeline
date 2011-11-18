@@ -67,7 +67,7 @@ ul.notifications label {
 	
 html {
 	color: #333;
-	background-color: #eeeeee;
+	background-color: #fff;
 	}	
 
 a, .ui-dialog div.invite-box a, .ui-dialog div.diff-box a {
@@ -76,7 +76,11 @@ a, .ui-dialog div.invite-box a, .ui-dialog div.diff-box a {
 		
 h1 a, h2 a {
 	color: #000;
-	}			
+	}	
+	
+a#pipeline-logo-lg {
+ 	background-image: url(./../images/pipeline-lg-light.gif);
+ 	}
 				
 span.required {
 	color: #B22222;
@@ -157,48 +161,62 @@ div.breadcrumbs h3 {
 	color: #666;
 	}
 	
-div.home {
-	background-color: #fff;
+div.page-body {
+	background-color: #eeeeee;
+	}
+
+div.page-footer a:link, div.page-footer a:visited {
+	color: #999;
+	}
+div.page-footer a:hover {
+	color: #000;
 	}
 	
-div.home div.top {
+a#pipeline-logo-sm {
+ 	background-image: url(./../images/pipeline-sm-light.gif);
+	}
+	
+html.home {
 	background-color: #eeeeee;
+	}
+	
+html.home div.top {
 	border-color: #ccc;
 	}
 
-div.home div.bottom {
-	background-color: #eeeeee;
+html.home div.middle {
+	background-color: #fff;
 	}
 				
-div.home h1 span {
+html.home h1 span {
 	color: #666;
 	}
-	div.home h1 span a:link, div.home h1 span a:visited {
+	html.home h1 span a:link, html.home h1 span a:visited {
 		color: #000;
 		}
 		
-div.home h2 a {
+html.home h2 a {
 	color: #369;
 	}
 	
-div.home div.get-started a:link, div.home div.get-started a:visited {
+html.home div.get-started a:link, html.home div.get-started a:visited {
 	border-color: #ccc;
 	background-color: #eee;
 	color: #666;		
 	}
-div.home div.get-started a:hover {
+html.home div.get-started a:hover {
 	background-color: #666;
 	color: #fff;
 	}
 	
-div.home div.features {
+html.home div.features {
 	color: #666;
 	}
-	div.home div.features h3 {
+	html.home div.features h3 {
 		color: #333;		
 		}	
 	
-div.home div.meta {
+html.home div.meta {
 	color: #666;
 	}	
 
