@@ -470,6 +470,15 @@ div.upload {
 	div.upload.flash {
 		background-image: url(./../images/icons/document-flash-movie.png);
 		}
+	div.upload.photoshop {
+		background-image: url(./../images/icons/document-photoshop-image.png);
+		}
+	div.upload.pdf {
+		background-image: url(./../images/icons/document-pdf-text.png);
+		}
+	div.upload.msword {
+		background-image: url(./../images/icons/document-word-text.png);
+		}
 
 	div.upload a.thumb {
 		width: 150px;

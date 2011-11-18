@@ -251,6 +251,7 @@ class Upload extends DbObject
 			case 'jpeg':
 			case 'png':
 			case 'gif':
+			case 'psd':
 			// flash
 			case 'swf':
 			case 'fla':
@@ -262,6 +263,9 @@ class Upload extends DbObject
 			case 'avi':
 			// audio
 			case 'mp3':
+			// document
+			case 'doc':
+			case 'pdf':
 				$isAllowed = true;
 		}
 		return ($isAllowed);
