@@ -13,7 +13,7 @@ $fork->startBlockSet('body');
 <script type="text/javascript">
 
 $(document).ready(function(){
-	$('#txtSubject').focus();
+	//$('#txtSubject').focus();
 	$('#btnSendEmail').click(function(){
 		buildPost({
 			'processPage': '<?= Url::adminProcess() ?>',

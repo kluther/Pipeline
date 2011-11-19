@@ -37,12 +37,12 @@ $fork->startBlockSet('body');
 
 
 <?php
-	$SOUP->render('project/partial/discussions',array(
-		'title' => 'Recent Discussions',
-		'cat' => 'activity',
-		'size' => 'small',
-		'class' => 'subtle'
-	));
+//	$SOUP->render('project/partial/discussions',array(
+//		'title' => 'Recent Discussions',
+//		'cat' => 'activity',
+//		'size' => 'small',
+//		'class' => 'subtle'
+//	));
 ?>
 
 </td>
