@@ -3,6 +3,7 @@
 $fork = $SOUP->fork();
 
 $fork->set('pageTitle', "Settings");
+$fork->set('headingURL', Url::settings());
 $fork->startBlockSet('body');
 
 ?>

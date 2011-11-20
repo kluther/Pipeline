@@ -2,6 +2,7 @@
 
 $fork = $SOUP->fork();
 $fork->set('pageTitle', 'Inbox');
+$fork->set('headingURL', Url::messageNew());
 $fork->startBlockSet('body');
 ?>
 

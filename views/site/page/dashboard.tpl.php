@@ -13,6 +13,7 @@ if(empty($yourProjects)) {
 
 $fork = $SOUP->fork();
 $fork->set('pageTitle', "Dashboard");
+$fork->set('headingURL', Url::dashboard());
 $fork->startBlockSet('body');
 
 ?>

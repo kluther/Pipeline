@@ -1,8 +1,13 @@
 <?php
 
+$message = $SOUP->get('message');
+
 $fork = $SOUP->fork();
 $fork->set('pageTitle', 'Inbox');
+$fork->set('headingURL', Url::message($message->getID()));
 $fork->startBlockSet('body');
+
+unset($message);
 
 ?>
 

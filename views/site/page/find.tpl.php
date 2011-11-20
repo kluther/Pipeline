@@ -3,6 +3,7 @@
 $fork = $SOUP->fork();
 
 $fork->set('pageTitle', "Find Projects");
+$fork->set('headingURL', Url::findProjects());
 $fork->startBlockSet('body');
 
 ?>

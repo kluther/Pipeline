@@ -5,6 +5,7 @@ $tasks = $SOUP->get('tasks');
 $fork = $SOUP->fork();
 
 $fork->set('pageTitle', $user->getUsername());
+$fork->set('headingURL', Url::user($user->getID()));
 $fork->startBlockSet('body');
 
 ?>

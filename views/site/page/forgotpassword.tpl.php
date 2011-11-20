@@ -3,6 +3,7 @@
 $fork = $SOUP->fork();
 
 $fork->set('pageTitle', "Reset Password");
+$fork->set('headingURL', Url::forgotPassword());
 $fork->startBlockSet('body');
 
 ?>

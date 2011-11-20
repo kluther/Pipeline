@@ -3,6 +3,7 @@
 $fork = $SOUP->fork();
 
 $fork->set('pageTitle', "Help");
+$fork->set('headingURL', Url::help());
 $fork->startBlockSet('body');
 
 ?>

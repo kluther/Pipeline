@@ -3,6 +3,7 @@
 
 	$fork = $SOUP->fork();
 	$fork->set('pageTitle', 'Study Consent');
+	$fork->set('headingURL', Url::consent());
 	$fork->startBlockSet('body');
 ?>
 <script type="text/javascript">

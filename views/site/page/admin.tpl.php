@@ -7,6 +7,7 @@ $events = $SOUP->get('events');
 
 $fork = $SOUP->fork();
 $fork->set('pageTitle', "Admin");
+$fork->set('headingURL', Url::admin());
 $fork->startBlockSet('body');
 
 ?>

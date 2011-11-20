@@ -5,6 +5,7 @@ $referer = $SOUP->get('referer');
 $fork = $SOUP->fork();
 
 $fork->set('pageTitle', "Log In");
+$fork->set('headingURL', Url::logIn());
 $fork->startBlockSet('body');
 
 ?>

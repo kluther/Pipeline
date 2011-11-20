@@ -3,6 +3,7 @@
 $fork = $SOUP->fork();
 
 $fork->set('pageTitle', "Register");
+$fork->set('headingURL', Url::register());
 $fork->startBlockSet('body');
 
 ?>

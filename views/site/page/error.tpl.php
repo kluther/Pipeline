@@ -3,7 +3,7 @@
 $fork = $SOUP->fork();
 
 $fork->set('pageTitle', "Error");
-///$fork->set('breadcrumbs', Breadcrumbs::error());
+$fork->set('headingURL', Url::error());
 $fork->startBlockSet('body');
 
 ?>
