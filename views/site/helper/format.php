@@ -39,17 +39,23 @@ function formatPitch($pitch) {
 }
 
 function truncateURL($matches) {
-	$url = $matches[0];
-	$formattedUrl = substr($url,0,65);
-	if(strlen($url)>65)
-		$formattedUrl.=htmlentities('&hellip;');
-	return '<a href="'.$url.'">'.$formattedUrl.'</a>';
+	$space = $matches[1];
+	$url = $matches[2];
+	$maxLength = 65;
+	if(strlen($url)>$maxLength) {
+		$a = substr($url,0,$maxLength-10);
+		$b = substr($url,-10);
+		$formattedUrl = $a.htmlentities('&hellip;').$b;
+	} else {
+		$formattedUrl = $url;
+	}
+	return $space.'<a href="'.$url.'">'.$formattedUrl.'</a>';
 }
 
 /* generic function for formatting paragraphs of HTML text */
 function formatParagraphs($paragraphs) {
-	// regex from http://snipplr.com/view/36992/improvement-of-url-interpretation-with-regex/
-	$pattern = '@((https?://)?([-\w]+\.[-\w\.]+)+\w(:\d+)?(/([-\w/_\.]*(\?\S+)?)?)*)@';
+	// regex modified from http://snipplr.com/view/36992/improvement-of-url-interpretation-with-regex/
+	$pattern = '@(^|\s|&#10;)((https?://)?([-\w]+\.[-\w\.]+)+\w(:\d+)?(/([-\w/_\.]*(\?\S+)?)?)*)@';
 	$paragraphs = preg_replace_callback(
 		$pattern,
 		truncateURL,
