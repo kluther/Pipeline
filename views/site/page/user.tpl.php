@@ -1,10 +1,10 @@
 <?php
 $user = $SOUP->get('user');
-$tasks = $SOUP->get('tasks');
+// $tasks = $SOUP->get('tasks');
 
 $fork = $SOUP->fork();
 
-$fork->set('pageTitle', $user->getUsername());
+$fork->set('pageTitle', 'Profile');
 $fork->set('headingURL', Url::user($user->getID()));
 $fork->startBlockSet('body');
 
@@ -27,12 +27,12 @@ $fork->startBlockSet('body');
 ?>
 
 <?php
-	$SOUP->render('project/partial/tasks', array(
-		'user' => $user,
-		'tasks' => $tasks,
-		'hasPermission' => false,
-		'title' => $user->getUsername().'\'s Tasks'		
-	));
+// 	$SOUP->render('project/partial/tasks', array(
+// 		'user' => $user,
+// 		'tasks' => $tasks,
+// 		'hasPermission' => false,
+// 		'title' => $user->getUsername().'\'s Tasks'		
+// 	));
 ?>
 
 </td>

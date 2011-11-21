@@ -14,7 +14,12 @@ if(!empty($project)) {
 
 if(Session::isLoggedIn()) {
 	$user = Session::getUser();
+	// update last login
+	$user->setLastLogin(date("Y-m-d H:i:s"));
+	$user->save();
+	// load unread messages
 	$numUnread = $user->getNumUnreadMessages();
+	// load custom theme, if specified
 	if($user->getThemeID() != null) {
 		$theme = Theme::load($user->getThemeID());
 	} else {

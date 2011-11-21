@@ -310,20 +310,30 @@ class Event extends DbObject
 		return (self::getByProjectID($projectID, PEOPLE_ID, $limit));
 	}	
 	
-	public static function getUserEvents($userID=null, $private=null, $limit=null) {
+	public static function getUserEvents($userID=null, $limit=null) {
 		if($userID == null) return null;
+		$loggedInUserID = Session::getUserID();
 		
 		$query = "SELECT e.id AS id FROM ".self::DB_TABLE." e";
 		$query .= " INNER JOIN ".EventType::DB_TABLE." et ON ";
 		$query .= " e.event_type_id = et.id";		
-		$query .= " INNER JOIN ".Project::DB_TABLE." p ON ";
-		$query .= " p.id = e.project_id";
+		$query .= " LEFT OUTER JOIN ".Project::DB_TABLE." p ON ";
+		$query .= " e.project_id = p.id";
 		$query .= " WHERE e.user_1_id = ".$userID;
-		$query .= " AND et.hidden = 0";
-		if($private === true) {
-			$query .= " AND p.private=1";
-		} elseif($private === false) {
-			$query .= " AND p.private=0";
+		// let admins see hidden events
+		if(!Session::isAdmin())
+			$query .= " AND et.hidden = 0";
+		// let fellow members see private project events
+		if(!empty($loggedInUserID)) {
+			$query .= " AND (p.private = 0";
+			$query .= " OR p.id IN (";
+				$query .= " SELECT project_id FROM ".ProjectUser::DB_TABLE;
+				$query .= " WHERE user_id = ".$loggedInUserID;
+				$query .= " AND relationship != ".ProjectUser::BANNED;
+			$query .= " ) OR (e.project_id IS NULL) )";
+		} else {
+			$query .= " AND ( (p.private = 0) OR";
+			$query .= " (e.project_id IS NULL) )";
 		}
 		$query .= " ORDER BY e.date_created DESC";
 		if($limit != null)
@@ -366,10 +376,35 @@ class Event extends DbObject
 		return $events;
 	}
 	
+	/* determine if event is new since user's last login */
+	public function isNew() {
+		$loggedInUser = Session::getUser();
+		
+		if(!empty($loggedInUser)) {
+			$lastLogin = strtotime($loggedInUser->getSecondLastLogin());
+			$eventTime = strtotime($this->getDateCreated());
+			
+			if($lastLogin < $eventTime) {
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return true;
+		}
+	}
+	
 	public function getCssClass()
 	{
 		$et = EventType::load($this->getEventTypeID());
 		$cssClass = $et->getCssClass();
+		
+		if($this->isNew()) {
+			$cssClass.=" new";
+		} else {
+			$cssClass.=" old";
+		}
+		
 		return $cssClass;
 	}
 	

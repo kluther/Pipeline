@@ -11,6 +11,12 @@ function formatEvent($event, $showProject=false)
 						'<a href="'.Url::base().'">'.PIPELINE_NAME.'</a>'
 					);
 					break;
+			case 'send_message':
+				$formatted = sprintf("%s sent a message to %s.",
+						formatUserLink($event->getUser1ID()),
+						formatUserLink($event->getUser2ID())
+					);
+					break;
 			case 'accept_member_invitation':
 				$predicate = ($showProject) ? 'the project '.formatProjectLink($event->getProjectID()) : "this project";
 				$formatted = sprintf("%s accepted %s's invitation to join %s.",

@@ -472,7 +472,7 @@ if(!empty($loc)) {
 }
 echo '</p>';
 ?>
-<p>last login <?= formatTimeTag($user->getLastLogin()) ?></p>
+<p>last login <?= formatTimeTag($user->getSecondLastLogin()) ?></p>
 <?php
 	
 // biography

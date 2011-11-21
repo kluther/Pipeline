@@ -20,6 +20,7 @@ class Session
 			$user = User::loadByUserName($userInfo);
 		
 		// last login
+		$user->setSecondLastLogin($user->getLastLogin());
 		$user->setLastLogin(date("Y-m-d H:i:s"));
 		$user->save();
 		

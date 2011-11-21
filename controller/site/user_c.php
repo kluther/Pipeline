@@ -10,13 +10,15 @@ if($user === null) {
 	exit();
 }
 
-$events = Event::getUserEvents($user->getID(), false, 10);
-$tasks = Task::getByUserID($user->getID(), null, false);
-$projects = Project::getByUserID($user->getID(), false);
+$events = Event::getUserEvents($user->getID(), 10);
+//$tasks = Task::getByUserID($user->getID(), null, false);
+
+$projects = ProjectUser::getProjectsByUserID($user->getID());
+
 
 $soup = new Soup();
 $soup->set('user', $user);
 $soup->set('events', $events);
-$soup->set('tasks', $tasks);
+//$soup->set('tasks', $tasks);
 $soup->set('projects', $projects);
 $soup->render('site/page/user');

@@ -30,6 +30,7 @@ class User extends DbObject
 	protected $admin;
 	protected $dateCreated;
 	protected $lastLogin;
+	protected $secondLastLogin;
 	
 	const DB_TABLE = 'user';
 	
@@ -68,7 +69,8 @@ class User extends DbObject
 			'notify_mass_email' => 1,
 			'admin' => 0,
 			'date_created' => null,
-			'last_login' => null
+			'last_login' => null,
+			'second_last_login' => null
 		);
 		
 		$args += $defaultArgs; // combine the arrays
@@ -101,6 +103,7 @@ class User extends DbObject
 		$this->admin = $args['admin'];
 		$this->dateCreated = $args['date_created'];
 		$this->lastLogin = $args['last_login'];
+		$this->secondLastLogin = $args['second_last_login'];
 	}
 	
 	public static function load($id)
@@ -184,7 +187,8 @@ class User extends DbObject
 			'notify_receive_message' => $this->notifyReceiveMessage,
 			'notify_mass_email' => $this->notifyMassEmail,
 			'admin' => $this->admin,
-			'last_login' => $this->lastLogin
+			'last_login' => $this->lastLogin,
+			'second_last_login' => $this->secondLastLogin
 		);		
 		$db->store($this, __CLASS__, self::DB_TABLE, $db_properties);
 	}
@@ -584,5 +588,16 @@ class User extends DbObject
 	{
 		$this->modified = true;	
 		$this->lastLogin = $newLastLogin;
+	}
+	
+	public function getSecondLastLogin()
+	{
+		return ($this->secondLastLogin);
+	}
+	
+	public function setSecondLastLogin($newSecondLastLogin)
+	{
+		$this->modified = true;	
+		$this->secondLastLogin = $newSecondLastLogin;
 	}
 }

@@ -159,8 +159,17 @@ class Project extends DbObject
 	}
 	
 	public static function getPublicProjects($limit=null) {
+		$userID = Session::getUserID();
+	
 		$query = "SELECT id FROM ".self::DB_TABLE;
 		$query .= " WHERE private = 0";
+		// don't include projects the user is affiliated with
+		if(!empty($userID)) {
+			$query .= " AND id NOT IN (";
+				$query .= " SELECT project_id FROM ".ProjectUser::DB_TABLE;
+				$query .= " WHERE user_id = ".$userID;
+			$query .= " )";
+		}
 		$query .= " ORDER BY status DESC, ISNULL(deadline) ASC, title ASC";
 		if($limit != null)
 			$query .= " LIMIT ".$limit;
@@ -176,49 +185,51 @@ class Project extends DbObject
 		return $projects;	
 	}
 	
-	public static function getByUserID($userID=null, $private=null, $limit=null) {
-		if($userID === null) return null;
-		
-		$query = "SELECT DISTINCT id FROM ".self::DB_TABLE;
-		// creator
-		$query .= " WHERE (creator_id = ".$userID;
-		// follower, organizer
-		$query .= " OR id IN (";
-			$query .= " SELECT DISTINCT project_id FROM ".ProjectUser::DB_TABLE;
-			$query .= " WHERE user_id = ".$userID;
-			$query .= " AND relationship != ".ProjectUser::BANNED;
-		$query .= " )";
-		// contributor
-		$query .= " OR id IN (";
-			$query .= " SELECT DISTINCT project_id FROM ".Accepted::DB_TABLE;
-			$query .= " WHERE creator_id = ".$userID;
-			//$query .= " OR user_2_id = ".$userID;
-		$query .= "))";
-		// not banned
-		$query .= " AND id NOT IN (";
-			$query .= " SELECT DISTINCT project_id FROM ".ProjectUser::DB_TABLE;
-			$query .= " WHERE user_id = ".$userID;
-			$query .= " AND relationship = ".ProjectUser::BANNED;
-		$query .= " )";
-		if($private === true) {
-			$query .= " AND private=1";
-		} elseif($private === false) {
-			$query .= " AND private=0";
-		}
-		$query .= " ORDER BY ISNULL(deadline) ASC, title ASC";
-		//echo $query;
-		if($limit != null)
-			$query .= " LIMIT ".$limit;
-			
-		$db = Db::instance();
-		$result = $db->lookup($query);
-		if(!mysql_num_rows($result)) return null;
-		
-		$projects = array();
-		while($row = mysql_fetch_assoc($result))
-			$projects[$row['id']] = self::load($row['id']);
-		return $projects;
-	}
+	// used on profile page
+// 	public static function getByUserID($userID=null, $private=null, $limit=null) {
+// 		if($userID === null) return null;
+// 		
+// 		$query = "SELECT id FROM ".self::DB_TABLE;
+// 		$query .= " WHERE 
+// 		// creator
+// 		$query .= " WHERE (creator_id = ".$userID;
+// 		// follower, organizer
+// 		$query .= " OR id IN (";
+// 			$query .= " SELECT DISTINCT project_id FROM ".ProjectUser::DB_TABLE;
+// 			$query .= " WHERE user_id = ".$userID;
+// 			$query .= " AND relationship != ".ProjectUser::BANNED;
+// 		$query .= " )";
+// 		// contributor
+// 		$query .= " OR id IN (";
+// 			$query .= " SELECT DISTINCT project_id FROM ".Accepted::DB_TABLE;
+// 			$query .= " WHERE creator_id = ".$userID;
+// 			//$query .= " OR user_2_id = ".$userID;
+// 		$query .= "))";
+// 		// not banned
+// 		$query .= " AND id NOT IN (";
+// 			$query .= " SELECT DISTINCT project_id FROM ".ProjectUser::DB_TABLE;
+// 			$query .= " WHERE user_id = ".$userID;
+// 			$query .= " AND relationship = ".ProjectUser::BANNED;
+// 		$query .= " )";
+// 		if($private === true) {
+// 			$query .= " AND private=1";
+// 		} elseif($private === false) {
+// 			$query .= " AND private=0";
+// 		}
+// 		$query .= " ORDER BY ISNULL(deadline) ASC, title ASC";
+// 		//echo $query;
+// 		if($limit != null)
+// 			$query .= " LIMIT ".$limit;
+// 			
+// 		$db = Db::instance();
+// 		$result = $db->lookup($query);
+// 		if(!mysql_num_rows($result)) return null;
+// 		
+// 		$projects = array();
+// 		while($row = mysql_fetch_assoc($result))
+// 			$projects[$row['id']] = self::load($row['id']);
+// 		return $projects;
+// 	}
 	
 	public static function getProjectFromSlug($slug=null)
 	{

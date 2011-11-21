@@ -714,7 +714,17 @@ ul.activity li.unlock-discussion {
 	}
 ul.activity li.people {
 	background-image: url(./../images/icons/users.png);
-	}		
+	}	
+ul.activity li.message {
+	background-image: url(./../images/icons/mail.png);
+	}
+	
+ul.activity li.new {
+	opacity: 1;
+	}
+ul.activity li.old {
+	opacity: 0.8;
+	}
 			
 /* NOTIFICATIONS */
 

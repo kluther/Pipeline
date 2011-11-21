@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 18, 2011 at 09:16 PM
+-- Generation Time: Nov 21, 2011 at 05:11 PM
 -- Server version: 5.1.44
 -- PHP Version: 5.3.1
 
@@ -204,7 +204,7 @@ INSERT INTO `event_type` (`id`, `description`, `group`, `css_class`, `diffable`,
 ('lock_discussion', NULL, 4, 'lock-discussion', 0, 0, 0),
 ('read_message', NULL, NULL, NULL, 1, 1, 0),
 ('release_task', NULL, 3, 'task', 0, 0, 0),
-('send_message', NULL, NULL, NULL, 1, 1, 0),
+('send_message', NULL, NULL, 'message', 1, 1, 0),
 ('trust_member', NULL, 5, 'people', 0, 0, 0),
 ('unban_user', NULL, 5, 'people', 0, 0, 0),
 ('unfollow_project', NULL, 5, 'people', 0, 1, 0),
@@ -350,11 +350,11 @@ CREATE TABLE IF NOT EXISTS `task` (
 
 CREATE TABLE IF NOT EXISTS `theme` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(128) NOT NULL,
-  `pipeline_stylesheet` varchar(128) NOT NULL,
-  `jqueryui_stylesheet` varchar(128) NOT NULL,
+  `name` varchar(128) CHARACTER SET latin1 NOT NULL,
+  `pipeline_stylesheet` varchar(128) CHARACTER SET latin1 NOT NULL,
+  `jqueryui_stylesheet` varchar(128) CHARACTER SET latin1 NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `theme`
@@ -454,6 +454,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `admin` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `date_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `last_login` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `second_last_login` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=50 ;
 
