@@ -719,11 +719,24 @@ ul.activity li.message {
 	background-image: url(./../images/icons/mail.png);
 	}
 	
-ul.activity li.new {
-	opacity: 1;
+ul.activity li.new h6.primary {
+	font-weight: bold;
 	}
-ul.activity li.old {
-	opacity: 0.8;
+ul.activity li.old h6.primary {
+	font-weight: normal;
+	}
+	
+ul.activity blockquote.details {
+	margin: 1em 0 0 22px;
+	padding: 1em;
+	color: #666;
+	font-size: 90%;
+	width: 500px;
+	overflow: hidden;
+	-moz-border-radius: 0.5em;
+	-webkit-border-radius: 0.5em;
+	border-radius: 0.5em;	
+	background-color: #eeeeee;
 	}
 			
 /* NOTIFICATIONS */

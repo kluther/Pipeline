@@ -65,6 +65,11 @@ ul.notifications label {
 	color: #a3a3a3;
 	}
 	
+ul.activity blockquote.details {
+	color: #666;
+	background-color: #000;	
+	}
+	
 html {
 	color: #eeeeee;
 	background-color: #222222;

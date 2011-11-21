@@ -126,10 +126,15 @@ RewriteRule ^projects/([a-z0-9-]+)/people/?$ controller/project/credits_c.php?sl
 
 ### ACTIVITY ###
 
+RewriteRule ^projects/([a-z0-9-]+)/activity/basics/(\d+)/?$ controller/project/activity_c.php?slug=$1&page=$2&filter=basics [QSA,L]
 RewriteRule ^projects/([a-z0-9-]+)/activity/basics/?$ controller/project/activity_c.php?slug=$1&filter=basics [QSA,L]
+RewriteRule ^projects/([a-z0-9-]+)/activity/tasks/(\d+)/?$ controller/project/activity_c.php?slug=$1&page=$2&filter=tasks [QSA,L]
 RewriteRule ^projects/([a-z0-9-]+)/activity/tasks/?$ controller/project/activity_c.php?slug=$1&filter=tasks [QSA,L]
+RewriteRule ^projects/([a-z0-9-]+)/activity/discussions/(\d+)/?$ controller/project/activity_c.php?slug=$1&page=$2&filter=discussions [QSA,L]
 RewriteRule ^projects/([a-z0-9-]+)/activity/discussions/?$ controller/project/activity_c.php?slug=$1&filter=discussions [QSA,L]
+RewriteRule ^projects/([a-z0-9-]+)/activity/people/(\d+)/?$ controller/project/activity_c.php?slug=$1&page=$2&filter=people [QSA,L]
 RewriteRule ^projects/([a-z0-9-]+)/activity/people/?$ controller/project/activity_c.php?slug=$1&filter=people [QSA,L]
+RewriteRule ^projects/([a-z0-9-]+)/activity/(\d+)/?$ controller/project/activity_c.php?slug=$1&page=$2&filter=all [QSA,L]
 RewriteRule ^projects/([a-z0-9-]+)/activity/?$ controller/project/activity_c.php?slug=$1&filter=all [QSA,L]
 
 ### USERS ###

@@ -457,3 +457,105 @@ function formatEvent($event, $showProject=false)
 		}
 		return $formatted;
 }
+
+function formatEventDetails($event) {
+	$details = '';
+	switch($event->getEventTypeID()) {
+		case 'edit_update_uploads':
+		case 'edit_task_uploads':
+			$addedIDs = explode(',',$event->getData2());
+			$added = '';
+			foreach($addedIDs as $a) {
+				if($a == '') continue; // skip blanks
+				$upload = Upload::load($a);
+				$added .= $upload->getOriginalName().' ('.formatFileSize($upload->getSize()).')<br /><br />';
+			}
+			if(!empty($added)) {
+				$details .= '<ins>'.$added.'</ins>';
+			}
+			$deletedIDs = explode(',',$event->getData1());
+			$deleted = '';
+			foreach($deletedIDs as $d) {
+				if($d == '') continue; // skip blanks
+				$upload = Upload::load($d);
+				$deleted .= $upload->getOriginalName().' ('.formatFileSize($upload->getSize()).')<br /><br />';
+			}
+			if(!empty($deleted)) {
+				$details .= '<del>'.$deleted.'</del>';
+			}
+			break;
+		case 'edit_pitch':	
+		case 'edit_specs':
+		case 'edit_rules':
+		case 'edit_task_description':
+		case 'edit_update_message':					
+			$from = $event->getData1();
+			$to = $event->getData2();	
+			$from = str_replace('&#10;','<br />', $from);	
+			$to = str_replace('&#10;','<br />', $to);	
+			$diff = new FineDiff($from, $to);
+			$htmlDiff = $diff->renderDiffToHTML();				
+			$htmlDiff = html_entity_decode($htmlDiff, ENT_QUOTES, 'UTF-8');
+			$htmlDiff = html_entity_decode($htmlDiff, ENT_QUOTES, 'UTF-8');
+			$details .= $htmlDiff;	
+			break;					
+		case 'edit_task_title':
+		case 'edit_update_title':
+			$from = $event->getData1();
+			$to = $event->getData2();	
+			$diff = new FineDiff($from, $to);
+			$htmlDiff = $diff->renderDiffToHTML();
+			$htmlDiff = html_entity_decode($htmlDiff, ENT_QUOTES, 'UTF-8');
+			$htmlDiff = html_entity_decode($htmlDiff, ENT_QUOTES, 'UTF-8');
+			$details .= $htmlDiff;				
+			break;
+		case 'edit_task_leader':
+			$details .= 'Old Leader: <del>'.formatUserLink($event->getUser1ID(), $event->getProjectID()).'</del><br /><br />';
+			$details .= 'New Leader: <ins>'.formatUserLink($event->getUser2ID(), $event->getProjectID()).'</ins>';
+			break;
+		case 'edit_task_num_needed':
+			$old = ($event->getData1() != null) ? $event->getData1() : '&#8734;';
+			$new = ($event->getData2() != null) ? $event->getData2() : '&#8734;';				
+			$details .= 'Old: <del>'.$old.'</del> people needed<br /><br />';
+			$details .= 'New: <ins>'.$new.'</ins> people needed';
+			break;		
+		case 'edit_task_deadline':
+		case 'edit_project_deadline':
+			$old = ($event->getData1() != null) ? formatTimeTag($event->getData1()) : '(none)';
+			$new = ($event->getData2() != null) ? formatTimeTag($event->getData2()) : '(none)';
+			$details .= 'Old Deadline: <del>'.$old.'</del><br /><br />';
+			$details .= 'New Deadline: <ins>'.$new.'</ins>';
+			break;
+		case 'edit_project_status':
+			$old = formatProjectStatus($event->getData1());
+			$new = formatProjectStatus($event->getData2());
+			$details .= 'Old Project Status: <del>'.$old.'</del><br /><br />';
+			$details .= 'New Project Status: <ins>'.$new.'</ins>';
+			break;				
+		case 'edit_accepted_status':
+			$old = formatAcceptedStatus($event->getData1());
+			$new = formatAcceptedStatus($event->getData2());
+			$details .= 'Old Status: <del>'.$old.'</del><br /><br />';
+			$details .= 'New Status: <ins>'.$new.'</ins>';
+			break;
+		case 'create_task_comment':
+		case 'create_task_comment_reply':
+		case 'create_update_comment':
+		case 'create_update_comment_reply':
+			$details .= formatComment($event->getData1());
+			break;
+		case 'create_discussion':
+			$details .= '<strong>'.$event->getData1().'</strong><br /><br />';
+			$details .= formatDiscussionReply($event->getData2());
+			break;				
+		case 'create_discussion_reply':
+			$details .= formatDiscussionReply($event->getData1());
+			break;
+		case 'create_update':
+			$update = Update::load($event->getItem1ID());
+			$details .= '<strong>'.$update->getTitle().'</strong><br /><br />';
+			$details .= formatUpdate($update->getMessage());
+			break;
+	}
+	return ($details);
+}

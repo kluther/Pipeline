@@ -1,8 +1,8 @@
 <?php
 
 $project = $SOUP->get('project');
-$filter = $SOUP->get('filter');
-$sparklineData = $SOUP->get('sparklineData');
+//$filter = $SOUP->get('filter');
+//$sparklineData = $SOUP->get('sparklineData');
 
 $fork = $SOUP->fork();
 
@@ -18,19 +18,18 @@ $fork->startBlockSet('body');
 <td class="left">
 
 <?php
-	$SOUP->render('/project/partial/sparkline',array(
-		'data' => $sparklineData,
-		'filter' => $filter
-		));
+//	$SOUP->render('/project/partial/sparkline',array(
+//		'data' => $sparklineData,
+//		'filter' => $filter
+//		));
 ?>
 	
 <?php
-	$SOUP->render('site/partial/activity',array(
-		'size' => 'large'
+	$SOUP->render('project/partial/activityAll',array(
+	//	'size' => 'large'
 		));
 ?>
 
-<p>Older activity is hidden</p>
 </td>
 
 <td class="right">
