@@ -38,12 +38,21 @@ function formatPitch($pitch) {
 	return (formatParagraphs($pitch));
 }
 
+function truncateURL($matches) {
+	$url = $matches[0];
+	$formattedUrl = substr($url,0,65);
+	if(strlen($url)>65)
+		$formattedUrl.=htmlentities('&hellip;');
+	return '<a href="'.$url.'">'.$formattedUrl.'</a>';
+}
+
 /* generic function for formatting paragraphs of HTML text */
 function formatParagraphs($paragraphs) {
-	$pattern = "/(\s|^|&#10;)(http:\/\/.*?)(\s|$|&#10;)/";
-	$paragraphs = preg_replace(
+	// regex from http://snipplr.com/view/36992/improvement-of-url-interpretation-with-regex/
+	$pattern = '@((https?://)?([-\w]+\.[-\w\.]+)+\w(:\d+)?(/([-\w/_\.]*(\?\S+)?)?)*)@';
+	$paragraphs = preg_replace_callback(
 		$pattern,
-		'$1<a href="$2">$2</a>$3',
+		truncateURL,
 		$paragraphs
 	);
 	$paragraphs = str_replace("&#10;","<br />",$paragraphs);
