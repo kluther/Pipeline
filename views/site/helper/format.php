@@ -58,7 +58,7 @@ function formatParagraphs($paragraphs) {
 	$pattern = '@(^|\s|&#10;)((https?://)?([-\w]+\.[-\w\.]+)+\w(:\d+)?(/([-\w/_\.]*(\?\S+)?)?)*)@';
 	$paragraphs = preg_replace_callback(
 		$pattern,
-		truncateURL,
+		'truncateURL',
 		$paragraphs
 	);
 	$paragraphs = str_replace("&#10;","<br />",$paragraphs);
