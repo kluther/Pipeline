@@ -224,7 +224,7 @@ class Discussion extends DbObject
 	{
 		$query = "SELECT id FROM ".self::DB_TABLE;
 		$query .= " WHERE parent_id=".$this->getID();
-		$query .= " AND id != parent_id"; // ignore parent discussion
+		//$query .= " AND id != parent_id"; // ignore parent discussion
 		if($deleted===true)
 			$query .= " AND deleted=1";
 		elseif($deleted===false)

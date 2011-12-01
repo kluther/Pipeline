@@ -4,17 +4,16 @@ include_once TEMPLATE_PATH.'/site/helper/format.php';
 $project = $SOUP->get('project');
 $replies = $SOUP->get('replies',array());
 $discussion = $SOUP->get('discussion', null);
+$page = $SOUP->get('page');
+$numPages = $SOUP->get('numPages');
 //$token = Upload::generateToken();
 
-// include discussion starter in list of replies
-if($replies != null)
-	array_unshift($replies, $discussion);
-else
-	$replies = array($discussion);
-	
+$thisURL = Url::discussion($discussion->getID());
+
 // any logged-in user can discuss
 $hasReplyPermission = ( Session::isLoggedIn() &&
-					!$discussion->getLocked() );
+					!$discussion->getLocked() &&
+					($page == $numPages) );
 $hasLockPermission = (Session::isAdmin() ||
 					$project->isTrusted(Session::getUserID()) ||
 					$project->isCreator(Session::getUserID()) );
@@ -65,6 +64,12 @@ $fork->startBlockSet('body');
 			});
 		});
 		<?php endif; ?>
+
+		$('#selDiscussionPages').change(function(){
+			var url = '<?= $thisURL ?>';
+			var pageNum = $(this).val();
+			window.location = url+'/'+pageNum;
+		});
 	});
 </script>
 
@@ -94,6 +99,32 @@ foreach($replies as $reply) {
 </ul>
 
 <?php
-
 $fork->endBlockSet();
+
+// pagination, if necessary
+if($numPages > 1) {
+	$fork->startBlockSet('footer');
+
+	if($page != 1) {
+		$olderURL = $thisURL;
+		$olderURL .= '/'.($page-1);
+		echo '<a href="'.$olderURL.'">&laquo; Older</a> ';
+	}
+
+	echo '<select id="selDiscussionPages">';
+	for($i=1; $i<=$numPages; $i++) {
+		$selected = ($i == $page) ? ' selected="selected"' : '';
+		echo '<option value="'.$i.'"'.$selected.'>page '.$i.'</option>';
+	}
+	echo '</select>';
+
+	if($page != $numPages) {
+		$newerURL = $thisURL;
+		$newerURL .= '/'.($page+1);
+		echo ' <a href="'.$newerURL.'">Newer &raquo;</a>';
+	}
+
+	$fork->endBlockSet();
+}
+
 $fork->render('site/partial/panel');

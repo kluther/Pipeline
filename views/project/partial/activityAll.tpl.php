@@ -66,7 +66,7 @@ if(!empty($events))
 	foreach($events as $event)
 	{
 		echo '<li class="'.$event->getCssClass().'">';
-		echo '<h6 class="primary">'.formatEvent($event, $showProject).'</h6>';
+		echo '<h6 class="primary">'.formatEvent($event).'</h6>';
 		echo '<p class="secondary">'.formatTimeTag($event->getDateCreated()).'</p>';
 		$details = formatEventDetails($event);
 		if(!empty($details)) {
@@ -82,6 +82,7 @@ if(!empty($events))
 
 ?>
 	</div>
+<?php if($numPages > 1): ?>
 	<div class="panel-footer">
 <?php
 	if($page != 1) {
@@ -102,8 +103,9 @@ if(!empty($events))
 	if($page != $numPages) {
 		$olderURL = $thisFilteredURL;
 		$olderURL .= '/'.($page+1);
-		echo '<a href="'.$olderURL.'">Older &raquo;</a> ';
+		echo ' <a href="'.$olderURL.'">Older &raquo;</a>';
 	}
 ?>
 	</div>
+<?php endif; ?>
 </div>

@@ -113,6 +113,7 @@ RewriteRule ^projects/([a-z0-9-]+)/discussions/new/activity/?$ controller/projec
 RewriteRule ^projects/([a-z0-9-]+)/discussions/new/?$ controller/project/discussion_new_c.php?slug=$1 [QSA,L]
 
 RewriteRule ^projects/([a-z0-9-]+)/discussions/(\d+)/process/?$ controller/project/discussion.process.php?slug=$1&d=$2 [QSA,L]
+RewriteRule ^projects/([a-z0-9-]+)/discussions/(\d+)/(\d+)/?$ controller/project/discussion_c.php?slug=$1&d=$2&page=$3 [QSA,L]
 RewriteRule ^projects/([a-z0-9-]+)/discussions/(\d+)/?$ controller/project/discussion_c.php?slug=$1&d=$2 [QSA,L]
 RewriteRule ^projects/([a-z0-9-]+)/discussions/?$ controller/project/discussions_c.php?slug=$1 [QSA,L]
 

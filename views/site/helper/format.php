@@ -38,29 +38,80 @@ function formatPitch($pitch) {
 	return (formatParagraphs($pitch));
 }
 
-function truncateURL($matches) {
-	$space = $matches[1];
-	$url = $matches[2];
-	$maxLength = 65;
-	if(strlen($url)>$maxLength) {
-		$a = substr($url,0,$maxLength-10);
-		$b = substr($url,-10);
-		$formattedUrl = $a.htmlentities('&hellip;').$b;
+/* note: only used for upload file names right now */
+function truncateFileName($fileName, $maxLength=30) {
+	if(strlen($fileName)>$maxLength) {
+		$a = substr($fileName,0,$maxLength-10);
+		$b = substr($fileName,-10);
+		$formattedFileName = $a.'&hellip;'.$b;
 	} else {
-		$formattedUrl = $url;
+		$formattedFileName = $fileName;
 	}
-	return $space.'<a href="'.$url.'">'.$formattedUrl.'</a>';
+	return '<a href="'.$fileName.'">'.$formattedFileName.'</a>';
+}
+
+/* thanks http://stackoverflow.com/questions/1925455/how-to-mimic-stackoverflow-auto-link-behavior */
+
+function auto_link_text($text) {
+    $pattern  = '#\b(([\w-]+://?|www[.])[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|/)))#';
+    return preg_replace_callback($pattern, 'auto_link_text_callback', $text);
+}
+
+function auto_link_text_callback($matches) {
+    $max_url_length = 50;
+    $max_depth_if_over_length = 2;
+    $ellipsis = htmlentities('&hellip;');
+
+    $url_full = $matches[0];
+    $url_short = '';
+
+    if (strlen($url_full) > $max_url_length) {
+        $parts = parse_url($url_full);
+        $url_short = $parts['scheme'] . '://' . preg_replace('/^www\./', '', $parts['host']) . '/';
+
+        $path_components = explode('/', trim($parts['path'], '/'));
+        foreach ($path_components as $dir) {
+            $url_string_components[] = $dir . '/';
+        }
+
+        if (!empty($parts['query'])) {
+            $url_string_components[] = '?' . $parts['query'];
+        }
+
+        if (!empty($parts['fragment'])) {
+            $url_string_components[] = '#' . $parts['fragment'];
+        }
+
+        for ($k = 0; $k < count($url_string_components); $k++) {
+            $curr_component = $url_string_components[$k];
+            if ($k >= $max_depth_if_over_length || strlen($url_short) + strlen($curr_component) > $max_url_length) {
+                if ($k == 0 && strlen($url_short) < $max_url_length) {
+                    // Always show a portion of first directory
+                    $url_short .= substr($curr_component, 0, $max_url_length - strlen($url_short));
+                }
+                $url_short .= $ellipsis;
+                break;
+            }
+            $url_short .= $curr_component;
+        }
+
+    } else {
+        $url_short = $url_full;
+    }
+
+    return "<a href=\"$url_full\">$url_short</a>";
 }
 
 /* generic function for formatting paragraphs of HTML text */
 function formatParagraphs($paragraphs) {
 	// regex modified from http://snipplr.com/view/36992/improvement-of-url-interpretation-with-regex/
-	$pattern = '@(^|\s|&#10;)((https?://)?([-\w]+\.[-\w\.]+)+\w(:\d+)?(/([-\w/_\.]*(\?\S+)?)?)*)@';
-	$paragraphs = preg_replace_callback(
-		$pattern,
-		'truncateURL',
-		$paragraphs
-	);
+	// $pattern = '@(^|\s|&#10;)((https?://)?([-\w]+\.[-\w\.]+)+\w(:\d+)?(/([-\w/_\.]*(\?\S+)?)?)*)@';
+	// $paragraphs = preg_replace_callback(
+		// $pattern,
+		// 'truncateURL',
+		// $paragraphs
+	// );
+	$paragraphs = auto_link_text($paragraphs);
 	$paragraphs = str_replace("&#10;","<br />",$paragraphs);
 	$paragraphs = html_entity_decode($paragraphs, ENT_QUOTES, 'UTF-8');
 	return $paragraphs;

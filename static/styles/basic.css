@@ -838,6 +838,7 @@ div.clear {
 /* PANELS */
 
 div.panel {
+	overflow: hidden;
 	margin-bottom: 1em;
 	-moz-border-bottom-left-radius: .5em;
 	-webkit-border-bottom-left-radius: .5em;
@@ -846,10 +847,15 @@ div.panel {
 	-webkit-border-bottom-right-radius: .5em;
 	border-bottom-right-radius: .5em;	
 	}
-	/*
-	div.panel.small {
-		width: 100%;
-		}
+
+td.left div.panel {
+	width: 580px;
+	}
+	
+td.right div.panel {
+	width: 400px;
+	}
+/*
 	div.panel.large {
 		width: 100%;
 		}
