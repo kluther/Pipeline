@@ -6,7 +6,7 @@ $soup = new Soup();
 if(Session::isLoggedIn()) {	
 	// dashboard
 	$yourProjects = ProjectUser::getProjectsByUserID(Session::getUserID());
-	$publicProjects = Project::getPublicProjects(10); // projects to join
+	$publicProjects = Project::getPublicProjects(Session::getUserID(), 10); // projects to join
 	//$user = User::load(Session::getUserID());
 	$events = Event::getDashboardEvents(Session::getUserID(), 10);
 	// $updates = Update::getByUserID($user->getID());

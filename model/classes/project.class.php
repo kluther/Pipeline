@@ -158,11 +158,9 @@ class Project extends DbObject
 		return $projects;	
 	}
 	
-	public static function getPublicProjects($limit=null) {
-		$userID = Session::getUserID();
-	
+	public static function getPublicProjects($userID=null, $limit=null) {
 		$query = "SELECT id FROM ".self::DB_TABLE;
-		$query .= " WHERE private = 0";
+		$query .= " WHERE (private = 0)";
 		// don't include projects the user is affiliated with
 		if(!empty($userID)) {
 			$query .= " AND id NOT IN (";
