@@ -191,8 +191,9 @@ class Event extends DbObject
 		
 		$query = "SELECT e.id AS id FROM ".self::DB_TABLE." e";
 		$query .= " INNER JOIN ".EventType::DB_TABLE." et ON ";
-		$query .= " e.event_type_id = et.id";		
-		$query .= " WHERE (e.item_1_id = ".$taskID;
+		$query .= " e.event_type_id = et.id";	
+		$query .= " WHERE e.project_id = ".$task->getProjectID();
+		$query .= " AND (e.item_1_id = ".$taskID;
 		$query .= " AND e.event_type_id IN (";
 			$query .= " SELECT id FROM ".EventType::DB_TABLE;
 			$query .= " WHERE `group` = ".TASKS_ID;
