@@ -15,20 +15,8 @@ $fork->startBlockSet('body');
 <td class="left">
 
 <?php
-	$data = array();
-	foreach($events as $e) {
-		$data[] = array(
-			$e->getEventTypeID(),
-			formatProjectLink($e->getProjectID()),
-			formatUserLink($e->getUser1ID()),
-			formatTimeTag($e->getDateCreated())
-		);
-	}
-	$SOUP->render('site/partial/itemTable', array(
-		'title' => 'Last 50 Events ('.count($events).')',
-		'ths' => array('Event Type', 'Project', 'User1', 'Date/time'),
-		'data' => $data
-		
+	$SOUP->render('site/partial/activity',array(
+		'showProject' => true
 	));
 ?>
 
