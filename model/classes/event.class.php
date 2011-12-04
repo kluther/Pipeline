@@ -321,20 +321,19 @@ class Event extends DbObject
 		$query .= " LEFT OUTER JOIN ".Project::DB_TABLE." p ON ";
 		$query .= " e.project_id = p.id";
 		$query .= " WHERE e.user_1_id = ".$userID;
-		// let admins see hidden events
-		if(!Session::isAdmin())
-			$query .= " AND et.hidden = 0";
-		// let fellow members see private project events
-		if(!empty($loggedInUserID)) {
+		if(empty($loggedInUserID)) {
+			$query .= " AND et.hidden = 0"; // ignore hidden events
+			$query .= " AND ( (p.private = 0) OR";
+			$query .= " (e.project_id IS NULL) )";
+		} elseif(!Session::isAdmin()) {
+			// let fellow members see private project events
+			$query .= " AND et.hidden = 0"; // ignore hidden events
 			$query .= " AND (p.private = 0";
 			$query .= " OR p.id IN (";
 				$query .= " SELECT project_id FROM ".ProjectUser::DB_TABLE;
 				$query .= " WHERE user_id = ".$loggedInUserID;
 				$query .= " AND relationship != ".ProjectUser::BANNED;
 			$query .= " ) OR (e.project_id IS NULL) )";
-		} else {
-			$query .= " AND ( (p.private = 0) OR";
-			$query .= " (e.project_id IS NULL) )";
 		}
 		$query .= " ORDER BY e.date_created DESC";
 		if($limit != null)
