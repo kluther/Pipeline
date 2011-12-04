@@ -265,6 +265,7 @@ class Upload extends DbObject
 			case 'mp3':
 			// document
 			case 'doc':
+			case 'docx':
 			case 'pdf':
 				$isAllowed = true;
 		}

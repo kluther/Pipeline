@@ -81,10 +81,20 @@ switch($mime) {
 	case 'application/octet-stream':
 		// only generate thumbs for .swf (.fla also uses these mime types)
 		if($ext == 'swf') {
+			list($orig_width, $orig_height) = @getimagesize($uploadedFile);
+			$scale = min(
+				Upload::THUMB_MAX_WIDTH / $orig_width,
+				Upload::THUMB_MAX_HEIGHT / $orig_height
+			);
+			if ($scale > 1) {
+				$scale = 1;
+			}
+			$new_width = $orig_width * $scale;
+			$new_height = $orig_height * $scale;
 			if($isWindows) {
-				echo exec(SYSTEM_PATH.'/lib/swfrender '.$uploadedFile.' -X '.Upload::THUMB_MAX_WIDTH.' -Y '.Upload::THUMB_MAX_HEIGHT.' -o '.$videoThumbFile); // generate thumb
+				echo exec(SYSTEM_PATH.'/lib/swfrender '.$uploadedFile.' -X '.$new_width.' -Y '.$new_height.' -o '.$videoThumbFile); // generate thumb
 			} else {
-				echo exec(SYSTEM_PATH.'/lib/swftools/swfrender '.$uploadedFile.' -X '.Upload::THUMB_MAX_WIDTH.' -Y '.Upload::THUMB_MAX_HEIGHT.' -o '.$videoThumbFile); // generate thumb
+				echo exec(SYSTEM_PATH.'/lib/swftools/swfrender '.$uploadedFile.' -X '.$new_width.' -Y '.$new_height.' -o '.$videoThumbFile); // generate thumb
 			}
 		}
 		break;

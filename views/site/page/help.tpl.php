@@ -65,7 +65,15 @@ $fork->startBlockSet('body');
 
 <h3 id="help-upload-formats">Which upload formats are supported?</h3>
 
-<p>Currently, Pipeline supports video (.mov, .mpg, .avi), audio (.mp3), Flash animation (.swf), and Flash video (.flv).</p>
+<p>Currently, Pipeline supports:</p>
+
+<ul>
+	<li>Images (.jpg, .jpeg, .png, .gif, .psd)</li>
+	<li>Video (.mov, .mpg, .mpeg, .avi)</li>
+	<li>Audio (.mp3)</li>
+	<li>Flash (.swf, .fla, .flv)</li>
+	<li>Documents (.doc, .docx, .pdf)</li>
+</ul>
 
 <div class="line"> </div>
 

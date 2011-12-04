@@ -481,21 +481,14 @@ div.upload {
 		}
 
 	div.upload a.thumb {
-		width: 150px;
-		height: 40px;
 		display: block;
 		float: right;
 		margin: 0 0 0 0.5em; padding: 0;
-		background: no-repeat center right;
+		background: no-repeat center center;
 		border: 1px solid;
 		}
 		div.upload a.thumb:hover {
 			border: 1px solid;
-			}
-		div.upload a.thumb img {
-			display: block;
-			height: 30px; width: 30px;
-			margin: 5px auto 0 auto; padding: 0;
 			}
 
 /* PRIMARY NAV */	
