@@ -64,7 +64,12 @@ if($action == 'reset') {
 		{
 			if ($password == $user->getPassword())
 			{
-				Session::signIn($user->getID());
+				// remember user?
+				$remember = Filter::text($_POST['remember']);
+				$remember = ($remember == 'remember') ? true : false;
+				// sign in
+				Session::signIn($user->getID(), $remember);
+				// send us onward
 				if(!empty($referer) && ($referer != Url::forgotPassword())) {
 					$json = array(
 						'success' => '1',

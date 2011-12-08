@@ -20,6 +20,7 @@ $(document).ready(function(){
 			'info':{
 				'username':$('#txtUsername').val(),
 				'password':$('#txtPassword').val(),
+				'remember':$('#chkRemember').val(),
 				'referer':$('#referer').val(),
 				'action':'login'
 				},
@@ -27,7 +28,7 @@ $(document).ready(function(){
 			});
 	});
 	// the below function allows user to press "Enter" to log in
-	$('input.login').keypress(function(e){
+	$('div.login').keypress(function(e){
 		if(e.which == 13){
 			$('#btnLogIn').click();
 			return false;
@@ -39,16 +40,24 @@ $(document).ready(function(){
 
 <td class="left">
 
-<label>Username or Email <input id="txtUsername" type="text" class="login" /></label>
-<label>Password <input id="txtPassword" type="password" class="login" /></label>
-<input type="hidden" id="referer" name="referer" value="<?= $referer ?>" />
-<input id="btnLogIn" type="button" value="Log In" />
-<p>Forgot your password? <a href="<?= Url::forgotPassword() ?>">Reset it here.</a></p>
-<p>Don't have an account yet? <a href="<?= Url::consent() ?>">Register for free!</a></p>
+<div class="login">
+
+	<label>Username or Email <input id="txtUsername" type="text" /></label>
+	<label>Password <input id="txtPassword" type="password" /></label>
+	<label><input type="checkbox" id="chkRemember" value="remember" /> Remember login for 30 days</label>
+	<input type="hidden" id="referer" name="referer" value="<?= $referer ?>" />
+	<input id="btnLogIn" type="button" value="Log In" />
+
+</div>
 
 </td>
 
-<td class="right"> </td>
+<td class="right">
+
+	<p>Forgot your password? <a href="<?= Url::forgotPassword() ?>">Reset it here.</a></p>
+	<p>Don't have an account yet? <a href="<?= Url::consent() ?>">Register for free!</a></p>
+
+</td>
 
 <?php
 

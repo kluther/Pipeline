@@ -10,7 +10,9 @@
 	define('USER_PICTURE_LARGE_PATH', USER_PICTURE_PATH.'/large'); # absolute path to large user picture thumbnail - !NO CHANGE
 	define('USER_PICTURE_SMALL_PATH', USER_PICTURE_PATH.'/small'); # absolute path to small user picture thumbnail - !NO CHANGE
 	
-	define('BASE_URI', 'http://pipeline.cc.gatech.edu'); # base URI for this Pipeline instance <- CHANGE THIS
+	define('BASE_URI', 'http://www.example.com'); # base URI for this Pipeline instance <- CHANGE THIS
+	define('COOKIE_DOMAIN','.example.com'); # the domain where the cookie will be available <- CHANGE THIS
+	define('COOKIE_PATH','/'); # the path on the server where the cookie will be available <- CHANGE THIS
 	define('PIPELINE_NAME', 'Pipeline Demo'); # name of this Pipeline instance <- CHANGE THIS
 	define('DEFAULT_THEME_ID', 1); # default theme ID <- CHANGE THIS
 	define('TIME_ZONE', 'America/New_York'); # name of PHP time zone <- CHANGE THIS

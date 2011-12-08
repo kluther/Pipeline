@@ -1091,12 +1091,18 @@ textarea {
 	padding: 0.2em;	
 	}
 		
-input.login {
+div.login input[type=text],
+div.login input[type=password] {
 	display: block;
 	font-size: 120%;
 	margin: 0.5em 0 1em 0;
 	padding: 0.2em;
 	width: 210px;
+	}
+	
+div.login input[type=button] {
+	display: block;
+	margin-top: 1em;
 	}
 
 /* text inputs */

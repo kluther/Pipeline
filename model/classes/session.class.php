@@ -11,7 +11,7 @@ class Session
 	}
 	
 	// accepts either userId or userName
-	public static function signIn($userInfo)
+	public static function signIn($userInfo, $remember=false)
 	{
 		// is $userInfo a string or an integer?
 		if(intval($userInfo) != 0)
@@ -24,17 +24,48 @@ class Session
 		$user->setLastLogin(date("Y-m-d H:i:s"));
 		$user->save();
 		
-		// set up session
-		$_SESSION[BASE_URI]['user_id'] = $user->getId();
-		$_SESSION[BASE_URI]['username'] = $user->getUserName();	
-		$_SESSION[BASE_URI]['admin'] = $user->getAdmin();
+		// set up cookies	
+		$expireTime = time()+30*24*60*60; // 30 days
+		$expire = ($remember) ? $expireTime  : false;
+		setcookie('user_id', $user->getID(), $expire, COOKIE_PATH, COOKIE_DOMAIN);
+		setcookie('username', $user->getUserName(), $expire, COOKIE_PATH, COOKIE_DOMAIN);
+		setcookie('admin', $user->getAdmin(), $expire, COOKIE_PATH, COOKIE_DOMAIN);
 	}
 	
 	public static function signOut()
 	{
-		session_unset();
-		session_destroy();	
-		$_SESSION = array();
+		// clear the cookies
+		setcookie('user_id', '', time()-3600, COOKIE_PATH, COOKIE_DOMAIN);
+		setcookie('username', '', time()-3600, COOKIE_PATH, COOKIE_DOMAIN);
+		setcookie('admin', '', time()-3600, COOKIE_PATH, COOKIE_DOMAIN);
+	}
+	
+	public static function getUserID()
+	{
+		if(isset($_COOKIE['user_id']))
+			return $_COOKIE['user_id'];
+		else
+			return null;
+	}
+	
+	public static function getUser()
+	{
+		return (User::load(self::getUserID()));
+	}
+	
+	public static function getUserName()
+	{
+		if(isset($_COOKIE['username']))
+			return $_COOKIE['username'];
+		else
+			return null;
+	}
+	
+	public static function isAdmin() {
+		if(isset($_COOKIE['admin']))
+			return $_COOKIE['admin'];
+		else
+			return null;
 	}
 	
 	public static function getMessage()
@@ -52,45 +83,7 @@ class Session
 
 	public static function clearMessage()
 	{	
-		@session_start();
 		$_SESSION[BASE_URI]['message'] = null;
 		unset($_SESSION[BASE_URI]['message']);		
-	}
-
-	// public static function getProjectID()
-	// {
-		// if(isset($_GET['p']))
-			// return $_GET['p'];
-		// else
-			// return null;
-	// }
-
-	public static function getUserID()
-	{
-		if(isset($_SESSION[BASE_URI]['user_id']))
-			return $_SESSION[BASE_URI]['user_id'];
-		else
-			return null;
-	}
-	
-	public static function getUser()
-	{
-		if(self::getUserID() != null)
-			return (User::load(self::getUserID()));
-	}
-	
-	public static function getUserName()
-	{
-		if(isset($_SESSION[BASE_URI]['username']))
-			return $_SESSION[BASE_URI]['username'];
-		else
-			return null;
-	}
-	
-	public static function isAdmin() {
-		if(isset($_SESSION[BASE_URI]['admin']))
-			return $_SESSION[BASE_URI]['admin'];
-		else
-			return null;
 	}
 }
