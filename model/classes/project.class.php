@@ -105,6 +105,10 @@ class Project extends DbObject
 	public function isAffiliated($userID=null) {
 		return(ProjectUser::isAffiliated($userID, $this->id));
 	}
+	
+	public function isInvited($userID=null) {
+		return(Invitation::hasInvitations($userID, $this->id));
+	}
 
 	public function getAllMembers() {
 		return(ProjectUser::getAllMembers($this->id));

@@ -19,6 +19,18 @@ if($task == null) {
 	exit();
 }
 
+// if private project, limit access to invited users, members, and admins
+if($project->getPrivate()) {
+	if(!Session::isAdmin() &&
+		(!$project->isInvited(Session::getUserID())) &&
+		(!$project->isMember(Session::getUserID())) &&
+		(!$project->isTrusted(Session::getUserID())) &&
+		(!$project->isCreator(Session::getUserID())) ) {
+	header('Location: '.Url::error());
+	exit();		
+	}
+}
+
 // // validate username
 // $username = Filter::text($_GET['u']);
 // $user = User::loadByUsername($username);
