@@ -51,6 +51,9 @@ http://flowplayer.org/
 Fugue icons by Yusuke Kamiyamane
 http://p.yusukekamiyamane.com/
 
+SWFObject
+http://code.google.com/p/swfobject/
+
 SWFTools
 http://www.swftools.org/
 
