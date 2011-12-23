@@ -68,9 +68,9 @@ $pipelineStylesheet = $theme->getPipelineStylesheet();
 			<ul>
 			<?php if(Session::isLoggedIn()): ?>
 				<li class="right"><a href="<?= Url::logOut() ?>">Log Out</a></li>
-				<li class="right"><a href="<?= Url::settings() ?>">Settings</a></li>
-				<li class="right"><a href="<?= Url::profile() ?>">Profile</a></li>	
-				<li class="right"><a href="<?= Url::inbox() ?>">Inbox<?= ($numUnread>0) ? '<span class="unread">'.$numUnread.'</span>' : '' ?></a></li>				
+				<li class="right"><a href="<?= Url::settings() ?>">Settings</a></li>	
+				<li class="right"><a href="<?= Url::inbox() ?>">Inbox<?= ($numUnread>0) ? '<span class="unread">'.$numUnread.'</span>' : '' ?></a></li>		
+				<li class="right"><a href="<?= Url::profile() ?>"><?= Session::getUsername() ?></a></li>				
 			<?php else: ?>
 				<li class="right"><a href="<?= Url::consent() ?>">Register</a></li>
 				<li class="right"><a href="<?= Url::logIn() ?>">Log In</a></li>
