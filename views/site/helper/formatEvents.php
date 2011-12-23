@@ -556,6 +556,11 @@ function formatEventDetails($event) {
 			$details .= '<strong>'.$update->getTitle().'</strong><br /><br />';
 			$details .= formatUpdate($update->getMessage());
 			break;
+		case 'create_task':
+			$task = Task::load($event->getItem1ID());
+			$details .= '<strong>'.$task->getTitle().'</strong><br /><br />';
+			$details .= formatTaskDescription($task->getDescription());
+			break;
 	}
 	return ($details);
 }
