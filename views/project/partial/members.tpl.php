@@ -224,7 +224,7 @@ foreach($allMembers as $m) {
 	echo '<li>';
 	if($project->isTrusted($m->getID())) {
 		// trusted member
-		if($hasEditPermission) {
+		if($hasEditPermission && ($m->getID() != Session::getUserID())) {
 			echo '<input id="ban-'.$m->getID().'" type="button" class="ban" value="Ban" /> <input id="untrust-'.$m->getID().'" type="button" class="untrust" value="Untrust" />';
 		}
 		echo formatUserPicture($m->getID(), 'small');
@@ -232,7 +232,7 @@ foreach($allMembers as $m) {
 		echo '<p class="secondary">trusted member</p>';				
 	} else {
 		// member
-		if($hasEditPermission) {
+		if($hasEditPermission && ($m->getID() != Session::getUserID())) {
 			echo '<input id="ban-'.$m->getID().'" type="button" class="ban" value="Ban" /> <input id="trust-'.$m->getID().'" type="button" class="trust" value="Trust" />';
 		}
 		echo formatUserPicture($m->getID(), 'small');
