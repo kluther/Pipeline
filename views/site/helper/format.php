@@ -47,7 +47,8 @@ function truncateFileName($fileName, $maxLength=30) {
 	} else {
 		$formattedFileName = $fileName;
 	}
-	return '<a href="'.$fileName.'">'.$formattedFileName.'</a>';
+	return ($formattedFileName);
+	//return '<a href="'.$fileName.'">'.$formattedFileName.'</a>';
 }
 
 /* thanks http://stackoverflow.com/questions/1925455/how-to-mimic-stackoverflow-auto-link-behavior */
