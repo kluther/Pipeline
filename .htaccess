@@ -125,6 +125,11 @@ RewriteRule ^projects/([a-z0-9-]+)/people/search/([a-z-]+)/?$ controller/project
 RewriteRule ^projects/([a-z0-9-]+)/people/process/?$ controller/project/credits.process.php?slug=$1 [QSA,L]
 RewriteRule ^projects/([a-z0-9-]+)/people/?$ controller/project/credits_c.php?slug=$1 [QSA,L]
 
+### FILES ###
+
+RewriteRule ^projects/([a-z0-9-]+)/files/(\d+)/?$ controller/project/files_c.php?slug=$1&page=$2 [QSA,L]
+RewriteRule ^projects/([a-z0-9-]+)/files/?$ controller/project/files_c.php?slug=$1 [QSA,L]
+
 ### ACTIVITY ###
 
 RewriteRule ^projects/([a-z0-9-]+)/activity/basics/(\d+)/?$ controller/project/activity_c.php?slug=$1&page=$2&filter=basics [QSA,L]

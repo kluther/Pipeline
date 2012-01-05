@@ -32,6 +32,9 @@ div.upload a.thumb {
 	div.upload a.thumb:hover {
 		border-color: #fff;
 		}	
+div.upload p.secondary {
+	color: #999;
+	}
 			
 div.primary-nav {			
 	background: #000;

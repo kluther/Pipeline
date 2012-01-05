@@ -26,6 +26,12 @@ class Breadcrumbs
 		return (self::oneCrumb("Details", Url::details($projectID)));
 	}
 	
+	public static function files($projectID=null)
+	{
+		if($projectID == null) return null;
+		return (self::oneCrumb("Files", Url::files($projectID)));
+	}
+	
 	public static function tasks($projectID=null)
 	{
 		if($projectID == null) return null;

@@ -449,6 +449,11 @@ class Url
 		return (self::people($projectID).'/search');
 	}
 	
+	public static function files($projectID=null) {
+		if($projectID === null) return null;
+		return (self::project($projectID).'/files');
+	}
+	
 	// public static function banned($projectID=null)
 	// {
 		// if($projectID == null) return null;

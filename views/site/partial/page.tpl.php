@@ -107,6 +107,7 @@ $pipelineStylesheet = $theme->getPipelineStylesheet();
 				<li><a <?= ($selected == "tasks")?'class="selected"':'' ?> href="<?= Url::tasks($project->getID()) ?>">Tasks</a></li>
 				<li><a <?= ($selected == "people")?'class="selected"':'' ?> href="<?= Url::people($project->getID()) ?>">People</a></li>
 				<li><a <?= ($selected == "discussions")?'class="selected"':'' ?> href="<?= Url::discussions($project->getID()) ?>">Discussions</a></li>
+				<li><a <?= ($selected == "files")?'class="selected"':'' ?> href="<?= Url::files($project->getID()) ?>">Files</a></li>
 				<li><a <?= ($selected == "activity")?'class="selected"':'' ?> href="<?= Url::activity($project->getID()) ?>">Activity</a></li>
 			<?php endif; ?>
 			</ul>

@@ -27,7 +27,10 @@ div.upload a.thumb {
 	}
 	div.upload a.thumb:hover {
 		border-color: slategray;
-		}	
+		}
+div.upload p.secondary {
+	color: #666;
+	}
 		
 div.primary-nav {			
 	/*background: rgba(255,255,255,.50);*/
