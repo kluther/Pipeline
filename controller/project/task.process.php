@@ -109,7 +109,9 @@ if($action == 'create') {
 		'event_type_id' => 'create_task',
 		'project_id' => $project->getID(),
 		'user_1_id' => Session::getUserID(),
-		'item_1_id' => $task->getID()
+		'item_1_id' => $task->getID(),
+		'data_1' => $task->getTitle(),
+		'data_2' => $task->getDescription()
 	));
 	$logEvent->save();
 	

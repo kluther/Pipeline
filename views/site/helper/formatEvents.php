@@ -552,14 +552,20 @@ function formatEventDetails($event) {
 			$details .= formatDiscussionReply($event->getData1());
 			break;
 		case 'create_update':
-			$update = Update::load($event->getItem1ID());
-			$details .= '<strong>'.$update->getTitle().'</strong><br /><br />';
-			$details .= formatUpdate($update->getMessage());
+			if($event->getData1() != '') {
+				$details .= '<strong>'.$event->getData1().'</strong><br /><br />';
+			}
+			if($event->getData2() != '') {
+				$details .= formatUpdate($event->getData2());
+			}
 			break;
 		case 'create_task':
-			$task = Task::load($event->getItem1ID());
-			$details .= '<strong>'.$task->getTitle().'</strong><br /><br />';
-			$details .= formatTaskDescription($task->getDescription());
+			if($event->getData1() != '') {
+				$details .= '<strong>'.$event->getData1().'</strong><br /><br />';
+			}
+			if($event->getData2() != '') {
+				$details .= formatTaskDescription($event->getData2());
+			}
 			break;
 	}
 	return ($details);
