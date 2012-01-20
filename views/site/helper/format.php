@@ -51,6 +51,21 @@ function truncateFileName($fileName, $maxLength=30) {
 	//return '<a href="'.$fileName.'">'.$formattedFileName.'</a>';
 }
 
+function truncateURL($matches) {
+	$space = $matches[1];
+	$url = $matches[2];
+	$space2 = $matches[3];
+	$maxLength = 50;
+	if(strlen($url)>$maxLength) {
+		$a = substr($url,0,$maxLength-10);
+		$b = substr($url,-10);
+		$formattedUrl = $a.htmlentities('&hellip;').$b;
+	} else {
+		$formattedUrl = $url;
+	}
+	return $space.'<a href="'.$url.'">'.$formattedUrl.'</a>'.$space2;
+}
+
 /* thanks http://stackoverflow.com/questions/1925455/how-to-mimic-stackoverflow-auto-link-behavior */
 
 function auto_link_text($text) {
@@ -106,13 +121,13 @@ function auto_link_text_callback($matches) {
 /* generic function for formatting paragraphs of HTML text */
 function formatParagraphs($paragraphs) {
 	// regex modified from http://snipplr.com/view/36992/improvement-of-url-interpretation-with-regex/
-	// $pattern = '@(^|\s|&#10;)((https?://)?([-\w]+\.[-\w\.]+)+\w(:\d+)?(/([-\w/_\.]*(\?\S+)?)?)*)@';
-	// $paragraphs = preg_replace_callback(
-		// $pattern,
-		// 'truncateURL',
-		// $paragraphs
-	// );
-	$paragraphs = auto_link_text($paragraphs);
+	$pattern = '@(^|\s|&#10;)(https?://.+?)(\s|$|&#10;)@';
+	$paragraphs = preg_replace_callback(
+		$pattern,
+		'truncateURL',
+		$paragraphs
+	);
+	//$paragraphs = auto_link_text($paragraphs);
 	$paragraphs = str_replace("&#10;","<br />",$paragraphs);
 	$paragraphs = html_entity_decode($paragraphs, ENT_QUOTES, 'UTF-8');
 	return $paragraphs;

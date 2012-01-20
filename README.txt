@@ -1,5 +1,5 @@
 PIPELINE
-Free, open-source platform for crowdsourcing creative projects
+Free, open-source software for crowdsourcing creative projects
 http://pipeline.cc.gatech.edu/
 
 
