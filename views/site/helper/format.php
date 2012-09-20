@@ -325,3 +325,16 @@ function toAscii($str, $replace=array(), $delimiter='-')
 
 	return $clean;
 }
+
+// Adding format tag for displaying whether a project is private/public
+function formatIsPrivate($isPrivate)
+{
+    if ($isPrivate == "1")
+    {
+        return "This project is <span class=\"bad\"><b>Private</b></span>";
+    }
+    else
+    {
+        return "This project is <span class=\"good\"><b>Public</b></span>";
+    }
+}
