@@ -140,8 +140,22 @@ if($action == "pitch") {
 		// set flag
 		$modified = true;		
 	}
-
-	// check flag
+        
+        //is privacy modified?
+        $private =  Filter::text($_POST['private']);
+        $private = (empty($private)) ? 0 : 1;
+        
+        $oldIsPrivate = $project->getPrivate();
+        if ($private != $oldIsPrivate){
+                //save changes
+                $project->setPrivate($private);
+                $project->save();
+                
+                //set flag
+                $modified = true;
+        }
+        
+        // check flag
 	if($modified) {
 		Session::setMessage('You edited the progress.');
 		$json = array('success' => '1');

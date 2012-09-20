@@ -34,13 +34,21 @@ $(document).ready(function(){
 	
 	$('#selStatus').val('<?= $project->getStatus() ?>');
 	
+        
+        var isPrivate = <?= $project->getPrivate() ?> ;
+        (isPrivate == 1) ? true:false;
+        
+        $('#chkPrivate').prop("checked",isPrivate);
+        
 	$('#btnEditProgress').click(function(){
 		buildPost({
 			'processPage':'<?= Url::detailsProcess($project->getID()) ?>',
 			'info': {
 				'action':'progress',
 				'deadline':$('#txtDeadline').val(),
-				'status':$('#selStatus').val()
+				'status':$('#selStatus').val(),
+                                'private':$('#chkPrivate:checked').val()
+                                
 			},
 			'buttonID':'#btnEditProgress'
 		});
@@ -63,6 +71,7 @@ $(document).ready(function(){
 
 <div class="edit hidden">
 
+<!--Controls Status drop-down list-->
 <div class="clear">
 	<label for="selStatus">Status<span class="required">*</span></label>
 	<div class="input">
@@ -76,6 +85,7 @@ $(document).ready(function(){
 	</div>
 </div>
 
+<!-- Controls Deadline date picker-->
 <div class="clear">
 	<label for="txtDeadline">Deadline</label>
 	<div class="input">
@@ -83,6 +93,17 @@ $(document).ready(function(){
 	</div>
 </div>
 
+<!-- Controls for Project Privacy -->
+<div class="clear">
+        <label for="chkPrivate">Private</label>
+	<div class="input">
+		<input type="checkbox" id="chkPrivate" name="chkPrivate" value="private" />
+		<p>If checked, this project will be hidden from everyone except members and invitees.</p>
+	</div>
+</div>
+
+
+<!-- Controls Save and Cancel buttons-->
 <div class="clear">
 	<div class="input">
 		<input id="btnEditProgress" type="button" value="Save" />
@@ -97,9 +118,10 @@ $(document).ready(function(){
 <div class="view">
 
 <ul class="segmented-list">
-	<li><strong>Status</strong>: <span class="status"><?= formatProjectStatus($project->getStatus()) ?></span></li>
+        <li><strong>Status</strong>: <span class="status"><?= formatProjectStatus($project->getStatus()) ?></span></li>
 	<li><strong>Deadline</strong>: <?= $deadline ?></li>
 	<li><strong>Started</strong>: <?= formatTimeTag($project->getDateCreated()) ?></li>
+        <li><strong></strong><?= formatIsPrivate($project->getPrivate()) ?></li>
 </ul>
 
 </div><!-- .view -->
