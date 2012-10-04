@@ -16,6 +16,13 @@ if($project == null) {
 	exit();	
 }
 
+//do not allow banned members to access project
+$isBanned = ProjectUser::isBanned(Session::getUserID(),$project->getID());
+if ($isBanned) {
+        header('Location: '.Url::error());
+	exit();	
+}
+
 $yourTasks = Task::getYourTasks(Session::getUserID(), $project->getID());
 
 $soup = new Soup();

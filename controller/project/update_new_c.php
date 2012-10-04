@@ -19,6 +19,13 @@ if($task == null) {
 	exit();
 }
 
+//do not allow banned members to access project
+$isBanned = ProjectUser::isBanned(Session::getUserID(),$project->getID());
+if ($isBanned) {
+        header('Location: '.Url::error());
+	exit();	
+}
+
 // if private project, limit access to invited users, members, and admins
 if($project->getPrivate()) {
 	if(!Session::isAdmin() &&
