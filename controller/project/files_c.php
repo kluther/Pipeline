@@ -11,22 +11,15 @@ if($project == null)
 	exit();
 }
 
-//do not allow banned members to access project
-$isBanned = ProjectUser::isBanned(Session::getUserID(),$project->getID());
-if ($isBanned) {
-        header('Location: '.Url::error());
-	exit();	
-}
-
 // if private project, limit access to invited users, members, and admins
+// and exclude banned members
 if($project->getPrivate()) {
-	if(!Session::isAdmin() &&
-		(!$project->isInvited(Session::getUserID())) &&
-		(!$project->isMember(Session::getUserID())) &&
-		(!$project->isTrusted(Session::getUserID())) &&
-		(!$project->isCreator(Session::getUserID())) ) {
-	header('Location: '.Url::error());
-	exit();		
+	if (!Session::isAdmin() && (!$project->isCreator(Session::getUserID()))) {
+		if (((!$project->isInvited(Session::getUserID())) && (!$project->isMember(Session::getUserID())) &&
+		(!$project->isTrusted(Session::getUserID()))) || ProjectUser::isBanned(Session::getUserID(),$project->id)) {
+		 	header('Location: '.Url::error());
+			exit();		
+		}
 	}
 }
 
