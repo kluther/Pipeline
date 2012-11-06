@@ -34,11 +34,12 @@ $jqueryuiStylesheet = $theme->getJqueryuiStylesheet();
 $pipelineStylesheet = $theme->getPipelineStylesheet();
 
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!DOCTYPE html>
+<html>
 <head>
 	<title><?= PIPELINE_NAME ?> - <?= $pageTitle ?></title>
 	<link rel="icon" type="image/png" href="<?= Url::images() ?>/icons/clapperboard.png" />
+	<script type="text/javascript" src="<?= Url::scripts() ?>/modernizr.js"></script>
 	<link rel="stylesheet" type="text/css" href="<?= Url::styles() ?>/basic.css" />
 	<link rel="stylesheet" type="text/css" href="<?= Url::styles() ?>/<?= $pipelineStylesheet ?>" />
 	<link rel="stylesheet" type="text/css" href="<?= Url::styles() ?>/<?= $jqueryuiStylesheet ?>" />
@@ -48,16 +49,6 @@ $pipelineStylesheet = $theme->getPipelineStylesheet();
 		google.load("jqueryui", "1.8.16");
 		google.setOnLoadCallback(function(){});
 	</script>
-	<script type="text/javascript" src="<?= Url::scripts() ?>/common.js"></script>
-	<script type="text/javascript" src="<?= Url::scripts() ?>/feedback.js"></script>
-	<?php if(Session::getMessage() != null): ?>
-	<script type="text/javascript">
-		$(document).ready(function(){
-			displayNotification("<?= Session::getMessage() ?>");
-		});
-	</script>		
-	<?php Session::clearMessage(); ?>
-	<?php endif; ?>
 </head>
 <body>
 
@@ -140,6 +131,17 @@ $pipelineStylesheet = $theme->getPipelineStylesheet();
 	</div>
 </div>
 <div id="feedback"></div><!-- #feedback -->
+
+<script type="text/javascript" src="<?= Url::scripts() ?>/common.js"></script>
+<script type="text/javascript" src="<?= Url::scripts() ?>/feedback.js"></script>
+<?php if(Session::getMessage() != null): ?>
+<script type="text/javascript">
+	$(document).ready(function(){
+		displayNotification("<?= Session::getMessage() ?>");
+	});
+</script>		
+<?php Session::clearMessage(); ?>
+<?php endif; ?>
 
 </body>
 </html>

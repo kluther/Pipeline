@@ -7,11 +7,12 @@ $jqueryuiStylesheet = $theme->getJqueryuiStylesheet();
 $pipelineStylesheet = $theme->getPipelineStylesheet();
 
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" class="home">
+<!DOCTYPE html>
+<html>
 <head>
 	<title><?= PIPELINE_NAME ?> - powered by Pipeline</title>
 	<link rel="icon" type="image/png" href="<?= Url::images() ?>/icons/clapperboard.png" />
+	<script type="text/javascript" src="<?= Url::scripts() ?>/modernizr.js"></script>
 	<link rel="stylesheet" type="text/css" href="<?= Url::styles() ?>/basic.css" />
 	<link rel="stylesheet" type="text/css" href="<?= Url::styles() ?>/<?= $pipelineStylesheet ?>" />
 	<link rel="stylesheet" type="text/css" href="<?= Url::styles() ?>/<?= $jqueryuiStylesheet ?>" />
