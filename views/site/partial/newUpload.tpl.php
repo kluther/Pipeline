@@ -34,7 +34,7 @@ function initializeUploader() {
 		flash_swf_url : '<?= Url::base() ?>/lib/plupload/js/plupload.flash.swf',
 		silverlight_xap_url : '<?= Url::base() ?>/lib/plupload/js/plupload.silverlight.xap',
 		filters : [
-			{title : "Allowed files", extensions : "jpg,jpeg,gif,png,psd,mov,avi,mpg,mpeg,swf,fla,flv,mp3,doc,docx,pdf"}
+			{title : "Allowed files", extensions : "jpg,jpeg,gif,png,psd,mov,avi,mpg,mpeg,mp4,3gp,swf,fla,flv,mp3,doc,docx,pdf"}
 		]
 	});
 
