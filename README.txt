@@ -27,6 +27,7 @@ The Pipeline team, based at the Georgia Institute of Technology (Georgia Tech), 
 Kurt Luther - Project Lead
 Amy Bruckman - Project Co-Lead
 Casey Fiesler - Community Manager
+Joe Gonzales - Developer
 Boris de Souza - Developer
 Kevin Ziegler - Developer
 Chris Howse - Developer

@@ -36,46 +36,46 @@ switch($mime) {
 	case 'image/png':
 		// calculate resized width and height
 		list($orig_width, $orig_height) = @getimagesize($uploadedFile);
-        $scale = min(
-            Upload::THUMB_MAX_WIDTH / $orig_width,
-            Upload::THUMB_MAX_HEIGHT / $orig_height
-        );
-        if ($scale > 1) {
-            $scale = 1;
-        }
-        $new_width = $orig_width * $scale;
-        $new_height = $orig_height * $scale;
-		// create resized image
-		$image_p = @imagecreatetruecolor($new_width, $new_height);
-		if( ($mime == 'image/jpeg') || ($mime == 'image/jpg') ) {
-			$image = @imagecreatefromjpeg($uploadedFile);
-			$write_image = 'imagejpeg';
-		} elseif($mime == 'image/gif') {
-			$image = @imagecreatefromgif($uploadedFile);
-			$write_image = 'imagegif';
-		} elseif($mime == 'image/png') {
-			$image = @imagecreatefrompng($uploadedFile);
-			$write_image = 'imagepng';
-		} else {
-            $image = null;
-		}
-		$success = $image && @imagecopyresampled(
-			$image_p,
-			$image,
-			0, 0, 0, 0,
-			$new_width,
-			$new_height,
-			$orig_width,
-			$orig_height
-		) && $write_image($image_p, THUMB_PATH.'/'.$fileName);
-		// clean up
-        @imagedestroy($image);
-        @imagedestroy($image_p);
-		if(!$success) {
-			die('{"jsonrpc" : "2.0", "error" : {"code": 105, "message": "Unable to create image thumbnail."}, "id" : "'.$fileName.'"}');
-		}
-		break;
-		
+                $scale = min(
+                Upload::THUMB_MAX_WIDTH / $orig_width,
+                Upload::THUMB_MAX_HEIGHT / $orig_height
+                );
+                if ($scale > 1) {
+                    $scale = 1;
+                }
+                $new_width = $orig_width * $scale;
+                $new_height = $orig_height * $scale;
+                        // create resized image
+                        $image_p = @imagecreatetruecolor($new_width, $new_height);
+                        if( ($mime == 'image/jpeg') || ($mime == 'image/jpg') ) {
+                                $image = @imagecreatefromjpeg($uploadedFile);
+                                $write_image = 'imagejpeg';
+                        } elseif($mime == 'image/gif') {
+                                $image = @imagecreatefromgif($uploadedFile);
+                                $write_image = 'imagegif';
+                        } elseif($mime == 'image/png') {
+                                $image = @imagecreatefrompng($uploadedFile);
+                                $write_image = 'imagepng';
+                        } else {
+                    $image = null;
+                        }
+                        $success = $image && @imagecopyresampled(
+                                $image_p,
+                                $image,
+                                0, 0, 0, 0,
+                                $new_width,
+                                $new_height,
+                                $orig_width,
+                                $orig_height
+                        ) && $write_image($image_p, THUMB_PATH.'/'.$fileName);
+                        // clean up
+                @imagedestroy($image);
+                @imagedestroy($image_p);
+                        if(!$success) {
+                                die('{"jsonrpc" : "2.0", "error" : {"code": 105, "message": "Unable to create image thumbnail."}, "id" : "'.$fileName.'"}');
+                        }
+                        break;
+
 	// it's flash
 	case 'application/x-shockwave-flash':
 	case 'application/octet-stream':
@@ -101,7 +101,9 @@ switch($mime) {
 		
 	// it's video
 	case 'video/mpeg': // .mpg
-	case 'video/quicktime': // .mov
+	case 'video/mp4':  // .mp4
+        case 'video/3gpp':  // .3gp
+        case 'video/quicktime': // .mov
 	case 'video/x-msvideo': // .avi
 	case 'video/x-flv':
 		if($isWindows) {
@@ -112,10 +114,12 @@ switch($mime) {
 		// NO break
 	// non-FLV videos also need to generate a preview
 	case 'video/mpeg': // .mpg
-	case 'video/quicktime': // .mov
+	case 'video/mp4':  // .mp4
+        case 'video/3gpp':  // .3gp
+        case 'video/quicktime': // .mov
 	case 'video/x-msvideo': // .avi
 		if($isWindows) {
-			echo exec(SYSTEM_PATH.'/lib/ffmpeg -i '.$uploadedFile.' -ar 22050 -vcodec flv '.$previewFile); // generate preview
+                        echo exec(SYSTEM_PATH.'/lib/ffmpeg -i '.$uploadedFile.' -ar 22050 -vcodec flv '.$previewFile); // generate preview
 		} else {
 			echo exec('ffmpeg -i '.$uploadedFile.' -ar 22050 -vcodec flv '.$previewFile); // generate preview
 		}

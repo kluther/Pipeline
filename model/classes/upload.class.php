@@ -234,7 +234,9 @@ class Upload extends DbObject
 			case 'video/mpeg': 
 			case 'video/quicktime': 
 			case 'video/x-msvideo': 
-			// audio
+			case 'video/mp4':
+                        case 'video/3gpp':
+                        // audio
 			case 'audio/mpeg': 
 			// misc
 			case 'application/octet-stream':
@@ -261,7 +263,9 @@ class Upload extends DbObject
 			case 'mpg':
 			case 'mpeg':
 			case 'avi':
-			// audio
+			case 'mp4':
+                        case '3gp':
+                        // audio
 			case 'mp3':
 			// document
 			case 'doc':
@@ -508,7 +512,9 @@ class Upload extends DbObject
 			case 'application/x-shockwave-flash': 
 			case 'video/x-flv': 
 			case 'video/mpeg': 
-			case 'video/quicktime': 
+			case 'video/mp4' :
+                        case 'video/3gpp':
+                        case 'video/quicktime': 
 			case 'video/x-msvideo': 
 				$fileName = pathinfo($this->storedName, PATHINFO_FILENAME);
 				$thumbFileName = $fileName.".jpg";
@@ -541,7 +547,9 @@ class Upload extends DbObject
 				break;
 			// reencoded video
 			case 'video/mpeg': 
-			case 'video/quicktime': 
+			case 'video/mp4':
+                        case 'video/3gpp':
+                        case 'video/quicktime': 
 			case 'video/x-msvideo': 
 				$fileName = pathinfo($this->storedName, PATHINFO_FILENAME);
 				$previewFileName = $fileName.".flv";
