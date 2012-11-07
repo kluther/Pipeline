@@ -214,6 +214,25 @@ INSERT INTO `event_type` (`id`, `description`, `group`, `css_class`, `diffable`,
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `interest`
+--
+
+CREATE TABLE IF NOT EXISTS `interest` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) unsigned NOT NULL,
+  `title` text,
+  `slug` text,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`),
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+--
+-- Dumping data for table `interest`
+--
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `invitation`
 --
 
