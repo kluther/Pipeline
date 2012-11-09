@@ -8,7 +8,7 @@ $pipelineStylesheet = $theme->getPipelineStylesheet();
 
 ?>
 <!DOCTYPE html>
-<html>
+<html class="home">
 <head>
 	<title><?= PIPELINE_NAME ?> - powered by Pipeline</title>
 	<link rel="icon" type="image/png" href="<?= Url::images() ?>/icons/clapperboard.png" />
