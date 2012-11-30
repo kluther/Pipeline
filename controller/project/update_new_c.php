@@ -24,7 +24,7 @@ if($task == null) {
 if($project->getPrivate()) {
 	if (!Session::isAdmin() && (!$project->isCreator(Session::getUserID()))) {
 		if (((!$project->isInvited(Session::getUserID())) && (!$project->isMember(Session::getUserID())) &&
-		(!$project->isTrusted(Session::getUserID()))) || ProjectUser::isBanned(Session::getUserID(),$project->id)) {
+		(!$project->isTrusted(Session::getUserID()))) || ProjectUser::isBanned(Session::getUserID(),$project->getID())) {
 		 	header('Location: '.Url::error());
 			exit();		
 		}
