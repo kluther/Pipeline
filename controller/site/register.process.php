@@ -70,13 +70,19 @@ switch($action)
 			}
 		}
 		
+                
 		// restrict username to a-zA-Z0-9- and at least 6 chars, max 20
-		$pattern = "%^[a-zA-Z0-9-]{6,20}$%";
-		if(!preg_match($pattern, $uname))
-		{
-			$json = array( 'error' => 'Your username must be at least 6 characters and include only letters, numbers, and hyphens.');
+//		$pattern = "%^[a-zA-Z0-9-]{6,20}$%";
+//		if(!preg_match($pattern, $uname))
+//		{
+//			$json = array( 'error' => 'Your username must be at least 6 characters and include only letters, numbers, and hyphens.');
+//			exit(json_encode($json));
+//		}
+                $veruname = Filter::usernamefilter($uname);
+                if (! $veruname) {
+                        $json = array( 'error' => 'Your username must be at least 6 characters and include only letters, numbers, and hyphens.');
 			exit(json_encode($json));
-		}
+                }
 		
 		// make sure passwords exist and match
 		if($pw == "" || $pw2 == "")

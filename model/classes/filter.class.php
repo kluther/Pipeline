@@ -55,7 +55,35 @@ Class Filter {
 	{
 		if ($string != null)
 		{
-			return preg_replace("/[^a-zA-Z0-9\s-]/","", $string);
+			return preg_replace("/[^a-zA-Z0-9\s]/","", $string);
+		}
+		return false;
+	}
+        
+        /* 
+	 *	@param text (usernamefilter).
+	 *	Return verified user name or False.
+	 */
+	static function usernamefilter($string = null)
+	{
+                // restrict username to a-zA-Z0-9- and at least 6 chars, max 20
+//		$pattern = "%^[a-zA-Z0-9-]{6,20}$%";
+//		if(!preg_match($pattern, $uname))
+//		{
+//			$json = array( 'error' => 'Your username must be at least 6 characters and include only letters, numbers, and hyphens.');
+//			exit(json_encode($json));
+//		}
+                
+		if ($string != null)
+		{
+                        // restrict username to a-zA-Z0-9- and at least 6 chars, max 20
+                        $pattern = "%^[a-zA-Z0-9-]{6,20}$%";
+                        
+                        if(preg_match($pattern, $string))
+                        {
+                            return $string;
+                        }
+                        
 		}
 		return false;
 	}
