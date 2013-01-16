@@ -61,22 +61,15 @@ Class Filter {
 	}
         
         /* 
-	 *	@param text (usernamefilter).
+	 *	@param text (usernameFilter).
+         *      Username is restricted to a-zA-Z0-9- and at least 6 chars, max 20
 	 *	Return verified user name or False.
 	 */
-	static function usernamefilter($string = null)
+	static function usernameFilter($string = null)
 	{
-                // restrict username to a-zA-Z0-9- and at least 6 chars, max 20
-//		$pattern = "%^[a-zA-Z0-9-]{6,20}$%";
-//		if(!preg_match($pattern, $uname))
-//		{
-//			$json = array( 'error' => 'Your username must be at least 6 characters and include only letters, numbers, and hyphens.');
-//			exit(json_encode($json));
-//		}
                 
 		if ($string != null)
 		{
-                        // restrict username to a-zA-Z0-9- and at least 6 chars, max 20
                         $pattern = "%^[a-zA-Z0-9-]{6,20}$%";
                         
                         if(preg_match($pattern, $string))

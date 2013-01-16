@@ -78,7 +78,8 @@ switch($action)
 //			$json = array( 'error' => 'Your username must be at least 6 characters and include only letters, numbers, and hyphens.');
 //			exit(json_encode($json));
 //		}
-                $veruname = Filter::usernamefilter($uname);
+                
+                $veruname = Filter::usernameFilter($uname);
                 if (! $veruname) {
                         $json = array( 'error' => 'Your username must be at least 6 characters and include only letters, numbers, and hyphens.');
 			exit(json_encode($json));

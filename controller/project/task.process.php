@@ -15,8 +15,8 @@ $action = Filter::text($_POST['action']);
 if ( ($action == 'create') || ($action == 'edit') ) {
 	//$token = Filter::alphanum($_POST['token']);
 	$title = Filter::text($_POST['txtTitle']);
-        $leaderName = Filter::usernamefilter($_POST['txtLeader']);
 //	$leaderName = Filter::alphanum($_POST['txtLeader']);
+        $leaderName = Filter::usernameFilter($_POST['txtLeader']);
 	$description = Filter::text($_POST['txtDescription']);
 	$status = Filter::numeric($_POST['selStatus']);
 	$numNeeded = Filter::numeric($_POST['txtNumNeeded']);
