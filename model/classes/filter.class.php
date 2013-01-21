@@ -59,6 +59,27 @@ Class Filter {
 		}
 		return false;
 	}
+        
+        /* 
+	 *	@param text (usernameFilter).
+         *      Username is restricted to a-zA-Z0-9- and at least 6 chars, max 20
+	 *	Return verified user name or False.
+	 */
+	static function usernameFilter($string = null)
+	{
+                
+		if ($string != null)
+		{
+                        $pattern = "%^[a-zA-Z0-9-]{6,20}$%";
+                        
+                        if(preg_match($pattern, $string))
+                        {
+                            return $string;
+                        }
+                        
+		}
+		return false;
+	}
 	
 	/* 
 	 *	@param input (numeric).
