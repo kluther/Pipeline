@@ -37,10 +37,13 @@ RewriteRule ^inbox/?$ controller/site/inbox_c.php [L]
 ### ADMIN ###
 
 RewriteRule ^admin/process/?$ controller/site/admin.process.php [L]
+RewriteRule ^admin/utilities/process/?$ controller/site/adminUtilities.process.php [L]
+RewriteRule ^admin/utilities/?$ controller/site/adminUtilities_c.php [L]
 RewriteRule ^admin/?$ controller/site/admin_c.php [L]
 
 ### HELP ###
 
+RewriteRule ^help/uploadCSV controller/site/help_c.php#uploadCSV [L]
 RewriteRule ^help/?$ controller/site/help_c.php [L]
 
 ### NEW PROJECT ###
