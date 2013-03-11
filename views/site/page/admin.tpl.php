@@ -71,4 +71,4 @@ $fork->startBlockSet('body');
 <?php
 
 $fork->endBlockSet();
-$fork->render('site/partial/page');
+$fork->render('site/partial/admin');

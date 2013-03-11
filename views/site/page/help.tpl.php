@@ -117,6 +117,37 @@ $fork->startBlockSet('body');
 
 <div class="line"> </div>
 
+<h3 id="help-uploadCSV" name="uploadCSV">How do I upload tasks into Pipeline?</h3>
+
+<p>Pipeline allows you to enter many tasks at one time using a <a href="http://en.wikipedia.org/wiki/Comma-separated_values">CSV</a> file.</p>
+<p><b>Each field in the file must be separated with ";" (semi-colons)</b></p>
+
+<br/>
+<p>The CSV file should have the following information on each line:</p>
+<p><b>Title(Required);Instruction (Required);Number Of People Needed (Optional);Deadline (Optional);Leader (Optional)</b></p>
+<br/>
+<p>If an item is marked as optional, you do not have to enter it. Here is an explanation of each field:</p>
+<p><b>Title <span class="bad">(Required)</span>:</b> This is the name of the task that you want to create.</p>
+<p><b>Description <span class="bad">(Required)</span>:</b> These are the instructions that will show when you open up a task.</p>
+<p><b>Number of People Needed <span class="good">(Optional)</span>:</b> This is the number of people that you need to work on a particular task. If this is left blank, 1 person will be used.</p>
+<p><b>Deadline <span class="good">(Optional)</span>:</b> This is the due date for the task you are creating. If this is left blank, a deadline of one week from today will be used.</p>
+<p><b>Leader <span class="good">(Optional)</span>:</b> This is the username of the Pipeline member that you want to be assigned as project leader. If this is left blank, you will be used as the project leader.</p>
+<br/>
+
+<h3>Example:</h3>
+<p>If I had a CSV file with the following line:</p>
+<p><b>Task 1;This is my first Task</b></p>
+
+<p>I would create a new task called "Task 1" that would have "This is my first Task" as instructions when you opened the task.</p>
+<br/><br/>
+Use the following <a href="sample.csv">template</a> to help you make tasks.
+
+
+
+
+
+<div class="line"></div>
+
 <h3 id="help-questions">What if my question isn't answered here?</h3>
 
 <p>Please <a href="mailto:<?= CONTACT_EMAIL ?>">shoot us an email</a> and we'll try to help.</p>

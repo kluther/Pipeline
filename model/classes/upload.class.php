@@ -309,7 +309,26 @@ class Upload extends DbObject
 		while($row = mysql_fetch_assoc($result))
 			$uploads[$row['id']] = self::load($row['id']);
 		return $uploads;			
-	}	
+	}
+        
+        public static function getByMimeType($mimeType=null) {
+                if ($mimeType == null) return null;
+                
+                $query = "SELECT id FROM ".self::DB_TABLE;
+                $query .= " WHERE mime = '" . $mimeType . "'";
+                //Should also only return based on user unless administrator
+                
+                $db = Db::instance();
+		$result = $db->lookup($query);
+		if(!mysql_num_rows($result)) return array();
+
+		$uploads = array();
+		while($row = mysql_fetch_assoc($result))
+			$uploads[$row['id']] = self::load($row['id']);
+		return $uploads;	
+                
+                
+        }
 	
 	// public static function getByToken($token=null) {
 		// if($token == null) return null;

@@ -19,8 +19,8 @@ $events = Event::getAllEvents(50);
 $soup = new Soup();
 
 $soup->set('projects', $projects);
-$soup->set('users', $users);
-$soup->set('events', $events);
-$soup->set('selected','recentActivity');
+//$soup->set('users', $users);
+//$soup->set('events', $events);
+$soup->set('selected','utilities');
 
-$soup->render('site/page/admin');
+$soup->render('site/page/adminUtilities');

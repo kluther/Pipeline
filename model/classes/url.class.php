@@ -27,13 +27,17 @@ class Url
 	public static function adminProcess() {
 		return (self::admin().'/process');
 	}
+        
+        public static function adminUtilitiesProcess() {
+                return (self::utilities().'/process');
+        }
 	
 	public static function uploadProcess()
 	{
 		return (self::base().'/upload/process');
-	}	
-	
-	public static function download($fileID=null) {
+	}
+        
+        public static function download($fileID=null) {
 		if($fileID == null) return null;
 		$upload = Upload::load($fileID);
 		return (self::base().'/download/'.$fileID.'/'.$upload->getOriginalName());
@@ -459,5 +463,20 @@ class Url
 		// if($projectID == null) return null;
 		// return (self::people($projectID).'/banned');
 	// }
+        
+        public static function recentActivity() {
+            return (self::admin());
+        }
+        
+        public static function utilities()
+	{
+		return (self::admin().'/utilities');
+	}
+        //This method will call the partial that shows errors based on a loaded
+        //.CSV file 
+//        public static function previewCSV()
+//        {
+//                return (self::uploads().'/CSV/preview');
+//        }
 	
 }
