@@ -40,7 +40,13 @@ $fork->set('title', 'Task Members');
 $fork->set('id', $id);
 if($hasJoinPermission) {
 	$fork->set('creatable', true);
-	$fork->set('createLabel', 'Join Task');
+	/* If there is only one person required for a task and no one has joined it yet, then change the button text to say "Claim" */
+        if (($numNeeded == 1) && ($numJoined == 0)) {
+            $fork->set('createLabel',"Claim");
+        }
+        else {
+            $fork->set('createLabel', 'Join Task');
+        }
 } elseif($hasLeavePermission) {
 	$fork->set('creatable', true);
 	$fork->set('createLabel', 'Leave Task');

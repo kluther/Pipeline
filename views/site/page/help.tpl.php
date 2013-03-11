@@ -55,7 +55,7 @@ $fork->startBlockSet('body');
 
 <h3 id="help-contrib-task">How do I contribute to a task?</h3>
 
-<p>Any logged-in user can contribute to a task. First, you need to join the task. Find an open task and join it by clicking the "Join Task" button.</p>
+<p>Any logged-in user can contribute to a task. First, you need to join the task. Find an open task and join it by clicking the "Claim" or "Join Task" button.</p>
 
 <p>When you're ready to contribute, click the "Contribute" button on the task page and fill in the information. Click "Create Contribution" and you're done!</p>
 
