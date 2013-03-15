@@ -110,7 +110,9 @@ class Task extends DbObject
 		return $tasks;			
 	}	
 	
-	public static function getMoreTasks($userID=null, $projectID=null, $limit=null)
+        //This function will return the tasks in a project that do not apply to a specified user. You can pass in a value of 'true"
+        // for 'excludeClosedTasks' which will prevent closed tasks from being returned in the result
+	public static function getMoreTasks($userID=null, $projectID=null, $limit=null, $excludeClosedTasks=false)
 	{
 		if( ($userID == null) || ($projectID == null) ) return null;
 		
@@ -123,6 +125,8 @@ class Task extends DbObject
 			$query .= " AND creator_id = ".$userID;
 			$query .= " AND status != ".Accepted::STATUS_RELEASED.")";
 		$query .= ")";
+                if ($excludeClosedTasks)
+                    $query .= " AND status != " .self::STATUS_CLOSED;
 		$query .= " ORDER BY status DESC, ISNULL(deadline) ASC, title ASC";
 		if($limit != null)
 			$query .= " LIMIT ".$limit;
@@ -136,7 +140,25 @@ class Task extends DbObject
 		while($row = mysql_fetch_assoc($result))
 			$tasks[$row['id']] = self::load($row['id']);
 		return $tasks;			
-	}	
+	}
+        
+        //This function will return tasks that do not have someone assigned to them yet. You can pass in a value of 'true"
+        // for 'excludeClosedTasks' which will prevent closed tasks from being returned in the result
+        public static function getUnclaimedTasks($userID=null, $projectID=null, $limit=null, $excludeClosedTasks=false)
+        {
+            if( ($userID == null) || ($projectID == null) ) return null;
+            
+            $unclaimedTasks = array();
+            $moreTasks = Task::getMoreTasks($userID,$projectID,$limit,$excludeClosedTasks);
+            foreach ($moreTasks as $task) {
+                $numAccepted = $task->getNumAccepted();
+                
+                if ($numAccepted == 0) {
+                    array_push($unclaimedTasks,$task);
+                }
+            }
+            return $unclaimedTasks;
+        }
 	
 	public static function getByLeaderID($projectID=null, $leaderID=null, $limit=null)
 	{
@@ -168,6 +190,27 @@ class Task extends DbObject
 			$query .= " AND status = ".$status;
 		}
 		$query .= " ORDER BY status DESC, ISNULL(deadline) ASC, title ASC";
+		if($limit != null)
+			$query .= " LIMIT ".$limit;
+			
+		$db = Db::instance();
+		$result = $db->lookup($query);
+		if(!mysql_num_rows($result)) return array();
+
+		$tasks = array();
+		while($row = mysql_fetch_assoc($result))
+			$tasks[$row['id']] = self::load($row['id']);
+		return $tasks;			
+	}
+        
+        //This function will return all of the closed tasks for a project
+        public static function getClosedTasks($projectID=null, $limit=null)
+	{
+		if ($projectID == null)  return null;
+		
+		$query = "SELECT id FROM ".self::DB_TABLE;
+		$query .= " WHERE project_id = ".$projectID;
+		$query .= " AND status = ".self::STATUS_CLOSED;
 		if($limit != null)
 			$query .= " LIMIT ".$limit;
 			

@@ -32,10 +32,21 @@ $soup->set('events', $events);
 $soup->set('discussions', $discussions);
 
 if(Session::isLoggedIn()) {
-	$yourTasks = Task::getYourTasks(Session::getUserID(), $project->getID());
-	$soup->set('yourTasks', $yourTasks);	
-	$moreTasks = Task::getMoreTasks(Session::getUserID(), $project->getID());
-	$soup->set('moreTasks', $moreTasks);
+        $projectId = $project->getID();
+	$yourTasks = Task::getYourTasks(Session::getUserID(), $projectId);
+	$soup->set('yourTasks', $yourTasks);
+        $unclaimedTasks = Task::getUnclaimedTasks(Session::getUserID(), $projectId,null,true);
+        $soup->set('unclaimedTasks',$unclaimedTasks);
+	$moreTasks = Task::getMoreTasks(Session::getUserID(), $projectId, null, true);
+	$moreTasksFiltered = array();
+        foreach ($moreTasks as $task){
+            if ($task->getNumAccepted() > 0){
+                array_push($moreTasksFiltered,$task);
+            }
+        }
+        $soup->set('moreTasks', $moreTasksFiltered);
+        $closedTasks = Task::getClosedTasks($projectId);
+        $soup->set('closedTasks',$closedTasks);
 } else {
 	$tasks = Task::getByProjectID($project->getID());
 	$soup->set('tasks', $tasks);

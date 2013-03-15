@@ -1,8 +1,10 @@
 <?php
 
 $project = $SOUP->get('project');
+$unclaimedTasks = $SOUP->get('unclaimedTasks');
 $moreTasks = $SOUP->get('moreTasks');
 $yourTasks = $SOUP->get('yourTasks');
+$closedTasks = $SOUP->get('closedTasks');
 $tasks = $SOUP->get('tasks');
 $events = $SOUP->get('events');
 
@@ -30,6 +32,15 @@ $fork->startBlockSet('body');
 		'user' => Session::getUser()
 	));
 ?>
+    
+<?php
+        $SOUP->render('project/partial/tasks',array(
+                'id' => 'unclaimedTasks',
+                'tasks' => $unclaimedTasks,
+                'title' => 'Unclaimed Tasks',
+                'hasPermission' => false
+        ));
+?>
 
 <?php
 	$SOUP->render('project/partial/tasks', array(
@@ -39,6 +50,15 @@ $fork->startBlockSet('body');
 		'hasPermission' => false
 	));
 ?>
+    
+<?php
+	$SOUP->render('project/partial/tasks', array(
+		'id' => 'closedTasks',
+		'tasks' => $closedTasks,
+		'title' => 'Closed Tasks',
+		'hasPermission' => false
+	));
+?>   
 
 <?php else: ?>
 
