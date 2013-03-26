@@ -223,7 +223,7 @@ CREATE TABLE IF NOT EXISTS `interest` (
   `title` text,
   `slug` text,
   PRIMARY KEY (`id`),
-  KEY `user_id` (`user_id`),
+  KEY `user_id` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 --
