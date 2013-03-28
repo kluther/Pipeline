@@ -18,6 +18,8 @@ INSTALLATION:
 4. Follow the instructions in config.php to configure your Pipeline instance. Remember to save the file when you're finished.
 5. Make Apache the owner of the "upload" folder and its subfolders (chown -R apache ./upload)
 6. If your Pipeline instance is in a subfolder of your domain, you may need to modify the ErrorDocument path in .htaccess (located in the root directory).
+7. If you are installing on Windows, make sure the following line is uncommented in your php.ini file:
+    extension=php_fileinfo.dll
 
 
 CREDITS:
