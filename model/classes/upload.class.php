@@ -1,5 +1,7 @@
 <?php
 
+require_once SYSTEM_PATH."/lib/getMimeType.php";
+
 class Upload extends DbObject
 {
 	protected $id;
@@ -190,9 +192,7 @@ class Upload extends DbObject
 		// get file size
 		$size = filesize($absPath);
 		// get mime type
-		$finfo = finfo_open(FILEINFO_MIME_TYPE);
-		$mime = finfo_file($finfo, $absPath);
-		finfo_close($finfo);	
+		$mime = getMimeType($absPath);
 		// get height and width (if image)
 		$imgSize = getimagesize($absPath);
 		if($imgSize) {

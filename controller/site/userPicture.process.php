@@ -1,5 +1,6 @@
 <?php
 require_once("../../global.php");
+require_once SYSTEM_PATH."/lib/getMimeType.php";
 
 if(!Session::isLoggedIn()) {
 	$json = array('error' => 'You must be logged in.');
@@ -168,9 +169,7 @@ if($chunk == ($chunks-1)) {
 	$uploadedFile = $targetDir . DIRECTORY_SEPARATOR . $fileName;
 
 	// get MIME type
-	$finfo = finfo_open(FILEINFO_MIME_TYPE);
-	$mime = finfo_file($finfo, $uploadedFile);
-	finfo_close($finfo);
+	$mime = getMimeType($uploadedFile);
 
 	// get extension
 	$ext = pathinfo($uploadedFile, PATHINFO_EXTENSION);
