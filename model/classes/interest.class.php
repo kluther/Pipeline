@@ -44,3 +44,4 @@ class Interest extends DbObject
 		);		
 		$db->store($this, __CLASS__, self::DB_TABLE, $db_properties);
 	}
+}
