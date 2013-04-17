@@ -11,6 +11,13 @@ $hasJoinedTask = $SOUP->get('hasJoinedTask', false);
 $hasLeavePermission = false;
 $hasJoinPermission = false;
 
+if ($task->getStatus()){
+    $openTask = true ;
+}else{
+    $openTask = false ;
+}
+
+
 if(Session::isLoggedIn() &&
 	!$project->isBanned(Session::getUserID())) {
 	if($hasJoinedTask) {
@@ -50,6 +57,7 @@ $fork->startBlockSet('body');
 
 ?>
 
+
 <script type="text/javascript">
 
 $(document).ready(function() {
@@ -57,6 +65,7 @@ $(document).ready(function() {
 <?php if($hasJoinPermission): ?>
 
 	var btnJoin = $('#<?= $id ?> .createButton');
+        <?php if($openTask): ?>
 	$(btnJoin).click(function() {
 		buildPost({
 			'processPage': '<?= Url::taskProcess($task->getID()) ?>',
@@ -66,10 +75,14 @@ $(document).ready(function() {
 			'buttonID': btnJoin
 		});
 	});
+        <?php else: ?>
+        $('.createButton').hide();
+        <?php endif; ?>
 	
 <?php elseif($hasLeavePermission): ?>
 
 	var btnLeave = $('#<?= $id ?> .createButton');
+        <?php if($openTask): ?>
 	$(btnLeave).click(function() {
 		buildPost({
 			'processPage': '<?= Url::taskProcess($task->getID()) ?>',
@@ -78,7 +91,10 @@ $(document).ready(function() {
 			},
 			'buttonID': btnLeave
 		});
-	});	
+	});
+        <?php else: ?>
+        $('.createButton').hide();
+        <?php endif; ?>
 
 <?php endif; ?>
 	

@@ -6,6 +6,13 @@ $comments = $SOUP->get('comments',array());
 $processURL = $SOUP->get('processURL');
 $parentID = $SOUP->get('parentID');
 
+$task = $SOUP->get('task');
+if ($task->getStatus()){
+    $openTask = true ;
+}else{
+    $openTask = false ;
+}
+
 // any logged-in user may comment
 $hasPermission = ( Session::isLoggedIn() &&
 					!$project->isBanned(Session::getUserID()) );
@@ -19,6 +26,7 @@ $hasPermission = ( Session::isLoggedIn() &&
 
 <script type="text/javascript">
 	$(document).ready(function(){
+            <?php if($openTask): ?>
 		//$('#txtComment').focus();
 		$('#btnComment').click(function(){
 			buildPost({
@@ -53,7 +61,11 @@ $hasPermission = ( Session::isLoggedIn() &&
 					$(li).find('.post-reply textarea').focus();
 				});
 			}
-		});		
+		});
+            <?php else: ?>
+                $('.comment').hide();
+                $('.replyButton').hide();
+            <?php endif; ?>
 	});
 </script>
 
