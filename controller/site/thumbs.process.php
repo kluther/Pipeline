@@ -1,12 +1,12 @@
 <?php
 
+require_once SYSTEM_PATH."/lib/getMimeType.php";
+
 // temp variable for uploaded file (and path)
 $uploadedFile = $targetDir . DIRECTORY_SEPARATOR . $fileName;
 
 // get MIME type
-$finfo = finfo_open(FILEINFO_MIME_TYPE);
-$mime = finfo_file($finfo, $uploadedFile);
-finfo_close($finfo);
+$mime = getMimeType($uploadedFile);
 
 // get extension
 $ext = pathinfo($uploadedFile, PATHINFO_EXTENSION);
