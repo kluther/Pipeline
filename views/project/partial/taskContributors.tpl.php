@@ -11,6 +11,13 @@ $hasJoinedTask = $SOUP->get('hasJoinedTask', false);
 $hasLeavePermission = false;
 $hasJoinPermission = false;
 
+if ($task->getStatus()){
+    $openTask = true ;
+}else{
+    $openTask = false ;
+}
+
+
 if(Session::isLoggedIn() &&
 	!$project->isBanned(Session::getUserID())) {
 	if($hasJoinedTask) {
@@ -40,13 +47,7 @@ $fork->set('title', 'Task Members');
 $fork->set('id', $id);
 if($hasJoinPermission) {
 	$fork->set('creatable', true);
-	/* If there is only one person required for a task and no one has joined it yet, then change the button text to say "Claim" */
-        if (($numNeeded == 1) && ($numJoined == 0)) {
-            $fork->set('createLabel',"Claim");
-        }
-        else {
-            $fork->set('createLabel', 'Join Task');
-        }
+	$fork->set('createLabel', 'Join Task');
 } elseif($hasLeavePermission) {
 	$fork->set('creatable', true);
 	$fork->set('createLabel', 'Leave Task');
@@ -56,6 +57,7 @@ $fork->startBlockSet('body');
 
 ?>
 
+
 <script type="text/javascript">
 
 $(document).ready(function() {
@@ -63,6 +65,7 @@ $(document).ready(function() {
 <?php if($hasJoinPermission): ?>
 
 	var btnJoin = $('#<?= $id ?> .createButton');
+        <?php if($openTask): ?>
 	$(btnJoin).click(function() {
 		buildPost({
 			'processPage': '<?= Url::taskProcess($task->getID()) ?>',
@@ -72,10 +75,14 @@ $(document).ready(function() {
 			'buttonID': btnJoin
 		});
 	});
+        <?php else: ?>
+        $('.createButton').hide();
+        <?php endif; ?>
 	
 <?php elseif($hasLeavePermission): ?>
 
 	var btnLeave = $('#<?= $id ?> .createButton');
+        <?php if($openTask): ?>
 	$(btnLeave).click(function() {
 		buildPost({
 			'processPage': '<?= Url::taskProcess($task->getID()) ?>',
@@ -84,7 +91,10 @@ $(document).ready(function() {
 			},
 			'buttonID': btnLeave
 		});
-	});	
+	});
+        <?php else: ?>
+        $('.createButton').hide();
+        <?php endif; ?>
 
 <?php endif; ?>
 	
