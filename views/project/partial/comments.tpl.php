@@ -7,7 +7,8 @@ $processURL = $SOUP->get('processURL');
 $parentID = $SOUP->get('parentID');
 
 $task = $SOUP->get('task');
-if ($task->getStatus()){
+$taskStatus = $task->getStatusName($task->getStatus());
+if ($taskStatus == "open"){
     $openTask = true ;
 }else{
     $openTask = false ;

@@ -11,12 +11,12 @@ $hasJoinedTask = $SOUP->get('hasJoinedTask', false);
 $hasLeavePermission = false;
 $hasJoinPermission = false;
 
-if ($task->getStatus()){
+$taskStatus = $task->getStatusName($task->getStatus());
+if ($taskStatus == "open" ){
     $openTask = true ;
 }else{
     $openTask = false ;
 }
-
 
 if(Session::isLoggedIn() &&
 	!$project->isBanned(Session::getUserID())) {
