@@ -31,6 +31,8 @@ class User extends DbObject
 	protected $dateCreated;
 	protected $lastLogin;
 	protected $secondLastLogin;
+        protected $lastHeartbeat;
+        protected $latestChatroom;
 	
 	const DB_TABLE = 'user';
 	
@@ -70,7 +72,9 @@ class User extends DbObject
 			'admin' => 0,
 			'date_created' => null,
 			'last_login' => null,
-			'second_last_login' => null
+			'second_last_login' => null,
+                        'last_heartbeat' => null,
+                        'latest_chatroom' => null
 		);
 		
 		$args += $defaultArgs; // combine the arrays
@@ -104,6 +108,8 @@ class User extends DbObject
 		$this->dateCreated = $args['date_created'];
 		$this->lastLogin = $args['last_login'];
 		$this->secondLastLogin = $args['second_last_login'];
+                $this->lastHeartbeat = $args['last_heartbeat'];
+                $this->latestChatroom = $args['latest_chatroom'];
 	}
 	
 	public static function load($id)
@@ -188,7 +194,9 @@ class User extends DbObject
 			'notify_mass_email' => $this->notifyMassEmail,
 			'admin' => $this->admin,
 			'last_login' => $this->lastLogin,
-			'second_last_login' => $this->secondLastLogin
+			'second_last_login' => $this->secondLastLogin,
+                        'last_heartbeat' => $this->lastHeartbeat,
+                        'latest_chatroom' => $this->latestChatroom
 		);		
 		$db->store($this, __CLASS__, self::DB_TABLE, $db_properties);
 	}
@@ -600,4 +608,22 @@ class User extends DbObject
 		$this->modified = true;	
 		$this->secondLastLogin = $newSecondLastLogin;
 	}
+        
+        public function getLastHeartbeat() {
+                return ($this->lastHeartbeat);
+        }
+        
+        public function setLastHeartbeat($timestamp) {
+                $this->modified = true;
+                $this->lastHeartbeat = $timestamp;
+        }
+        
+        public function getLatestChatroom() {
+                return ($this->latestChatroom);
+        }
+        
+        public function setLatestChatroom($chatroom) {
+                $this->modified = true;
+                $this->latestChatroom = $chatroom;
+        }
 }

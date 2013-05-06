@@ -8,6 +8,7 @@ REQUIREMENTS:
 - Apache HTTP Server
 - PHP 5
 - MySQL
+-*The Chat feature can only be used in non-commercial applications (More information below)
 
 
 INSTALLATION:
@@ -60,6 +61,10 @@ http://code.google.com/p/swfobject/
 SWFTools
 http://www.swftools.org/
 
+**Chat Feature**
+The included Chat feature is built off of  Anant Garg's chat program (anantgarg.com). This was released for non-commercial purposes. If you want to use it in
+a commercial capacity, please contact Anat for permission. In order to turn off the chat feature, set the following line in the config.php file to false: 
+define('ENABLE_CHAT', true);
 
 LICENSE:
 
