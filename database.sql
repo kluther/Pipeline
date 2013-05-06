@@ -494,7 +494,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `date_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `last_login` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `second_last_login` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `last_heatbeat` timestamp DEFAULT '0000-00-00 00:00:00',
+  `last_heartbeat` timestamp DEFAULT '0000-00-00 00:00:00',
   `latest_chatroom` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=50 ;
