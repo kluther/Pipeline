@@ -14,7 +14,8 @@
 	define('COOKIE_DOMAIN','.example.com'); # the domain where the cookie will be available <- CHANGE THIS
 	define('COOKIE_PATH','/'); # the path on the server where the cookie will be available <- CHANGE THIS
 	define('PIPELINE_NAME', 'Pipeline Demo'); # name of this Pipeline instance <- CHANGE THIS
-	define('DEFAULT_THEME_ID', 1); # default theme ID <- CHANGE THIS
+	define('ENABLE_CHAT',true);     #Chat is for non-commercial uses only. Please change from 'true' to 'false' to disable.
+        define('DEFAULT_THEME_ID', 1); # default theme ID <- CHANGE THIS
 	define('TIME_ZONE', 'America/New_York'); # name of PHP time zone <- CHANGE THIS
 	define('CONTACT_EMAIL', 'email@address.com'); # contact email address <- CHANGE THIS
 	

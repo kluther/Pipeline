@@ -1,4 +1,5 @@
 <?php
+require_once '../../global.php';
 require_once TEMPLATE_PATH.'/site/helper/format.php';
 
 $body = $SOUP->get('body');
@@ -8,8 +9,14 @@ $selected = $SOUP->get('selected', null);
 $breadcrumbs = $SOUP->get('breadcrumbs', null);
 $project = $SOUP->get('project', null);
 
+$showChatBox = false;
+
+
 if(!empty($project)) {
 	$status = formatProjectStatus($project->getStatus());
+        $projectId = $project->getID();
+        $projectSlug = $project->getSlug();
+        $projectTitle = $project->getTitle();
 }
 
 if(Session::isLoggedIn()) {
@@ -25,6 +32,14 @@ if(Session::isLoggedIn()) {
 	} else {
 		$theme = Theme::load(DEFAULT_THEME_ID); // load default theme
 	}
+        //Only allow chatting for logged in members within the context of a project
+        //Chat is only supported at the chat room level for now
+        if (!empty($projectId)){
+            //Check whether chat is enabled in config.php and user is part of the project or an admin user
+            If ((ENABLE_CHAT==1) && ($project->isMember(Session::getUserID()) || Session::isAdmin())) {
+                $showChatBox = true;
+            }
+        }
 } else {
 	$theme = Theme::load(DEFAULT_THEME_ID); // load default theme
 }
@@ -44,7 +59,8 @@ $pipelineStylesheet = $theme->getPipelineStylesheet();
 	<link rel="stylesheet" type="text/css" href="<?= Url::styles() ?>/<?= $pipelineStylesheet ?>" />
 	<link rel="stylesheet" type="text/css" href="<?= Url::styles() ?>/<?= $jqueryuiStylesheet ?>" />
 	<script type="text/javascript" src="http://www.google.com/jsapi"></script>
-	<script type="text/javascript"> 
+        <link rel="stylesheet" type="text/css"  media="all" href="<?= Url::styles() ?>/chat.css" />
+        <script type="text/javascript"> 
 		google.load("jquery", "1");
 		google.load("jqueryui", "1.8.16");
 		google.setOnLoadCallback(function(){});
@@ -123,6 +139,7 @@ $pipelineStylesheet = $theme->getPipelineStylesheet();
 		<table id="columns">
 			<tr><?= $body ?></tr>
 		</table>
+                <?php if (!empty($chatBox)) echo $chatBox; ?>
 	</div><!-- end .funnel -->
 </div><!-- end .page-body -->
 <div class="page-footer">
@@ -134,14 +151,31 @@ $pipelineStylesheet = $theme->getPipelineStylesheet();
 
 <script type="text/javascript" src="<?= Url::scripts() ?>/common.js"></script>
 <script type="text/javascript" src="<?= Url::scripts() ?>/feedback.js"></script>
-<?php if(Session::getMessage() != null): ?>
+<script type="text/javascript">
+    var chatLocation = <?php echo json_encode(Url::base()."/chat.php"); ?>;
+    var slug = <?php echo json_encode($_GET['slug']) ?>;
+    var lastRecord = 0;
+    var pageId = <?php echo time() ?>;
+</script>
+<?php If ($showChatBox): ?>
+    <script type="text/javascript" src="<?= Url::scripts() ?>/chat.js"></script>
+<?php endif; ?>
+    
 <script type="text/javascript">
 	$(document).ready(function(){
-		displayNotification("<?= Session::getMessage() ?>");
-	});
-</script>		
-<?php Session::clearMessage(); ?>
-<?php endif; ?>
+                <?php If ($showChatBox): ?>                        
+                    chatWith('<?= str_replace(" ","_",$projectTitle) ?>');
+                <?php endif; ?>
+                
+                <?php if(Session::getMessage() != null): ?>
+                    displayNotification("<?= Session::getMessage() ?>");
+                <?php Session::clearMessage(); ?>
+                <?php endif; ?>
+                
+        });
+</script>
+
+
 
 </body>
 </html>

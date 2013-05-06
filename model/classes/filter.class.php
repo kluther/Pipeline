@@ -113,7 +113,7 @@ Class Filter {
 
 	/* 
 	 *	@param input (web url).
-	 *	Return sanatized & validate input or False if filter fails.
+	 *	Return sanatized & validated input or False if filter fails.
 	 */
 	static function url($url = null)
 	{
@@ -125,6 +125,15 @@ Class Filter {
 		}
 		return false;
 	}
+        
+        /*
+         *      Code from : http://stackoverflow.com/questions/2524680/check-whether-the-string-is-a-unix-timestamp
+         *      @param input (Unix timestamp)
+         *      Return sanatized & validated input or False if filter fails
+         */
+        static function isValidTimestamp($timestamp = NULL){
+                return ((string) (int) $timestamp === $timestamp) && ($timestamp <= PHP_INT_MAX) && ($timestamp >= ~PHP_INT_MAX);
+        }
 	
 }
 
