@@ -36,7 +36,7 @@ if(Session::isLoggedIn()) {
         //Chat is only supported at the chat room level for now
         if (!empty($projectId)){
             //Check whether chat is enabled in config.php and user is part of the project or an admin user
-            If ((ENABLE_CHAT==1) && ($project->isMember(Session::getUserID()) || Session::isAdmin())) {
+            If ((ENABLE_CHAT==1) && ($project->isMember(Session::getUserID()) || Session::isAdmin() || $project->isCreator(Session::getUserID()))) {
                 $showChatBox = true;
             }
         }
