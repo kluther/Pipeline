@@ -14,12 +14,13 @@ REQUIREMENTS:
 INSTALLATION:
 
 1. Upload all Pipeline files to your web server.
-2. Create a new MySQL database and run the queries in database.sql (located in the root directory).
-3. Copy config_sample.php to a new file, config.php, and put it in the root directory.
-4. Follow the instructions in config.php to configure your Pipeline instance. Remember to save the file when you're finished.
+2. Create a new MySQL database and run the queries in "database.sql" (located in the root directory).
+3. Copy "config_sample.php" to a new file, "config.php", and put it in the root directory.
+4. Follow the instructions in "config.php" to configure your Pipeline instance. Remember to save the file when you're finished. 
 5. Make Apache the owner of the "upload" folder and its subfolders (chown -R apache ./upload)
-6. If your Pipeline instance is in a subfolder of your domain, you may need to modify the ErrorDocument path in .htaccess (located in the root directory).
-7. If you are installing on Windows, make sure the following line is uncommented in your php.ini file:
+6. Under the "apache/conf" folder, open "httpd.conf". Ensure that "LoadModule rewrite_module modules/mod_rewrite.so" is uncommented.
+7. If your Pipeline instance is in a subfolder of your domain, you may need to modify the ErrorDocument path in ".htaccess" (located in the root directory).
+8. If you are installing on Windows, make sure the following line is uncommented in your "php.ini" file:
     extension=php_fileinfo.dll
 
 
@@ -34,6 +35,7 @@ Joe Gonzales - Developer
 Boris de Souza - Developer
 Kevin Ziegler - Developer
 Chris Howse - Developer
+Jackson Morgan - Developer
 National Science Foundation - Financial Support
 
 Pipeline makes use of many open-source software components and media assets, including:
