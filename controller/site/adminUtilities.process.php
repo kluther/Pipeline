@@ -119,6 +119,9 @@ else {
                 $json = array( 'error' => 'Your uploaded file must be a CSV file' );
                 exit(json_encode($json));
         }
+        
+        //Change the ability to detect line endings when reading the file
+        ini_set("auto_detect_line_endings", true);
 
         //CSV files should be in the format:
         //Title(Required);Instruction (Required);Number Of People Needed (Optional);Deadline (Optional);Leader (Optional)
