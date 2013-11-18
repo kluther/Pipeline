@@ -39,6 +39,7 @@ RewriteRule ^inbox/?$ controller/site/inbox_c.php [L]
 RewriteRule ^admin/process/?$ controller/site/admin.process.php [L]
 RewriteRule ^admin/utilities/process/?$ controller/site/adminUtilities.process.php [L]
 RewriteRule ^admin/utilities/?$ controller/site/adminUtilities_c.php [L]
+RewriteRule ^admin/settings/?$ controller/site/adminSettings_c.php [L]
 RewriteRule ^admin/?$ controller/site/admin_c.php [L]
 
 ### HELP ###

@@ -1193,6 +1193,40 @@ html.home div.meta {
 		}
 	
 
+/* jQuery Expandable Form */
+
+div.jQ-dropdown-nav {
+    padding-top: .75em;
+    padding-bottom: .5em;
+    overflow: hidden;
+}
+div.jQ-dropdown-nav li {
+    display: inline;
+    margin-right: .5em;
+    padding: .5em 1em;
+    border: 2px solid;
+    -moz-border-radius-topleft: .5em;
+    -moz-border-radius-topright: .5em;
+    -webkit-border-top-left-radius: .5em;
+    -webkit-border-top-right-radius: .5em;
+    border-top-left-radius: .5em;
+    border-top-right-radius: .5em;
+    cursor: pointer;
+}
+div.jQ-dropdown-nav li:hover {
+    color: red;
+}
+
+
+div.jQ-dropdown {
+    display: none;
+    width: 100%;
+    background-color: #EEEEEE;
+    min-height: 100px;
+    border: 2px solid;
+}
+
+                
 /* ERRORS */
 
 div#feedback {

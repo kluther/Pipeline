@@ -48,6 +48,7 @@ $pipelineStylesheet = $theme->getPipelineStylesheet();
 	</script>
 	<script type="text/javascript" src="<?= Url::scripts() ?>/common.js"></script>
 	<script type="text/javascript" src="<?= Url::scripts() ?>/feedback.js"></script>
+        <script type="text/javascript" src="<?= Url::scripts() ?>/dropdown.js"></script>
 	<?php if(Session::getMessage() != null): ?>
 	<script type="text/javascript">
 		$(document).ready(function(){
@@ -98,7 +99,7 @@ $pipelineStylesheet = $theme->getPipelineStylesheet();
 			                       
 				<li><a <?= ($selected == "recentActivity")?'class="selected"':'' ?> href="<?= Url::admin()?>">Recent Activity</a></li>
 				<li><a <?= ($selected == "utilities")?'class="selected"':'' ?> href="<?= Url::utilities() ?>">Utilities</a></li>
-			
+                                <li><a <?= ($selected == "settings")?'class="selected"':'' ?> href="<?= Url::adminSettings() ?>">Settings</a></li>
 			</ul>
 		</div><!-- end .secondary-nav -->
 	</div><!-- end .funnel -->

@@ -32,6 +32,10 @@ class Url
                 return (self::utilities().'/process');
         }
 	
+        public static function adminSettingsProcess() {
+                return (self::adminSettings().'process');
+        }
+        
 	public static function uploadProcess()
 	{
 		return (self::base().'/upload/process');
@@ -472,6 +476,11 @@ class Url
 	{
 		return (self::admin().'/utilities');
 	}
+        
+        public static function adminSettings()
+        {
+            return (self::admin().'/settings');
+        }
         //This method will call the partial that shows errors based on a loaded
         //.CSV file 
 //        public static function previewCSV()
