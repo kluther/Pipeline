@@ -6,21 +6,10 @@ if(!Session::isAdmin()) {
 	exit();
 }
 
-// projects
-$projects = Project::getAllProjects();
-
-// users
-$users = User::getAllUsers();
-
-// activity
-$events = Event::getAllEvents(50);
-
+$types = DocTypes::getAllTypes();
 
 $soup = new Soup();
 
-$soup->set('projects', $projects);
-//$soup->set('users', $users);
-//$soup->set('events', $events);
 $soup->set('selected','settings');
-
+$soup->set('types',$types);
 $soup->render('site/page/adminSettings');
