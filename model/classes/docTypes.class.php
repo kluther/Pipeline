@@ -46,12 +46,15 @@ class DocTypes extends DbObject
 	}
 	
         public static function getAllTypes($limit=null) {
-		$query = "SELECT * FROM ".self::DB_TABLE;
-		$query .= " ORDER BY id ASC";
+                $db = Db::instance();
+            
+                $query = "SELECT * FROM ".self::DB_TABLE;
+                if (mysql_num_rows($db->lookup($query)) != 0) {
+                    $query .= " ORDER BY id ASC";
+                }
 		if($limit != null)
 			$query .= " LIMIT ".$limit;
-		
-		$db = Db::instance();
+	
 		$result = $db->lookup($query);
 		if(!mysql_num_rows($result)) return null;
 		
