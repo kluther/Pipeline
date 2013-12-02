@@ -90,7 +90,7 @@ class Db
 	// Use this on ANY string that comes from external sources (i.e. the user).
 	public function quoteString($s)
 	{
-		return "'" . mysql_real_escape_string($s) . "'";
+                return "'" . mysql_real_escape_string($s) . "'";
 	}
 	
 	// Formats a date (i.e. UNIX timestamp) for use in SQL queries.
@@ -139,7 +139,7 @@ class Db
 			if($value !== null) // skip unset fields
 			{
 				$fields .= $field . ", ";
-				$values .= $this->quoteString($value) . ", ";
+                                $values .= "'" . mysql_real_escape_string($value) . "', ";
 			}
 		}
 		
