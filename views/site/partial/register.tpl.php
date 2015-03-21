@@ -98,7 +98,7 @@ function registerUser()
 	<div class="input">
 		<input id="txtUsername" type="text" maxlength="20" />
 		<span id="username_check"></span>
-		<p><strong>Do not use your full name</strong></p>		
+		<p><strong>Please use your Virginia Tech PID</strong></p>		
 		<p>Letters, numbers, and hyphens only, max 20 characters</p>
 	</div>
 </div>

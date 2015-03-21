@@ -70,7 +70,7 @@ Class Filter {
                 
 		if ($string != null)
 		{
-                        $pattern = "%^[a-zA-Z0-9-]{6,20}$%";
+                        $pattern = "%^[a-zA-Z0-9-]{1,20}$%";
                         
                         if(preg_match($pattern, $string))
                         {

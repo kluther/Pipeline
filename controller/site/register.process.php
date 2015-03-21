@@ -79,11 +79,11 @@ switch($action)
 //			exit(json_encode($json));
 //		}
                 
-                $veruname = Filter::usernameFilter($uname);
-                if (! $veruname) {
-                        $json = array( 'error' => 'Your username must be at least 6 characters and include only letters, numbers, and hyphens.');
-			exit(json_encode($json));
-                }
+        $veruname = Filter::usernameFilter($uname);
+        if (! $veruname) {
+                $json = array( 'error' => 'Your username must be at least 1 character and include only letters, numbers, and hyphens.');
+    exit(json_encode($json));
+        }
 		
 		// make sure passwords exist and match
 		if($pw == "" || $pw2 == "")
