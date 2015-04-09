@@ -26,7 +26,7 @@ function initializeUploader() {
 	var uploader = new plupload.Uploader({
 		runtimes : 'flash,html5,gears,silverlight,browserplus',
 		browse_button : '<?= $browseButtonID ?>',
-		max_file_size : '100mb',
+		max_file_size : '<?= MAX_UPLOAD_SIZE ?>mb',
 		chunk_size : '1mb',
 		url : '<?= Url::uploadProcess() ?>',
 		unique_names : true,

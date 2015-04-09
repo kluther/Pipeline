@@ -18,7 +18,8 @@
         define('DEFAULT_THEME_ID', 1); # default theme ID <- CHANGE THIS
 	define('TIME_ZONE', 'America/New_York'); # name of PHP time zone <- CHANGE THIS
 	define('CONTACT_EMAIL', 'email@address.com'); # contact email address <- CHANGE THIS
-	
+	define('MAX_UPLOAD_SIZE', 750); # maximum allowed upload size in MB <- CHANGE THIS	
+
 	define('DB_HOST', 'localhost'); # database host <- CHANGE THIS
 	define('DB_USERNAME', 'root'); # database username <- CHANGE THIS
 	define('DB_PASSWORD', 'qwerty'); # database password <- CHANGE THIS

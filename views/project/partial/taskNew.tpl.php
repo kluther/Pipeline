@@ -95,7 +95,7 @@ $fork->startBlockSet('body');
 	<label>Attached Files</label>
 	<div class="input">
 		<input type="button" id="btnSelectFiles" value="Select Files" />
-		<p>Max size 100 MB each</p>
+		<p>Max size <?= MAX_UPLOAD_SIZE ?> MB each</p>
 		<div id="filelist"></div>
 	</div>
 </div>
