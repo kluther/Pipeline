@@ -5,6 +5,22 @@ function formatEvent($event, $showProject=false)
 {
 		switch($event->getEventTypeID())
 		{
+                        case 'invite_member_email':
+                                $predicate = ($showProject) ? 'the project '.formatProjectLink($event->getProjectID()) : "this project";
+                                $formatted = sprintf("%s invited %s to join %s.",
+                                                formatUserLink($event->getUser1ID(), $event->getProjectID()),
+                                                '<a href="mailto:'.$event->getData1().'">'.$event->getData1().'</a>',
+                                                $predicate
+                                        );
+                                        break;
+                        case 'invite_member_user':
+                                $predicate = ($showProject) ? 'the project '.formatProjectLink($event->getProjectID()) : "this project";
+                                $formatted = sprintf("%s invited %s to join %s.",
+                                                formatUserLink($event->getUser1ID(), $event->getProjectID()),
+                                                formatUserLink($event->getUser2ID(), $event->getProjectID()),
+                                                $predicate
+                                        );
+                                        break;
 			case 'create_user':
 				$formatted = sprintf("%s registered for %s.",
 						formatUserLink($event->getUser1ID()),
