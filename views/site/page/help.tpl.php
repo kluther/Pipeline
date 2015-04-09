@@ -75,6 +75,8 @@ $fork->startBlockSet('body');
 	<li>Documents (.doc, .docx, .pdf)</li>
 </ul>
 
+<p>Each uploaded file can have a maximum size of <?= MAX_UPLOAD_SIZE ?> MB.</p>
+
 <div class="line"> </div>
 
 <h3 id="help-html-allowed">Which HTML tags can I use?</h3>
