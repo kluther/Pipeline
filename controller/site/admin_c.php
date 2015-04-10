@@ -13,7 +13,29 @@ $projects = Project::getAllProjects();
 $users = User::getAllUsers();
 
 // activity
-$events = Event::getAllEvents(50);
+
+
+// page number, if any
+if(empty($_GET['page']))
+	$page = 1;
+else
+	$page = Filter::numeric($_GET['page']);
+
+define('EVENTS_PER_PAGE', 10); // how many events per page
+
+$totalNumEvents = count(Event::getAllEvents());
+
+$numPages = ceil($totalNumEvents/EVENTS_PER_PAGE); // get # pages
+if( ($numPages != 0) && ($page > $numPages) ) {
+	// invalid page number
+	header('Location: '.Url::error());
+	exit();
+}
+
+// figure out which events to get
+$limit = ($page-1)*EVENTS_PER_PAGE.', '.EVENTS_PER_PAGE;
+
+$events = Event::getAllEvents($limit);
 
 
 $soup = new Soup();
@@ -21,6 +43,10 @@ $soup = new Soup();
 $soup->set('projects', $projects);
 $soup->set('users', $users);
 $soup->set('events', $events);
-$soup->set('selected','recentActivity');
-
+$soup->set('page', $page);
+$soup->set('numPages', $numPages);
 $soup->render('site/page/admin');
+
+
+
+
