@@ -2,7 +2,7 @@ Options -Indexes
 
 RewriteEngine on
 
-ErrorDocument 404 /ldrs1016/controller/site/error_c.php
+ErrorDocument 404 /Pipeline/controller/site/error_c.php
 
 ### STATIC ###
 
@@ -39,6 +39,7 @@ RewriteRule ^inbox/?$ controller/site/inbox_c.php [L]
 RewriteRule ^admin/process/?$ controller/site/admin.process.php [L]
 RewriteRule ^admin/utilities/process/?$ controller/site/adminUtilities.process.php [L]
 RewriteRule ^admin/utilities/?$ controller/site/adminUtilities_c.php [L]
+RewriteRule ^admin/(\d+)/?$ controller/site/admin_c.php?page=$1 [QSA,L]
 RewriteRule ^admin/?$ controller/site/admin_c.php [L]
 
 ### HELP ###

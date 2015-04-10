@@ -11,6 +11,8 @@ $showProject = $SOUP->get('showProject', false);
 $page = $SOUP->get('page');
 $numPages = $SOUP->get('numPages');
 
+$thisURL = Url::admin();
+
 $fork = $SOUP->fork();
 $fork->set('id', 'activity');
 $fork->set('title', $title);
@@ -36,6 +38,12 @@ $(document).ready(function(){
 		return false;
 	});
 	
+	$('#selActivityPages').change(function(){
+		var url = '<?= $thisURL ?>';
+		var pageNum = $(this).val();
+		window.location = url+'/'+pageNum;
+	});
+    
 });
 
 </script>
@@ -84,7 +92,7 @@ elseif($numPages > 1):
 	$fork->startBlockSet("footer");
 
 	if($page != 1) {
-		$newerURL = Url::admin().'/'.($page-1);
+		$newerURL = $thisURL.'/'.($page-1);
 		echo '<a href="'.$newerURL.'">&laquo; Newer</a> ';
 	}
     
@@ -98,7 +106,7 @@ elseif($numPages > 1):
     echo '</select>';
 
 	if($page != $numPages) {
-		$olderURL = Url::admin().'/'.($page+1);
+		$olderURL = $thisURL.'/'.($page+1);
 		echo ' <a href="'.$olderURL.'">Older &raquo;</a>';
 	}
 
