@@ -2,7 +2,7 @@ Options -Indexes
 
 RewriteEngine on
 
-ErrorDocument 404 /Pipeline/controller/site/error_c.php
+ErrorDocument 404 /ldrs1016/controller/site/error_c.php
 
 ### STATIC ###
 
