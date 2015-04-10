@@ -21,7 +21,7 @@ if(empty($_GET['page']))
 else
 	$page = Filter::numeric($_GET['page']);
 
-define('EVENTS_PER_PAGE', 3); // how many events per page
+define('EVENTS_PER_PAGE', 15); // how many events per page
 
 $totalNumEvents = count(Event::getAllEvents());
 
