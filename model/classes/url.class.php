@@ -294,6 +294,12 @@ class Url
 		if($projectID == null) return null;
 		return (self::activity($projectID).'/people');
 	}
+    
+	public static function activityReflections($projectID=null)
+	{
+		if($projectID == null) return null;
+		return (self::activity($projectID).'/reflections');
+	}
 
 	public static function details($projectID=null)
 	{
@@ -425,6 +431,24 @@ class Url
 	public static function discussionNewProcess($projectID=null) {
 		if($projectID == null) return null;
 		return (self::discussionNew($projectID).'/process');
+	}
+    
+	public static function reflection($reflectionID=null)
+	{
+		if($reflectionID == null) return null;
+		$reflection = Discussion::load($reflectionID);
+		return (self::reflections($reflection->getProjectID()).'/'.$reflectionID);
+	}
+    
+	public static function reflections($projectID=null)
+	{
+		if($projectID == null) return null;
+		return (self::project($projectID).'/reflections');
+	}
+    
+	public static function reflectionNew($projectID=null) {
+		if($projectID == null) return null;
+		return (self::reflections($projectID).'/new');
 	}
 
 	public static function people($projectID=null)

@@ -120,6 +120,59 @@ if($action == 'lock') {
 	$json = array('success' => '1', 'successUrl' => $successURL);
 	echo json_encode($json);
 	
+} elseif($action == 'create-reflection') {
+	// get additional POST variables
+	$title = Filter::text($_POST['title']);
+	$message = Filter::formattedText($_POST['message']);
+	$visibility = Filter::text($_POST['visibility']);
+	
+	// validate
+	if($title == '') {
+		$json = array( 'error' => 'You must provide a title.' );
+		exit(json_encode($json));	
+	} elseif($message == '') {
+		$json = array( 'error' => 'You must provide some text for the reflection.' );
+		exit(json_encode($json));		
+	}
+	
+	// create reflection
+	$reflection = new Discussion(array(
+		'creator_id' => Session::getUserID(),
+		'project_id' => $project->getID(),
+		'title' => $title,
+		'message' => $message,
+        'is_reflection' => 1,
+		'reflection_visibility' => $visibility
+	));
+	$reflection->save();
+	// assign parent_id to self
+	$reflection->setParentID($reflection->getID());
+	$reflection->save();
+	
+	// attach any uploads
+	// Upload::attachToItem(
+		// $token,
+		// Upload::TYPE_DISCUSSION,
+		// $discussion->getID(),
+		// $project->getID()
+	// );
+	
+	// log it
+	$logEvent = new Event(array(
+		'event_type_id' => 'create_reflection',
+		'project_id' => $project->getID(),
+		'user_1_id' => Session::getUserID(),
+		'item_1_id' => $reflection->getID(),
+		'data_1' => $title,
+		'data_2' => $message
+	));
+	$logEvent->save();
+	
+	// we're done here
+	Session::setMessage('You created a new reflection.');
+    $successURL = Url::reflection($reflection->getID());
+	$json = array('success' => '1', 'successUrl' => $successURL);
+	echo json_encode($json);
 } elseif($action == 'reply') {
 	$discussionID = Filter::numeric($_POST['discussionID']);
 	$message = Filter::formattedText($_POST['message']);

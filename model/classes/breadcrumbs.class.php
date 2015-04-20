@@ -109,7 +109,33 @@ class Breadcrumbs
 			self::oneCrumb($title, Url::discussionNew($projectID))
 		);
 	}
+    
+	public static function reflection($discussionID=null)
+	{
+		$discussion = Discussion::load($discussionID);
+		$title = $discussion->getTitle();
+		$projectID = $discussion->getProjectID();
+		return array_merge(
+			self::reflections($projectID),
+			self::oneCrumb($title, Url::reflection($discussionID))
+		);
+	}
+    
+	public static function reflections($projectID=null)
+	{
+		if($projectID == null) return null;
+		return (self::oneCrumb("Reflections", Url::reflections($projectID)));
+	}
 	
+	public static function reflectionNew($projectID=null) {
+		if($projectID == null) return null;
+		$title = 'New Reflection';
+		return array_merge(
+			self::reflections($projectID),
+			self::oneCrumb($title, Url::reflectionNew($projectID))
+		);
+	}
+    
 	public static function people($projectID=null)
 	{
 		if($projectID == null) return null;

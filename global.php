@@ -27,6 +27,7 @@ define('BASICS_ID',2);
 define('TASKS_ID',3);
 define('DISCUSSIONS_ID',4);
 define('PEOPLE_ID',5);
+define('REFLECTIONS_ID', 6);
 
 set_include_path(dirname(__FILE__));
 require_once("config.php");

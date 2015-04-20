@@ -116,6 +116,7 @@ $pipelineStylesheet = $theme->getPipelineStylesheet();
 				<li><a <?= ($selected == "discussions")?'class="selected"':'' ?> href="<?= Url::discussions($project->getID()) ?>">Discussions</a></li>
 				<li><a <?= ($selected == "files")?'class="selected"':'' ?> href="<?= Url::files($project->getID()) ?>">Files</a></li>
 				<li><a <?= ($selected == "activity")?'class="selected"':'' ?> href="<?= Url::activity($project->getID()) ?>">Activity</a></li>
+                <li><a <?= ($selected == "reflections")?'class="selected"':'' ?> href="<?= Url::reflections($project->getID()) ?>">Reflections</a></li>
 			<?php endif; ?>
 			</ul>
 		</div><!-- end .secondary-nav -->

@@ -304,6 +304,15 @@ class Event extends DbObject
 		while($row = mysql_fetch_assoc($result))
 			$events[$row['id']] = self::load($row['id']);
 		return $events;			
+	}
+    
+    public static function getReflectionEvents($discussionID=null, $limit=null) {
+        return array();   
+    }
+    
+	public static function getReflectionsEventsByProjectID($projectID=null, $limit=null)
+	{
+		return (self::getByProjectID($projectID, REFLECTIONS_ID, $limit));
 	}	
 
 	public static function getPeopleEventsByProjectID($projectID=null, $limit=null)

@@ -116,6 +116,14 @@ RewriteRule ^projects/([a-z0-9-]+)/discussions/new/people/?$ controller/project/
 RewriteRule ^projects/([a-z0-9-]+)/discussions/new/activity/?$ controller/project/discussion_new_c.php?slug=$1&cat=activity [QSA,L]
 RewriteRule ^projects/([a-z0-9-]+)/discussions/new/?$ controller/project/discussion_new_c.php?slug=$1 [QSA,L]
 
+# new reflection
+RewriteRule ^projects/([a-z0-9-]+)/reflections/new/?$ controller/project/reflection_new_c.php?slug=$1 [QSA,L]
+RewriteRule ^projects/([a-z0-9-]+)/reflections/?$ controller/project/reflections_c.php?slug=$1 [QSA,L]
+RewriteRule ^projects/([a-z0-9-]+)/reflections/(\d+)/process/?$ controller/project/discussion.process.php?slug=$1&d=$2 [QSA,L]
+RewriteRule ^projects/([a-z0-9-]+)/reflections/(\d+)/(\d+)/?$ controller/project/reflection_c.php?slug=$1&d=$2&page=$3 [QSA,L]
+RewriteRule ^projects/([a-z0-9-]+)/reflections/(\d+)/?$ controller/project/reflection_c.php?slug=$1&d=$2 [QSA,L]
+
+# other discussion pages
 RewriteRule ^projects/([a-z0-9-]+)/discussions/(\d+)/process/?$ controller/project/discussion.process.php?slug=$1&d=$2 [QSA,L]
 RewriteRule ^projects/([a-z0-9-]+)/discussions/(\d+)/(\d+)/?$ controller/project/discussion_c.php?slug=$1&d=$2&page=$3 [QSA,L]
 RewriteRule ^projects/([a-z0-9-]+)/discussions/(\d+)/?$ controller/project/discussion_c.php?slug=$1&d=$2 [QSA,L]

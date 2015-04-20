@@ -6,6 +6,7 @@ $replies = $SOUP->get('replies',array());
 $discussion = $SOUP->get('discussion', null);
 $page = $SOUP->get('page');
 $numPages = $SOUP->get('numPages');
+$isReflection = $SOUP->get('isReflection', false);
 //$token = Upload::generateToken();
 
 $thisURL = Url::discussion($discussion->getID());
@@ -20,16 +21,19 @@ $hasLockPermission = (Session::isAdmin() ||
 
 // css for discussion title
 $cssLocked = ($discussion->getLocked()) ? ' class="locked"' : '';
+
+// choose label depending on whether Reflection or Discussion
+$itemLabel = ($isReflection) ? 'Reflection' : 'Discussion';
 	
 $fork = $SOUP->fork();
 $fork->set('id', 'discussion');
-$fork->set('title', 'Discussion');
+$fork->set('title', $itemLabel);
 if($hasLockPermission) {
 	$fork->set('editable', true);
 	if($discussion->getLocked()) {
-		$fork->set('editLabel', 'Unlock Discussion');
+		$fork->set('editLabel', 'Unlock '.$itemLabel);
 	} else {
-		$fork->set('editLabel', 'Lock Discussion');
+		$fork->set('editLabel', 'Lock '.$itemLabel);
 	}
 }
 $fork->startBlockSet('body');

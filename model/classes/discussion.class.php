@@ -9,11 +9,18 @@ class Discussion extends DbObject
 	protected $title;
 	protected $message;
 	protected $category;
+    protected $isReflection;
+    protected $reflectionVisibility;
 	protected $deleted;
 	protected $locked;
 	protected $dateCreated;
 		
 	const  DB_TABLE = 'discussion';
+    
+    const REFLECT_VIS_ME = 0;
+    const REFLECT_VIS_ME_INSTR = 1;
+    const REFLECT_VIS_ME_INSTR_PROJ_MEMB = 2;
+    const REFLECT_VIS_EVERYONE = 10;
 	
 	// const CATEGORY_ACTIVITY = 1;
 	// const CATEGORY_DETAILS = 2;
@@ -31,6 +38,8 @@ class Discussion extends DbObject
 			'title' => '',
 			'message' => '',
 			'category' => null,
+            'is_reflection' => 0,
+            'reflection_visibility' => null,
 			'date_created' => null,
 			'deleted' => 0,
 			'locked' => 0
@@ -45,6 +54,8 @@ class Discussion extends DbObject
 		$this->title = $args['title'];
 		$this->message = $args['message'];
 		$this->category = $args['category'];
+        $this->isReflection = $args['is_reflection'];
+        $this->reflectionVisibility = $args['reflection_visibility'];
 		$this->dateCreated = $args['date_created'];
 		$this->deleted = $args['deleted'];
 		$this->locked = $args['locked'];
@@ -68,6 +79,8 @@ class Discussion extends DbObject
 			'title' => $this->title,
 			'message' => $this->message,
 			'category' => $this->category,
+            'is_reflection' => $this->isReflection,
+            'reflection_visibility' => $this->reflectionVisibility,
 			'deleted' => $this->deleted,
 			'locked' => $this->locked
 		);		
@@ -116,6 +129,11 @@ class Discussion extends DbObject
 	public static function getActivityDiscussionsByProjectID($projectID=null, $limit=null) {
 		return (self::getByProjectID($projectID, ACTIVITY_ID, $limit));
 	}
+    
+    public static function getReflectionsByUserID($userID=null, $projectID=null, $limit=null, $deleted=false) {
+        // placeholder
+        return array();
+        }
 	
 	public static function getByUserID($userID=null, $projectID=null, $limit=null, $deleted=false) {
 		if ($userID == null) return null;
@@ -178,8 +196,12 @@ class Discussion extends DbObject
 		
 		// return $discussions;		
 	// }
+    
+    public static function getReflectionsByProjectID($projectID=null, $category=null, $limit=null, $deleted=false) {
+        return (self::getByProjectID($projectID, null, $limit, $deleted, true));  
+    }
 
-	public static function getByProjectID($projectID=null, $category=null, $limit=null, $deleted=false)
+	public static function getByProjectID($projectID=null, $category=null, $limit=null, $deleted=false, $reflections=false)
 	{
 		if ($projectID == null) return null;
 		
@@ -192,6 +214,11 @@ class Discussion extends DbObject
 			$query .= " AND deleted=1";
 		elseif($deleted===false)
 			$query .= " AND deleted=0";
+        if($reflections) {
+            $query .= " AND is_reflection=1";   
+        } else {
+            $query .= " AND is_reflection=0";   
+        }
 		//$query .= " GROUP BY parent_id";
 		$query .= " ORDER BY locked ASC, date_created DESC, title ASC";
 		if($limit!=null)
@@ -350,6 +377,24 @@ class Discussion extends DbObject
 		$this->category = $newCategory;
 		$this->modified = true;
 	}
+    
+    public function getIsReflection() {
+        return ($this->isReflection);   
+    }
+    
+    public function setIsReflection($newIsReflection) {
+        $this->isReflection = $newIsReflection;
+        $this->modified = true;
+    }
+    
+    public function getReflectionVisibility() {
+        return ($this->reflectionVisibility);   
+    }
+    
+    public function setReflectionVisibility($newReflectionVisibility) {
+        $this->reflectionVisibility = $newReflectionVisibility;
+        $this->modified = true;
+    }
 	
 	public function getDateCreated()
 	{
