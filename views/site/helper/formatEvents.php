@@ -5,22 +5,33 @@ function formatEvent($event, $showProject=false)
 {
 		switch($event->getEventTypeID())
 		{
-                        case 'invite_member_email':
-                                $predicate = ($showProject) ? 'the project '.formatProjectLink($event->getProjectID()) : "this project";
-                                $formatted = sprintf("%s invited %s to join %s.",
-                                                formatUserLink($event->getUser1ID(), $event->getProjectID()),
-                                                '<a href="mailto:'.$event->getData1().'">'.$event->getData1().'</a>',
-                                                $predicate
-                                        );
-                                        break;
-                        case 'invite_member_user':
-                                $predicate = ($showProject) ? 'the project '.formatProjectLink($event->getProjectID()) : "this project";
-                                $formatted = sprintf("%s invited %s to join %s.",
-                                                formatUserLink($event->getUser1ID(), $event->getProjectID()),
-                                                formatUserLink($event->getUser2ID(), $event->getProjectID()),
-                                                $predicate
-                                        );
-                                        break;
+            case 'create_reflection':
+				$predicate = ($showProject) ? ' in the project '.formatProjectLink($event->getProjectID()) : '';
+				$discussion = Discussion::load($event->getItem1ID());
+				$title = $discussion->getTitle();
+				$url = Url::discussion($discussion->getID());
+				$formatted = sprintf("%s posted the reflection %s%s.",
+						formatUserLink($event->getUser1ID(), $event->getProjectID()),
+						'<a href="'.$url.'">'.$title.'</a>',
+						$predicate
+					);	
+                    break;
+            case 'invite_member_email':
+                    $predicate = ($showProject) ? 'the project '.formatProjectLink($event->getProjectID()) : "this project";
+                    $formatted = sprintf("%s invited %s to join %s.",
+                                    formatUserLink($event->getUser1ID(), $event->getProjectID()),
+                                    '<a href="mailto:'.$event->getData1().'">'.$event->getData1().'</a>',
+                                    $predicate
+                            );
+                    break;
+            case 'invite_member_user':
+                    $predicate = ($showProject) ? 'the project '.formatProjectLink($event->getProjectID()) : "this project";
+                    $formatted = sprintf("%s invited %s to join %s.",
+                                    formatUserLink($event->getUser1ID(), $event->getProjectID()),
+                                    formatUserLink($event->getUser2ID(), $event->getProjectID()),
+                                    $predicate
+                            );
+                    break;
 			case 'create_user':
 				$formatted = sprintf("%s registered for %s.",
 						formatUserLink($event->getUser1ID()),
