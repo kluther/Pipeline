@@ -2,7 +2,7 @@
 require_once("../../global.php");
 
 $fileID = Filter::numeric($_GET['fi']);
-$fileName = Filter::text($_GET['fn']);
+$fileName = urlencode(Filter::text($_GET['fn']));
 
 $upload = Upload::load($fileID);
 if( ($upload == null) ||
