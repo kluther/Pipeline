@@ -154,7 +154,9 @@ $pipelineStylesheet = $theme->getPipelineStylesheet();
 <script type="text/javascript" src="<?= Url::scripts() ?>/feedback.js"></script>
 <script type="text/javascript">
     var chatLocation = <?php echo json_encode(Url::base()."/chat.php"); ?>;
+<?php if(isset($_GET['slug'])): ?>
     var slug = <?php echo json_encode($_GET['slug']) ?>;
+<?php endif; ?>
     var lastRecord = 0;
     var pageId = <?php echo time() ?>;
 </script>
