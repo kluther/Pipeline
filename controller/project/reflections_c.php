@@ -40,3 +40,42 @@ $soup->set('events', $events);
 // }
 
 $soup->render('project/page/reflections');
+
+//$r is the reflection
+//$cu is the current user
+function permissionCheck($r, $cu)
+{
+	$vis = $r->getReflectionVisibility();
+	if($vis == Discussion::REFLECT_VIS_ME)
+	{
+		if($r->getCreatorID() == $cu)
+		{
+			return true;
+		}
+	}
+	elseif($vis == Discussion::REFLECT_VIS_ME_INSTR)
+	{
+		if($r->getCreatorID() == $cu || Session::isInstructor() == true)
+		{
+			return true;
+		}
+	}
+	elseif($vis == Discussion::REFLECT_VIS_ME_INSTR_PROJ_MEMB)
+	{
+		$p = $r->getProjectID();
+		$c = Session::getUserID();
+		$t = ProjectUser::isMember($c, $p);
+		if($r->getCreatorID() == $cu || Session::isInstructor() == true || $t == true)
+		{
+			return true;
+		}
+	}
+	elseif($vis == Discussion::REFLECT_VIS_EVERYONE)
+	{
+			return true;
+	}
+	else
+	{
+		return false;
+	}
+}

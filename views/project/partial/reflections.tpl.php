@@ -60,6 +60,8 @@ if(empty($reflections)) {
 } elseif($size == 'small') {
 	echo '<ul class="segmented-list discussions">';
 	foreach($reflections as $d) {
+		if(permissionCheck($d, Session::getUserID()) == false)
+			continue;
 		echo '<li>';
 		$cssLock = ($d->getLocked()) ? ' locked' : '';
 		echo '<h6 class="primary'.$cssLock.'"><a href="'.Url::discussion($d->getID()).'">'.$d->getTitle().'</a></h6>';
@@ -87,6 +89,8 @@ if(empty($reflections)) {
 		</tr>
 <?php
 	foreach($reflections as $d) {
+		if(permissionCheck($d, Session::getUserID()) == false)
+			continue;
 		echo '<tr>';
 		echo '<td class="title">';
 		$cssLock = ($d->getLocked()) ? ' class="locked"' : '';

@@ -491,6 +491,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `notify_receive_message` tinyint(3) unsigned NOT NULL DEFAULT '1',
   `notify_mass_email` tinyint(1) unsigned NOT NULL DEFAULT '1',
   `admin` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `instructor` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `date_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `last_login` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `second_last_login` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',

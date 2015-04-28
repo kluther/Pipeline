@@ -30,6 +30,7 @@ class Session
 		setcookie('user_id', $user->getID(), $expire, COOKIE_PATH, COOKIE_DOMAIN);
 		setcookie('username', $user->getUserName(), $expire, COOKIE_PATH, COOKIE_DOMAIN);
 		setcookie('admin', $user->getAdmin(), $expire, COOKIE_PATH, COOKIE_DOMAIN);
+		setcookie('instructor', $user->getInstructor(), $expire, COOKIE_PATH, COOKIE_DOMAIN);
 	}
 	
 	public static function signOut()
@@ -38,6 +39,7 @@ class Session
 		setcookie('user_id', '', time()-3600, COOKIE_PATH, COOKIE_DOMAIN);
 		setcookie('username', '', time()-3600, COOKIE_PATH, COOKIE_DOMAIN);
 		setcookie('admin', '', time()-3600, COOKIE_PATH, COOKIE_DOMAIN);
+		setcookie('instructor', '', time()-3600, COOKIE_PATH, COOKIE_DOMAIN);
 	}
 	
 	public static function getUserID()
@@ -64,6 +66,14 @@ class Session
 	public static function isAdmin() {
 		if(isset($_COOKIE['admin']))
 			return $_COOKIE['admin'];
+		else
+			return null;
+	}
+
+	public static function isInstructor()
+	{
+		if(isset($_COOKIE['instructor']))
+			return $_COOKIE['instructor'];
 		else
 			return null;
 	}

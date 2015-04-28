@@ -28,6 +28,7 @@ class User extends DbObject
 	protected $notifyReceiveMessage;
 	protected $notifyMassEmail;
 	protected $admin;
+	protected $instructor; //new
 	protected $dateCreated;
 	protected $lastLogin;
 	protected $secondLastLogin;
@@ -70,6 +71,7 @@ class User extends DbObject
 			'notify_receive_message' => 1,
 			'notify_mass_email' => 1,
 			'admin' => 0,
+			'instructor' => 0,
 			'date_created' => null,
 			'last_login' => null,
 			'second_last_login' => null,
@@ -105,6 +107,7 @@ class User extends DbObject
 		$this->notifyReceiveMessage = $args['notify_receive_message'];
 		$this->notifyMassEmail = $args['notify_mass_email'];
 		$this->admin = $args['admin'];
+		$this->instructor = $args['instructor'];
 		$this->dateCreated = $args['date_created'];
 		$this->lastLogin = $args['last_login'];
 		$this->secondLastLogin = $args['second_last_login'];
@@ -193,6 +196,7 @@ class User extends DbObject
 			'notify_receive_message' => $this->notifyReceiveMessage,
 			'notify_mass_email' => $this->notifyMassEmail,
 			'admin' => $this->admin,
+			'instructor' => $this->instructor, //new
 			'last_login' => $this->lastLogin,
 			'second_last_login' => $this->secondLastLogin,
                         'last_heartbeat' => $this->lastHeartbeat,
@@ -573,6 +577,15 @@ class User extends DbObject
 	
 	public function setAdmin($newAdmin) {
 		$this->admin = $newAdmin;
+		$this->modified = true;
+	}
+
+	public function getInstructor(){
+		return ($this->instructor);
+	}
+
+	public function setInstructor(){
+		$this->instructor = $newInstructor;
 		$this->modified = true;
 	}
 	
