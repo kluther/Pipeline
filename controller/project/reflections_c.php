@@ -41,11 +41,17 @@ $soup->set('events', $events);
 
 $soup->render('project/page/reflections');
 
-//$r is the reflection
-//$cu is the current user
+//$r is the reflection object
+//$cu is the current user ID
 function permissionCheck($r, $cu)
-{
-	$vis = $r->getReflectionVisibility();
+{   
+    // allow admin to see all
+    $cuObj = User::load($cu);
+    if($cuObj->getAdmin()) {
+        return true;   
+    }
+    
+    $vis = $r->getReflectionVisibility();
 	if($vis == Discussion::REFLECT_VIS_ME)
 	{
 		if($r->getCreatorID() == $cu)
@@ -55,7 +61,7 @@ function permissionCheck($r, $cu)
 	}
 	elseif($vis == Discussion::REFLECT_VIS_ME_INSTR)
 	{
-		if($r->getCreatorID() == $cu || Session::isInstructor() == true)
+		if($r->getCreatorID() == $cu || Session::isInstructor())
 		{
 			return true;
 		}
@@ -65,7 +71,7 @@ function permissionCheck($r, $cu)
 		$p = $r->getProjectID();
 		$c = Session::getUserID();
 		$t = ProjectUser::isMember($c, $p);
-		if($r->getCreatorID() == $cu || Session::isInstructor() == true || $t == true)
+		if($r->getCreatorID() == $cu || Session::isInstructor() || $t)
 		{
 			return true;
 		}

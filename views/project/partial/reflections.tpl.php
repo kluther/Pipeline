@@ -9,11 +9,11 @@ $reflections = $SOUP->get('reflections', array());
 $class = $SOUP->get('class');
 $size = $SOUP->get('size');
 
-// allow values to be passed in
+// only admin, instructor, or project member can reflect
 if($hasPermission === null) {
-	// any logged-in user may discuss
-	$hasPermission = ( Session::isLoggedIn() &&
-						!$project->isBanned(Session::getUserID()) );
+    $hasPermission = ( Session::isAdmin() ||
+                      Session::isInstructor() ||
+					$project->isMember(Session::getUserID()) );
 }
 
 $fork = $SOUP->fork();
@@ -85,7 +85,7 @@ if(empty($reflections)) {
 			<th style="padding-left: 22px;">Reflection</th>
 			<th>Replies</th>
 			<th>Last Reply</th>
-			<!--th>Category</th-->
+			<th>Visibility</th>
 		</tr>
 <?php
 	foreach($reflections as $d) {
@@ -107,9 +107,28 @@ if(empty($reflections)) {
 		} else {
 			echo '<td class="last-reply">--</td>';
 		}
-		//$category = ($d->getCategory() != null) ? '<span>'.formatSectionLink($d->getCategory(), $d->getProjectID()).'</span>' : '--';
-		//echo '<td class="category">'.$category.'</td>';
-		//echo '</tr>';
+        // show visibility setting
+        $visSetting = '';
+        switch($d->getReflectionVisibility()) {
+            case Discussion::REFLECT_VIS_ME:
+                $visSetting .= '<span title="Me">M</span> ';
+                break;
+            case Discussion::REFLECT_VIS_ME_INSTR:
+                $visSetting .= '<span title="Me">M</span> ';
+                $visSetting .= '<span title="Instructor">I</span> ';
+                break;
+            case Discussion::REFLECT_VIS_ME_INSTR_PROJ_MEMB:
+                $visSetting .= '<span title="Me">M</span> ';
+                $visSetting .= '<span title="Instructor">I</span> ';
+                $visSetting .= '<span title="Project Members">P</span> ';
+                break;
+            case Discussion::REFLECT_VIS_EVERYONE:
+                $visSetting .= '<span title="Everyone">E</span> ';
+                break;
+            default:
+                break;
+        }
+        echo '<td class="category">'.$visSetting.'</td>';
 	}
 ?>
 	</table>
